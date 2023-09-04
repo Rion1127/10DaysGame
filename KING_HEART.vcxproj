@@ -382,6 +382,9 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="KING_HEART.rc" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="engine\external\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
       <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
     </ProjectReference>
@@ -389,16 +392,13 @@
       <Project>{f7d37771-5e1f-448d-9f0b-3563c98512aa}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="KING_HEART.rc" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{1aed7f23-dbc9-4f51-9fbc-9e0f220029f2}</ProjectGuid>
     <RootNamespace>KING_HEART</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>KING_HEART</ProjectName>
+    <ProjectName>10DaysGame</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
