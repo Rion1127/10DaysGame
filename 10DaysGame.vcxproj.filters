@@ -175,6 +175,12 @@
     <Filter Include="application\ヘッダーファイル\Panel">
       <UniqueIdentifier>{efb34bd8-a9c8-49d5-a3c8-e111ae96bbe9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ヘッダーファイル\Animation">
+      <UniqueIdentifier>{8f353bc5-c281-4fc9-87e8-5533627c32d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ソースファイル\Animation">
+      <UniqueIdentifier>{d3742166-e95f-4052-902e-30964c454413}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
