@@ -12,29 +12,29 @@ Panel::Panel()
 	//配列初期化
 	panel_.resize(maxPanelSize_);
 	savePanel_.resize(maxPanelSize_);
-	for (uint32_t i = 0; i < maxPanelSize_; i++)
+	for (int32_t i = 0; i < maxPanelSize_; i++)
 	{
 		panel_[i].resize(maxPanelSize_);
 		savePanel_[i].resize(maxPanelSize_);
 	}
 
-	for (uint32_t y = 0; y < panel_.size(); y++)
+	for (int32_t y = 0; y < panel_.size(); y++)
 	{
-		for (uint32_t x = 0; x < panel_[y].size(); x++)
+		for (int32_t x = 0; x < panel_[y].size(); x++)
 		{
 			panel_[x][y] = 0;
 		}
 	}
 	//中心からinitalSize_の分、空のパネルを配置する
-	uint32_t sizeMinY = ((uint32_t)(panel_.size() - 1) / 2);
-	uint32_t sizeMaxY = ((uint32_t)(panel_.size() - 1) / 2) + (initalSize_ - 1);
+	int32_t sizeMinY = ((int32_t)(panel_.size() - 1) / 2);
+	int32_t sizeMaxY = ((int32_t)(panel_.size() - 1) / 2) + (initalSize_ - 1);
 
-	uint32_t sizeMinX = ((uint32_t)(panel_[0].size() - 1) / 2);
-	uint32_t sizeMaxX = ((uint32_t)(panel_[0].size() - 1) / 2) + (initalSize_ - 1);
+	int32_t sizeMinX = ((int32_t)(panel_[0].size() - 1) / 2);
+	int32_t sizeMaxX = ((int32_t)(panel_[0].size() - 1) / 2) + (initalSize_ - 1);
 
-	for (uint32_t y = 0; y < panel_.size(); y++)
+	for (int32_t y = 0; y < panel_.size(); y++)
 	{
-		for (uint32_t x = 0; x < panel_[y].size(); x++)
+		for (int32_t x = 0; x < panel_[y].size(); x++)
 		{
 			if (y >= sizeMinY && y <= sizeMaxY&&
 				x >= sizeMinX && x <= sizeMaxX) {
@@ -43,13 +43,21 @@ Panel::Panel()
 			savePanel_[x][y] = panel_[x][y];
 		}
 	}
+	spritePos_ = { 500,200 };
+	sprite_ = std::make_unique<PanelSprite>(maxPanelSize_, spritePos_,1.f);
 }
 
 void Panel::Update()
 {
-	for (uint32_t y = 0; y < panel_.size(); y++)
+	selectPos_ = {
+		Clamp(selectPos_.x,(int32_t)0,(int32_t)(maxPanelSize_ - 1)),
+		Clamp(selectPos_.y,(int32_t)0,(int32_t)(maxPanelSize_ - 1)),
+	};
+
+
+	for (int32_t y = 0; y < panel_.size(); y++)
 	{
-		for (uint32_t x = 0; x < panel_[y].size(); x++)
+		for (int32_t x = 0; x < panel_[y].size(); x++)
 		{
 			//選択している箇所の数値を変える
 			if (selectPos_.x == x && selectPos_.y == y)
@@ -63,10 +71,12 @@ void Panel::Update()
 		}
 	}
 	
+	sprite_->Update(panel_);
 }
 
-void Panel::Draw()
+void Panel::DrawSprite()
 {
+	sprite_->Draw();
 }
 
 void Panel::DrawImGui()
@@ -249,7 +259,7 @@ void Panel::SetPanel(Mino mino)
 #pragma endregion
 
 #pragma region PanelSprite
-PanelSprite::PanelSprite(uint32_t panelSize)
+PanelSprite::PanelSprite(uint32_t panelSize, Vector2 basePos, float panelScale)
 {
 	//配列初期化
 	sprite_.resize(panelSize);
@@ -262,18 +272,42 @@ PanelSprite::PanelSprite(uint32_t panelSize)
 	{
 		for (uint32_t x = 0; x < sprite_[y].size(); x++)
 		{
-			
 			sprite_[x][y].Ini();
+			sprite_[x][y].SetTexture(TextureManager::GetInstance()->GetTexture("Panel"));
+
+			Vector2 pos = {
+				basePos.x + (32.f * panelScale) * x,
+				basePos.y + (32.f * panelScale) * y,
+			};
+
+			sprite_[x][y].SetPos(pos);
+			sprite_[x][y].SetScale(Vector2(panelScale, panelScale));
 		}
 	}
 }
 
-void PanelSprite::Update()
+void PanelSprite::Update(const std::vector<std::vector<int32_t>>& panel)
 {
 	for (uint32_t y = 0; y < sprite_.size(); y++)
 	{
 		for (uint32_t x = 0; x < sprite_[y].size(); x++)
 		{
+			if (panel[x][y] == State::NOT_OPEN) {
+				sprite_[x][y].SetColor(Color(100,100,100,255));
+			}
+			else if (panel[x][y] == State::EMPTY) {
+				sprite_[x][y].SetColor(Color(255, 255, 255, 255));
+			}
+			else if (panel[x][y] == State::ATTACK) {
+				sprite_[x][y].SetColor(Color(255, 150, 150, 255));
+			}
+			else if (panel[x][y] == State::SELECT) {
+				sprite_[x][y].SetColor(Color(0, 255, 0, 255));
+			}
+			else if (panel[x][y] == State::NEXT_RELEASE) {
+				sprite_[x][y].SetColor(Color(0, 0, 255, 255));
+			}
+
 
 			sprite_[x][y].Update();
 		}

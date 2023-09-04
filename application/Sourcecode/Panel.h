@@ -6,42 +6,46 @@
 #include "mInput.h"
 #include "Sprite.h"
 
+enum State {
+	NOT_OPEN,
+	EMPTY,
+	ATTACK,
+	NEXT_RELEASE,
+	SELECT
+};
+
 class PanelSprite {
 private:
 	std::vector<std::vector<Sprite>> sprite_;
 public:
-	PanelSprite(uint32_t panelSize);
+	PanelSprite(uint32_t panelSize,Vector2 basePos, float panelScale);
 
-	void Update();
+	void Update(const std::vector<std::vector<int32_t>>& panel);
 	void Draw();
 };
 
 class Panel
 {
 private:
-	enum State {
-		NOT_OPEN,
-		EMPTY,
-		ATTACK,
-		NEXT_RELEASE,
-		SELECT
-	};
+	
 	struct SelectPos {
-		uint32_t x;
-		uint32_t y;
+		int32_t x;
+		int32_t y;
 	};
 private:
-	std::vector<std::vector<uint32_t>> panel_;
-	std::vector<std::vector<uint32_t>> savePanel_;
-	uint32_t maxPanelSize_;
-	uint32_t initalSize_;
+	std::vector<std::vector<int32_t>> panel_;
+	std::vector<std::vector<int32_t>> savePanel_;
+	int32_t maxPanelSize_;
+	int32_t initalSize_;
 
 	SelectPos selectPos_;
 
+	Vector2 spritePos_;
+	std::unique_ptr<PanelSprite> sprite_;
 public:
 	Panel();
 	void Update();
-	void Draw();
+	void DrawSprite();
 
 	void DrawImGui();
 public:
@@ -53,5 +57,5 @@ private:
 public:
 	//パネルをセットする
 	void SetPanel(Mino mino);
-	void SetSelectPos(Vector2 pos) { selectPos_.x = (uint32_t)pos.x; selectPos_.y = (uint32_t)pos.y;}
+	void SetSelectPos(Vector2 pos) { selectPos_.x = (int32_t)pos.x; selectPos_.y = (int32_t)pos.y;}
 };

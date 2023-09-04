@@ -42,6 +42,7 @@ void DebugScene::Draw()
 	panel_->DrawImGui();
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	sprite_->Draw();
+	panel_->DrawSprite();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);
