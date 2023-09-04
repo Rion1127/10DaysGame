@@ -42,7 +42,7 @@ void SceneManager::Update()
 		//Transition<TitleScene>();
 	}
 	if (Key::TriggerKey(DIK_2)) {
-		//Transition<GameScene>();
+		Transition<GameScene>();
 	}
 	if (Key::TriggerKey(DIK_3)) {
 		//Transition<GameOverScene>();
