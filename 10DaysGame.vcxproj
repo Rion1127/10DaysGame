@@ -69,6 +69,7 @@
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\StateMachine.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="engine\util\RRandom.h" />
     <ClInclude Include="engine\util\StateMachine.h" />
     <ClInclude Include="engine\util\Timer.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
