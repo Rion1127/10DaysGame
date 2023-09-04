@@ -11,7 +11,7 @@
 
 DebugScene::~DebugScene()
 {
-
+	//
 }
 
 void DebugScene::Ini()
