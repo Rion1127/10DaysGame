@@ -5,6 +5,7 @@
 #include "mSound.h"
 #include "Texture.h"
 #include "IScene.h"
+#include "Panel.h"
 
 class DebugScene final:
     public IScene
@@ -14,6 +15,8 @@ private:
 	DebugCamera debugCamera_;
 
 	std::unique_ptr<Sprite> sprite_;
+
+	std::unique_ptr<Panel> panel_;
 public:
 	~DebugScene();
 

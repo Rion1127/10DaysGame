@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="application\Sourcecode\CollisionManager.cpp" />
     <ClCompile Include="application\Sourcecode\LoadManager.cpp" />
+    <ClCompile Include="application\Sourcecode\Panel.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\DebugScene.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\GameScene.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\SceneManager.cpp" />
@@ -72,6 +73,7 @@
   <ItemGroup>
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
     <ClInclude Include="application\Sourcecode\LoadManager.h" />
+    <ClInclude Include="application\Sourcecode\Panel.h" />
     <ClInclude Include="application\Sourcecode\Scene\DebugScene.h" />
     <ClInclude Include="application\Sourcecode\Scene\GameScene.h" />
     <ClInclude Include="application\Sourcecode\Scene\SceneManager.h" />

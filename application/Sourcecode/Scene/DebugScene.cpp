@@ -21,6 +21,11 @@ void DebugScene::Ini()
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Ini();
 	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White"));
+	sprite_->SetPos(Vector2(500, 500));
+	sprite_->SetPos(Vector2(500,500));
+
+
+	panel_ = std::make_unique<Panel>();
 }
 
 void DebugScene::Update()
@@ -30,10 +35,13 @@ void DebugScene::Update()
 #endif // _DEBUG
 
 	sprite_->Update();
+
+	panel_->Update();
 }
 
 void DebugScene::Draw()
 {
+	panel_->DrawImGui();
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	sprite_->Draw();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
