@@ -11,7 +11,7 @@
 
 GameScene::~GameScene()
 {
-
+	
 }
 
 void GameScene::Ini()
@@ -27,7 +27,7 @@ void GameScene::Update()
 {
 #ifdef _DEBUG
 
-#endif // _DEBUG
+#endif //_DEBUG
 
 	sprite_->Update();
 }
