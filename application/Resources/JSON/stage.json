@@ -1,0 +1,277 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "LIGHT",
+            "name": "Light",
+            "transform": {
+                "translation": [
+                    4.076245307922363,
+                    1.0054539442062378,
+                    5.903861999511719
+                ],
+                "rotation": [
+                    37.26104736328125,
+                    3.1637091636657715,
+                    106.93632507324219
+                ],
+                "scaling": [
+                    1.0,
+                    0.9999999403953552,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "CAMERA",
+            "name": "Camera",
+            "transform": {
+                "translation": [
+                    7.358891487121582,
+                    -6.925790786743164,
+                    4.958309173583984
+                ],
+                "rotation": [
+                    63.559295654296875,
+                    2.2983238068263745e-07,
+                    46.69194412231445
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "floor",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -1.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "floor",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "stage",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -1.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "stage",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "pillar.002",
+            "transform": {
+                "translation": [
+                    32.5,
+                    32.5,
+                    9.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "pillar",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "pillar.003",
+            "transform": {
+                "translation": [
+                    -32.5,
+                    32.5,
+                    9.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "pillar",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "pillar",
+            "transform": {
+                "translation": [
+                    32.5,
+                    -32.5,
+                    9.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "pillar",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "pillar.001",
+            "transform": {
+                "translation": [
+                    -32.5,
+                    -32.5,
+                    9.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "pillar",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "fence",
+            "transform": {
+                "translation": [
+                    48.0,
+                    0.0,
+                    -0.4000000059604645
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    90.00000762939453
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "wallFence",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "fence.001",
+            "transform": {
+                "translation": [
+                    -48.0,
+                    0.0,
+                    -0.4000000059604645
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -90.00000762939453
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "wallFence",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "wall",
+            "transform": {
+                "translation": [
+                    0.0,
+                    51.0,
+                    -0.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    90.00000762939453
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "wall",
+            "isvisible": 1
+        },
+        {
+            "type": "MESH",
+            "name": "wall.001",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -51.0,
+                    -0.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    90.00000762939453
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "model_name": "wall",
+            "isvisible": 1
+        }
+    ]
+}
