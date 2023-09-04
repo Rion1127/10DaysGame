@@ -1,5 +1,7 @@
 #include "Mino.h"
 
+std::array<Mino, 7> MinoList::minoList_;
+
 MinoList::MinoList()
 {
 	for (uint32_t i = 0; i < minoList_.size(); i++) {

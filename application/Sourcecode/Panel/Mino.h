@@ -21,7 +21,7 @@ class MinoList
 private:
 	
 private:
-	std::array<Mino, 7> minoList_;
+	static std::array<Mino, 7> minoList_;
 
 public:
 	MinoList();
@@ -34,5 +34,5 @@ private:
 	Mino LminoInit();
 	Mino JminoInit();
 public:
-	Mino GetMinoList(Type type) { return minoList_.at((size_t)type); }
+	static Mino GetMinoList(Type type) { return minoList_.at((size_t)type); }
 };
