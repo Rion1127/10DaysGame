@@ -57,6 +57,8 @@ void LoadManager::LoadTexture()
 	LoadGraph("continueTex.png", "Continue");
 	LoadGraph("TitleTex.png", "TitleTex");
 
+	//ƒvƒŒƒCƒ„[
+	LoadGraph("Player.png", "Player");
 }
 
 void LoadManager::LoadSound()
