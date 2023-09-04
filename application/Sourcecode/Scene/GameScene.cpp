@@ -18,9 +18,9 @@ void GameScene::Ini()
 {
 	sound_ = SoundManager::GetInstance();
 
-	/*sprite_ = std::make_unique<Sprite>();
+	sprite_ = std::make_unique<Sprite>();
 	sprite_->Ini();
-	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White"));*/
+	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White"));
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
@@ -32,14 +32,14 @@ void GameScene::Update()
 
 #endif //_DEBUG
 
-	//sprite_->Update();
+	sprite_->Update();
 	player_->Update();
 }
 
 void GameScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
-	//sprite_->Draw();
+	sprite_->Draw();
 	player_->Draw();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 
