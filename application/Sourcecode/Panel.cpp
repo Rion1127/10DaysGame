@@ -3,6 +3,7 @@
 #include <string>
 #include "Mino.h"
 
+#pragma region Panel
 Panel::Panel()
 {
 	//配列の数を指定
@@ -55,7 +56,7 @@ void Panel::Update()
 			{
 				panel_[selectPos_.x][selectPos_.y] = State::SELECT;
 			}
-			else if(panel_[x][y] != State::SELECT)
+			else if(panel_[x][y] != State::EMPTY)
 			{
 				panel_[x][y] = savePanel_[x][y];
 			}
@@ -80,8 +81,8 @@ void Panel::DrawImGui()
 	}
 	
 
-	ImGui::InputInt("x", &selectPos_.x);
-	ImGui::InputInt("y", &selectPos_.y);
+	ImGui::InputInt("x", (int*)&selectPos_.x);
+	ImGui::InputInt("y", (int*)&selectPos_.y);
 
 	std::string typeName;
 	static int panelType = 0;
@@ -237,10 +238,58 @@ void Panel::SetPanel(Mino mino)
 			{
 				savePanel_[x][y] = State::NEXT_RELEASE;
 			}
+			//全て更新する
+			panel_[x][y] = savePanel_[x][y];
 
 			panelX++;
 		}
 		panelY++;
 	}
 }
+#pragma endregion
 
+#pragma region PanelSprite
+PanelSprite::PanelSprite(uint32_t panelSize)
+{
+	//配列初期化
+	sprite_.resize(panelSize);
+	for (uint32_t i = 0; i < panelSize; i++)
+	{
+		sprite_[i].resize(panelSize);
+	}
+
+	for (uint32_t y = 0; y < sprite_.size(); y++)
+	{
+		for (uint32_t x = 0; x < sprite_[y].size(); x++)
+		{
+			
+			sprite_[x][y].Ini();
+		}
+	}
+}
+
+void PanelSprite::Update()
+{
+	for (uint32_t y = 0; y < sprite_.size(); y++)
+	{
+		for (uint32_t x = 0; x < sprite_[y].size(); x++)
+		{
+
+			sprite_[x][y].Update();
+		}
+	}
+}
+
+void PanelSprite::Draw()
+{
+	for (uint32_t y = 0; y < sprite_.size(); y++)
+	{
+		for (uint32_t x = 0; x < sprite_[y].size(); x++)
+		{
+
+			sprite_[x][y].Draw();
+		}
+	}
+}
+
+#pragma endregion

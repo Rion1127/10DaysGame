@@ -16,49 +16,7 @@ void LoadManager::LoadTexture()
 {
 	LoadGraph("white1280x720.png", "White1280x720");
 	LoadGraph("white1x1.png", "White");
-	LoadGraph("title.png", "Title");
-	//HPバー
-	LoadGraph("hpBarBack.png", "HpBarBack");
-	LoadGraph("gauge.png", "Gauge");
-	//パーティクル
-	LoadGraph("starParticle.png", "StarParticle");
-	LoadGraph("smoke.png", "Smoke");
-	LoadGraph("heart.png", "Heart");
-	LoadGraph("circle.png", "Circle");
-	LoadGraph("particle.png", "Particle");
-	LoadGraph("fireCircle.png", "FireCircle");
-	LoadGraph("explosion_01.png", "Explosion_01");
-	LoadGraph("explosion_02.png", "Explosion_02");
-	LoadGraph("swordTrail.png", "SwordTrail");
-	//UI
-	LoadGraph("LockOn1.png", "LockOn1");
-	LoadGraph("LockOn2.png", "LockOn2");
-	LoadGraph("UItex.png", "UItex");
-	LoadGraph("ready.png", "Ready");
-	LoadGraph("go.png", "Go");
-	LoadGraph("clear.png", "Clear");
-	LoadGraph("retry.png", "Retry");
-	LoadGraph("readyShape.png", "ReadyShape");
-	LoadGraph("goShape.png", "GoShape");
-	LoadGraph("pause.png", "Pause");
-
 	
-	LoadGraph("commandTitle.png", "CommandTitle");
-	LoadGraph("commandFrame.png", "CommandFrame");
-	LoadGraph("commandSelect.png", "CommandSelect");
-	LoadGraph("commandTex.png", "CommandTex");
-	LoadGraph("CommandmagicTex.png", "CommandMagicTex");
-	LoadGraph("CommandmagicTitle.png", "CommandMagicTitle");
-
-	//ボタンUI
-	LoadGraph("pressA.png", "PressA");
-	LoadGraph("OperationUI.png", "OperationUI");
-	//ゲームオーバーUI
-	LoadGraph("continueTex.png", "Continue");
-	LoadGraph("TitleTex.png", "TitleTex");
-
-	//プレイヤー
-	LoadGraph("Player.png", "Player");
 }
 
 void LoadManager::LoadSound()
