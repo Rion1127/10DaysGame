@@ -3,11 +3,16 @@
 
 Panel::Panel()
 {
+	//”z—ñ‚Ì”‚ğw’è
 	maxPanelSize_ = 10;
+	initalSize_ = 2;
+	//”z—ñ‰Šú‰»
 	panel_.resize(maxPanelSize_);
+	savePanel_.resize(maxPanelSize_);
 	for (uint32_t i = 0; i < maxPanelSize_; i++)
 	{
 		panel_[i].resize(maxPanelSize_);
+		savePanel_[i].resize(maxPanelSize_);
 	}
 
 	for (uint32_t y = 0; y < panel_.size(); y++)
@@ -15,6 +20,24 @@ Panel::Panel()
 		for (uint32_t x = 0; x < panel_[y].size(); x++)
 		{
 			panel_[x][y] = 0;
+		}
+	}
+
+	uint32_t sizeMinY = ((uint32_t)(panel_.size() - 1) / 2);
+	uint32_t sizeMaxY = ((uint32_t)(panel_.size() - 1) / 2) + (initalSize_ - 1);
+
+	uint32_t sizeMinX = ((uint32_t)(panel_[0].size() - 1) / 2);
+	uint32_t sizeMaxX = ((uint32_t)(panel_[0].size() - 1) / 2) + (initalSize_ - 1);
+
+	for (uint32_t y = 0; y < panel_.size(); y++)
+	{
+		for (uint32_t x = 0; x < panel_[y].size(); x++)
+		{
+			if (y >= sizeMinY && y <= sizeMaxY&&
+				x >= sizeMinX && x <= sizeMaxX) {
+				panel_[x][y] = State::EMPTY;
+			}
+			savePanel_[x][y] = panel_[x][y];
 		}
 	}
 }
@@ -30,9 +53,9 @@ void Panel::Update()
 			{
 				panel_[debugSelectX][debugSelectY] = State::SELECT;
 			}
-			else
+			else if(panel_[x][y] != State::EMPTY)
 			{
-				panel_[x][y] = 0;
+				panel_[x][y] = savePanel_[x][y];
 			}
 		}
 	}
@@ -61,34 +84,3 @@ void Panel::DrawImGui()
 	ImGui::End();
 }
 
-Mino::Mino()
-{
-}
-
-void Mino::OminoInit()
-{
-}
-
-void Mino::TminoInit()
-{
-}
-
-void Mino::SminoInit()
-{
-}
-
-void Mino::ZminoInit()
-{
-}
-
-void Mino::IminoInit()
-{
-}
-
-void Mino::LminoInit()
-{
-}
-
-void Mino::JminoInit()
-{
-}

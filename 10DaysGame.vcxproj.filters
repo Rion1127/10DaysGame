@@ -169,6 +169,12 @@
     <Filter Include="application\ヘッダーファイル\UI">
       <UniqueIdentifier>{4bbecf48-c7d6-42f0-9f2a-8ffb8bed7b30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\Panel">
+      <UniqueIdentifier>{e329adb3-d013-4f08-9c30-431232e04f9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Panel">
+      <UniqueIdentifier>{efb34bd8-a9c8-49d5-a3c8-e111ae96bbe9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -342,11 +348,14 @@
     <ClCompile Include="engine\util\StateMachine.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Panel.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>application\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Panel.cpp">
+      <Filter>application\ソースファイル\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Panel\Mino.cpp">
+      <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -524,11 +533,14 @@
     <ClInclude Include="engine\util\StateMachine.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Panel.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>application\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Panel.h">
+      <Filter>application\ヘッダーファイル\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Panel\Mino.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

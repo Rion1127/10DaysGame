@@ -6,6 +6,7 @@
 #include "Texture.h"
 #include "IScene.h"
 #include "Panel.h"
+#include "Mino.h"
 
 class DebugScene final:
     public IScene
@@ -17,6 +18,7 @@ private:
 	std::unique_ptr<Sprite> sprite_;
 
 	std::unique_ptr<Panel> panel_;
+	MinoList minoList_;
 public:
 	~DebugScene();
 
