@@ -127,6 +127,7 @@ void Sword::UpdateAttackAnimation(YGame::YTransform::Status& animeStatus)
 	animeStatus.rota_.z +=
 		rotaEas_.In(rotaTim_.Ratio());
 
+	// 上方向ベクトル
 	Vector3 upDir = -Vector3(std::sinf(animeStatus.rota_.z), std::cosf(animeStatus.rota_.z), 0.0f);
 
 	if (breakTim_.IsAct())
@@ -175,8 +176,10 @@ void Sword::UpdateAttackAnimation(YGame::YTransform::Status& animeStatus)
 		{
 			for (size_t j = 0; j < panels_[i].size(); j++)
 			{
+				// 横ベクトル
 				Vector3 sideDir = Vector3(0.0f, 0.0f, 1.0f).cross(upDir);
 
+				// ランダムに動き
 				float posX = RRandom::RandF(-2.5f, +2.5f);
 				float posY = RRandom::RandF(+15.0f, +20.0f);
 				panels_[i][j].moveSpeed_ = (sideDir * posX) + (upDir * posY);
