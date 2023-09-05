@@ -3,6 +3,7 @@
 #include "Mino.h"
 #include "Player.h"
 #include "IEnemy.h"
+#include "EnemyManager.h"
 class MainGameSyste
 {
 private:
@@ -24,6 +25,8 @@ private:
 
 	Player* player_;
 	IEnemy* enemy_;
+
+	EnemyManager enemyManager_;
 public:
 	MainGameSyste();
 	void Update();

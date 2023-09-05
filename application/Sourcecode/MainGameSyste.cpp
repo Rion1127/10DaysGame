@@ -10,39 +10,59 @@ MainGameSyste::MainGameSyste()
 	reloadMinoNum_ = 2;
 
 	ReloadMino();
+
+	enemy_ = enemyManager_.GetNowEnemy();
 }
 
 void MainGameSyste::Update()
 {
-	panel_->Update();
+	enemyManager_.Update();
+	if (enemyManager_.GetIsAllEnemyDestroy() == false) {
+		panel_->Update();
 
-	//敵の攻撃
-	if (nowTurn_ == Turn::PLAYER) {
-		TurnPlayer();
+		//敵の攻撃
+		if (nowTurn_ == Turn::PLAYER) {
+			TurnPlayer();
+		}
+		//敵の攻撃
+		else if (nowTurn_ == Turn::ENEMY) {
+			TurnEnemy();
+		}
+		//ターンを交代する
+		else if (nowTurn_ == Turn::CHANGE) {
+			//ターンをチェンジする
+			TurnChange();
+		}
+
+		//前のターンがどっちのターンか記録しておく
+		if (nowTurn_ != Turn::CHANGE) {
+			prevTurn_ = nowTurn_;
+		}
 	}
-	//敵の攻撃
-	else if (nowTurn_ == Turn::ENEMY) {
-		TurnEnemy();
-	}
-	//ターンを交代する
-	else if (nowTurn_ == Turn::CHANGE) {
-		//ターンをチェンジする
-		TurnChange();
+	//クリアしたら
+	else {
+
 	}
 
-	//前のターンがどっちのターンか記録しておく
-	if (nowTurn_ != Turn::CHANGE) {
-		prevTurn_ = nowTurn_;
+	
+
+	if (enemyManager_.GetIsChangeNowEnemy()) {
+		enemy_ = enemyManager_.GetNowEnemy();
+		enemyManager_.SetIsChangeNowEnemy(false);
 	}
 }
 
 void MainGameSyste::DrawSprite()
 {
 	panel_->DrawSprite();
+	enemyManager_.Draw();
 }
 
 void MainGameSyste::DrawImGui()
 {
+	if (enemy_ != nullptr) {
+		enemy_->DrawImGui();
+	}
 	panel_->DrawImGui();
 	ImGui::Begin("MainGameSyste");
 	ImGui::Text("%d", reloadMinoNum_);
@@ -54,6 +74,13 @@ void MainGameSyste::DrawImGui()
 	if (nowTurn_ == Turn::ENEMY)string += "ENEMY";
 
 	ImGui::Text(string.c_str());
+
+	std::string gameStatestring = "GameState : ";
+
+	if (enemyManager_.GetIsAllEnemyDestroy())gameStatestring += "Clear";
+	else gameStatestring += "fighting";
+
+	ImGui::Text(gameStatestring.c_str());
 
 	ImGui::End();
 }
@@ -121,7 +148,7 @@ void MainGameSyste::TurnPlayer()
 void MainGameSyste::TurnEnemy()
 {
 	//プレイヤーがダメージを受ける
-	if (enemy_->GetIsAlive()) {
+	if (enemyManager_.GetIsChangeNowEnemy() == false) {
 		player_->Damage(enemy_->GetAttackPower());
 	}
 

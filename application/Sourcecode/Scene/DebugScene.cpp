@@ -21,11 +21,9 @@ void DebugScene::Ini()
 	mainSystem_ = std::make_unique<MainGameSyste>();
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
-	enemy_ = std::make_unique<Enemy>(100,5);
-	enemy_->Initialize();
-
+	
 	mainSystem_->SetPlayer(player_.get());
-	mainSystem_->SetEnemy(enemy_.get());
+	//mainSystem_->SetEnemy(enemy_.get());
 }
 
 void DebugScene::Update()
@@ -36,14 +34,12 @@ void DebugScene::Update()
 
 	mainSystem_->Update();
 	player_->Update();
-	enemy_->Update();
 }
 
 void DebugScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	player_->Draw();
-	enemy_->Draw();
 	mainSystem_->DrawSprite();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 
@@ -58,6 +54,5 @@ void DebugScene::Draw()
 #ifdef _DEBUG
 	mainSystem_->DrawImGui();
 	player_->DrawImGui();
-	enemy_->DrawImGui();
 #endif // _DEBUG
 }

@@ -11,6 +11,7 @@ protected:
 	bool isAlive_;
 	int32_t attackPower_;
 public:
+	IEnemy();
 	IEnemy(int32_t health, int32_t attackPower);
 	virtual void Update() = 0;
 	virtual void Draw() = 0;

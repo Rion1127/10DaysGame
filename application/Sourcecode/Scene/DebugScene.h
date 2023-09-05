@@ -20,7 +20,6 @@ private:
 
 	std::unique_ptr<MainGameSyste> mainSystem_;
 	std::unique_ptr<Player> player_ = nullptr;
-	std::unique_ptr<Enemy> enemy_ = nullptr;
 	MinoList minoList_;
 public:
 	~DebugScene();
