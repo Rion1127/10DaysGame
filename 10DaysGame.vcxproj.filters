@@ -363,6 +363,9 @@
     <ClCompile Include="application\Sourcecode\Panel\Mino.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>application\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -547,6 +550,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Panel\Mino.h">
       <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

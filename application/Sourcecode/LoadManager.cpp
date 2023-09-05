@@ -19,8 +19,9 @@ void LoadManager::LoadTexture()
 	//パネル関連
 	LoadGraph("panel.png", "Panel");
 	//プレイヤー
-	LoadGraph("Player.png", "Player");
-	
+	LoadGraph("player.png", "Player");
+	//敵
+	LoadGraph("enemy.png", "Enemy");
 }
 
 void LoadManager::LoadSound()

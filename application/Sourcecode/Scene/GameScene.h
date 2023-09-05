@@ -6,6 +6,7 @@
 #include "Texture.h"
 #include "IScene.h"
 #include "Player.h"
+#include "Enemy.h"
 
 class GameScene final :
 	public IScene
@@ -16,6 +17,7 @@ private:
 
 	std::unique_ptr<Sprite> sprite_;
 	std::unique_ptr<Player> player_ = nullptr;
+	std::unique_ptr<Enemy> enemy_ = nullptr;
 public:
 	~GameScene();
 
