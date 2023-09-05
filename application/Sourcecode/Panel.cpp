@@ -52,6 +52,9 @@ Panel::Panel()
 
 void Panel::Update()
 {
+	Vector3 mPos = MouseInput::GetInstance()->mPos_;
+
+
 	//エラーが起きないように選択している場所をクランプする
 	SelectPosClamp(MinoList::GetMinoList((MinoType)minoType_));
 
@@ -177,6 +180,13 @@ void Panel::DrawImGui()
 	}
 
 	ImGui::End();
+
+
+	ImGui::Begin("Mouse");
+	Vector3 mPos = MouseInput::GetInstance()->mPos_;
+	float pos[2] = { mPos.x,mPos.y };
+	ImGui::DragFloat2("mousePos",pos);
+	ImGui::End();
 }
 
 void Panel::PanelUpdate()
@@ -279,24 +289,24 @@ void Panel::DisplayPanelUpdate(const Mino& mino)
 
 void Panel::SelectPosClamp(const Mino& mino)
 {
-	uint32_t sizeY = selectPos_.y + (uint32_t)mino.panel_.size();
-	uint32_t sizeX = selectPos_.x + (uint32_t)mino.panel_[0].size();
+	//右端、下端の座標
+	uint32_t sizeY = selectPos_.y + (uint32_t)mino.panel_.size() - 1;
+	uint32_t sizeX = selectPos_.x + (uint32_t)mino.panel_[0].size() - 1;
 
 	uint32_t panelsizeY = (uint32_t)systemPanel_.size() - 1;
 	uint32_t panelsizeX = (uint32_t)systemPanel_[0].size() - 1;
-	//パネルの配列の数と
+	//比較した値分移動させる
 	if (panelsizeY < sizeY) {
-		int32_t max = panelsizeY - (sizeY - panelsizeY);
-		selectPos_.y = Min(selectPos_.y, max);
+		int32_t sub = sizeY - panelsizeY;
+		selectPos_.y -= sub;
 	}
 	if (selectPos_.y < 0) {
 		selectPos_.y = Max(selectPos_.y, 0);
 	}
 
 	if (panelsizeX < sizeX) {
-		int32_t max = panelsizeX - (sizeX - panelsizeX);
-
-		selectPos_.x = Min(selectPos_.x, max);
+		int32_t sub = sizeX - panelsizeX;
+		selectPos_.x -= sub;
 	}
 	if (selectPos_.x < 0) {
 		selectPos_.x = Max(selectPos_.x, 0);

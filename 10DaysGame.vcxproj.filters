@@ -366,6 +366,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>application\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\particleManager\ParticleManager.cpp">
+      <Filter>application\ソースファイル\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -553,6 +556,9 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>application\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\particleManager\ParticleManager.h">
+      <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
