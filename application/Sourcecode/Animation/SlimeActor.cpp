@@ -2,11 +2,10 @@
 #include <cassert>
 
 using YGame::SlimeActor;
-using YMath::Vector3;
 
 void SlimeActor::Initialize(
 	const uint32_t frame, 
-	const std::vector<YMath::Vector3>& wobbleScaleValues, 
+	const std::vector<Vector3>& wobbleScaleValues, 
 	const float exponent)
 {
 	assert(wobbleScaleValues.empty() == false);

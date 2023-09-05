@@ -11,6 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="application\Sourcecode\Animation\BezierEase.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\Ease.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\HitActor.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\Lerp.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\YPower.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\Shake.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\SlimeActor.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\SplineEase.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\YTimer.cpp" />
     <ClCompile Include="application\Sourcecode\CollisionManager.cpp" />
     <ClCompile Include="application\Sourcecode\LoadManager.cpp" />
     <ClCompile Include="application\Sourcecode\Panel.cpp" />
@@ -75,6 +84,15 @@
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="application\Sourcecode\Animation\BezierEase.h" />
+    <ClInclude Include="application\Sourcecode\Animation\Ease.h" />
+    <ClInclude Include="application\Sourcecode\Animation\HitActor.h" />
+    <ClInclude Include="application\Sourcecode\Animation\Lerp.h" />
+    <ClInclude Include="application\Sourcecode\Animation\YPower.h" />
+    <ClInclude Include="application\Sourcecode\Animation\Shake.h" />
+    <ClInclude Include="application\Sourcecode\Animation\SlimeActor.h" />
+    <ClInclude Include="application\Sourcecode\Animation\SplineEase.h" />
+    <ClInclude Include="application\Sourcecode\Animation\YTimer.h" />
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
     <ClInclude Include="application\Sourcecode\LoadManager.h" />
     <ClInclude Include="application\Sourcecode\Panel.h" />

@@ -1,12 +1,9 @@
 #include "Ease.h"
 #include "Lerp.h"
 #include "Vector2.h"
-#include "Vector4.h"
+#include "Vector3.h"
 
 using YMath::Ease;
-using YMath::Vector2;
-using YMath::Vector3;
-using YMath::Vector4;
 
 template<typename T>
 void Ease<T>::Initialize(const T& start, const T& end, const float exponent)
@@ -33,4 +30,3 @@ template class Ease<float>;
 template class Ease<double>;
 template class Ease<Vector2>;
 template class Ease<Vector3>;
-template class Ease<Vector4>;

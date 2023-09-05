@@ -1,5 +1,4 @@
 #pragma once
-#include "Vector3.h"
 #include <vector>
 
 namespace YMath
@@ -17,15 +16,6 @@ namespace YMath
 	/// <returns>その割合の時の値</returns>
 	template<typename T>
 	T Lerp(const T& a, const T& b, const float t);
-
-	/// <summary>
-	/// 3次元補間
-	/// </summary>
-	/// <param name="v1"> : 初期値</param>
-	/// <param name="v2"> : 最終値</param>
-	/// <param name="t"> : 割合 (基本 0.0 ~ 1.0)</param>
-	/// <returns>その割合の時の値</returns>
-	Vector3 Slerp(const Vector3& v1, const Vector3& v2, float t);
 
 	/// <summary>
 	/// ベジエ曲線

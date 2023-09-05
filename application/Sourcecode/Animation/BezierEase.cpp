@@ -1,13 +1,10 @@
 #include "BezierEase.h"
 #include "Lerp.h"
 #include "Vector2.h"
-#include "Vector4.h"
+#include "Vector3.h"
 #include <cassert>
 
 using YMath::BezierEase;
-using YMath::Vector2;
-using YMath::Vector3;
-using YMath::Vector4;
 
 template<typename T>
 void BezierEase<T>::Initialize(const std::vector<T>& points, const float exponent)
@@ -36,4 +33,3 @@ template class BezierEase<float>;
 template class BezierEase<double>;
 template class BezierEase<Vector2>;
 template class BezierEase<Vector3>;
-template class BezierEase<Vector4>;

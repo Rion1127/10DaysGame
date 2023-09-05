@@ -1,7 +1,7 @@
 #pragma once
 #include "SplineEase.h"
-#include "Timer.h"
-#include "Power.h"
+#include "YTimer.h"
+#include "YPower.h"
 #include "Vector3.h"
 #include <vector>
 
@@ -29,7 +29,7 @@ namespace YGame
 		/// <param name="exponent"> : 指数</param>
 		void Initialize(
 			const uint32_t frame, 
-			const std::vector<YMath::Vector3>& wobbleScaleValues, 
+			const std::vector<Vector3>& wobbleScaleValues, 
 			const float exponent);
 
 		/// <summary>
@@ -55,7 +55,7 @@ namespace YGame
 		/// 現在の拡縮値取得
 		/// </summary>
 		/// <returns>現在の拡縮値</returns>
-		YMath::Vector3 WobbleScaleValue(const EaseType easeType) const;
+		Vector3 WobbleScaleValue(const EaseType easeType) const;
 	
 	public:
 		
@@ -67,13 +67,13 @@ namespace YGame
 		bool isAct_ = false;
 		
 		// イージング
-		YMath::SplineEase<YMath::Vector3> ease_;
+		YMath::SplineEase<Vector3> ease_;
 		
 		// タイマー
-		YMath::Timer timer_;
+		YMath::YTimer timer_;
 		
 		// パワー
-		YMath::Power power_;
+		YMath::YPower power_;
 	};
 }
 
