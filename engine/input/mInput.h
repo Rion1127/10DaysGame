@@ -2,6 +2,7 @@
 #define DIRECTINPUT_VERSION		0x0800	//DirectInputのバージョン指定
 #include <dinput.h>
 #include "Vector3.h"
+#include "Vector2.h"
 #include <WinUser.h>
 #include "WinAPI.h"
 //コントローラ
@@ -41,11 +42,11 @@ private:
 public:
 	POINT p_;
 	//現フレームのマウスの位置
-	Vector3 mPos_;
+	Vector2 mPos_;
 	//前フレームのマウスの位置
-	Vector3 prevmPos_;
+	Vector2 prevmPos_;
 	//マウスが動いた方向のベクトル
-	Vector3 mouseVec_;
+	Vector2 mouseVec_;
 public:
 	static MouseInput* GetInstance();
 
@@ -68,11 +69,10 @@ public:
 	int32_t IsMouseWheel();
 	
 	//マウスが1フレームに移動したベクトルを取得する
-	Vector3 GetCursorMove();
+	Vector2 GetCursorMove();
 
 	float GetCursorMoveX();
 	float GetCursorMoveY();
-	float GetCursorMoveZ();
 private:
 	MouseInput() {};
 	//マウスの座標を取得する

@@ -355,4 +355,19 @@ bool CheckRay2Sphere(const Ray& ray, const Sphere& sphere, float* distance, Vect
 	return true;
 }
 
+bool CheckBox2DtoPoint(Box2D box, Vector2 point)
+{
+	if (box.leftUp.x < point.x &&
+		box.RightDown.x > point.x)
+	{
+		if (box.leftUp.y < point.y &&
+			box.RightDown.y > point.y)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 

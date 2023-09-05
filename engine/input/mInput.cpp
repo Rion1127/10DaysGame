@@ -185,7 +185,7 @@ int32_t MouseInput::IsMouseWheel()
 	return mouseState_.lZ;
 }
 
-Vector3 MouseInput::GetCursorMove()
+Vector2 MouseInput::GetCursorMove()
 {
 	return mouseVec_;
 }
@@ -198,11 +198,6 @@ float MouseInput::GetCursorMoveX()
 float MouseInput::GetCursorMoveY()
 {
 	return mouseVec_.y;
-}
-
-float MouseInput::GetCursorMoveZ()
-{
-	return mouseVec_.z;
 }
 #pragma endregion
 

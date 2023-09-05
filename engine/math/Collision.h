@@ -41,6 +41,11 @@ struct Ray {
 	Vector3 dir = { 1,0,0};
 };
 
+struct Box2D {
+	Vector2 leftUp;
+	Vector2 RightDown;
+};
+
 bool RayCollision(WorldTransform ray, WorldTransform obj);
 
 bool BallCollision(const WorldTransform& a, const WorldTransform& b);
@@ -67,3 +72,5 @@ bool CheckRay2Traiangle(const Ray& ray, const Triangle& triangle,
 //ƒŒƒC‚Æ‹‰‚Ì“–‚½‚è”»’è
 bool CheckRay2Sphere(const Ray& ray, const Sphere& sphere,
 	float* distance = nullptr, Vector3* inter = nullptr);
+
+bool CheckBox2DtoPoint(Box2D box,Vector2 point);

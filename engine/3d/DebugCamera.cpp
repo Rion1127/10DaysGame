@@ -97,7 +97,7 @@ void DebugCamera::CameraMove()
 			moveDistVec = {
 				-mInput_->GetCursorMoveX() * 0.005f,
 				mInput_->GetCursorMoveY() * 0.005f,
-				-mInput_->GetCursorMoveZ() * 0.005f
+				/*-mInput_->GetCursorMoveZ() * 0.005f*/0
 			};
 
 		}

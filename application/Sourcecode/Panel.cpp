@@ -2,6 +2,7 @@
 #include <imgui.h>
 #include <string>
 #include "Mino.h"
+#include "Collision.h"
 
 #pragma region Panel
 Panel::Panel()
@@ -52,20 +53,28 @@ Panel::Panel()
 
 void Panel::Update()
 {
-	Vector3 mPos = MouseInput::GetInstance()->mPos_;
-
-
-	//エラーが起きないように選択している場所をクランプする
-	SelectPosClamp(MinoList::GetMinoList((MinoType)minoType_));
+	Vector2 mPos = MouseInput::GetInstance()->mPos_;
 
 	for (int32_t y = 0; y < displayPanel_.size(); y++)
 	{
 		for (int32_t x = 0; x < displayPanel_[y].size(); x++)
 		{
+			Vector2 leftUp = {
+				spritePos_.x + (x * spriteSize_),
+				spritePos_.y + (y * spriteSize_),
+			};
+			Vector2 rightDown = {
+				spritePos_.x + ((x + 1) * spriteSize_),
+				spritePos_.y + ((y + 1) * spriteSize_),
+			};
+
+			Box2D box = {
+				leftUp,
+				rightDown
+			};
 			//選択している箇所の数値を変える
-			if (selectPos_.x == x && selectPos_.y == y)
-			{
-				displayPanel_[selectPos_.x][selectPos_.y] = State::SELECT;
+			if (CheckBox2DtoPoint(box, mPos)) {
+				selectPos_ = { x,y };
 			}
 			else if(displayPanel_[x][y] != State::EMPTY)
 			{
@@ -73,6 +82,9 @@ void Panel::Update()
 			}
 		}
 	}
+	//エラーが起きないように選択している場所をクランプする
+	SelectPosClamp(MinoList::GetMinoList((MinoType)minoType_));
+
 	DisplayPanelUpdate(MinoList::GetMinoList((MinoType)minoType_));
 	
 	sprite_->Update(displayPanel_);
@@ -183,7 +195,7 @@ void Panel::DrawImGui()
 
 
 	ImGui::Begin("Mouse");
-	Vector3 mPos = MouseInput::GetInstance()->mPos_;
+	Vector2 mPos = MouseInput::GetInstance()->mPos_;
 	float pos[2] = { mPos.x,mPos.y };
 	ImGui::DragFloat2("mousePos",pos);
 	ImGui::End();
