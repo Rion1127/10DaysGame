@@ -84,7 +84,11 @@ void Panel::Update()
 	}
 	//エラーが起きないように選択している場所をクランプする
 	SelectPosClamp(MinoList::GetMinoList((MinoType)minoType_));
-
+	//左クリックをしたらパネルを設置する
+	if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		SetPanel(MinoList::GetMinoList((MinoType)minoType_));
+	}
+	//見た目のパネルの配列を更新
 	DisplayPanelUpdate(MinoList::GetMinoList((MinoType)minoType_));
 	
 	sprite_->Update(displayPanel_);
