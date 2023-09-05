@@ -11,7 +11,8 @@ enum State {
 	EMPTY,
 	ATTACK,
 	NEXT_RELEASE,
-	SELECT
+	SELECT,
+	TEMPPOS
 };
 
 class PanelSprite {
@@ -33,15 +34,21 @@ private:
 		int32_t y;
 	};
 private:
-	std::vector<std::vector<int32_t>> panel_;
-	std::vector<std::vector<int32_t>> savePanel_;
+	//描画用のパネル
+	std::vector<std::vector<int32_t>> displayPanel_;
+	//システム上のパネル
+	std::vector<std::vector<int32_t>> systemPanel_;
 	int32_t maxPanelSize_;
 	int32_t initalSize_;
-
+	//現在選択しているパネル上の座標
 	SelectPos selectPos_;
 
 	Vector2 spritePos_;
+	float spriteSize_;
+	float spriteScale_;
 	std::unique_ptr<PanelSprite> sprite_;
+
+	MinoType minoType_;
 public:
 	Panel();
 	void Update();
@@ -53,9 +60,11 @@ public:
 	void PanelUpdate();
 private:
 	//パネルをセットできるか確認する
-	bool IsCanChange(Mino mino);
+	bool IsCanChange(const Mino& mino);
+	void DisplayPanelUpdate(const Mino& mino);
+	void SelectPosClamp(const Mino& mino);
 public:
 	//パネルをセットする
-	void SetPanel(Mino mino);
+	void SetPanel(const Mino& mino);
 	void SetSelectPos(Vector2 pos) { selectPos_.x = (int32_t)pos.x; selectPos_.y = (int32_t)pos.y;}
 };
