@@ -375,69 +375,110 @@ void Panel::SetPanel(const Mino& mino)
 PanelSprite::PanelSprite(uint32_t panelSize, Vector2 basePos, float panelScale)
 {
 	//配列初期化
-	sprite_.resize(panelSize);
+	panels_.resize(panelSize);
 	for (uint32_t i = 0; i < panelSize; i++)
 	{
-		sprite_[i].resize(panelSize);
+		panels_[i].resize(panelSize);
 	}
 
-	for (uint32_t y = 0; y < sprite_.size(); y++)
+	for (uint32_t y = 0; y < panels_.size(); y++)
 	{
-		for (uint32_t x = 0; x < sprite_[y].size(); x++)
+		for (uint32_t x = 0; x < panels_[y].size(); x++)
 		{
-			sprite_[x][y].Ini();
-			sprite_[x][y].SetTexture(TextureManager::GetInstance()->GetTexture("Panel"));
+			panels_[x][y].sprite_.Ini();
+			panels_[x][y].sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Panel"));
 
 			Vector2 pos = {
 				basePos.x + (32.f * panelScale) * x,
 				basePos.y + (32.f * panelScale) * y,
 			};
 
-			sprite_[x][y].SetPos(pos);
-			sprite_[x][y].SetScale(Vector2(panelScale, panelScale));
+			panels_[x][y].sprite_.SetPos(pos);
+			panels_[x][y].sprite_.SetScale(Vector2(panelScale, panelScale));
+			
+			// トランスフォーム
+			panels_[x][y].trfm_.Initialize();
+			panels_[x][y].trfm_.pos_ = Vector3(pos.x, pos.y, 0.0f);
+			
+			// アニメーション用
+			panels_[x][y].slimeActor_.Initialize(10, { Vector3(), Vector3(0.4f, 0.4f, 0.4f) }, 3.0f);
+			panels_[x][y].rotaTim_.Initialize(40);
 		}
 	}
+
+	rotaEas_.Initialize(0.0f, 3.141592f * 2.0f, 2.0f);
 }
 
 void PanelSprite::Update(const std::vector<std::vector<int32_t>>& panel)
 {
-	for (uint32_t y = 0; y < sprite_.size(); y++)
+	for (uint32_t y = 0; y < panels_.size(); y++)
 	{
-		for (uint32_t x = 0; x < sprite_[y].size(); x++)
+		for (uint32_t x = 0; x < panels_[y].size(); x++)
 		{
 			//パネルの色変更
 			if (panel[x][y] == State::NOT_OPEN) {
-				sprite_[x][y].SetColor(Color(100,100,100,255));
+				panels_[x][y].sprite_.SetColor(Color(100, 100, 100, 255));
+				panels_[x][y].isSet_ = false;
+				panels_[x][y].isOpen_ = false;
 			}
 			else if (panel[x][y] == State::EMPTY) {
-				sprite_[x][y].SetColor(Color(255, 255, 255, 255));
+				panels_[x][y].sprite_.SetColor(Color(255, 255, 255, 255));
+				panels_[x][y].isSet_ = false;
+				panels_[x][y].isOpen_ = false;
 			}
 			else if (panel[x][y] == State::ATTACK) {
-				sprite_[x][y].SetColor(Color(255, 150, 150, 255));
+				panels_[x][y].sprite_.SetColor(Color(255, 150, 150, 255));
+				SetAnimation(x, y);
 			}
 			else if (panel[x][y] == State::SELECT) {
-				sprite_[x][y].SetColor(Color(0, 255, 0, 255));
+				panels_[x][y].sprite_.SetColor(Color(0, 255, 0, 255));
 			}
 			else if (panel[x][y] == State::NEXT_RELEASE) {
-				sprite_[x][y].SetColor(Color(0, 0, 255, 255));
+				panels_[x][y].sprite_.SetColor(Color(0, 0, 255, 255));
+				OpenAnimation(x, y);
 			}
 			else if (panel[x][y] == State::TEMPPOS) {
-				sprite_[x][y].SetColor(Color(0, 200, 200, 255));
+				panels_[x][y].sprite_.SetColor(Color(0, 200, 200, 255));
 			}
 
-			sprite_[x][y].Update();
+			// アニメーション
+			YGame::YTransform::Status animeStatus;
+
+			panels_[x][y].slimeActor_.Update();
+			animeStatus.scale_ += panels_[x][y].slimeActor_.WobbleScaleValue(YGame::SlimeActor::EaseType::eOut);
+			
+			panels_[x][y].rotaTim_.Update();
+			animeStatus.rota_.z += rotaEas_.InOut(panels_[x][y].rotaTim_.Ratio());
+
+			// 行列更新
+			panels_[x][y].trfm_.UpdateMatrix(animeStatus);
+			panels_[x][y].sprite_.Update(panels_[x][y].trfm_.m_);
 		}
 	}
 }
 
+void PanelSprite::SetAnimation(const size_t x, const size_t y)
+{
+	if (panels_[x][y].isSet_) { return; }
+	panels_[x][y].slimeActor_.Wobble();
+	panels_[x][y].isSet_ = true;
+}
+
+void PanelSprite::OpenAnimation(const size_t x, const size_t y)
+{
+	if (panels_[x][y].isOpen_) { return; }
+	panels_[x][y].slimeActor_.Wobble();
+	panels_[x][y].rotaTim_.Reset(true);
+	panels_[x][y].isOpen_ = true;
+}
+
 void PanelSprite::Draw()
 {
-	for (uint32_t y = 0; y < sprite_.size(); y++)
+	for (uint32_t y = 0; y < panels_.size(); y++)
 	{
-		for (uint32_t x = 0; x < sprite_[y].size(); x++)
+		for (uint32_t x = 0; x < panels_[y].size(); x++)
 		{
-
-			sprite_[x][y].Draw();
+			panels_[x][y].sprite_.Draw();
 		}
 	}
 }

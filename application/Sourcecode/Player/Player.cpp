@@ -12,8 +12,11 @@ void Player::Initialize()
 	health_ = 100;
 	attackpower_ = 2;
 
+	// トランスフォーム
 	trfm_.Initialize();
 	trfm_.pos_ = Vector3(sprite_->GetPos().x, sprite_->GetPos().y, 0.0f);
+	
+	// アニメーション用
 	sword_.Initialize(20, 20, &trfm_.m_);
 }
 
