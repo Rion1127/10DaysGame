@@ -24,6 +24,10 @@ void DebugScene::Ini()
 	
 
 	panel_ = std::make_unique<Panel>();
+	player_ = std::make_unique<Player>();
+	player_->Initialize();
+	enemy_ = std::make_unique<Enemy>();
+	enemy_->Initialize();
 }
 
 void DebugScene::Update()
@@ -35,6 +39,8 @@ void DebugScene::Update()
 	sprite_->Update();
 
 	panel_->Update();
+	player_->Update();
+	enemy_->Update();
 }
 
 void DebugScene::Draw()
@@ -42,6 +48,8 @@ void DebugScene::Draw()
 	panel_->DrawImGui();
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	sprite_->Draw();
+	player_->Draw();
+	enemy_->Draw();
 	panel_->DrawSprite();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 
