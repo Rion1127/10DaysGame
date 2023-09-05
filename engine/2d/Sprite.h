@@ -83,6 +83,8 @@ private:
 	std::string name_;
 public:
 	void Update();
+	
+	void Update(Matrix4& matWorld);
 
 	void DrawImGui();
 

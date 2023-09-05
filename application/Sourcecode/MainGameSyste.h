@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "IEnemy.h"
 #include "EnemyManager.h"
+#include "YCameraManager.h"
 class MainGameSyste
 {
 private:
@@ -27,6 +28,9 @@ private:
 	IEnemy* enemy_;
 
 	EnemyManager enemyManager_;
+	
+	// ƒJƒƒ‰
+	YCameraManager* cameraManager_;
 public:
 	MainGameSyste();
 	void Update();

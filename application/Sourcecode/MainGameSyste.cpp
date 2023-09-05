@@ -12,6 +12,10 @@ MainGameSyste::MainGameSyste()
 	ReloadMino();
 
 	enemy_ = enemyManager_.GetNowEnemy();
+
+	// カメラ取得 + 初期化
+	cameraManager_ = YCameraManager::GetInstance();
+	cameraManager_->Initialize();
 }
 
 void MainGameSyste::Update()
@@ -50,6 +54,9 @@ void MainGameSyste::Update()
 		enemy_ = enemyManager_.GetNowEnemy();
 		enemyManager_.SetIsChangeNowEnemy(false);
 	}
+
+	// カメラ更新
+	cameraManager_->Update();
 }
 
 void MainGameSyste::DrawSprite()
@@ -141,6 +148,8 @@ void MainGameSyste::TurnPlayer()
 			int32_t damage = panel_->GetAttackPanelNum() * player_->GetAttackPower();
 			enemy_->Damage(damage);
 			nowTurn_ = Turn::CHANGE;
+
+			player_->AttackAnimation(panel_->GetDisplayPanel());
 		}
 	}
 }

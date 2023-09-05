@@ -205,6 +205,12 @@
     <Filter Include="application\ヘッダーファイル\Player">
       <UniqueIdentifier>{488670ca-5a8b-44d9-85b4-6e2d8b9ecca4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\Animation\Math">
+      <UniqueIdentifier>{7f89fae7-7834-4a82-9b6c-be0e96bf20fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Animation\Math">
+      <UniqueIdentifier>{628cee8d-5cf2-4739-80b5-fd6d0b27696a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -381,14 +387,8 @@
     <ClCompile Include="application\Sourcecode\Panel.cpp">
       <Filter>application\ソースファイル\Panel</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Animation\YPower.cpp">
-      <Filter>application\ソースファイル\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Animation\Shake.cpp">
-      <Filter>application\ソースファイル\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Animation\YTimer.cpp">
-      <Filter>application\ソースファイル\Animation</Filter>
+    <ClCompile Include="application\Sourcecode\Panel\Mino.cpp">
+      <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\Lerp.cpp">
       <Filter>application\ソースファイル\Animation\Lerp</Filter>
@@ -428,6 +428,36 @@
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\Player.cpp">
       <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\Shake.cpp">
+      <Filter>application\ソースファイル\Animation\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\YTransform.cpp">
+      <Filter>application\ソースファイル\Animation\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\YPower.cpp">
+      <Filter>application\ソースファイル\Animation\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\YTimer.cpp">
+      <Filter>application\ソースファイル\Animation\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\AnimeManager.cpp">
+      <Filter>application\ソースファイル\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\Sword.cpp">
+      <Filter>application\ソースファイル\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\YCameraManager.cpp">
+      <Filter>application\ソースファイル\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\Shake.cpp">
+      <Filter>application\ソースファイル\Animation\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\YPower.cpp">
+      <Filter>application\ソースファイル\Animation\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\YTimer.cpp">
+      <Filter>application\ソースファイル\Animation\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -608,14 +638,8 @@
     <ClInclude Include="application\Sourcecode\Panel.h">
       <Filter>application\ヘッダーファイル\Panel</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Animation\YPower.h">
-      <Filter>application\ヘッダーファイル\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Animation\Shake.h">
-      <Filter>application\ヘッダーファイル\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Animation\YTimer.h">
-      <Filter>application\ヘッダーファイル\Animation</Filter>
+    <ClInclude Include="application\Sourcecode\Panel\Mino.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\BezierEase.h">
       <Filter>application\ヘッダーファイル\Animation\Lerp</Filter>
@@ -655,6 +679,36 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Player\Player.h">
       <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\Shake.h">
+      <Filter>application\ヘッダーファイル\Animation\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\YTransform.h">
+      <Filter>application\ヘッダーファイル\Animation\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\YPower.h">
+      <Filter>application\ヘッダーファイル\Animation\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\YTimer.h">
+      <Filter>application\ヘッダーファイル\Animation\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\AnimeManager.h">
+      <Filter>application\ヘッダーファイル\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\Sword.h">
+      <Filter>application\ヘッダーファイル\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\YCameraManager.h">
+      <Filter>application\ヘッダーファイル\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\YPower.h">
+      <Filter>application\ヘッダーファイル\Animation\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\YTimer.h">
+      <Filter>application\ヘッダーファイル\Animation\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\Shake.h">
+      <Filter>application\ヘッダーファイル\Animation\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

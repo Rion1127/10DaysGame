@@ -283,6 +283,20 @@ void Sprite::Update()
 	TransferVertex();
 }
 
+void Sprite::Update(Matrix4& matWorld)
+{
+	if (isInvisible_)
+	{
+		return;
+	}
+
+	// 定数バッファにデータ転送
+	constMapMaterial_->color = color_ / 255.f;
+	constMapTransform_->mat = matWorld * matProjection_; // 行列の合成
+
+	TransferVertex();
+}
+
 void Sprite::Draw()
 {
 	if (isImguiDisplay_) {

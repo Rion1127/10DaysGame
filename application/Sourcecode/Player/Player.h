@@ -1,5 +1,5 @@
 #pragma once
-#include "Sprite.h"
+#include "Sword.h"
 
 class Player
 {
@@ -10,6 +10,8 @@ public:
 
 	void Update();
 
+	void AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndices);
+
 	void Draw();
 	void DrawImGui();
 public:
@@ -17,8 +19,12 @@ public:
 public:
 	int32_t GetAttackPower() { return attackpower_; }
 private:
+	YGame::YTransform trfm_;
+
 	std::unique_ptr<Sprite> sprite_ = nullptr;
 	int32_t health_;
 	int32_t attackpower_;
+
+	Sword sword_;
 };
 

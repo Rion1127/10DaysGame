@@ -1,10 +1,17 @@
 #pragma once
 #include "Vector2.h"
 #include "Sprite.h"
+#include "YTransform.h"
+#include "HitActor.h"
 
 class IEnemy
 {
 protected:
+	// トランスフォーム
+	YGame::YTransform trfm_;
+	// 被弾アニメーション
+	YGame::HitActor hitActor_;
+
 	std::unique_ptr<Sprite> sprite_ = nullptr;
 
 	int32_t health_;

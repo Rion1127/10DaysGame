@@ -74,4 +74,6 @@ public:
 public:
 	bool GetisSetComplete() { return isSetComplete_; }
 	int32_t GetAttackPanelNum() { return attackPanelNum_; }
+
+	std::vector<std::vector<int32_t>> GetDisplayPanel() { return displayPanel_; }
 };
