@@ -32,8 +32,10 @@ public:
 private:
 	//ƒ~ƒm‚ğ•â[‚·‚é
 	void ReloadMino();
-	void TurnChange();
 
+	void TurnChange();
+	void TurnPlayer();
+	void TurnEnemy();
 public:
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetEnemy(IEnemy* enemy) { enemy_ = enemy; }

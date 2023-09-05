@@ -15,40 +15,25 @@ MainGameSyste::MainGameSyste()
 void MainGameSyste::Update()
 {
 	panel_->Update();
-	//パネルの設置が成功したら
-	if (panel_->GetisSetComplete()) {
-		panel_->SetisSetComplete(false);
-		//配置出来たらミノを消す
-		minos_.erase(minos_.begin());
-		
-		//残りの数が0になった場合ターンを終了する
-		if (minos_.size() <= 0) {
-			//プレイヤーターン終了演出はここへ
-
-
-			nowTurn_ = Turn::CHANGE;
-		}
-	}
 
 	//敵の攻撃
 	if (nowTurn_ == Turn::PLAYER) {
-		if (minos_.size() > 0) {
-			panel_->SetMinoType(minos_[0]);
-		}
+		TurnPlayer();
 	}
 	//敵の攻撃
 	else if (nowTurn_ == Turn::ENEMY) {
-		//プレイヤーがダメージを受ける
-		if (enemy_->GetIsAlive()) {
-			player_->Damage(enemy_->GetAttackPower());
-		}
-		//エネミーターン終了演出はここへ
-
-		//処理が終わったらシーンをチェンジする
-		nowTurn_ = Turn::CHANGE;
+		TurnEnemy();
 	}
-	//ターンをチェンジする
-	TurnChange();
+	//ターンを交代する
+	else if (nowTurn_ == Turn::CHANGE) {
+		//ターンをチェンジする
+		TurnChange();
+	}
+
+	//前のターンがどっちのターンか記録しておく
+	if (nowTurn_ != Turn::CHANGE) {
+		prevTurn_ = nowTurn_;
+	}
 }
 
 void MainGameSyste::DrawSprite()
@@ -95,32 +80,51 @@ void MainGameSyste::ReloadMino()
 
 void MainGameSyste::TurnChange()
 {
-	//ターンを交代する
-	if (nowTurn_ == Turn::CHANGE) {
-		//シーンチェンジ演出はここへ
+	//自分のターンだったら敵のターンへ
+	if (prevTurn_ == Turn::PLAYER) {
+		nowTurn_ = Turn::ENEMY;
+	}
+	//敵のターンだったら自分のターンへ
+	else if (prevTurn_ == Turn::ENEMY) {
+		nowTurn_ = Turn::PLAYER;
+		//ミノをリロードする
+		ReloadMino();
+	}
+	prevTurn_ = nowTurn_;
+}
 
+void MainGameSyste::TurnPlayer()
+{
+	if (minos_.size() > 0) {
+		panel_->SetMinoType(minos_[0]);
+	}
 
-		//自分のターンだったら敵のターンへ
-		if (prevTurn_ == Turn::PLAYER) {
-			nowTurn_ = Turn::ENEMY;
+	//パネルの設置が成功したら
+	if (panel_->GetisSetComplete()) {
+		panel_->SetisSetComplete(false);
+		//配置出来たミノを消す
+		minos_.erase(minos_.begin());
 
+		//残りの数が0になった場合ターンを終了する
+		if (minos_.size() <= 0) {
 			//パネル更新
 			panel_->PanelUpdate();
 			reloadMinoNum_ = 2;
+			//敵にダメージを与える
 			int32_t damage = panel_->GetAttackPanelNum() * player_->GetAttackPower();
 			enemy_->Damage(damage);
+			nowTurn_ = Turn::CHANGE;
 		}
-		//敵のターンだったら自分のターンへ
-		else if (prevTurn_ == Turn::ENEMY) {
-			nowTurn_ = Turn::PLAYER;
-			//ミノをリロードする
-			ReloadMino();
-		}
-		prevTurn_ = nowTurn_;
 	}
-	//前のターンがどっちのターンか記録しておく
-	else {
-		prevTurn_ = nowTurn_;
+}
+
+void MainGameSyste::TurnEnemy()
+{
+	//プレイヤーがダメージを受ける
+	if (enemy_->GetIsAlive()) {
+		player_->Damage(enemy_->GetAttackPower());
 	}
 
+	//処理が終わったらシーンをチェンジする
+	nowTurn_ = Turn::CHANGE;
 }
