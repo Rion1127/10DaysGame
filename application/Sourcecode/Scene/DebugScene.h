@@ -7,6 +7,8 @@
 #include "IScene.h"
 #include "Panel.h"
 #include "Mino.h"
+#include "Player.h"
+#include "Enemy.h"
 
 class DebugScene final:
     public IScene
@@ -18,6 +20,8 @@ private:
 	std::unique_ptr<Sprite> sprite_;
 
 	std::unique_ptr<Panel> panel_;
+	std::unique_ptr<Player> player_ = nullptr;
+	std::unique_ptr<Enemy> enemy_ = nullptr;
 	MinoList minoList_;
 public:
 	~DebugScene();
