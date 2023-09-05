@@ -7,6 +7,8 @@ void Player::Initialize()
 	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Player"));
 	sprite_->SetPos(Vector2(200, 500));
 	sprite_->SetPos(Vector2(200, 500));
+
+	health_ = 100;
 }
 
 void Player::Update()

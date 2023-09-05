@@ -1,19 +1,20 @@
 #pragma once
-#include "Sprite.h"
+#include "IEnemy.h"
 
-class Enemy
+class Enemy final:
+	public IEnemy
 {
 
 public:
+	Enemy(int32_t health);
 
 	void Initialize();
 
-	void Update();
+	void Update()override;
 
-	void Draw();
-
+	void Draw()override;
+	
 private:
 
-	std::unique_ptr<Sprite> sprite_ = nullptr;
 };
 

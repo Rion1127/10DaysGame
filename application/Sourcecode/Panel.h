@@ -68,4 +68,7 @@ public:
 	//パネルをセットする
 	void SetPanel(const Mino& mino);
 	void SetSelectPos(Vector2 pos) { selectPos_.x = (int32_t)pos.x; selectPos_.y = (int32_t)pos.y;}
+	void SetisSetComplete(bool flag) { isSetComplete_ = flag; }
+public:
+	bool GetisSetComplete() { return isSetComplete_; }
 };

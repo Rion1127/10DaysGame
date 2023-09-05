@@ -24,7 +24,7 @@ void GameScene::Ini()
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
-	enemy_ = std::make_unique<Enemy>();
+	enemy_ = std::make_unique<Enemy>(10);
 	enemy_->Initialize();
 }
 

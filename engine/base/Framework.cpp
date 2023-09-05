@@ -55,7 +55,7 @@ void Framework::Update()
 	SoundManager::Update();
 #ifdef _DEBUG
 	//デモウィンドウの表示オン
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 #endif // DEBUG
 }
 

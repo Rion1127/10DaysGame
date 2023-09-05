@@ -193,6 +193,18 @@
     <Filter Include="application\ヘッダーファイル\Animation\Actor">
       <UniqueIdentifier>{04b697a6-5648-4f25-a4b6-ce12e0fd6b03}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\Enemy">
+      <UniqueIdentifier>{bbf0849f-3dbe-489b-87ca-ea3ecc6082b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ソースファイル\Player">
+      <UniqueIdentifier>{4b9a8b27-fa59-498b-a051-19eb90b4ca18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Enemy">
+      <UniqueIdentifier>{536cb383-5278-484d-b0ee-cee82861a8e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Player">
+      <UniqueIdentifier>{488670ca-5a8b-44d9-85b4-6e2d8b9ecca4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -366,17 +378,8 @@
     <ClCompile Include="engine\util\StateMachine.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>application\ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Panel.cpp">
       <Filter>application\ソースファイル\Panel</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Panel\Mino.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>application\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\YPower.cpp">
       <Filter>application\ソースファイル\Animation</Filter>
@@ -409,6 +412,18 @@
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\MainGameSyste.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Panel\Mino.cpp">
+      <Filter>application\ソースファイル\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>application\ソースファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Enemy\IEnemy.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -587,17 +602,8 @@
     <ClInclude Include="engine\util\StateMachine.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>application\ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Panel.h">
       <Filter>application\ヘッダーファイル\Panel</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Panel\Mino.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\YPower.h">
       <Filter>application\ヘッダーファイル\Animation</Filter>
@@ -630,6 +636,18 @@
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\MainGameSyste.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Panel\Mino.h">
+      <Filter>application\ヘッダーファイル\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>application\ヘッダーファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Enemy\IEnemy.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

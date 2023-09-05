@@ -113,7 +113,7 @@ void Panel::DrawImGui()
 				displayPanel_[5][y], displayPanel_[6][y], displayPanel_[7][y], displayPanel_[8][y], displayPanel_[9][y]);
 		}
 	}
-	if (ImGui::CollapsingHeader("savePanel"))
+	if (ImGui::CollapsingHeader("systemPanel"))
 	{
 		for (uint32_t y = 0; y < systemPanel_.size(); y++)
 		{
@@ -364,6 +364,7 @@ void Panel::SetPanel(const Mino& mino)
 		}
 		panelY++;
 	}
+	isSetComplete_ = true;
 }
 #pragma endregion
 

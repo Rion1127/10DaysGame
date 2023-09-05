@@ -21,6 +21,7 @@
     <ClCompile Include="application\Sourcecode\Animation\SplineEase.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\YTimer.cpp" />
     <ClCompile Include="application\Sourcecode\CollisionManager.cpp" />
+    <ClCompile Include="application\Sourcecode\Enemy\IEnemy.cpp" />
     <ClCompile Include="application\Sourcecode\LoadManager.cpp" />
     <ClCompile Include="application\Sourcecode\MainGameSyste.cpp" />
     <ClCompile Include="application\Sourcecode\Panel.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="application\Sourcecode\Animation\SplineEase.h" />
     <ClInclude Include="application\Sourcecode\Animation\YTimer.h" />
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
+    <ClInclude Include="application\Sourcecode\Enemy\IEnemy.h" />
     <ClInclude Include="application\Sourcecode\LoadManager.h" />
     <ClInclude Include="application\Sourcecode\MainGameSyste.h" />
     <ClInclude Include="application\Sourcecode\Panel.h" />

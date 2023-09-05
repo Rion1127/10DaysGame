@@ -21,8 +21,11 @@ void DebugScene::Ini()
 	mainSystem_ = std::make_unique<MainGameSyste>();
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
-	enemy_ = std::make_unique<Enemy>();
+	enemy_ = std::make_unique<Enemy>(10);
 	enemy_->Initialize();
+
+	mainSystem_->SetPlayer(player_.get());
+	mainSystem_->SetEnemy(enemy_.get());
 }
 
 void DebugScene::Update()
@@ -52,4 +55,9 @@ void DebugScene::Draw()
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 
+#ifdef _DEBUG
+	mainSystem_->DrawImGui();
+
+
+#endif // _DEBUG
 }
