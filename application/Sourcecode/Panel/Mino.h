@@ -2,7 +2,7 @@
 #include <array> 
 #include <vector>
 
-enum class Type {
+enum class MinoType {
 	Omino,
 	Tmino,
 	Smino,
@@ -34,5 +34,5 @@ private:
 	Mino LminoInit();
 	Mino JminoInit();
 public:
-	static Mino GetMinoList(Type type) { return minoList_.at((size_t)type); }
+	static Mino GetMinoList(MinoType type) { return minoList_.at((size_t)type); }
 };

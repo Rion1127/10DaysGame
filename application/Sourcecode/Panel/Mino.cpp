@@ -6,25 +6,25 @@ MinoList::MinoList()
 {
 	for (uint32_t i = 0; i < minoList_.size(); i++) {
 		//ƒ~ƒm‰Šú‰»
-		if (i == (uint32_t)Type::Omino) {
+		if (i == (uint32_t)MinoType::Omino) {
 			minoList_[i] = OminoInit();
 		}
-		else if (i == (uint32_t)Type::Tmino) {
+		else if (i == (uint32_t)MinoType::Tmino) {
 			minoList_[i] = TminoInit();
 		}
-		else if (i == (uint32_t)Type::Smino) {
+		else if (i == (uint32_t)MinoType::Smino) {
 			minoList_[i] = SminoInit();
 		}
-		else if (i == (uint32_t)Type::Zmino) {
+		else if (i == (uint32_t)MinoType::Zmino) {
 			minoList_[i] = ZminoInit();
 		}
-		else if (i == (uint32_t)Type::Imino) {
+		else if (i == (uint32_t)MinoType::Imino) {
 			minoList_[i] = IminoInit();
 		}
-		else if (i == (uint32_t)Type::Lmino) {
+		else if (i == (uint32_t)MinoType::Lmino) {
 			minoList_[i] = LminoInit();
 		}
-		else if (i == (uint32_t)Type::Jmino) {
+		else if (i == (uint32_t)MinoType::Jmino) {
 			minoList_[i] = JminoInit();
 		}
 	}
