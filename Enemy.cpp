@@ -1,8 +1,8 @@
 #include "Enemy.h"
 #include <imgui.h>
 
-Enemy::Enemy(int32_t health) :
-	IEnemy(health)
+Enemy::Enemy(int32_t health, int32_t attackPower) :
+	IEnemy(health, attackPower)
 {
 }
 

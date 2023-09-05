@@ -28,7 +28,10 @@ void MainGameSyste::Update()
 
 	//敵の攻撃
 	if (nowTurn_ == Turn::ENEMY) {
-		player_->Damage(10);
+		//プレイヤーがダメージを受ける
+		if (enemy_->GetIsAlive()) {
+			player_->Damage(enemy_->GetAttackPower());
+		}
 		//エネミーターン終了演出はここへ
 
 		//処理が終わったらシーンをチェンジする

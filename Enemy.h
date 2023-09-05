@@ -6,7 +6,7 @@ class Enemy final:
 {
 
 public:
-	Enemy(int32_t health);
+	Enemy(int32_t health,int32_t attackPower);
 
 	void Initialize();
 

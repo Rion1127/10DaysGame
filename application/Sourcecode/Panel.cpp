@@ -219,7 +219,7 @@ void Panel::PanelUpdate()
 			}
 			else if (systemPanel_[x][y] == State::ATTACK) {
 				systemPanel_[x][y] = State::EMPTY;
-
+				//攻撃パネルをカウントする
 				attackPanelNum_++;
 			}
 		}
