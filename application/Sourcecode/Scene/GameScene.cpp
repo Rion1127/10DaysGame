@@ -24,6 +24,8 @@ void GameScene::Ini()
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
+	enemy_ = std::make_unique<Enemy>();
+	enemy_->Initialize();
 }
 
 void GameScene::Update()
@@ -34,13 +36,17 @@ void GameScene::Update()
 
 	sprite_->Update();
 	player_->Update();
+	enemy_->Update();
 }
 
 void GameScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	sprite_->Draw();
+
 	player_->Draw();
+	enemy_->Draw();
+
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);
