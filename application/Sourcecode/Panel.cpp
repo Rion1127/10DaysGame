@@ -131,7 +131,7 @@ void Panel::DrawImGui()
 	static int panelType = 0;
 	ImGui::InputInt("type", &panelType);
 	panelType = Clamp(panelType,0,6);
-	minoType_ = (MinoType)panelType;
+	//minoType_ = (MinoType)panelType;
 
 	
 

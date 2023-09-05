@@ -19,7 +19,8 @@ private:
 
 	std::unique_ptr<Panel> panel_;
 	uint32_t reloadMinoNum_;
-	std::vector<Mino> minos_;
+	std::vector<MinoType> minos_;
+	std::vector<MinoType> minosList_;
 
 	Player* player_;
 	IEnemy* enemy_;
@@ -28,6 +29,11 @@ public:
 	void Update();
 	void DrawSprite();
 	void DrawImGui();
+private:
+	//É~ÉmÇï‚è[Ç∑ÇÈ
+	void ReloadMino();
+	void TurnChange();
+
 public:
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetEnemy(IEnemy* enemy) { enemy_ = enemy; }
