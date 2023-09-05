@@ -39,8 +39,8 @@ void DebugScene::Update()
 void DebugScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
-	player_->Draw();
 	mainSystem_->DrawSprite();
+	player_->Draw();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);

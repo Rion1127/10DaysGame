@@ -55,6 +55,11 @@ private:
 		int32_t index_;
 		YGame::YTransform trfm_;
 		Sprite sprite_;
+		
+		YGame::YTransform::Status breakStatus_;
+		Vector3 moveSpeed_;
+		Vector3 rotaSpeed_;
+		Vector3 scaleSpeed_;
 	};
 
 	// çUåÇíiäK
@@ -85,6 +90,8 @@ private:
 	YMath::YPower alphaPow_;
 
 	float panelCounter_ = 0.0f;
+
+	YMath::YTimer breakTim_;
 	
 	AttackStep step_ = AttackStep::None;
 };

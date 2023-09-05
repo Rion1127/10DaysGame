@@ -20,7 +20,7 @@ IEnemy::IEnemy(int32_t health, int32_t attackPower)
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Ini();
 	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Enemy"));
-	sprite_->SetPos(Vector2(800, 100));
+	sprite_->SetPos(Vector2(700, 100));
 
 	health_ = health;
 	isAlive_ = true;
@@ -42,5 +42,5 @@ void IEnemy::Damage(int32_t health)
 	}
 
 	// 被弾アニメーション
-	hitActor_.Hit(10.0f, 1.0f);
+	//hitActor_.Hit(10.0f, 1.0f);
 }

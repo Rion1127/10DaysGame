@@ -1,6 +1,7 @@
 #include "Sword.h"
 #include "Lerp.h"
 #include "YCameraManager.h"
+#include "RRandom.h"
 
 static const float kPI = 3.141592f;
 
@@ -32,6 +33,11 @@ void Sword::Initialize(const size_t maxXSize, const size_t maxYSize, Matrix4* ma
 			panels_[y][x].sprite_.Ini();
 			
 			panels_[y][x].sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Panel"));
+			
+			panels_[y][x].breakStatus_ = {};
+			panels_[y][x].moveSpeed_ = {};
+			panels_[y][x].rotaSpeed_ = {};
+			panels_[y][x].scaleSpeed_ = {};
 		}
 	}
 
@@ -53,6 +59,8 @@ void Sword::Initialize(const size_t maxXSize, const size_t maxYSize, Matrix4* ma
 	alphaPow_.Initialize(10);
 
 	panelCounter_ = 0.0f;
+
+	breakTim_.Initialize(40);
 
 	step_ = AttackStep::None;
 }
@@ -82,12 +90,21 @@ void Sword::AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndice
 			{
 				panelCounter_ += 1.0f;
 			}
+
+			panels_[i][j].breakStatus_ = {};
+			panels_[i][j].moveSpeed_ = {};
+			panels_[i][j].rotaSpeed_ = {};
+			panels_[i][j].scaleSpeed_ = {};
 		}
 	}
 
 	slime_.Wobble();
 
 	rotaTim_.Reset();
+
+	alphaPow_.Reset();
+
+	breakTim_.Reset();
 
 	// 生成
 	step_ = AttackStep::Forge;
@@ -99,6 +116,8 @@ void Sword::UpdateAttackAnimation(YGame::YTransform::Status& animeStatus)
 
 	rotaTim_.Update();
 
+	breakTim_.Update();
+
 	if (slime_.IsAct())
 	{
 		animeStatus.scale_ +=
@@ -107,6 +126,28 @@ void Sword::UpdateAttackAnimation(YGame::YTransform::Status& animeStatus)
 
 	animeStatus.rota_.z +=
 		rotaEas_.In(rotaTim_.Ratio());
+
+	Vector3 upDir = -Vector3(std::sinf(animeStatus.rota_.z), std::cosf(animeStatus.rota_.z), 0.0f);
+
+	if (breakTim_.IsAct())
+	{
+		for (size_t i = 0; i < panels_.size(); i++)
+		{
+			for (size_t j = 0; j < panels_[i].size(); j++)
+			{
+				// 重力
+				panels_[i][j].moveSpeed_ -= upDir * 0.98f;
+
+				panels_[i][j].breakStatus_.pos_ += panels_[i][j].moveSpeed_;
+				panels_[i][j].breakStatus_.rota_ += panels_[i][j].rotaSpeed_;
+				panels_[i][j].breakStatus_.scale_ += panels_[i][j].scaleSpeed_;
+				
+				panels_[i][j].breakStatus_.scale_.x = std::clamp(panels_[i][j].breakStatus_.scale_.x, 0.0f, 1.0f);
+				panels_[i][j].breakStatus_.scale_.y = std::clamp(panels_[i][j].breakStatus_.scale_.y, 0.0f, 1.0f);
+				panels_[i][j].breakStatus_.scale_.z = std::clamp(panels_[i][j].breakStatus_.scale_.z, 0.0f, 1.0f);
+			}
+		}
+	}
 
 	// 生成終了
 	if (slime_.IsAct() == false && step_ == AttackStep::Forge)
@@ -127,10 +168,30 @@ void Sword::UpdateAttackAnimation(YGame::YTransform::Status& animeStatus)
 		float dekey = shake / 10.0f;
 
 		YCameraManager::GetInstance()->ShakeCamera(shake, dekey);
+
+		breakTim_.Reset(true);
+
+		for (size_t i = 0; i < panels_.size(); i++)
+		{
+			for (size_t j = 0; j < panels_[i].size(); j++)
+			{
+				Vector3 sideDir = Vector3(0.0f, 0.0f, 1.0f).cross(upDir);
+
+				float posX = RRandom::RandF(-2.5f, +2.5f);
+				float posY = RRandom::RandF(+15.0f, +20.0f);
+				panels_[i][j].moveSpeed_ = (sideDir * posX) + (upDir * posY);
+				
+				float rotaZ = RRandom::RandF(-kPI * 0.1f, +kPI * 0.1f);
+				panels_[i][j].rotaSpeed_.z = rotaZ;
+				
+				float scale = RRandom::RandF(-1.0f, 0.0f);
+				panels_[i][j].scaleSpeed_ = Vector3(scale, scale, scale);
+			}
+		}
 	}
 
 	// 斬撃終了
-	if (rotaTim_.IsEnd() && step_ == AttackStep::Strike)
+	if (breakTim_.Ratio() >= 0.75f && step_ == AttackStep::Strike)
 	{
 		// 終了
 		step_ = AttackStep::None;
@@ -182,7 +243,7 @@ void Sword::Update()
 	{
 		for (size_t j = 0; j < panels_[i].size(); j++)
 		{
-			panels_[i][j].trfm_.UpdateMatrix();
+			panels_[i][j].trfm_.UpdateMatrix(panels_[i][j].breakStatus_);
 
 			panels_[i][j].sprite_.Update(panels_[i][j].trfm_.m_);
 		}

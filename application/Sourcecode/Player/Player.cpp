@@ -7,7 +7,7 @@ void Player::Initialize()
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Ini();
 	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Player"));
-	sprite_->SetPos(Vector2(500, 100));
+	sprite_->SetPos(Vector2(600, 100));
 
 	health_ = 100;
 	attackpower_ = 2;
