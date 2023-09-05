@@ -417,14 +417,17 @@
     <ClCompile Include="application\Sourcecode\Panel\Mino.cpp">
       <Filter>application\ソースファイル\Panel</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>application\ソースファイル\Player</Filter>
+    <ClCompile Include="application\Sourcecode\Enemy\Enemy.cpp">
+      <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
+    <ClCompile Include="application\Sourcecode\Enemy\EnemyManager.cpp">
       <Filter>application\ソースファイル\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Enemy\IEnemy.cpp">
-      <Filter>engine\ソース ファイル</Filter>
+      <Filter>application\ソースファイル\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\Player.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -641,14 +644,17 @@
     <ClInclude Include="application\Sourcecode\Panel\Mino.h">
       <Filter>application\ヘッダーファイル\Panel</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
+    <ClInclude Include="application\Sourcecode\Enemy\Enemy.h">
       <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>application\ヘッダーファイル\Player</Filter>
+    <ClInclude Include="application\Sourcecode\Enemy\EnemyManager.h">
+      <Filter>application\ヘッダーファイル\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Enemy\IEnemy.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
+      <Filter>application\ヘッダーファイル\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Player\Player.h">
+      <Filter>application\ヘッダーファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
