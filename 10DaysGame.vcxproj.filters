@@ -408,6 +408,9 @@
     <ClCompile Include="application\Sourcecode\particleManager\ParticleManager.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\MainGameSyste.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -625,6 +628,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\particleManager\ParticleManager.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\MainGameSyste.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

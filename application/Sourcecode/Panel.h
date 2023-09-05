@@ -49,6 +49,7 @@ private:
 	std::unique_ptr<PanelSprite> sprite_;
 
 	MinoType minoType_;
+	bool isSetComplete_;
 public:
 	Panel();
 	void Update();

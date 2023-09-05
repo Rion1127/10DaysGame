@@ -44,6 +44,7 @@ Panel::Panel()
 			systemPanel_[x][y] = displayPanel_[x][y];
 		}
 	}
+	isSetComplete_ = false;
 	//スプライトのサイズ
 	spritePos_ = { 500,200 };
 	spriteSize_ = 32;
