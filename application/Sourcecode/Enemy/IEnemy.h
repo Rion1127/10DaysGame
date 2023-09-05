@@ -12,6 +12,8 @@ public:
 	IEnemy(int32_t health);
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
+
+	virtual void DrawImGui() = 0;
 public:
 	void Damage(int32_t health) { health_ -= health; }
 };

@@ -57,7 +57,7 @@ void DebugScene::Draw()
 
 #ifdef _DEBUG
 	mainSystem_->DrawImGui();
-
-
+	player_->DrawImGui();
+	enemy_->DrawImGui();
 #endif // _DEBUG
 }

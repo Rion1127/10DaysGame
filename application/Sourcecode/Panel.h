@@ -50,6 +50,7 @@ private:
 
 	MinoType minoType_;
 	bool isSetComplete_;
+	int32_t attackPanelNum_;
 public:
 	Panel();
 	void Update();
@@ -71,4 +72,5 @@ public:
 	void SetisSetComplete(bool flag) { isSetComplete_ = flag; }
 public:
 	bool GetisSetComplete() { return isSetComplete_; }
+	int32_t GetAttackPanelNum() { return attackPanelNum_; }
 };

@@ -208,6 +208,7 @@ void Panel::DrawImGui()
 
 void Panel::PanelUpdate()
 {
+	attackPanelNum_ = 0;
 	for (uint32_t y = 0; y < displayPanel_.size(); y++)
 	{
 		for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
@@ -218,6 +219,8 @@ void Panel::PanelUpdate()
 			}
 			else if (systemPanel_[x][y] == State::ATTACK) {
 				systemPanel_[x][y] = State::EMPTY;
+
+				attackPanelNum_++;
 			}
 		}
 	}

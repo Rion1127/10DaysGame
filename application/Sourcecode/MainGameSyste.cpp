@@ -28,6 +28,7 @@ void MainGameSyste::Update()
 
 	//敵の攻撃
 	if (nowTurn_ == Turn::ENEMY) {
+		player_->Damage(10);
 		//エネミーターン終了演出はここへ
 
 		//処理が終わったらシーンをチェンジする
@@ -42,13 +43,17 @@ void MainGameSyste::Update()
 		//自分のターンだったら敵のターンへ
 		if (prevTurn_ == Turn::PLAYER) {
 			nowTurn_ = Turn::ENEMY;
+
+			//パネル更新
+			panel_->PanelUpdate();
+			reloadMinoNum_ = 2;
+			int32_t damage = panel_->GetAttackPanelNum() * player_->GetAttackPower();
+			enemy_->Damage(damage);
 		}
 		//敵のターンだったら自分のターンへ
 		else if (prevTurn_ == Turn::ENEMY) {
 			nowTurn_ = Turn::PLAYER;
-			//パネル更新
-			panel_->PanelUpdate();
-			reloadMinoNum_ = 2;
+			
 		}
 		prevTurn_ = nowTurn_;
 	}

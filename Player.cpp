@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <imgui.h>
 
 void Player::Initialize()
 {
@@ -9,6 +10,7 @@ void Player::Initialize()
 	sprite_->SetPos(Vector2(200, 500));
 
 	health_ = 100;
+	attackpower_ = 2;
 }
 
 void Player::Update()
@@ -19,4 +21,11 @@ void Player::Update()
 void Player::Draw()
 {
 	sprite_->Draw();
+}
+
+void Player::DrawImGui()
+{
+	ImGui::Begin("player");
+	ImGui::Text("HP : %d", health_);
+	ImGui::End();
 }
