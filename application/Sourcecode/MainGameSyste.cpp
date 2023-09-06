@@ -1,5 +1,6 @@
 #include "MainGameSyste.h"
 #include "RRandom.h"
+#include "SceneManager.h"
 
 MainGameSyste::MainGameSyste()
 {
@@ -16,6 +17,13 @@ MainGameSyste::MainGameSyste()
 	// カメラ取得 + 初期化
 	cameraManager_ = YCameraManager::GetInstance();
 	cameraManager_->Initialize();
+
+	Vector2 pos = {
+		WinAPI::GetWindowSize().x / 2.f,
+		WinAPI::GetWindowSize().y / 1.5f
+	};
+	clearButton_ = std::make_unique<Button>(pos);
+	clearButton_->SetTexture(TextureManager::GetInstance()->GetTexture("TitleButton"));
 }
 
 void MainGameSyste::Update()
@@ -46,6 +54,11 @@ void MainGameSyste::Update()
 	//クリアしたら
 	else {
 		panel_->SetUpdateType(UpdateType::SpriteOnly);
+
+		if (clearButton_->GetIsCollision())
+		{
+			SceneManager::SetChangeStart(SceneName::Title);
+		}
 	}
 
 	
@@ -57,12 +70,18 @@ void MainGameSyste::Update()
 
 	// カメラ更新
 	cameraManager_->Update();
+
+	clearButton_->Update();
 }
 
 void MainGameSyste::DrawSprite()
 {
 	panel_->DrawSprite();
 	enemyManager_.Draw();
+	if (enemyManager_.GetIsAllEnemyDestroy() == true)
+	{
+		clearButton_->Draw();
+	}
 }
 
 void MainGameSyste::DrawImGui()

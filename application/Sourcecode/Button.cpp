@@ -1,6 +1,6 @@
 #include "Button.h"
 
-Button::Button(Vector2 pos, int32_t returnValue)
+Button::Button(Vector2 pos)
 {
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Ini();
@@ -8,8 +8,7 @@ Button::Button(Vector2 pos, int32_t returnValue)
 	sprite_->SetAnchor(Vector2(0.5f, 0.5f));
 	pos_ = pos;
 	sprite_->SetPos(pos_);
-	return_ = returnValue;
-
+	
 	col_.leftUp = {
 		pos_.x - (sprite_->GetTexture().size_.x / 2),
 		pos_.y - (sprite_->GetTexture().size_.y / 2)
@@ -28,16 +27,13 @@ void Button::Update()
 	if (CheckBox2DtoPoint(col_, mPos))
 	{
 		isCollision_ = true;
-
 		sprite_->SetColor(Color(0, 0, 0, 255));
-
 	}
 	else
 	{
 		isCollision_ = false;
 		sprite_->SetColor(Color(255, 255, 255, 255));
 	}
-
 
 	sprite_->Update();
 }

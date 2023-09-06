@@ -25,6 +25,7 @@ void LoadManager::LoadTexture()
 	//ƒ{ƒ^ƒ“UI
 	LoadGraph("gameStartButton.png", "GameStartButton");
 	LoadGraph("tutorialButton.png", "TutorialButton");
+	LoadGraph("titleButton.png", "TitleButton");
 }
 
 void LoadManager::LoadSound()

@@ -30,11 +30,11 @@ void TitleScene::Ini()
 		WinAPI::GetWindowSize().y / 1.2f,
 	};
 	Vector2 endlessPos;
-	tutorialButton_ = std::make_unique<Button>(tutorialPos, 0);
+	tutorialButton_ = std::make_unique<Button>(tutorialPos);
 	tutorialButton_->SetTexture(TextureManager::GetInstance()->GetTexture("TutorialButton"));
-	mainGameButton_ = std::make_unique<Button>(mainGamePos, 0);
+	mainGameButton_ = std::make_unique<Button>(mainGamePos);
 	mainGameButton_->SetTexture(TextureManager::GetInstance()->GetTexture("GameStartButton"));
-	endlessButton_ = std::make_unique<Button>(endlessPos, 0);
+	endlessButton_ = std::make_unique<Button>(endlessPos);
 }
 
 void TitleScene::Update()

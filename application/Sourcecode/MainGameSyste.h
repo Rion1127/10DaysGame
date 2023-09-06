@@ -5,6 +5,7 @@
 #include "IEnemy.h"
 #include "EnemyManager.h"
 #include "YCameraManager.h"
+#include "Button.h"
 class MainGameSyste
 {
 private:
@@ -31,6 +32,8 @@ private:
 	
 	// ƒJƒƒ‰
 	YCameraManager* cameraManager_;
+
+	std::unique_ptr<Button> clearButton_;
 public:
 	MainGameSyste();
 	void Update();
