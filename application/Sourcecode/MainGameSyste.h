@@ -31,7 +31,7 @@ private:
 	EnemyManager enemyManager_;
 	
 	// ƒJƒƒ‰
-	YCameraManager* cameraManager_;
+	YGame::YCameraManager* cameraManager_;
 
 	std::unique_ptr<Button> clearButton_;
 public:

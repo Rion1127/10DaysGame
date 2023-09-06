@@ -3,33 +3,31 @@
 
 IEnemy::IEnemy()
 {
-	sprite_ = std::make_unique<Sprite>();
-	sprite_->Ini();
-	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Enemy"));
-	Vector2 pos = {
+	Vector3 pos = {
 		WinAPI::GetWindowSize().x / 3.5f,
-		WinAPI::GetWindowSize().y / 5.f
+		WinAPI::GetWindowSize().y / 5.f,
+		0.0f
 	};
-	sprite_->SetPos(pos);
+
+	health_ = 0;
+	isAlive_ = false;
+	attackPower_ = 0;
 
 	// トランスフォーム
 	trfm_.Initialize();
-	trfm_.pos_ = Vector3(sprite_->GetPos().x, sprite_->GetPos().y, 0.0f);
+	trfm_.pos_ = pos;
 
 	// アニメーション用
-	hitActor_.Initialize();
+	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_.m_);
 }
 
 IEnemy::IEnemy(int32_t health, int32_t attackPower)
 {
-	sprite_ = std::make_unique<Sprite>();
-	sprite_->Ini();
-	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Enemy"));
-	Vector2 pos = {
+	Vector3 pos = {
 		WinAPI::GetWindowSize().x / 1.5f,
-		WinAPI::GetWindowSize().y / 5.f
+		WinAPI::GetWindowSize().y / 5.f,
+		0.0f
 	};
-	sprite_->SetPos(pos);
 
 	health_ = health;
 	isAlive_ = true;
@@ -37,10 +35,10 @@ IEnemy::IEnemy(int32_t health, int32_t attackPower)
 
 	// トランスフォーム
 	trfm_.Initialize();
-	trfm_.pos_ = Vector3(sprite_->GetPos().x, sprite_->GetPos().y, 0.0f);
+	trfm_.pos_ = pos;
 
 	// アニメーション用
-	hitActor_.Initialize();
+	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_.m_);
 }
 
 void IEnemy::Damage(int32_t health)
@@ -49,7 +47,6 @@ void IEnemy::Damage(int32_t health)
 	if (health_ <= 0) {
 		isAlive_ = false;
 	}
-
-	// 被弾アニメーション
-	//hitActor_.Hit(10.0f, 1.0f);
+	
+	drawer_.HitAnimation();
 }

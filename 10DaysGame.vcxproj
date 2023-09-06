@@ -12,11 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application\Sourcecode\Animation\AnimeManager.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\BaseDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\BezierEase.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\Ease.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\EnemyDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\HitActor.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\Lerp.cpp" />
-    <ClCompile Include="application\Sourcecode\Animation\Sword.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\PlayerDrawer.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\SwordDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\YCameraManager.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\YTransform.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\YPower.cpp" />
@@ -94,11 +97,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\Sourcecode\Animation\AnimeManager.h" />
+    <ClInclude Include="application\Sourcecode\Animation\BaseDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\BezierEase.h" />
     <ClInclude Include="application\Sourcecode\Animation\Ease.h" />
+    <ClInclude Include="application\Sourcecode\Animation\EnemyDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\HitActor.h" />
     <ClInclude Include="application\Sourcecode\Animation\Lerp.h" />
-    <ClInclude Include="application\Sourcecode\Animation\Sword.h" />
+    <ClInclude Include="application\Sourcecode\Animation\SwordDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\YCameraManager.h" />
     <ClInclude Include="application\Sourcecode\Animation\YTransform.h" />
     <ClInclude Include="application\Sourcecode\Animation\YPower.h" />
@@ -173,6 +178,7 @@
     <ClInclude Include="engine\util\RRandom.h" />
     <ClInclude Include="engine\util\StateMachine.h" />
     <ClInclude Include="engine\util\Timer.h" />
+    <ClInclude Include="application\Sourcecode\Animation\PlayerDrawer.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

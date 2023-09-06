@@ -1,6 +1,8 @@
 #include "YCameraManager.h"
 #include <algorithm>
 
+using YGame::YCameraManager;
+
 void YCameraManager::Initialize()
 {
     pos_ = {};

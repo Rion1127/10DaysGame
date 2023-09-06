@@ -2,6 +2,8 @@
 #include "RRandom.h"
 #include "SceneManager.h"
 
+using YGame::YCameraManager;
+
 MainGameSyste::MainGameSyste()
 {
 	panel_ = std::make_unique<Panel>();

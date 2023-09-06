@@ -211,6 +211,12 @@
     <Filter Include="application\ヘッダーファイル\Animation\Math">
       <UniqueIdentifier>{628cee8d-5cf2-4739-80b5-fd6d0b27696a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\Animation\Drawer">
+      <UniqueIdentifier>{32942eec-28de-48e3-8353-32ec3ec5f826}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Animation\Drawer">
+      <UniqueIdentifier>{a98651b8-b2b6-4eff-9b92-cbe52135ca79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -411,6 +417,9 @@
     <ClCompile Include="application\Sourcecode\particleManager\ParticleManager.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\MainGameSyste.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="application\Sourcecode\Panel\Mino.cpp">
       <Filter>application\ソースファイル\Panel</Filter>
     </ClCompile>
@@ -441,9 +450,6 @@
     <ClCompile Include="application\Sourcecode\Animation\AnimeManager.cpp">
       <Filter>application\ソースファイル\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Animation\Sword.cpp">
-      <Filter>application\ソースファイル\Animation</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\YCameraManager.cpp">
       <Filter>application\ソースファイル\Animation</Filter>
     </ClCompile>
@@ -456,8 +462,17 @@
     <ClCompile Include="application\Sourcecode\Animation\YTimer.cpp">
       <Filter>application\ソースファイル\Animation\Math</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\MainGameSyste.cpp">
-      <Filter>application\ソースファイル</Filter>
+    <ClCompile Include="application\Sourcecode\Animation\SwordDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\PlayerDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\BaseDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\EnemyDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Scene\TitleScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
@@ -668,6 +683,9 @@
     <ClInclude Include="application\Sourcecode\particleManager\ParticleManager.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="application\Sourcecode\MainGameSyste.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="application\Sourcecode\Panel\Mino.h">
       <Filter>application\ヘッダーファイル\Panel</Filter>
     </ClInclude>
@@ -698,9 +716,6 @@
     <ClInclude Include="application\Sourcecode\Animation\AnimeManager.h">
       <Filter>application\ヘッダーファイル\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Animation\Sword.h">
-      <Filter>application\ヘッダーファイル\Animation</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\YCameraManager.h">
       <Filter>application\ヘッダーファイル\Animation</Filter>
     </ClInclude>
@@ -713,8 +728,17 @@
     <ClInclude Include="application\Sourcecode\Animation\Shake.h">
       <Filter>application\ヘッダーファイル\Animation\Math</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\MainGameSyste.h">
-      <Filter>application\ヘッダーファイル</Filter>
+    <ClInclude Include="application\Sourcecode\Animation\SwordDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\BaseDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\EnemyDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\PlayerDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Scene\TitleScene.h">
       <Filter>application\ヘッダーファイル\Scene</Filter>
