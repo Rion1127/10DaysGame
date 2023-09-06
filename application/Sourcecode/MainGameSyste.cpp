@@ -21,9 +21,8 @@ MainGameSyste::MainGameSyste()
 void MainGameSyste::Update()
 {
 	enemyManager_.Update();
+	panel_->Update();
 	if (enemyManager_.GetIsAllEnemyDestroy() == false) {
-		panel_->Update();
-
 		//敵の攻撃
 		if (nowTurn_ == Turn::PLAYER) {
 			TurnPlayer();
@@ -50,7 +49,7 @@ void MainGameSyste::Update()
 
 	
 
-	if (enemyManager_.GetIsChangeNowEnemy()) {
+	if (enemyManager_.GetIsChangeNowEnemy() || enemyManager_.GetNowEnemy() == nullptr) {
 		enemy_ = enemyManager_.GetNowEnemy();
 		enemyManager_.SetIsChangeNowEnemy(false);
 	}
@@ -139,8 +138,8 @@ void MainGameSyste::TurnPlayer()
 		//配置出来たミノを消す
 		minos_.erase(minos_.begin());
 
-		//残りの数が0になった場合ターンを終了する
-		if (minos_.size() <= 0) {
+		//残りの数が0になった場合かすべてのマスを埋めた時ターンを終了する
+		if (minos_.size() <= 0 || panel_->GetIsAllFill()) {
 			//パネル更新
 			panel_->PanelUpdate();
 			reloadMinoNum_ = 2;

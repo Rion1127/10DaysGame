@@ -69,6 +69,7 @@ private:
 
 	MinoType minoType_;
 	bool isSetComplete_;
+	bool isAllFill_;
 	int32_t attackPanelNum_;
 public:
 	Panel();
@@ -92,6 +93,7 @@ public:
 	void SetMinoType(MinoType type) { minoType_ = type; }
 public:
 	bool GetisSetComplete() { return isSetComplete_; }
+	bool GetIsAllFill() { return isAllFill_; }
 	int32_t GetAttackPanelNum() { return attackPanelNum_; }
 
 	std::vector<std::vector<int32_t>> GetDisplayPanel() { return displayPanel_; }

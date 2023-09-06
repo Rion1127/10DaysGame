@@ -21,6 +21,9 @@ protected:
 public:
 	IEnemy();
 	IEnemy(int32_t health, int32_t attackPower);
+	virtual ~IEnemy() {
+		int a = 0;
+	};
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 

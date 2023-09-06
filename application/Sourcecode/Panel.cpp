@@ -46,6 +46,7 @@ Panel::Panel()
 		}
 	}
 	isSetComplete_ = false;
+	isAllFill_ = false;
 	//スプライトのサイズ
 	spritePos_ = { 
 		WinAPI::GetWindowSize().x / 3.4f,
@@ -59,6 +60,8 @@ Panel::Panel()
 void Panel::Update()
 {
 	Vector2 mPos = MouseInput::GetInstance()->mPos_;
+
+	uint32_t emptyNum = 0;
 
 	for (int32_t y = 0; y < displayPanel_.size(); y++)
 	{
@@ -85,8 +88,23 @@ void Panel::Update()
 			{
 				displayPanel_[x][y] = systemPanel_[x][y];
 			}
+
+			if (systemPanel_[x][y] == State::EMPTY)
+			{
+				emptyNum++;
+			}
 		}
 	}
+	//一つも置ける箇所がないとき
+	if (emptyNum == 0)
+	{
+		isAllFill_ = true;
+	}
+	else
+	{
+		isAllFill_ = false;
+	}
+
 	//エラーが起きないように選択している場所をクランプする
 	SelectPosClamp(MinoList::GetMinoList((MinoType)minoType_));
 	//左クリックをしたらパネルを設置する
@@ -200,13 +218,8 @@ void Panel::DrawImGui()
 		PanelUpdate();
 	}
 
-	ImGui::End();
+	ImGui::Text("isAllFill : %d", isAllFill_);
 
-
-	ImGui::Begin("Mouse");
-	Vector2 mPos = MouseInput::GetInstance()->mPos_;
-	float pos[2] = { mPos.x,mPos.y };
-	ImGui::DragFloat2("mousePos",pos);
 	ImGui::End();
 }
 

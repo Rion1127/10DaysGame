@@ -7,7 +7,9 @@ class Enemy final:
 
 public:
 	Enemy(int32_t health,int32_t attackPower);
-
+	~Enemy() {
+		int a = 0;
+	}
 	void Initialize();
 
 	void Update()override;

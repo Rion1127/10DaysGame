@@ -30,7 +30,8 @@ void EnemyManager::Update()
 		nowEnemy_->Update();
 
 		if (nowEnemy_->GetIsAlive() == false) {
-			nowEnemy_.release();
+			nowEnemy_.reset();
+			nowEnemy_ = nullptr;
 		}
 	}
 }
