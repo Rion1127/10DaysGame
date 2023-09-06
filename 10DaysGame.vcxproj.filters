@@ -411,9 +411,6 @@
     <ClCompile Include="application\Sourcecode\particleManager\ParticleManager.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\MainGameSyste.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Panel\Mino.cpp">
       <Filter>application\ソースファイル\Panel</Filter>
     </ClCompile>
@@ -458,6 +455,9 @@
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\YTimer.cpp">
       <Filter>application\ソースファイル\Animation\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\MainGameSyste.cpp">
+      <Filter>application\ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -662,9 +662,6 @@
     <ClInclude Include="application\Sourcecode\particleManager\ParticleManager.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\MainGameSyste.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Panel\Mino.h">
       <Filter>application\ヘッダーファイル\Panel</Filter>
     </ClInclude>
@@ -709,6 +706,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\Shake.h">
       <Filter>application\ヘッダーファイル\Animation\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\MainGameSyste.h">
+      <Filter>application\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

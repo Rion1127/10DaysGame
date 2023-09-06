@@ -1,13 +1,19 @@
 #include "Player.h"
 #include "YCameraManager.h"
 #include <imgui.h>
+#include "WinAPI.h"
 
 void Player::Initialize()
 {	
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Ini();
 	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Player"));
-	sprite_->SetPos(Vector2(600, 100));
+
+	Vector2 pos = {
+		WinAPI::GetWindowSize().x / 3.4f,
+		WinAPI::GetWindowSize().y / 5.f
+	};
+	sprite_->SetPos(pos);
 
 	health_ = 100;
 	attackpower_ = 2;

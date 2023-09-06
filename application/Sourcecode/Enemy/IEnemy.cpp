@@ -1,11 +1,16 @@
 #include "IEnemy.h"
+#include "WinAPI.h"
 
 IEnemy::IEnemy()
 {
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Ini();
 	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Enemy"));
-	sprite_->SetPos(Vector2(800, 200));
+	Vector2 pos = {
+		WinAPI::GetWindowSize().x / 3.5f,
+		WinAPI::GetWindowSize().y / 5.f
+	};
+	sprite_->SetPos(pos);
 
 	// トランスフォーム
 	trfm_.Initialize();
@@ -20,7 +25,11 @@ IEnemy::IEnemy(int32_t health, int32_t attackPower)
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Ini();
 	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Enemy"));
-	sprite_->SetPos(Vector2(700, 100));
+	Vector2 pos = {
+		WinAPI::GetWindowSize().x / 1.5f,
+		WinAPI::GetWindowSize().y / 5.f
+	};
+	sprite_->SetPos(pos);
 
 	health_ = health;
 	isAlive_ = true;

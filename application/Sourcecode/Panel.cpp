@@ -3,6 +3,7 @@
 #include <string>
 #include "Mino.h"
 #include "Collision.h"
+#include "WinAPI.h"
 
 #pragma region Panel
 Panel::Panel()
@@ -46,7 +47,10 @@ Panel::Panel()
 	}
 	isSetComplete_ = false;
 	//スプライトのサイズ
-	spritePos_ = { 500,200 };
+	spritePos_ = { 
+		WinAPI::GetWindowSize().x / 3.4f,
+		WinAPI::GetWindowSize().y / 3.f
+	};
 	spriteSize_ = 32;
 	spriteScale_ = 1;
 	sprite_ = std::make_unique<PanelSprite>(maxPanelSize_, spritePos_, spriteScale_);
