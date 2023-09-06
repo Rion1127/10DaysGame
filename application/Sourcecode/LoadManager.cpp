@@ -26,6 +26,8 @@ void LoadManager::LoadTexture()
 	LoadGraph("gameStartButton.png", "GameStartButton");
 	LoadGraph("tutorialButton.png", "TutorialButton");
 	LoadGraph("titleButton.png", "TitleButton");
+	LoadGraph("endlessButton.png", "EndlessButton");
+	LoadGraph("dotTest.png", "DotTest");
 }
 
 void LoadManager::LoadSound()
