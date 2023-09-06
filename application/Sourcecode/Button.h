@@ -19,4 +19,5 @@ public:
 	bool GetIsCollision() { return isCollision_; }
 public:
 	void SetTexture(Texture* texture);
+	void SetPos(Vector2 pos) { pos_ = pos; }
 };

@@ -26,7 +26,7 @@ void DebugScene::Ini()
 
 	dotSprite_.SetTexture(TextureManager::GetInstance()->GetTexture("DotTest"));
 	dotSprite_.Ini();
-	dotSprite_.SetPos(Vector2(300,800));
+	dotSprite_.SetPos(Vector2(100,800));
 }
 
 void DebugScene::Update()

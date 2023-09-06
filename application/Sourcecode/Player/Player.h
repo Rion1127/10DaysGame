@@ -4,7 +4,17 @@
 
 class Player
 {
+private:
+	int32_t health_;
+	int32_t attackpower_;
+	bool isAlive_;
 
+	// トランスフォーム
+	YGame::YTransform trfm_;
+
+	// アニメーション
+	YGame::PlayerDrawer drawer_;
+	YGame::SwordDrawer sword_;
 public:
 
 	void Initialize();
@@ -19,15 +29,6 @@ public:
 	void Damage(int32_t damage);
 public:
 	int32_t GetAttackPower() { return attackpower_; }
-private:
-	int32_t health_;
-	int32_t attackpower_;
-
-	// トランスフォーム
-	YGame::YTransform trfm_;
-	
-	// アニメーション
-	YGame::PlayerDrawer drawer_;
-	YGame::SwordDrawer sword_;
+	bool GetIsAlive() { return isAlive_; }
 };
 

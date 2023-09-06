@@ -64,16 +64,19 @@ void TitleScene::Update()
 			if (tutorialButton_->GetIsCollision())
 			{
 				SceneManager::SetChangeStart(SceneName::Debug);
+				SceneManager::SetGameMode(GameMode::Tutorial);
 			}
 			//本編へ
 			else if (mainGameButton_->GetIsCollision())
 			{
 				SceneManager::SetChangeStart(SceneName::Game);
+				SceneManager::SetGameMode(GameMode::MainGame);
 			}
 			//エンドレスへ
 			else if (mainGameButton_->GetIsCollision())
 			{
 				SceneManager::SetChangeStart(SceneName::Game);
+				SceneManager::SetGameMode(GameMode::EndLess);
 			}
 		}
 

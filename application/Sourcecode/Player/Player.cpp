@@ -13,6 +13,7 @@ void Player::Initialize()
 
 	health_ = 100;
 	attackpower_ = 2;
+	isAlive_ = true;
 
 	// トランスフォーム
 	trfm_.Initialize();
@@ -26,6 +27,10 @@ void Player::Initialize()
 void Player::Update()
 {
 	trfm_.UpdateMatrix({ YGame::YCameraManager::GetInstance()->GetCameraPos(), {}, {} });
+
+	if (health_ <= 0) {
+		isAlive_ = false;
+	}
 
 	drawer_.Update();
 	sword_.Update();

@@ -14,11 +14,17 @@ private:
 		ENEMY,
 		CHANGE
 	};
+	enum class State {
+		GAME,
+		CLEAR,
+		GAMEOVER
+	};
 private:
 	//現在のターン
 	Turn nowTurn_;
 	//ひとつ前のターン
 	Turn prevTurn_;
+	State gameState_;
 
 	std::unique_ptr<Panel> panel_;
 	uint32_t reloadMinoNum_;
@@ -33,7 +39,10 @@ private:
 	// カメラ
 	YGame::YCameraManager* cameraManager_;
 
-	std::unique_ptr<Button> clearButton_;
+	std::unique_ptr<Button> titleButton_;
+	std::unique_ptr<Button> retryButton_;
+	Vector2 uiUpPos_;
+	Vector2 uiDownPos_;
 public:
 	MainGameSyste();
 	void Update();
@@ -46,6 +55,8 @@ private:
 	void TurnChange();
 	void TurnPlayer();
 	void TurnEnemy();
+
+	void GameOverUpdate();
 public:
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetEnemy(IEnemy* enemy) { enemy_ = enemy; }

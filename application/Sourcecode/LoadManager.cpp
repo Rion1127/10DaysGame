@@ -28,6 +28,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("titleButton.png", "TitleButton");
 	LoadGraph("endlessButton.png", "EndlessButton");
 	LoadGraph("dotTest.png", "DotTest");
+	LoadGraph("retry.png", "Retry");
 }
 
 void LoadManager::LoadSound()

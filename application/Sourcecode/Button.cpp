@@ -22,6 +22,15 @@ Button::Button(Vector2 pos)
 
 void Button::Update()
 {
+	sprite_->SetPos(pos_);
+	col_.leftUp = {
+		pos_.x - (sprite_->GetTexture().size_.x / 2),
+		pos_.y - (sprite_->GetTexture().size_.y / 2)
+	};
+	col_.RightDown = {
+		pos_.x + (sprite_->GetTexture().size_.x / 2),
+		pos_.y + (sprite_->GetTexture().size_.y / 2)
+	};
 
 	Vector2 mPos = MouseInput::GetInstance()->mPos_;
 	if (CheckBox2DtoPoint(col_, mPos))
