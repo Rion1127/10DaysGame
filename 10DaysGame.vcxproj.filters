@@ -480,6 +480,9 @@
     <ClCompile Include="application\Sourcecode\Button.cpp">
       <Filter>application\ソースファイル\UI</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Scene\TutorialScene.cpp">
+      <Filter>application\ソースファイル\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -745,6 +748,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Button.h">
       <Filter>application\ヘッダーファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Scene\TutorialScene.h">
+      <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
