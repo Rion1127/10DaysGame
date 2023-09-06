@@ -22,6 +22,9 @@ void LoadManager::LoadTexture()
 	LoadGraph("player.png", "Player");
 	//“G
 	LoadGraph("enemy.png", "Enemy");
+	//ƒ{ƒ^ƒ“UI
+	LoadGraph("gameStartButton.png", "GameStartButton");
+	LoadGraph("tutorialButton.png", "TutorialButton");
 }
 
 void LoadManager::LoadSound()

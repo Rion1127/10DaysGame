@@ -4,6 +4,7 @@
 #include "mSound.h"
 #include "Texture.h"
 #include "IScene.h"
+#include "Button.h"
 
 class TitleScene final :
 	public IScene
@@ -18,7 +19,9 @@ private:
 	DebugCamera debugCamera_;
 
 	TitleType type_;
-	std::unique_ptr<Sprite> tutorialButton_;
+	std::unique_ptr<Button> tutorialButton_;
+	std::unique_ptr<Button> mainGameButton_;
+	std::unique_ptr<Button> endlessButton_;
 public:
 	~TitleScene();
 
