@@ -24,6 +24,7 @@
     <ClCompile Include="application\Sourcecode\Animation\SlimeActor.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\SplineEase.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\YTimer.cpp" />
+    <ClCompile Include="application\Sourcecode\Button.cpp" />
     <ClCompile Include="application\Sourcecode\CollisionManager.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\Enemy.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\EnemyManager.cpp" />
@@ -37,6 +38,7 @@
     <ClCompile Include="application\Sourcecode\Scene\DebugScene.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\GameScene.cpp" />
     <ClCompile Include="application\Sourcecode\Scene\SceneManager.cpp" />
+    <ClCompile Include="application\Sourcecode\Scene\TitleScene.cpp" />
     <ClCompile Include="application\Sourcecode\Shader\Bloom.cpp" />
     <ClCompile Include="application\Sourcecode\Shader\CrossFilter.cpp" />
     <ClCompile Include="application\Sourcecode\Shader\GaussianBlur.cpp" />
@@ -104,6 +106,7 @@
     <ClInclude Include="application\Sourcecode\Animation\SlimeActor.h" />
     <ClInclude Include="application\Sourcecode\Animation\SplineEase.h" />
     <ClInclude Include="application\Sourcecode\Animation\YTimer.h" />
+    <ClInclude Include="application\Sourcecode\Button.h" />
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
     <ClInclude Include="application\Sourcecode\Enemy\Enemy.h" />
     <ClInclude Include="application\Sourcecode\Enemy\EnemyManager.h" />
@@ -117,6 +120,7 @@
     <ClInclude Include="application\Sourcecode\Scene\DebugScene.h" />
     <ClInclude Include="application\Sourcecode\Scene\GameScene.h" />
     <ClInclude Include="application\Sourcecode\Scene\SceneManager.h" />
+    <ClInclude Include="application\Sourcecode\Scene\TitleScene.h" />
     <ClInclude Include="application\Sourcecode\Shader\Bloom.h" />
     <ClInclude Include="application\Sourcecode\Shader\CrossFilter.h" />
     <ClInclude Include="application\Sourcecode\Shader\GaussianBlur.h" />

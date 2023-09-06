@@ -12,6 +12,7 @@ enum class SceneName {
 	Game,
 	GameOver,
 	GameClear,
+	Debug,
 	None
 };
 
@@ -23,7 +24,7 @@ private:
 	static SceneName ssceneName_;
 	static bool sisSetNext_;
 	static Timer animeTimer_;
-	static Sprite whiteSprite_;
+	
 public:
 	static void Ini();
 	static void Update();

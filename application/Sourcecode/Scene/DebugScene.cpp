@@ -23,7 +23,6 @@ void DebugScene::Ini()
 	player_->Initialize();
 	
 	mainSystem_->SetPlayer(player_.get());
-	//mainSystem_->SetEnemy(enemy_.get());
 }
 
 void DebugScene::Update()

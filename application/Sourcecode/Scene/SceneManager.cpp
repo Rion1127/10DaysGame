@@ -5,12 +5,12 @@
 
 #include "DebugScene.h"
 #include "GameScene.h"
+#include "TitleScene.h"
 
 std::unique_ptr<IScene> SceneManager::scurrentScene_ = nullptr;
 SceneName SceneManager::ssceneName_;
 bool SceneManager::sisSetNext_ = false;
 Timer SceneManager::animeTimer_;
-Sprite SceneManager::whiteSprite_;
 
 void SceneManager::Ini()
 {
@@ -27,10 +27,7 @@ void SceneManager::Ini()
 
 
 	animeTimer_.SetLimitTime(100);
-	whiteSprite_.Ini();
-	whiteSprite_.SetColor(Color(220, 220, 220, 0));
-	whiteSprite_.SetAnchor({0.f,0.f});
-	whiteSprite_.SetTexture(TextureManager::GetInstance()->GetTexture("White1280x720"));
+	
 }
 
 void SceneManager::Update()
@@ -57,10 +54,7 @@ void SceneManager::Update()
 	if (sisSetNext_)
 	{
 		animeTimer_.AddTime(1);
-		Color color = whiteSprite_.GetColor();
-		color.a = 255.f * animeTimer_.GetTimeRate();
-		whiteSprite_.SetColor(color);
-		whiteSprite_.Update();
+		
 		//ƒV[ƒ“‘JˆÚ
 		if (animeTimer_.GetIsEnd())
 		{
@@ -71,13 +65,8 @@ void SceneManager::Update()
 	{
 		if (animeTimer_.GetTimer() > 0)
 		{
-			animeTimer_.AddTime(-5);
+			animeTimer_.AddTime(-1);
 		}
-
-		Color color = whiteSprite_.GetColor();
-		color.a = 255.f * animeTimer_.GetTimeRate();
-		whiteSprite_.SetColor(color);
-		whiteSprite_.Update();
 	}
 }
 
@@ -87,22 +76,25 @@ void SceneManager::Draw()
 	scurrentScene_->Draw();
 
 	PipelineManager::PreDraw("Sprite",TRIANGLELIST);
-	whiteSprite_.Draw();
 }
 
 void SceneManager::SceneChange()
 {
 	if (ssceneName_ == SceneName::Title)
 	{
-		//Transition<TitleScene>();
+		Transition<TitleScene>();
 	}
 	else if (ssceneName_ == SceneName::Game)
 	{
-		//Transition<GameScene>();
+		Transition<GameScene>();
 	}
 	else if (ssceneName_ == SceneName::GameOver)
 	{
 		//Transition<GameOverScene>();
+	}
+	else if (ssceneName_ == SceneName::Debug)
+	{
+		Transition<DebugScene>();
 	}
 
 	sisSetNext_ = false;
