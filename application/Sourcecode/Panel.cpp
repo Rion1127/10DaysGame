@@ -47,6 +47,7 @@ Panel::Panel()
 	}
 	isSetComplete_ = false;
 	isAllFill_ = false;
+	updateType_ = UpdateType::All;
 	//スプライトのサイズ
 	spritePos_ = { 
 		WinAPI::GetWindowSize().x / 3.4f,
@@ -59,62 +60,69 @@ Panel::Panel()
 
 void Panel::Update()
 {
-	Vector2 mPos = MouseInput::GetInstance()->mPos_;
-
-	uint32_t emptyNum = 0;
-
-	for (int32_t y = 0; y < displayPanel_.size(); y++)
+	if (updateType_ == UpdateType::All)
 	{
-		for (int32_t x = 0; x < displayPanel_[y].size(); x++)
+		Vector2 mPos = MouseInput::GetInstance()->mPos_;
+
+		for (int32_t y = 0; y < displayPanel_.size(); y++)
 		{
-			Vector2 leftUp = {
-				spritePos_.x + (x * spriteSize_),
-				spritePos_.y + (y * spriteSize_),
-			};
-			Vector2 rightDown = {
-				spritePos_.x + ((x + 1) * spriteSize_),
-				spritePos_.y + ((y + 1) * spriteSize_),
-			};
-
-			Box2D box = {
-				leftUp,
-				rightDown
-			};
-			//選択している箇所の数値を変える
-			if (CheckBox2DtoPoint(box, mPos)) {
-				selectPos_ = { x,y };
-			}
-			else if(displayPanel_[x][y] != State::EMPTY)
+			for (int32_t x = 0; x < displayPanel_[y].size(); x++)
 			{
-				displayPanel_[x][y] = systemPanel_[x][y];
-			}
+				Vector2 leftUp = {
+					spritePos_.x + (x * spriteSize_),
+					spritePos_.y + (y * spriteSize_),
+				};
+				Vector2 rightDown = {
+					spritePos_.x + ((x + 1) * spriteSize_),
+					spritePos_.y + ((y + 1) * spriteSize_),
+				};
 
-			if (systemPanel_[x][y] == State::EMPTY)
-			{
-				emptyNum++;
+				Box2D box = {
+					leftUp,
+					rightDown
+				};
+				//選択している箇所の数値を変える
+				if (CheckBox2DtoPoint(box, mPos))
+				{
+					selectPos_ = { x,y };
+				}
+				else if (displayPanel_[x][y] != State::EMPTY)
+				{
+					displayPanel_[x][y] = systemPanel_[x][y];
+				}
 			}
 		}
-	}
-	//一つも置ける箇所がないとき
-	if (emptyNum == 0)
-	{
-		isAllFill_ = true;
+
+		//エラーが起きないように選択している場所をクランプする
+		SelectPosClamp(MinoList::GetMinoList((MinoType)minoType_));
+		//左クリックをしたらパネルを設置する
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+		{
+			SetPanel(MinoList::GetMinoList((MinoType)minoType_));
+
+			isAllFill_ = true;
+			for (int32_t y = 0; y < systemPanel_.size(); y++)
+			{
+				for (int32_t x = 0; x < systemPanel_[y].size(); x++)
+				{
+					if (systemPanel_[x][y] == State::EMPTY)
+					{
+						//空のパネルを見つけたらすべて埋まっているフラグをfalseにする
+						isAllFill_ = false;
+						break;
+					}
+				}
+			}
+		}
+		//見た目のパネルの配列を更新
+		DisplayPanelUpdate(MinoList::GetMinoList((MinoType)minoType_));
+
+		sprite_->Update(displayPanel_);
 	}
 	else
 	{
-		isAllFill_ = false;
+		sprite_->Update(displayPanel_);
 	}
-
-	//エラーが起きないように選択している場所をクランプする
-	SelectPosClamp(MinoList::GetMinoList((MinoType)minoType_));
-	//左クリックをしたらパネルを設置する
-	if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
-		SetPanel(MinoList::GetMinoList((MinoType)minoType_));
-	}
-	//見た目のパネルの配列を更新
-	DisplayPanelUpdate(MinoList::GetMinoList((MinoType)minoType_));
-	
-	sprite_->Update(displayPanel_);
 }
 
 void Panel::DrawSprite()

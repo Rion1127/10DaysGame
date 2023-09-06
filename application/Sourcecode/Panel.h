@@ -18,6 +18,10 @@ enum State {
 	SELECT,
 	TEMPPOS
 };
+enum class UpdateType {
+	All,
+	SpriteOnly
+};
 
 class PanelSprite {
 private:
@@ -70,6 +74,7 @@ private:
 	MinoType minoType_;
 	bool isSetComplete_;
 	bool isAllFill_;
+	UpdateType updateType_;
 	int32_t attackPanelNum_;
 public:
 	Panel();
@@ -91,6 +96,7 @@ public:
 	void SetSelectPos(Vector2 pos) { selectPos_.x = (int32_t)pos.x; selectPos_.y = (int32_t)pos.y;}
 	void SetisSetComplete(bool flag) { isSetComplete_ = flag; }
 	void SetMinoType(MinoType type) { minoType_ = type; }
+	void SetUpdateType(UpdateType type) { updateType_ = type; }
 public:
 	bool GetisSetComplete() { return isSetComplete_; }
 	bool GetIsAllFill() { return isAllFill_; }

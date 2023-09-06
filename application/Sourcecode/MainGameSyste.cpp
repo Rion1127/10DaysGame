@@ -23,6 +23,7 @@ void MainGameSyste::Update()
 	enemyManager_.Update();
 	panel_->Update();
 	if (enemyManager_.GetIsAllEnemyDestroy() == false) {
+		panel_->SetUpdateType(UpdateType::All);
 		//“G‚ÌUŒ‚
 		if (nowTurn_ == Turn::PLAYER) {
 			TurnPlayer();
@@ -44,7 +45,7 @@ void MainGameSyste::Update()
 	}
 	//ƒNƒŠƒA‚µ‚½‚ç
 	else {
-
+		panel_->SetUpdateType(UpdateType::SpriteOnly);
 	}
 
 	
