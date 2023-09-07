@@ -6,6 +6,8 @@
 #include "YCameraManager.h"
 #include "NextMinoDrawer.h"
 #include "Button.h"
+
+#include "MouseUI.h"
 class MainGameSyste
 {
 private:
@@ -51,6 +53,8 @@ private:
 
 	std::unique_ptr<Button> minoCountUpButton_;
 	Vector2 minoCountUpPos_;
+
+	MouseUI mouseUi_;
 public:
 	MainGameSyste();
 	void Update();

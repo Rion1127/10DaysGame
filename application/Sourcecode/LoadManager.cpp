@@ -31,6 +31,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("dotTest.png", "DotTest");
 	LoadGraph("retry.png", "Retry");
 	LoadGraph("minoCouintUp.png", "MinoCouintUp");
+	LoadGraph("mouse.png", "Mouse");
 }
 
 void LoadManager::LoadSound()

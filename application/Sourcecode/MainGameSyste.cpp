@@ -11,7 +11,7 @@ MainGameSyste::MainGameSyste()
 	nowTurn_ = Turn::PLAYER;
 	gameState_ = State::GAME;
 	//ƒ^[ƒ“‚²‚Æ‚É•â[‚·‚éƒ~ƒm‚Ì”
-	reloadMinoNum_ = 4;
+	reloadMinoNum_ = 2;
 
 	ReloadMino();
 
@@ -139,7 +139,7 @@ void MainGameSyste::Update()
 		}
 	}
 
-	
+	mouseUi_.Update();
 }
 
 void MainGameSyste::DrawSprite()
@@ -159,6 +159,7 @@ void MainGameSyste::DrawSprite()
 	
 	minoCountUpButton_->Draw();
 	nextMinoDrawer_.Draw();
+	mouseUi_.Draw();
 }
 
 void MainGameSyste::DrawImGui()
