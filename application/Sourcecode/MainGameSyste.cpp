@@ -91,7 +91,7 @@ void MainGameSyste::Update()
 		}
 
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
-			//1ターンに置くパーツの数を
+			//1ターンに置くパーツの数を増やす
 			if (minoCountUpButton_->GetIsCollision()) {
 				MinoCountUp();
 			}
@@ -236,6 +236,7 @@ void MainGameSyste::TurnPlayer()
 	//パネルの設置が成功したら
 	if (panel_->GetisSetComplete()) {
 		panel_->SetisSetComplete(false);
+		panel_->SetRotNum(0);
 		//配置出来たミノを消す
 		minos_.erase(minos_.begin());
 

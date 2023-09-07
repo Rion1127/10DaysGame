@@ -56,6 +56,8 @@ Panel::Panel()
 	spriteSize_ = 32;
 	spriteScale_ = 1;
 	sprite_ = std::make_unique<PanelSprite>(maxPanelSize_, spritePos_, spriteScale_);
+
+	rotNum_ = 0;
 }
 
 void Panel::Update()
@@ -96,13 +98,18 @@ void Panel::Update()
 				}
 			}
 		}
-
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_RIGHT))
+		{
+			rotNum_++;
+			if (rotNum_ > 3)rotNum_ = 0;
+		}
+		nowMino_ = SetRotMino(MinoList::GetMinoList((MinoType)minoType_));
 		//エラーが起きないように選択している場所をクランプする
-		SelectPosClamp(MinoList::GetMinoList((MinoType)minoType_));
+		SelectPosClamp(nowMino_);
 		//左クリックをしたらパネルを設置する
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
 		{
-			SetPanel(MinoList::GetMinoList((MinoType)minoType_));
+			SetPanel(nowMino_);
 
 			isAllFill_ = true;
 			for (int32_t y = 0; y < systemPanel_.size(); y++)
@@ -119,7 +126,7 @@ void Panel::Update()
 			}
 		}
 		//見た目のパネルの配列を更新
-		DisplayPanelUpdate(MinoList::GetMinoList((MinoType)minoType_));
+		DisplayPanelUpdate(nowMino_);
 
 		sprite_->Update(displayPanel_);
 	}
@@ -366,6 +373,57 @@ void Panel::SelectPosClamp(const Mino& mino)
 	if (selectPos_.x < 0) {
 		selectPos_.x = Max(selectPos_.x, 0);
 	}
+}
+
+Mino Panel::SetRotMino(const Mino& mino)
+{
+	Mino result{};
+
+	size_t sizeX = mino.panel_[0].size();
+	size_t sizeY = mino.panel_.size();
+	if (rotNum_ == 0) {
+		result = mino;
+		return result;
+	}
+	if (rotNum_ == 1) {
+		result.panel_.resize(sizeX);//x
+		for (int32_t i = 0; i < result.panel_.size(); i++)
+		{
+			result.panel_[i].resize(sizeY);//y
+		}
+	}
+	else if (rotNum_ == 2) {
+		result.panel_.resize(sizeY);//x
+		for (int32_t i = 0; i < result.panel_.size(); i++)
+		{
+			result.panel_[i].resize(sizeX);//y
+		}
+	}
+	else if (rotNum_ == 3) {
+		result.panel_.resize(sizeX);//x
+		for (int32_t i = 0; i < result.panel_.size(); i++)
+		{
+			result.panel_[i].resize(sizeY);//y
+		}
+	}
+
+	for (uint32_t y = 0; y < sizeY; y++) {
+		for (uint32_t x = 0; x < sizeX; x++) {
+			if (rotNum_ == 1) {
+				result.panel_[x][y] =
+					mino.panel_[sizeY - 1 - y][x];
+			}
+			else if (rotNum_ == 2) {
+				result.panel_[y][x] =
+					mino.panel_[sizeY - 1 - y][sizeX - 1 - x];
+			}
+			else if (rotNum_ == 3) {
+				result.panel_[x][y] =
+					mino.panel_[y][sizeX - 1 - x];
+			}
+		}
+	}
+	return result;
 }
 
 void Panel::SetPanel(const Mino& mino)
