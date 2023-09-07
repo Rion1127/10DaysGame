@@ -11,7 +11,7 @@ void BlockDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matP
 	ChangeColor(colorType);
 }
 
-void BlockDrawer::ChangeColor(const BlockColorType& colorType)
+void BlockDrawer::ChangeColor(const BlockColorType colorType)
 {
 	colorType_ = colorType;
 

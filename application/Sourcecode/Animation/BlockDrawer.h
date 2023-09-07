@@ -39,7 +39,7 @@ namespace YGame
 		/// 色変更
 		/// </summary>
 		/// <param name="colorType"> : 色</param>
-		void ChangeColor(const BlockColorType& colorType);
+		void ChangeColor(const BlockColorType colorType);
 
 		/// <summary>
 		/// 色取得

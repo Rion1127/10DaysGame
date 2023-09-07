@@ -11,7 +11,7 @@ MainGameSyste::MainGameSyste()
 	nowTurn_ = Turn::PLAYER;
 	gameState_ = State::GAME;
 	//ƒ^[ƒ“‚²‚Æ‚É•â[‚·‚éƒ~ƒm‚Ì”
-	reloadMinoNum_ = 1;
+	reloadMinoNum_ = 4;
 
 	ReloadMino();
 

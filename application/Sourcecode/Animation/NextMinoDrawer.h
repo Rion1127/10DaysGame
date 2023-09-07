@@ -40,13 +40,13 @@ namespace YGame
 
 			// 初期化
 			void Initialize(const YTransform::Status& trfmStatus);
-			
+
 			// 更新
 			void Update();
 
 			// 描画
 			void Draw();
-			
+
 			// ミノ替えアニメ
 			void ChangeMinoAnimation(const MinoType type);
 			
@@ -54,12 +54,17 @@ namespace YGame
 			void InvisibleMinoAnimation();
 		
 		private:
+
+			// ミノ変更
+			void ChangeMino();
+		
+		private:
 			
 			YTransform trfm_;
 
 			MinoType type_;
 
-			BlockDrawer drawer_;
+			std::array<BlockDrawer, 4> drawers_;
 
 			SlimeActor slime_;
 

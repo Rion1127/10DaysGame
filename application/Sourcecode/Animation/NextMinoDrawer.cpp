@@ -4,28 +4,35 @@ using YGame::NextMinoDrawer;
 
 void NextMinoDrawer::Initialize()
 {
-	for (size_t i = 0; i < nextMinos_.size(); i++)
+	static const float kScale = 0.75f;
+	
+		for (size_t i = 0; i < nextMinos_.size(); i++)
 	{
 		YTransform::Status status;
 
 		if (i == 0)
 		{
-			status.pos_ = 
-			{ 
-				570.0f, 
-				300.0f, 
-				0.0f 
-			};
-			status.scale_ = { 2.0f,2.0f,0.0f };
+			status.scale_ = { 0.0f,0.0f,0.0f };
 		}
-		else
+		if (i == 1)
 		{
 			status.pos_ = 
 			{ 
-				580.0f,
-				300.0f + 100.0f * static_cast<float>(i), 
+				600.0f, 
+				300.0f, 
+				0.0f 
+			};
+			status.scale_ = { kScale,kScale,0.0f };
+		}
+		else
+		{
+
+			status.pos_ = 
+			{ 
+				620.0f,
+				250.0f + 75.0f * static_cast<float>(i), 
 				0.0f };
-			status.scale_ = { 1.0f,1.0f,0.0f };
+			status.scale_ = { kScale / 1.5f,kScale / 1.5f,0.0f };
 		}
 
 		nextMinos_[i].Initialize(status);
@@ -49,6 +56,7 @@ void NextMinoDrawer::Draw()
 {
 	for (size_t i = 0; i < nextMinos_.size(); i++)
 	{
+		if (i == 0) { continue; }
 		nextMinos_[i].Draw();
 	}
 }
@@ -91,7 +99,11 @@ void NextMinoDrawer::ChangeNextMino(const std::vector<MinoType>& minos)
 void NextMinoDrawer::NextMino::Initialize(const YTransform::Status& trfmStatus)
 {
 	trfm_.Initialize(trfmStatus);
-	drawer_.Initialize(YTransform::Status::Default(), &trfm_.m_, BlockColorType::None);
+
+	for (size_t i = 0; i < drawers_.size(); i++)
+	{
+		drawers_[i].Initialize(YTransform::Status::Default(), &trfm_.m_, BlockColorType::None);
+	}
 
 	slime_.Initialize(
 		20,
@@ -111,20 +123,7 @@ void NextMinoDrawer::NextMino::Update()
 	colorTim_.Update();
 	if (colorTim_.IsEnd())
 	{
-		BlockColorType colorType = BlockColorType::None;
-
-		if (isInvisible_ == false)
-		{
-			if (type_ == MinoType::Omino) { colorType = BlockColorType::Yellow; }
-			if (type_ == MinoType::Tmino) { colorType = BlockColorType::Purple; }
-			if (type_ == MinoType::Smino) { colorType = BlockColorType::Green; }
-			if (type_ == MinoType::Zmino) { colorType = BlockColorType::Red; }
-			if (type_ == MinoType::Imino) { colorType = BlockColorType::Cyan; }
-			if (type_ == MinoType::Lmino) { colorType = BlockColorType::Orange; }
-			if (type_ == MinoType::Jmino) { colorType = BlockColorType::Blue; }
-		}
-
-		drawer_.ChangeColor(colorType);
+		ChangeMino();
 
 		colorTim_.Reset();
 	}
@@ -139,12 +138,19 @@ void NextMinoDrawer::NextMino::Update()
 	}
 
 	trfm_.UpdateMatrix({ {}, {}, scale });
-	drawer_.Update();
+
+	for (size_t i = 0; i < drawers_.size(); i++)
+	{
+		drawers_[i].Update();
+	}
 }
 
 void NextMinoDrawer::NextMino::Draw()
 {
-	drawer_.Draw();
+	for (size_t i = 0; i < drawers_.size(); i++)
+	{
+		drawers_[i].Draw();
+	}
 }
 
 void NextMinoDrawer::NextMino::ChangeMinoAnimation(const MinoType type)
@@ -163,5 +169,59 @@ void NextMinoDrawer::NextMino::InvisibleMinoAnimation()
 	colorTim_.Reset(true);
 	
 	isInvisible_ = true;
+}
+
+void NextMinoDrawer::NextMino::ChangeMino()
+{
+	BlockColorType colorType = BlockColorType::None;
+
+	if (isInvisible_ == false)
+	{
+		if (type_ == MinoType::Omino) { colorType = BlockColorType::Yellow; }
+		if (type_ == MinoType::Tmino) { colorType = BlockColorType::Purple; }
+		if (type_ == MinoType::Smino) { colorType = BlockColorType::Green; }
+		if (type_ == MinoType::Zmino) { colorType = BlockColorType::Red; }
+		if (type_ == MinoType::Imino) { colorType = BlockColorType::Cyan; }
+		if (type_ == MinoType::Lmino) { colorType = BlockColorType::Orange; }
+		if (type_ == MinoType::Jmino) { colorType = BlockColorType::Blue; }
+	}
+
+	for (size_t i = 0; i < drawers_.size(); i++)
+	{
+		drawers_[i].ChangeColor(colorType);
+	}
+
+	if (isInvisible_) { return; }
+
+	// パネル位置変更
+	std::vector<std::vector<uint32_t>> panel = MinoList::GetMinoList(type_).panel_;
+	size_t dIndex = 0;
+
+	Vector3 offset;
+
+	if (type_ == MinoType::Omino) { offset = { -32.0f,-32.0f,0.0f }; }
+	if (type_ == MinoType::Tmino) { offset = { -48.0f,-32.0f,0.0f }; }
+	if (type_ == MinoType::Smino) { offset = { -48.0f,-32.0f,0.0f }; }
+	if (type_ == MinoType::Zmino) { offset = { -48.0f,-32.0f,0.0f }; }
+	if (type_ == MinoType::Imino) { offset = { -16.0f,-64.0f,0.0f }; }
+	if (type_ == MinoType::Lmino) { offset = { -48.0f,-32.0f,0.0f }; }
+	if (type_ == MinoType::Jmino) { offset = { -48.0f,-32.0f,0.0f }; }
+
+	for (size_t i = 0; i < panel.size(); i++)
+	{
+		for (size_t j = 0; j < panel[i].size(); j++)
+		{
+			if (panel[i][j] != 1) { continue; }
+		
+			YTransform::Status status = YTransform::Status::Default();
+
+			status.pos_ = { 32.0f * j, 32.0f * i, 0.0f };
+			status.pos_ += offset;
+
+			drawers_[dIndex].SetTransform(status);
+
+			dIndex++;
+		}
+	}
 }
 
