@@ -11,8 +11,8 @@
 #include "Enemy.h"
 #include "MainGameSyste.h"
 
-class DebugScene final:
-    public IScene
+class TutorialScene :
+	public IScene
 {
 private:
 	SoundManager* sound_ = nullptr;
@@ -21,16 +21,12 @@ private:
 	std::unique_ptr<MainGameSyste> mainSystem_;
 	std::unique_ptr<Player> player_ = nullptr;
 	MinoList minoList_;
-
-	Sprite dotSprite_;
 public:
-	~DebugScene();
+	~TutorialScene();
 
 	void Ini()override;
 
 	void Update()override;
 
 	void Draw()override;
-private:
 };
-

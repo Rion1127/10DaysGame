@@ -2,13 +2,16 @@
 #include "RRandom.h"
 #include "SceneManager.h"
 
+using YGame::YCameraManager;
+
 MainGameSyste::MainGameSyste()
 {
 	panel_ = std::make_unique<Panel>();
 
 	nowTurn_ = Turn::PLAYER;
+	gameState_ = State::GAME;
 	//ターンごとに補充するミノの数
-	reloadMinoNum_ = 2;
+	reloadMinoNum_ = 1;
 
 	ReloadMino();
 
@@ -18,12 +21,47 @@ MainGameSyste::MainGameSyste()
 	cameraManager_ = YCameraManager::GetInstance();
 	cameraManager_->Initialize();
 
-	Vector2 pos = {
+	SpriteInit();
+	CostInit();
+}
+
+void MainGameSyste::SpriteInit()
+{
+	uiUpPos_ = {
 		WinAPI::GetWindowSize().x / 2.f,
-		WinAPI::GetWindowSize().y / 1.5f
+		WinAPI::GetWindowSize().y / 1.3f
 	};
-	clearButton_ = std::make_unique<Button>(pos);
-	clearButton_->SetTexture(TextureManager::GetInstance()->GetTexture("TitleButton"));
+	titleButton_ = std::make_unique<Button>(uiUpPos_);
+	titleButton_->SetTexture(TextureManager::GetInstance()->GetTexture("TitleButton"));
+	uiDownPos_ = {
+		WinAPI::GetWindowSize().x / 2.f,
+		WinAPI::GetWindowSize().y / 1.1f
+	};
+	retryButton_ = std::make_unique<Button>(uiUpPos_);
+	retryButton_->SetTexture(TextureManager::GetInstance()->GetTexture("Retry"));
+
+	minoCountUpPos_ = {
+		WinAPI::GetWindowSize().x / 1.3f,
+		WinAPI::GetWindowSize().y / 1.3f
+	};
+	minoCountUpButton_ = std::make_unique<Button>(minoCountUpPos_);
+	minoCountUpButton_->SetTexture(TextureManager::GetInstance()->GetTexture("MinoCouintUp"));
+}
+
+void MainGameSyste::CostInit()
+{
+	powerLevel_ = 1;
+	powerUpCost_.push_back(10);
+	powerUpCost_.push_back(20);
+	powerUpCost_.push_back(30);
+	powerUpCost_.push_back(40);
+
+	minoCountLevel_ = 1;
+	minoCountUpCost_.push_back(50);
+	minoCountUpCost_.push_back(60);
+	minoCountUpCost_.push_back(70);
+	minoCountUpCost_.push_back(80);
+	minoCountUpCost_.push_back(90);
 }
 
 void MainGameSyste::Update()
@@ -31,6 +69,7 @@ void MainGameSyste::Update()
 	enemyManager_.Update();
 	panel_->Update();
 	if (enemyManager_.GetIsAllEnemyDestroy() == false) {
+		gameState_ = State::GAME;
 		panel_->SetUpdateType(UpdateType::All);
 		//敵の攻撃
 		if (nowTurn_ == Turn::PLAYER) {
@@ -50,18 +89,33 @@ void MainGameSyste::Update()
 		if (nowTurn_ != Turn::CHANGE) {
 			prevTurn_ = nowTurn_;
 		}
+
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+			//1ターンに置くパーツの数を
+			if (minoCountUpButton_->GetIsCollision()) {
+				MinoCountUp();
+			}
+		}
+		minoCountUpButton_->Update();
 	}
 	//クリアしたら
 	else {
+		gameState_ = State::CLEAR;
 		panel_->SetUpdateType(UpdateType::SpriteOnly);
 
-		if (clearButton_->GetIsCollision())
-		{
-			SceneManager::SetChangeStart(SceneName::Title);
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+			if (titleButton_->GetIsCollision())
+			{
+
+				SceneManager::SetChangeStart(SceneName::Title);
+			}
 		}
 	}
 
-	
+	if (player_->GetIsAlive() == false) {
+		gameState_ = State::GAMEOVER;
+		panel_->SetUpdateType(UpdateType::SpriteOnly);
+	}
 
 	if (enemyManager_.GetIsChangeNowEnemy() || enemyManager_.GetNowEnemy() == nullptr) {
 		enemy_ = enemyManager_.GetNowEnemy();
@@ -71,17 +125,36 @@ void MainGameSyste::Update()
 	// カメラ更新
 	cameraManager_->Update();
 
-	clearButton_->Update();
+	if (gameState_ == State::CLEAR ||
+		gameState_ == State::GAMEOVER)
+	{
+		//クリアの時はタイトルに戻るスプライトだけ有効にする
+		titleButton_->Update();
+		//ゲームオーバー
+		if (gameState_ == State::GAMEOVER) {
+			GameOverUpdate();
+		}
+	}
+
+	
 }
 
 void MainGameSyste::DrawSprite()
 {
 	panel_->DrawSprite();
 	enemyManager_.Draw();
-	if (enemyManager_.GetIsAllEnemyDestroy() == true)
+	if (gameState_ == State::CLEAR ||
+		gameState_ == State::GAMEOVER)
 	{
-		clearButton_->Draw();
+		//クリアの時はタイトルに戻るスプライトだけ有効にする
+		titleButton_->Draw();
+
+		if (gameState_ == State::GAMEOVER) {
+			retryButton_->Draw();
+		}
 	}
+	
+	minoCountUpButton_->Draw();
 }
 
 void MainGameSyste::DrawImGui()
@@ -103,10 +176,18 @@ void MainGameSyste::DrawImGui()
 
 	std::string gameStatestring = "GameState : ";
 
-	if (enemyManager_.GetIsAllEnemyDestroy())gameStatestring += "Clear";
-	else gameStatestring += "fighting";
+	if (gameState_ == State::CLEAR)gameStatestring += "Clear";
+	else if (gameState_ == State::GAME) gameStatestring += "fighting";
+	else if (gameState_ == State::GAMEOVER) gameStatestring += "GAMEOVER";
 
 	ImGui::Text(gameStatestring.c_str());
+
+	ImGui::End();
+
+	ImGui::Begin("Cost");
+
+	ImGui::Text("powerUpCost : %d , Now : %d", powerUpCost_.at(powerLevel_ - 1), panel_->GetEmptyPanelNum());
+	ImGui::Text("minoCountUpCost : %d , Now : %d", minoCountUpCost_.at(powerLevel_ - 1), panel_->GetEmptyPanelNum());
 
 	ImGui::End();
 }
@@ -162,7 +243,6 @@ void MainGameSyste::TurnPlayer()
 		if (minos_.size() <= 0 || panel_->GetIsAllFill()) {
 			//パネル更新
 			panel_->PanelUpdate();
-			reloadMinoNum_ = 2;
 			//敵にダメージを与える
 			int32_t damage = panel_->GetAttackPanelNum() * player_->GetAttackPower();
 			enemy_->Damage(damage);
@@ -182,4 +262,36 @@ void MainGameSyste::TurnEnemy()
 
 	//処理が終わったらシーンをチェンジする
 	nowTurn_ = Turn::CHANGE;
+}
+
+void MainGameSyste::GameOverUpdate()
+{
+	retryButton_->Update();
+
+	titleButton_->SetPos(uiDownPos_);
+	retryButton_->SetPos(uiUpPos_);
+
+	if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		if (titleButton_->GetIsCollision())
+		{
+			SceneManager::SetChangeStart(SceneName::Title);
+		}
+		else if (retryButton_->GetIsCollision())
+		{
+
+			SceneManager::SetChangeStart(SceneName::Game);
+		}
+	}
+}
+
+void MainGameSyste::MinoCountUp()
+{
+	const int32_t cost = minoCountUpCost_.at(minoCountLevel_ - 1);
+	int32_t nowEmptyPanelNum = panel_->GetEmptyPanelNum();
+	//空白のパネルがコストよりも多ければ
+	if (cost <= nowEmptyPanelNum) {
+		minoCountLevel_++;
+		reloadMinoNum_++;
+		panel_->PanelReset();
+	}
 }

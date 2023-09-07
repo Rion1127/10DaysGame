@@ -9,30 +9,18 @@ Enemy::Enemy(int32_t health, int32_t attackPower) :
 
 void Enemy::Initialize() 
 {
-	trfm_.Initialize();
-	trfm_.pos_ = Vector3(sprite_->GetPos().x, sprite_->GetPos().y, 0.0f);
-
-	hitActor_.Initialize();
 }
 
 void Enemy::Update()
 {
-	hitActor_.Update();
-	
-	Vector3 pos;
-	pos += YCameraManager::GetInstance()->GetCameraPos();
-	pos += hitActor_.ShakePosValue();
+	trfm_.UpdateMatrix({ YGame::YCameraManager::GetInstance()->GetCameraPos(), {}, {} });
 
-	trfm_.UpdateMatrix({ pos });
-	
-	sprite_->SetColor(hitActor_.ColorValue());
-
-	sprite_->Update(trfm_.m_);
+	drawer_.Update();
 }
 
 void Enemy::Draw()
 {
-	sprite_->Draw();
+	drawer_.Draw();
 }
 
 void Enemy::DrawImGui()

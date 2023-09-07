@@ -5,33 +5,34 @@
 
 void Player::Initialize()
 {	
-	sprite_ = std::make_unique<Sprite>();
-	sprite_->Ini();
-	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Player"));
-
-	Vector2 pos = {
+	Vector3 pos = {
 		WinAPI::GetWindowSize().x / 3.4f,
-		WinAPI::GetWindowSize().y / 5.f
+		WinAPI::GetWindowSize().y / 5.f,
+		0.0f
 	};
-	sprite_->SetPos(pos);
 
 	health_ = 100;
 	attackpower_ = 2;
+	isAlive_ = true;
 
 	// トランスフォーム
 	trfm_.Initialize();
-	trfm_.pos_ = Vector3(sprite_->GetPos().x, sprite_->GetPos().y, 0.0f);
-	
+	trfm_.pos_ = pos;
+
 	// アニメーション用
+	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_.m_);
 	sword_.Initialize(20, 20, &trfm_.m_);
 }
 
 void Player::Update()
 {
-	trfm_.UpdateMatrix({ YCameraManager::GetInstance()->GetCameraPos(), {}, {} });
-	
-	sprite_->Update(trfm_.m_);
-	
+	trfm_.UpdateMatrix({ YGame::YCameraManager::GetInstance()->GetCameraPos(), {}, {} });
+
+	if (health_ <= 0) {
+		isAlive_ = false;
+	}
+
+	drawer_.Update();
 	sword_.Update();
 }
 
@@ -42,8 +43,7 @@ void Player::AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndic
 
 void Player::Draw()
 {
-	sprite_->Draw();
-
+	drawer_.Draw();
 	sword_.Draw();
 }
 
@@ -51,5 +51,13 @@ void Player::DrawImGui()
 {
 	ImGui::Begin("player");
 	ImGui::Text("HP : %d", health_);
+	ImGui::Text("power : %d", attackpower_);
 	ImGui::End();
+}
+
+void Player::Damage(int32_t damage)
+{
+	health_ -= damage;
+
+	drawer_.HitAnimation();
 }

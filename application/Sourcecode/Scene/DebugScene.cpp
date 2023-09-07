@@ -23,6 +23,10 @@ void DebugScene::Ini()
 	player_->Initialize();
 	
 	mainSystem_->SetPlayer(player_.get());
+
+	dotSprite_.SetTexture(TextureManager::GetInstance()->GetTexture("DotTest"));
+	dotSprite_.Ini();
+	dotSprite_.SetPos(Vector2(100,800));
 }
 
 void DebugScene::Update()
@@ -33,6 +37,7 @@ void DebugScene::Update()
 
 	mainSystem_->Update();
 	player_->Update();
+	dotSprite_.Update();
 }
 
 void DebugScene::Draw()
@@ -40,6 +45,7 @@ void DebugScene::Draw()
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	mainSystem_->DrawSprite();
 	player_->Draw();
+	dotSprite_.Draw();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);

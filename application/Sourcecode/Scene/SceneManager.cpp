@@ -11,6 +11,7 @@ std::unique_ptr<IScene> SceneManager::scurrentScene_ = nullptr;
 SceneName SceneManager::ssceneName_;
 bool SceneManager::sisSetNext_ = false;
 Timer SceneManager::animeTimer_;
+GameMode SceneManager::sgameMode_;
 
 void SceneManager::Ini()
 {
@@ -36,7 +37,7 @@ void SceneManager::Update()
 
 #ifdef _DEBUG
 	if (Key::TriggerKey(DIK_1)) {
-		//Transition<TitleScene>();
+		Transition<TitleScene>();
 	}
 	if (Key::TriggerKey(DIK_2)) {
 		Transition<GameScene>();
@@ -88,10 +89,6 @@ void SceneManager::SceneChange()
 	{
 		Transition<GameScene>();
 	}
-	else if (ssceneName_ == SceneName::GameOver)
-	{
-		//Transition<GameOverScene>();
-	}
 	else if (ssceneName_ == SceneName::Debug)
 	{
 		Transition<DebugScene>();
@@ -112,11 +109,6 @@ void SceneManager::SetChangeStart(const SceneName sceneName) {
 		if (sceneName == SceneName::Game)
 		{
 			animeTimer_.SetLimitTime(100);
-		}
-		//ゲームオーバーシーンへ
-		else if (sceneName == SceneName::GameOver)
-		{
-			animeTimer_.SetLimitTime(120);
 		}
 	}
 }

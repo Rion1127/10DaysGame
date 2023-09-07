@@ -4,7 +4,7 @@
 EnemyManager::EnemyManager()
 {
 #ifdef _DEBUG
-	list_.SetEnemy("Stage1", &enemyList_);
+	list_.SetEnemy("MainGame", &enemyList_);
 
 	nowEnemy_.swap(enemyList_[0]);
 	enemyList_.erase(enemyList_.begin());
@@ -49,15 +49,15 @@ void EnemyManager::DrawImGui()
 #pragma region
 EnemyPopDataList::EnemyPopDataList()
 {
-	PopData stage1;
-	stage1.enemyData.resize(2);
-	for (int32_t i = 0; i < stage1.enemyData.size(); i++) {
-		stage1.enemyData[i] = {
-			10,
-			5 + (2 * i)
+	PopData mainGame;
+	mainGame.enemyData.resize(3);
+	for (int32_t i = 0; i < mainGame.enemyData.size(); i++) {
+		mainGame.enemyData[i] = {
+			10 + 4 * i,
+			3 + (2 * i)
 		};
 	}
-	dataList_.insert(std::make_pair("Stage1",stage1));
+	dataList_.insert(std::make_pair("MainGame", mainGame));
 }
 
 void EnemyPopDataList::SetEnemy(std::string name, std::vector<std::unique_ptr<IEnemy>>* enemy)

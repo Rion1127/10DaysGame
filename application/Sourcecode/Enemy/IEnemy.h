@@ -1,23 +1,18 @@
 #pragma once
-#include "Vector2.h"
-#include "Sprite.h"
-
-#include "YTransform.h"
-#include "HitActor.h"
+#include "EnemyDrawer.h"
 
 class IEnemy
 {
 protected:
-	// トランスフォーム
-	YGame::YTransform trfm_;
-	// 被弾アニメーション
-	YGame::HitActor hitActor_;
-
-	std::unique_ptr<Sprite> sprite_ = nullptr;
-
 	int32_t health_;
 	bool isAlive_;
 	int32_t attackPower_;
+	
+	// トランスフォーム
+	YGame::YTransform trfm_;
+
+	// アニメーション
+	YGame::EnemyDrawer drawer_;
 public:
 	IEnemy();
 	IEnemy(int32_t health, int32_t attackPower);

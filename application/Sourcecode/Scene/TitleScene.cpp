@@ -26,15 +26,21 @@ void TitleScene::Ini()
 	};
 	Vector2 mainGamePos;
 	mainGamePos = {
-		WinAPI::GetWindowSize().x / 1.5f,
+		WinAPI::GetWindowSize().x / 2.f,
 		WinAPI::GetWindowSize().y / 1.2f,
 	};
 	Vector2 endlessPos;
+	endlessPos = {
+		WinAPI::GetWindowSize().x / 1.3f,
+		WinAPI::GetWindowSize().y / 1.2f,
+	};
 	tutorialButton_ = std::make_unique<Button>(tutorialPos);
 	tutorialButton_->SetTexture(TextureManager::GetInstance()->GetTexture("TutorialButton"));
 	mainGameButton_ = std::make_unique<Button>(mainGamePos);
 	mainGameButton_->SetTexture(TextureManager::GetInstance()->GetTexture("GameStartButton"));
 	endlessButton_ = std::make_unique<Button>(endlessPos);
+	endlessButton_->SetTexture(TextureManager::GetInstance()->GetTexture("EndlessButton"));
+
 }
 
 void TitleScene::Update()
@@ -54,12 +60,23 @@ void TitleScene::Update()
 		//選択したシーンに切り替える
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
 		{
+			//チュートリアルへ
 			if (tutorialButton_->GetIsCollision())
 			{
 				SceneManager::SetChangeStart(SceneName::Debug);
-			}else if (mainGameButton_->GetIsCollision())
+				SceneManager::SetGameMode(GameMode::Tutorial);
+			}
+			//本編へ
+			else if (mainGameButton_->GetIsCollision())
 			{
 				SceneManager::SetChangeStart(SceneName::Game);
+				SceneManager::SetGameMode(GameMode::MainGame);
+			}
+			//エンドレスへ
+			else if (mainGameButton_->GetIsCollision())
+			{
+				SceneManager::SetChangeStart(SceneName::Game);
+				SceneManager::SetGameMode(GameMode::EndLess);
 			}
 		}
 
@@ -68,6 +85,7 @@ void TitleScene::Update()
 
 	tutorialButton_->Update();
 	mainGameButton_->Update();
+	endlessButton_->Update();
 }
 
 void TitleScene::Draw()
@@ -77,6 +95,7 @@ void TitleScene::Draw()
 	{
 		tutorialButton_->Draw();
 		mainGameButton_->Draw();
+		endlessButton_->Draw();
 	}
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 

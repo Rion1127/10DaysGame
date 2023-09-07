@@ -1,9 +1,20 @@
 #pragma once
-#include "Sword.h"
+#include "PlayerDrawer.h"
+#include "SwordDrawer.h"
 
 class Player
 {
+private:
+	int32_t health_;
+	int32_t attackpower_;
+	bool isAlive_;
 
+	// トランスフォーム
+	YGame::YTransform trfm_;
+
+	// アニメーション
+	YGame::PlayerDrawer drawer_;
+	YGame::SwordDrawer sword_;
 public:
 
 	void Initialize();
@@ -15,16 +26,10 @@ public:
 	void Draw();
 	void DrawImGui();
 public:
-	void Damage(int32_t damage) { health_ -= damage; }
+	void Damage(int32_t damage);
+	void SetAttackPower(int32_t power) { attackpower_ = power; }
 public:
 	int32_t GetAttackPower() { return attackpower_; }
-private:
-	YGame::YTransform trfm_;
-
-	std::unique_ptr<Sprite> sprite_ = nullptr;
-	int32_t health_;
-	int32_t attackpower_;
-
-	Sword sword_;
+	bool GetIsAlive() { return isAlive_; }
 };
 
