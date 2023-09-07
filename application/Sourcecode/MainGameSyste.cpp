@@ -40,21 +40,12 @@ void MainGameSyste::SpriteInit()
 	retryButton_ = std::make_unique<Button>(uiUpPos_);
 	retryButton_->SetTexture(TextureManager::GetInstance()->GetTexture("Retry"));
 
-	powerUpPos_ = {
+	minoCountUpPos_ = {
 		WinAPI::GetWindowSize().x / 1.3f,
 		WinAPI::GetWindowSize().y / 1.3f
 	};
-	powerUpButton_ = std::make_unique<Button>(powerUpPos_);
-	powerUpButton_->SetTexture(TextureManager::GetInstance()->GetTexture("PowerUp"));
-
-
-	minoCountUpPos_ = {
-		WinAPI::GetWindowSize().x / 1.3f,
-		WinAPI::GetWindowSize().y / 1.15f
-	};
 	minoCountUpButton_ = std::make_unique<Button>(minoCountUpPos_);
 	minoCountUpButton_->SetTexture(TextureManager::GetInstance()->GetTexture("MinoCouintUp"));
-
 }
 
 void MainGameSyste::CostInit()
@@ -100,15 +91,12 @@ void MainGameSyste::Update()
 		}
 
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
-			//パワーアップ
-			if (powerUpButton_->GetIsCollision()) {
-				PowerUp();
-			}
 			//1ターンに置くパーツの数を
 			if (minoCountUpButton_->GetIsCollision()) {
 				MinoCountUp();
 			}
 		}
+		minoCountUpButton_->Update();
 	}
 	//クリアしたら
 	else {
@@ -148,8 +136,7 @@ void MainGameSyste::Update()
 		}
 	}
 
-	powerUpButton_->Update();
-	minoCountUpButton_->Update();
+	
 }
 
 void MainGameSyste::DrawSprite()
@@ -166,7 +153,7 @@ void MainGameSyste::DrawSprite()
 			retryButton_->Draw();
 		}
 	}
-	powerUpButton_->Draw();
+	
 	minoCountUpButton_->Draw();
 }
 
@@ -297,24 +284,13 @@ void MainGameSyste::GameOverUpdate()
 	}
 }
 
-void MainGameSyste::PowerUp()
-{
-	const int32_t cost = powerUpCost_.at(powerLevel_ - 1);
-	int32_t nowEmptyPanelNum = panel_->GetEmptyPanelNum();
-	if (cost <= nowEmptyPanelNum) {
-		int32_t power = player_->GetAttackPower();
-		power += 1;
-		player_->SetAttackPower(power);
-
-		panel_->PanelReset();
-	}
-}
-
 void MainGameSyste::MinoCountUp()
 {
 	const int32_t cost = minoCountUpCost_.at(minoCountLevel_ - 1);
 	int32_t nowEmptyPanelNum = panel_->GetEmptyPanelNum();
+	//空白のパネルがコストよりも多ければ
 	if (cost <= nowEmptyPanelNum) {
+		minoCountLevel_++;
 		reloadMinoNum_++;
 		panel_->PanelReset();
 	}

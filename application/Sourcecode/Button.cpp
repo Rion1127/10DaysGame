@@ -36,12 +36,14 @@ void Button::Update()
 	if (CheckBox2DtoPoint(col_, mPos))
 	{
 		isCollision_ = true;
-		sprite_->SetColor(Color(0, 0, 0, 255));
+		
+		state_ = PipeLineState::Sub;
 	}
 	else
 	{
 		isCollision_ = false;
-		sprite_->SetColor(Color(255, 255, 255, 255));
+		
+		state_ = PipeLineState::Alpha;
 	}
 
 	sprite_->Update();
@@ -49,7 +51,9 @@ void Button::Update()
 
 void Button::Draw()
 {
+	PipelineManager::PreDraw("Sprite", TRIANGLELIST, state_);
 	sprite_->Draw();
+	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 }
 
 void Button::SetTexture(Texture* texture)

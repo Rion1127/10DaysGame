@@ -10,6 +10,7 @@ private:
 	
 	Box2D col_;
 	bool isCollision_;
+	PipeLineState state_;
 public:
 	Button(Vector2 pos);
 

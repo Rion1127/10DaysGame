@@ -30,7 +30,6 @@ void LoadManager::LoadTexture()
 	LoadGraph("dotTest.png", "DotTest");
 	LoadGraph("retry.png", "Retry");
 	LoadGraph("minoCouintUp.png", "MinoCouintUp");
-	LoadGraph("powerUp.png", "PowerUp");
 }
 
 void LoadManager::LoadSound()

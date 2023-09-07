@@ -48,9 +48,7 @@ private:
 	Vector2 uiUpPos_;
 	Vector2 uiDownPos_;
 
-	std::unique_ptr<Button> powerUpButton_;
 	std::unique_ptr<Button> minoCountUpButton_;
-	Vector2 powerUpPos_;
 	Vector2 minoCountUpPos_;
 public:
 	MainGameSyste();
@@ -68,7 +66,7 @@ private:
 	void TurnEnemy();
 
 	void GameOverUpdate();
-	void PowerUp();
+	
 	void MinoCountUp();
 public:
 	void SetPlayer(Player* player) { player_ = player; }
