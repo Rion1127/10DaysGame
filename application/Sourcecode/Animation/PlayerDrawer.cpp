@@ -90,6 +90,8 @@ void PlayerDrawer::UpdateAnimation()
 		}
 	}
 
+	hitActor_.Update();
+
 	animeStatus_.pos_ += hitActor_.ShakePosValue();
 
 	sprite_.SetColor(hitActor_.ColorValue());

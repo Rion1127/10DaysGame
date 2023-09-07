@@ -39,6 +39,8 @@ void EnemyDrawer::UpdateAnimation()
 		sprite_.SetTex_LeftTop({ 128.0f * static_cast<float>(moveCount_), 0.0f });
 	}
 
+	hitActor_.Update();
+
 	animeStatus_.pos_ += hitActor_.ShakePosValue();
 
 	sprite_.SetColor(hitActor_.ColorValue());

@@ -4,7 +4,7 @@
 using YGame::HitActor;
 
 const Color kDefColor = Color(255, 255, 255, 255);
-const Color kHitColor = Color(255, 0, 0, 128);
+const Color kHitColor = Color(255, 0, 0, 255);
 
 void HitActor::Initialize()
 {
@@ -35,6 +35,7 @@ void HitActor::Hit(const float swing, const float dekey)
 {
 	isAct_ = true;
 
+	shake_.Initialize();
 	shake_.Activate(swing, dekey);
 }
 
