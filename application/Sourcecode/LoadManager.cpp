@@ -22,7 +22,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("player.png", "Player");
 	LoadGraph("playerMove.png", "PlayerMove");
 	//“G
-	LoadGraph("enemy.png", "Enemy");
+	LoadGraph("slime.png", "Enemy");
 	//ƒ{ƒ^ƒ“UI
 	LoadGraph("gameStartButton.png", "GameStartButton");
 	LoadGraph("tutorialButton.png", "TutorialButton");

@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseDrawer.h"
 #include "HitActor.h"
+#include "YTimer.h"
 
 namespace YGame
 {
@@ -39,5 +40,8 @@ namespace YGame
 		// 被弾アニメーション
 		HitActor hitActor_;
 
+		YMath::YTimer moveTim_;
+
+		uint32_t moveCount_;
 	};
 }
