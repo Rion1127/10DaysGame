@@ -1,10 +1,10 @@
 #pragma once
 #include "Panel.h"
-#include "Mino.h"
 #include "Player.h"
 #include "IEnemy.h"
 #include "EnemyManager.h"
 #include "YCameraManager.h"
+#include "NextMinoDrawer.h"
 #include "Button.h"
 class MainGameSyste
 {
@@ -34,6 +34,7 @@ private:
 	std::vector<int32_t> minoCountUpCost_;
 	uint32_t powerLevel_;
 	uint32_t minoCountLevel_;
+	YGame::NextMinoDrawer nextMinoDrawer_;
 
 	Player* player_;
 	IEnemy* enemy_;

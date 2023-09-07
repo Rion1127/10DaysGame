@@ -19,6 +19,12 @@ namespace YGame
 		/// 描画
 		/// </summary>
 		void Draw();
+
+		/// <summary>
+		/// トランスフォーム設定
+		/// </summary>
+		/// <param name="trfmStatus"> : トランスフォーム情報</param>
+		void SetTransform(const YTransform::Status& trfmStatus);
 	
 	public:
 
