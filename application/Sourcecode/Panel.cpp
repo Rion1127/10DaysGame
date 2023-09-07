@@ -58,6 +58,12 @@ Panel::Panel()
 	sprite_ = std::make_unique<PanelSprite>(maxPanelSize_, spritePos_, spriteScale_);
 
 	rotNum_ = 0;
+
+	allPanelSize_.leftUp = spritePos_;
+	allPanelSize_.RightDown = {
+		spritePos_.x + displayPanel_[0].size() * spriteSize_,
+		spritePos_.y + displayPanel_[0].size() * spriteSize_
+	};
 }
 
 void Panel::Update()
@@ -109,18 +115,20 @@ void Panel::Update()
 		//左クリックをしたらパネルを設置する
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
 		{
-			SetPanel(nowMino_);
+			if (CheckBox2DtoPoint(allPanelSize_, mPos)) {
+				SetPanel(nowMino_);
 
-			isAllFill_ = true;
-			for (int32_t y = 0; y < systemPanel_.size(); y++)
-			{
-				for (int32_t x = 0; x < systemPanel_[y].size(); x++)
+				isAllFill_ = true;
+				for (int32_t y = 0; y < systemPanel_.size(); y++)
 				{
-					if (systemPanel_[x][y] == State::EMPTY)
+					for (int32_t x = 0; x < systemPanel_[y].size(); x++)
 					{
-						//空のパネルを見つけたらすべて埋まっているフラグをfalseにする
-						isAllFill_ = false;
-						break;
+						if (systemPanel_[x][y] == State::EMPTY)
+						{
+							//空のパネルを見つけたらすべて埋まっているフラグをfalseにする
+							isAllFill_ = false;
+							break;
+						}
 					}
 				}
 			}

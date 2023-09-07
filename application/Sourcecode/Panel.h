@@ -5,6 +5,7 @@
 #include "Vector2.h"
 #include "mInput.h"
 #include "Sprite.h"
+#include "Collision.h"
 
 #include "YTransform.h"
 #include "SlimeActor.h"
@@ -81,6 +82,7 @@ private:
 	//0,0度　1,90度 2,180度 3,270度
 	uint32_t rotNum_;
 	Mino nowMino_;
+	Box2D allPanelSize_;
 public:
 	Panel();
 	void Update();
