@@ -19,7 +19,8 @@ void LoadManager::LoadTexture()
 	//パネル関連
 	LoadGraph("panel.png", "Panel");
 	//プレイヤー
-	LoadGraph("player2.png", "Player");
+	LoadGraph("player.png", "Player");
+	LoadGraph("playerMove.png", "PlayerMove");
 	//敵
 	LoadGraph("enemy.png", "Enemy");
 	//ボタンUI
