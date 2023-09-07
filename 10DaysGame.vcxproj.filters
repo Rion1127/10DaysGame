@@ -181,18 +181,6 @@
     <Filter Include="application\ソースファイル\Animation">
       <UniqueIdentifier>{d3742166-e95f-4052-902e-30964c454413}</UniqueIdentifier>
     </Filter>
-    <Filter Include="application\ソースファイル\Animation\Lerp">
-      <UniqueIdentifier>{9fde1cd3-c4b7-4038-bd93-67cc2e12b835}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="application\ヘッダーファイル\Animation\Lerp">
-      <UniqueIdentifier>{8257d38c-8233-422f-8290-b74f3b7bbd5e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="application\ソースファイル\Animation\Actor">
-      <UniqueIdentifier>{e0d85326-0667-4e5a-a5be-e676f10694da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="application\ヘッダーファイル\Animation\Actor">
-      <UniqueIdentifier>{04b697a6-5648-4f25-a4b6-ce12e0fd6b03}</UniqueIdentifier>
-    </Filter>
     <Filter Include="application\ソースファイル\Enemy">
       <UniqueIdentifier>{bbf0849f-3dbe-489b-87ca-ea3ecc6082b3}</UniqueIdentifier>
     </Filter>
@@ -216,6 +204,18 @@
     </Filter>
     <Filter Include="application\ヘッダーファイル\Animation\Drawer">
       <UniqueIdentifier>{a98651b8-b2b6-4eff-9b92-cbe52135ca79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ソースファイル\Animation\Math\Lerp">
+      <UniqueIdentifier>{9fde1cd3-c4b7-4038-bd93-67cc2e12b835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Animation\Math\Lerp">
+      <UniqueIdentifier>{8257d38c-8233-422f-8290-b74f3b7bbd5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ソースファイル\Animation\Drawer\Actor">
+      <UniqueIdentifier>{e0d85326-0667-4e5a-a5be-e676f10694da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Animation\Drawer\Actor">
+      <UniqueIdentifier>{04b697a6-5648-4f25-a4b6-ce12e0fd6b03}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -397,22 +397,22 @@
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\Lerp.cpp">
-      <Filter>application\ソースファイル\Animation\Lerp</Filter>
+      <Filter>application\ソースファイル\Animation\Math\Lerp</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\BezierEase.cpp">
-      <Filter>application\ソースファイル\Animation\Lerp</Filter>
+      <Filter>application\ソースファイル\Animation\Math\Lerp</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\Ease.cpp">
-      <Filter>application\ソースファイル\Animation\Lerp</Filter>
+      <Filter>application\ソースファイル\Animation\Math\Lerp</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\SplineEase.cpp">
-      <Filter>application\ソースファイル\Animation\Lerp</Filter>
+      <Filter>application\ソースファイル\Animation\Math\Lerp</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\HitActor.cpp">
-      <Filter>application\ソースファイル\Animation\Actor</Filter>
+      <Filter>application\ソースファイル\Animation\Drawer\Actor</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\SlimeActor.cpp">
-      <Filter>application\ソースファイル\Animation\Actor</Filter>
+      <Filter>application\ソースファイル\Animation\Drawer\Actor</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\particleManager\ParticleManager.cpp">
       <Filter>application\ソースファイル\Particle</Filter>
@@ -447,9 +447,6 @@
     <ClCompile Include="application\Sourcecode\Animation\YTimer.cpp">
       <Filter>application\ソースファイル\Animation\Math</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Animation\AnimeManager.cpp">
-      <Filter>application\ソースファイル\Animation</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\YCameraManager.cpp">
       <Filter>application\ソースファイル\Animation</Filter>
     </ClCompile>
@@ -480,8 +477,14 @@
     <ClCompile Include="application\Sourcecode\Button.cpp">
       <Filter>application\ソースファイル\UI</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\BlockDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer</Filter>
+    </ClCompile>
     <ClCompile Include="application\Sourcecode\Scene\TutorialScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\NextMinoDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -666,22 +669,22 @@
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\BezierEase.h">
-      <Filter>application\ヘッダーファイル\Animation\Lerp</Filter>
+      <Filter>application\ヘッダーファイル\Animation\Math\Lerp</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\Ease.h">
-      <Filter>application\ヘッダーファイル\Animation\Lerp</Filter>
+      <Filter>application\ヘッダーファイル\Animation\Math\Lerp</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\Lerp.h">
-      <Filter>application\ヘッダーファイル\Animation\Lerp</Filter>
+      <Filter>application\ヘッダーファイル\Animation\Math\Lerp</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\SplineEase.h">
-      <Filter>application\ヘッダーファイル\Animation\Lerp</Filter>
+      <Filter>application\ヘッダーファイル\Animation\Math\Lerp</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\HitActor.h">
-      <Filter>application\ヘッダーファイル\Animation\Actor</Filter>
+      <Filter>application\ヘッダーファイル\Animation\Drawer\Actor</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\SlimeActor.h">
-      <Filter>application\ヘッダーファイル\Animation\Actor</Filter>
+      <Filter>application\ヘッダーファイル\Animation\Drawer\Actor</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\particleManager\ParticleManager.h">
       <Filter>application\ヘッダーファイル\Particle</Filter>
@@ -716,9 +719,6 @@
     <ClInclude Include="application\Sourcecode\Animation\YTimer.h">
       <Filter>application\ヘッダーファイル\Animation\Math</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Animation\AnimeManager.h">
-      <Filter>application\ヘッダーファイル\Animation</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\YCameraManager.h">
       <Filter>application\ヘッダーファイル\Animation</Filter>
     </ClInclude>
@@ -751,6 +751,12 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Scene\TutorialScene.h">
       <Filter>application\ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\BlockDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\NextMinoDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
