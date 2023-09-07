@@ -21,6 +21,11 @@ void BaseDrawer::Draw()
 	sprite_.Draw();
 }
 
+void BaseDrawer::SetTransform(const YTransform::Status& trfmStatus)
+{
+	trfm_.Initialize(trfmStatus);
+}
+
 void BaseDrawer::BaseInitialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
 {
 	trfm_.Initialize(trfmStatus);

@@ -11,10 +11,11 @@ MainGameSyste::MainGameSyste()
 	nowTurn_ = Turn::PLAYER;
 	gameState_ = State::GAME;
 	//ターンごとに補充するミノの数
-	reloadMinoNum_ = 1;
+	reloadMinoNum_ = 4;
 
 	ReloadMino();
 
+	nextMinoDrawer_.Initialize();
 	enemy_ = enemyManager_.GetNowEnemy();
 
 	// カメラ取得 + 初期化
@@ -122,6 +123,8 @@ void MainGameSyste::Update()
 		enemyManager_.SetIsChangeNowEnemy(false);
 	}
 
+	nextMinoDrawer_.Update(minos_);
+
 	// カメラ更新
 	cameraManager_->Update();
 
@@ -155,6 +158,7 @@ void MainGameSyste::DrawSprite()
 	}
 	
 	minoCountUpButton_->Draw();
+	nextMinoDrawer_.Draw();
 }
 
 void MainGameSyste::DrawImGui()
@@ -230,7 +234,7 @@ void MainGameSyste::TurnChange()
 void MainGameSyste::TurnPlayer()
 {
 	if (minos_.size() > 0) {
-		panel_->SetMinoType(minos_[0]);
+		panel_->ChangeMinoAnimation(minos_[0]);
 	}
 
 	//パネルの設置が成功したら

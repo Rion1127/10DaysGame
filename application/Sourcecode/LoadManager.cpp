@@ -20,6 +20,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("panel.png", "Panel");
 	//プレイヤー
 	LoadGraph("player.png", "Player");
+	LoadGraph("playerMove.png", "PlayerMove");
 	//敵
 	LoadGraph("enemy.png", "Enemy");
 	//ボタンUI
