@@ -11,12 +11,13 @@ void SwordDrawer::Initialize(const size_t maxXSize, const size_t maxYSize, Matri
 {
 	// 親トランスフォーム
 	trfm_.Initialize();
+	trfm_.pos_ = Vector3(+64.0f, 0.0f, 0.0f);
 	trfm_.parent_ = matParent;
 
 	// ハンドル
 	handle_.Initialize(
 		{
-			Vector3(0.0f, -16.0f, 0.0f),
+			Vector3(0.0f, -64.0f, 0.0f),
 			{},
 			Vector3(0.25f, 1.0f, 0.0f)
 		}, &trfm_.m_);
@@ -24,12 +25,12 @@ void SwordDrawer::Initialize(const size_t maxXSize, const size_t maxYSize, Matri
 	// パネル縦横分生成
 	for (size_t y = 0; y < maxYSize; y++)
 	{
-		panels_.emplace_back();
+		blades_.emplace_back();
 		for (size_t x = 0; x < maxXSize; x++)
 		{
-			panels_[y].emplace_back();
+			blades_[y].emplace_back();
 			
-			panels_[y][x].Initialize({}, &trfm_.m_);
+			blades_[y][x].Initialize({}, &trfm_.m_);
 		}
 	}
 
@@ -76,12 +77,13 @@ void SwordDrawer::AttackAnimation(const std::vector<std::vector<int32_t>>& panel
 
 			Vector3 leftTop = -Vector3(kPanelSize * xSize, kPanelSize * ySize, 0.0f) * kPanelScale / 2.0f;
 			leftTop -= Vector3(0.0f, kPanelSize * ySize, 0.0f) * kPanelScale / 2.0f;
+			leftTop -= Vector3(0.0f, 64.0f, 0.0f);
 
 			YTransform::Status status;
 			status.pos_ = Vector3(kPanelSize * i, kPanelSize * j, 0) * kPanelScale + leftTop;
 			status.scale_ = Vector3(kPanelScale, kPanelScale, 0);
 
-			panels_[i][j].InitializeAnime(panelIndices[i][j], status);	
+			blades_[i][j].InitializeAnime(panelIndices[i][j], status);	
 		}
 	}
 
@@ -130,11 +132,11 @@ void SwordDrawer::UpdateAttackAnimation(YGame::YTransform::Status& animeStatus)
 
 		// 上方向ベクトル
 		Vector3 upDir = -Vector3(std::sinf(animeStatus.rota_.z), std::cosf(animeStatus.rota_.z), 0.0f);
-		for (size_t i = 0; i < panels_.size(); i++)
+		for (size_t i = 0; i < blades_.size(); i++)
 		{
-			for (size_t j = 0; j < panels_[i].size(); j++)
+			for (size_t j = 0; j < blades_[i].size(); j++)
 			{
-				panels_[i][j].StrikeAnimation(upDir);
+				blades_[i][j].StrikeAnimation(upDir);
 			}
 		}
 		
@@ -145,11 +147,11 @@ void SwordDrawer::UpdateAttackAnimation(YGame::YTransform::Status& animeStatus)
 	// 斬撃終了
 	if (breakTim_.Ratio() >= 0.75f && step_ == AttackStep::Strike)
 	{
-		for (size_t i = 0; i < panels_.size(); i++)
+		for (size_t i = 0; i < blades_.size(); i++)
 		{
-			for (size_t j = 0; j < panels_[i].size(); j++)
+			for (size_t j = 0; j < blades_[i].size(); j++)
 			{
-				panels_[i][j].InitializeAnime(-1, {});
+				blades_[i][j].InitializeAnime(-1, {});
 			}
 		}
 
@@ -168,11 +170,11 @@ void SwordDrawer::UpdateColorAnimation()
 
 	handle_.SetAlpha(alphaRatio);
 	
-	for (size_t i = 0; i < panels_.size(); i++)
+	for (size_t i = 0; i < blades_.size(); i++)
 	{
-		for (size_t j = 0; j < panels_[i].size(); j++)
+		for (size_t j = 0; j < blades_[i].size(); j++)
 		{
-			panels_[i][j].SetAlpha(alphaRatio);
+			blades_[i][j].SetAlpha(alphaRatio);
 		}
 	}
 }
@@ -191,11 +193,11 @@ void SwordDrawer::Update()
 
 	handle_.Update();
 
-	for (size_t i = 0; i < panels_.size(); i++)
+	for (size_t i = 0; i < blades_.size(); i++)
 	{
-		for (size_t j = 0; j < panels_[i].size(); j++)
+		for (size_t j = 0; j < blades_[i].size(); j++)
 		{
-			panels_[i][j].Update();
+			blades_[i][j].Update();
 		}
 	}
 }
@@ -204,11 +206,11 @@ void SwordDrawer::Draw()
 {
 	handle_.Draw();
 
-	for (size_t i = 0; i < panels_.size(); i++)
+	for (size_t i = 0; i < blades_.size(); i++)
 	{
-		for (size_t j = 0; j < panels_[i].size(); j++)
+		for (size_t j = 0; j < blades_[i].size(); j++)
 		{
-			panels_[i][j].Draw();
+			blades_[i][j].Draw();
 		}
 	}
 }
@@ -225,31 +227,28 @@ void SwordDrawer::HandleDrawer::SetAlpha(const float alpha)
 	sprite_.SetColor(Color(0, 0, 0, 255) * alpha);
 }
 
-void SwordDrawer::PanelDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
+void SwordDrawer::BladeDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
 {
-	BaseInitialize(trfmStatus, matParent);
-	
-	isResetAnimeStatus_ = false;
-	
-	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Panel"));
+	drawer_.Initialize(YTransform::Status::Default(), matParent, BlockColorType::None);
 
 	index_ = -1;
 
+	breakStatus_ = {};
 	moveSpeed_ = rotaSpeed_ = scaleSpeed_ = {};
 }
 
-void SwordDrawer::PanelDrawer::InitializeAnime(const int32_t panelIndex, const YTransform::Status& trfmStatus)
+void SwordDrawer::BladeDrawer::InitializeAnime(const int32_t panelIndex, const YTransform::Status& trfmStatus)
 {
-	trfm_.Initialize(trfmStatus);
+	drawer_.SetTransform(trfmStatus);
 
 	index_ = panelIndex;
 
 	isUpdate_ = false;
-	animeStatus_ = {};
+	breakStatus_ = {};
 	moveSpeed_ = rotaSpeed_ = scaleSpeed_ = {};
 }
 
-void SwordDrawer::PanelDrawer::StrikeAnimation(const Vector3& upDir)
+void SwordDrawer::BladeDrawer::StrikeAnimation(const Vector3& upDir)
 {
 	isUpdate_ = true;
 	upDir_ = upDir;
@@ -269,30 +268,38 @@ void SwordDrawer::PanelDrawer::StrikeAnimation(const Vector3& upDir)
 	scaleSpeed_ = Vector3(scale, scale, scale);
 }
 
-void SwordDrawer::PanelDrawer::UpdateAnimation()
+void SwordDrawer::BladeDrawer::Update()
 {
-	if (isUpdate_ == false) { return; }
+	if (isUpdate_)
+	{
+		// 重力
+		moveSpeed_ -= upDir_ * 0.98f;
 
-	// 重力
-	moveSpeed_ -= upDir_ * 0.98f;
+		breakStatus_.pos_ += moveSpeed_;
+		breakStatus_.rota_ += rotaSpeed_;
+		breakStatus_.scale_ += scaleSpeed_;
 
-	animeStatus_.pos_ += moveSpeed_;
-	animeStatus_.rota_ += rotaSpeed_;
-	animeStatus_.scale_ += scaleSpeed_;
+		breakStatus_.scale_.x = std::clamp(breakStatus_.scale_.x, 0.0f, 1.0f);
+		breakStatus_.scale_.y = std::clamp(breakStatus_.scale_.y, 0.0f, 1.0f);
+		breakStatus_.scale_.z = std::clamp(breakStatus_.scale_.z, 0.0f, 1.0f);
+	}
 
-	animeStatus_.scale_.x = std::clamp(animeStatus_.scale_.x, 0.0f, 1.0f);
-	animeStatus_.scale_.y = std::clamp(animeStatus_.scale_.y, 0.0f, 1.0f);
-	animeStatus_.scale_.z = std::clamp(animeStatus_.scale_.z, 0.0f, 1.0f);
+	drawer_.Update(breakStatus_);
 }
 
-void SwordDrawer::PanelDrawer::SetAlpha(const float alpha)
+void SwordDrawer::BladeDrawer::Draw()
+{
+	drawer_.Draw();
+}
+
+void SwordDrawer::BladeDrawer::SetAlpha(const float alpha)
 {
 	if (index_ == 2)
 	{
-		sprite_.SetColor(Color(0, 255, 0, 255) * alpha);
+		drawer_.ChangeColor(BlockColorType::Orange, alpha);
 	}
 	else
 	{
-		sprite_.SetColor(Color(0, 0, 0, 0));
+		drawer_.ChangeColor(BlockColorType::None);
 	}
 }

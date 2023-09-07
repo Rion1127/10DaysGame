@@ -13,7 +13,7 @@ namespace YGame
 		/// <summary>
 		/// XV
 		/// </summary>
-		void Update();
+		void Update(const YTransform::Status& status = {});
 		
 		/// <summary>
 		/// •`‰æ

@@ -2,7 +2,7 @@
 
 using YGame::BaseDrawer;
 
-void BaseDrawer::Update()
+void BaseDrawer::Update(const YTransform::Status& status)
 {
 	if (isResetAnimeStatus_) 
 	{
@@ -11,7 +11,12 @@ void BaseDrawer::Update()
 
 	UpdateAnimation();
 
-	trfm_.UpdateMatrix(animeStatus_);
+	YTransform::Status allStatus;
+	allStatus.pos_ = animeStatus_.pos_ + status.pos_;
+	allStatus.rota_ = animeStatus_.rota_ + status.rota_;
+	allStatus.scale_ = animeStatus_.scale_ + status.scale_;
+
+	trfm_.UpdateMatrix(allStatus);
 
 	sprite_.Update(trfm_.m_);
 }

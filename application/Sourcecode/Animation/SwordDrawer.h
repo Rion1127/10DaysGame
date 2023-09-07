@@ -1,5 +1,5 @@
 #pragma once
-#include "BaseDrawer.h"
+#include "BlockDrawer.h"
 #include "SlimeActor.h"
 #include "Ease.h"
 
@@ -56,7 +56,7 @@ namespace YGame
 		};
 
 		// パネル
-		class PanelDrawer final : public BaseDrawer 
+		class BladeDrawer final 
 		{
 
 		public:
@@ -64,20 +64,24 @@ namespace YGame
 			void Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent);
 
 			void InitializeAnime(const int32_t panelIndex, const YTransform::Status& trfmStatus);
-
+			
 			void StrikeAnimation(const Vector3& upDir);
 
-			void UpdateAnimation() override;
+			void Update();
+			
+			void Draw();
 
 			void SetAlpha(const float alpha);
 		
 		private:
 
-			int32_t index_;
+			BlockDrawer drawer_;
+
+			int32_t index_ = 0;
 
 			bool isUpdate_ = false;
 			Vector3 upDir_;
-
+			YTransform::Status breakStatus_;
 			Vector3 moveSpeed_;
 			Vector3 rotaSpeed_;
 			Vector3 scaleSpeed_;
@@ -97,7 +101,7 @@ namespace YGame
 		HandleDrawer handle_;
 
 		// パネル
-		std::vector<std::vector<PanelDrawer>> panels_;
+		std::vector<std::vector<BladeDrawer>> blades_;
 
 		// スライムアニメーション用
 		YGame::SlimeActor slime_;

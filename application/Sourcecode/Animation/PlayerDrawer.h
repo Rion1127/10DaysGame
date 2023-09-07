@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseDrawer.h"
 #include "HitActor.h"
+#include "YTimer.h"
 
 namespace YGame
 {
@@ -20,7 +21,17 @@ namespace YGame
 		/// 被弾アニメーション
 		/// </summary>
 		void HitAnimation();
-	
+		
+		/// <summary>
+		/// 立ちアニメーション
+		/// </summary>
+		void IdleAnimation();
+		
+		/// <summary>
+		/// 移動アニメーション
+		/// </summary>
+		void MoveAnimation();
+
 	public:
 
 		PlayerDrawer() = default;
@@ -29,9 +40,18 @@ namespace YGame
 
 	private:
 
-		/// <summary>
-		/// アニメ更新
-		/// </summary>
+		// テクスチャ
+		enum class TextureType
+		{
+			Idle, Move
+		};
+	
+	private:
+
+		// テクスチャ変更
+		void ChangeTexture(const TextureType textureType);
+
+		// アニメ更新
 		void UpdateAnimation() override;
 
 	protected:
@@ -39,5 +59,12 @@ namespace YGame
 		// 被弾アニメーション
 		HitActor hitActor_;
 
+		bool isIdle_ = false;
+		
+		bool isMove_ = false;
+
+		YMath::YTimer moveTim_;
+
+		uint32_t moveCount_;
 	};
 }

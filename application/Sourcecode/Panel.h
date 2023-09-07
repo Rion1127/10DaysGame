@@ -7,9 +7,7 @@
 #include "Sprite.h"
 #include "Collision.h"
 
-#include "YTransform.h"
-#include "SlimeActor.h"
-#include "Ease.h"
+#include "PanelDrawer.h"
 
 enum State {
 	NOT_OPEN,
@@ -26,19 +24,7 @@ enum class UpdateType {
 
 class PanelSprite {
 private:
-	struct PanelStatus
-	{
-		YGame::YTransform trfm_;
-		YGame::SlimeActor slimeActor_;
-		YMath::YTimer rotaTim_;
-		Sprite sprite_;
-
-		bool isSet_ = false;
-		bool isOpen_ = false;
-	};
-private:
-	std::vector<std::vector<PanelStatus>> panels_;
-	YMath::Ease<float> rotaEas_;
+	std::vector<std::vector<YGame::PanelDrawer>> panels_;
 public:
 	PanelSprite(uint32_t panelSize,Vector2 basePos, float panelScale);
 

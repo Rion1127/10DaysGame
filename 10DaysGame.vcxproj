@@ -19,6 +19,7 @@
     <ClCompile Include="application\Sourcecode\Animation\HitActor.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\Lerp.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\NextMinoDrawer.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\PanelDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\PlayerDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\SwordDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\YCameraManager.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="application\Sourcecode\Animation\HitActor.h" />
     <ClInclude Include="application\Sourcecode\Animation\Lerp.h" />
     <ClInclude Include="application\Sourcecode\Animation\NextMinoDrawer.h" />
+    <ClInclude Include="application\Sourcecode\Animation\PanelDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\SwordDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\YCameraManager.h" />
     <ClInclude Include="application\Sourcecode\Animation\YTransform.h" />

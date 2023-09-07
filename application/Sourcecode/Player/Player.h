@@ -22,6 +22,8 @@ public:
 	void Update();
 
 	void AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndices);
+	void IdleAnimation();
+	void MoveAnimation();
 
 	void Draw();
 	void DrawImGui();

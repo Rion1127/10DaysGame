@@ -14,7 +14,7 @@ void NextMinoDrawer::Initialize()
 		{
 			status.scale_ = { 0.0f,0.0f,0.0f };
 		}
-		if (i == 1)
+		else if (i == 1)
 		{
 			status.pos_ = 
 			{ 

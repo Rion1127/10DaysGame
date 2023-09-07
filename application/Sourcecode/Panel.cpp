@@ -486,28 +486,19 @@ PanelSprite::PanelSprite(uint32_t panelSize, Vector2 basePos, float panelScale)
 	{
 		for (uint32_t x = 0; x < panels_[y].size(); x++)
 		{
-			panels_[x][y].sprite_.Ini();
-			panels_[x][y].sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Panel"));
+			YGame::YTransform::Status status;
 
-			Vector2 pos = {
+			status.pos_ = {
 				basePos.x + (32.f * panelScale) * x,
 				basePos.y + (32.f * panelScale) * y,
+				0.0f
 			};
 
-			panels_[x][y].sprite_.SetPos(pos);
-			panels_[x][y].sprite_.SetScale(Vector2(panelScale, panelScale));
-			
-			// トランスフォーム
-			panels_[x][y].trfm_.Initialize();
-			panels_[x][y].trfm_.pos_ = Vector3(pos.x, pos.y, 0.0f);
-			
-			// アニメーション用
-			panels_[x][y].slimeActor_.Initialize(10, { Vector3(), Vector3(0.4f, 0.4f, 0.4f) }, 3.0f);
-			panels_[x][y].rotaTim_.Initialize(40);
+			status.scale_ = { panelScale, panelScale, 0.0f };
+
+			panels_[x][y].Initialize(status, nullptr);
 		}
 	}
-
-	rotaEas_.Initialize(0.0f, 3.141592f * 2.0f, 2.0f);
 }
 
 void PanelSprite::Update(const std::vector<std::vector<int32_t>>& panel)
@@ -518,59 +509,41 @@ void PanelSprite::Update(const std::vector<std::vector<int32_t>>& panel)
 		{
 			//パネルの色変更
 			if (panel[x][y] == State::NOT_OPEN) {
-				panels_[x][y].sprite_.SetColor(Color(100, 100, 100, 255));
-				panels_[x][y].isSet_ = false;
-				panels_[x][y].isOpen_ = false;
+				panels_[x][y].ChangeColor(YGame::BlockColorType::Gray);
+				panels_[x][y].ResetAnime();
 			}
 			else if (panel[x][y] == State::EMPTY) {
-				panels_[x][y].sprite_.SetColor(Color(255, 255, 255, 255));
-				panels_[x][y].isSet_ = false;
-				panels_[x][y].isOpen_ = false;
+				panels_[x][y].ChangeColor(YGame::BlockColorType::White);
+				panels_[x][y].ResetAnime();
 			}
 			else if (panel[x][y] == State::ATTACK) {
-				panels_[x][y].sprite_.SetColor(Color(255, 150, 150, 255));
+				panels_[x][y].ChangeColor(YGame::BlockColorType::Orange);
 				SetAnimation(x, y);
 			}
 			else if (panel[x][y] == State::SELECT) {
-				panels_[x][y].sprite_.SetColor(Color(0, 255, 0, 255));
+				panels_[x][y].ChangeColor(YGame::BlockColorType::Orange);
 			}
 			else if (panel[x][y] == State::NEXT_RELEASE) {
-				panels_[x][y].sprite_.SetColor(Color(0, 0, 255, 255));
+				panels_[x][y].ChangeColor(YGame::BlockColorType::Blue);
 				OpenAnimation(x, y);
 			}
 			else if (panel[x][y] == State::TEMPPOS) {
-				panels_[x][y].sprite_.SetColor(Color(0, 200, 200, 255));
+				panels_[x][y].ChangeColor(YGame::BlockColorType::Cyan);
 			}
 
-			// アニメーション
-			YGame::YTransform::Status animeStatus;
-
-			panels_[x][y].slimeActor_.Update();
-			animeStatus.scale_ += panels_[x][y].slimeActor_.WobbleScaleValue(YGame::SlimeActor::EaseType::eOut);
-			
-			panels_[x][y].rotaTim_.Update();
-			animeStatus.rota_.z += rotaEas_.InOut(panels_[x][y].rotaTim_.Ratio());
-
-			// 行列更新
-			panels_[x][y].trfm_.UpdateMatrix(animeStatus);
-			panels_[x][y].sprite_.Update(panels_[x][y].trfm_.m_);
+			panels_[x][y].Update();
 		}
 	}
 }
 
 void PanelSprite::SetAnimation(const size_t x, const size_t y)
 {
-	if (panels_[x][y].isSet_) { return; }
-	panels_[x][y].slimeActor_.Wobble();
-	panels_[x][y].isSet_ = true;
+	panels_[x][y].SetAnimation();
 }
 
 void PanelSprite::OpenAnimation(const size_t x, const size_t y)
 {
-	if (panels_[x][y].isOpen_) { return; }
-	panels_[x][y].slimeActor_.Wobble();
-	panels_[x][y].rotaTim_.Reset(true);
-	panels_[x][y].isOpen_ = true;
+	panels_[x][y].OpenAnimation();
 }
 
 void PanelSprite::Draw()
@@ -579,7 +552,7 @@ void PanelSprite::Draw()
 	{
 		for (uint32_t x = 0; x < panels_[y].size(); x++)
 		{
-			panels_[x][y].sprite_.Draw();
+			panels_[x][y].Draw();
 		}
 	}
 }

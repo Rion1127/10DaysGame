@@ -22,6 +22,8 @@ void Player::Initialize()
 	// アニメーション用
 	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_.m_);
 	sword_.Initialize(20, 20, &trfm_.m_);
+
+	drawer_.MoveAnimation();
 }
 
 void Player::Update()
@@ -60,4 +62,14 @@ void Player::Damage(int32_t damage)
 	health_ -= damage;
 
 	drawer_.HitAnimation();
+}
+
+void Player::IdleAnimation()
+{
+	drawer_.IdleAnimation();
+}
+
+void Player::MoveAnimation()
+{
+	drawer_.MoveAnimation();
 }

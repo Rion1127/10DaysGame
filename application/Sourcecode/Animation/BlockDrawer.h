@@ -39,7 +39,8 @@ namespace YGame
 		/// 色変更
 		/// </summary>
 		/// <param name="colorType"> : 色</param>
-		void ChangeColor(const BlockColorType colorType);
+		/// <param name="alphaRatio"> : アルファ値比率</param>
+		void ChangeColor(const BlockColorType colorType, const float alphaRatio = 255);
 
 		/// <summary>
 		/// 色取得
