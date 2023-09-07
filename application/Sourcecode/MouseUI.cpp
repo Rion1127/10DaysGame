@@ -42,5 +42,4 @@ void MouseUI::Update()
 void MouseUI::Draw()
 {
 	sprite_->Draw();
-	sprite_->DrawImGui();
 }
