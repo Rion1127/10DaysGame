@@ -76,6 +76,7 @@ private:
 	bool isAllFill_;
 	UpdateType updateType_;
 	int32_t attackPanelNum_;
+	int32_t emptyPanelNum_;
 public:
 	Panel();
 	void Update();
@@ -85,6 +86,7 @@ public:
 public:
 	//パネルを次のターンにする
 	void PanelUpdate();
+	void PanelReset();
 private:
 	//パネルをセットできるか確認する
 	bool IsCanChange(const Mino& mino);
@@ -101,6 +103,7 @@ public:
 	bool GetisSetComplete() { return isSetComplete_; }
 	bool GetIsAllFill() { return isAllFill_; }
 	int32_t GetAttackPanelNum() { return attackPanelNum_; }
+	int32_t GetEmptyPanelNum() { return emptyPanelNum_; }
 
 	std::vector<std::vector<int32_t>> GetDisplayPanel() { return displayPanel_; }
 };

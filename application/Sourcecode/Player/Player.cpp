@@ -51,6 +51,7 @@ void Player::DrawImGui()
 {
 	ImGui::Begin("player");
 	ImGui::Text("HP : %d", health_);
+	ImGui::Text("power : %d", attackpower_);
 	ImGui::End();
 }
 

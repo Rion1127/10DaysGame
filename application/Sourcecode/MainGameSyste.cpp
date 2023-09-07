@@ -11,7 +11,7 @@ MainGameSyste::MainGameSyste()
 	nowTurn_ = Turn::PLAYER;
 	gameState_ = State::GAME;
 	//ターンごとに補充するミノの数
-	reloadMinoNum_ = 2;
+	reloadMinoNum_ = 1;
 
 	ReloadMino();
 
@@ -21,6 +21,12 @@ MainGameSyste::MainGameSyste()
 	cameraManager_ = YCameraManager::GetInstance();
 	cameraManager_->Initialize();
 
+	SpriteInit();
+	CostInit();
+}
+
+void MainGameSyste::SpriteInit()
+{
 	uiUpPos_ = {
 		WinAPI::GetWindowSize().x / 2.f,
 		WinAPI::GetWindowSize().y / 1.3f
@@ -34,6 +40,37 @@ MainGameSyste::MainGameSyste()
 	retryButton_ = std::make_unique<Button>(uiUpPos_);
 	retryButton_->SetTexture(TextureManager::GetInstance()->GetTexture("Retry"));
 
+	powerUpPos_ = {
+		WinAPI::GetWindowSize().x / 1.3f,
+		WinAPI::GetWindowSize().y / 1.3f
+	};
+	powerUpButton_ = std::make_unique<Button>(powerUpPos_);
+	powerUpButton_->SetTexture(TextureManager::GetInstance()->GetTexture("PowerUp"));
+
+
+	minoCountUpPos_ = {
+		WinAPI::GetWindowSize().x / 1.3f,
+		WinAPI::GetWindowSize().y / 1.15f
+	};
+	minoCountUpButton_ = std::make_unique<Button>(minoCountUpPos_);
+	minoCountUpButton_->SetTexture(TextureManager::GetInstance()->GetTexture("MinoCouintUp"));
+
+}
+
+void MainGameSyste::CostInit()
+{
+	powerLevel_ = 1;
+	powerUpCost_.push_back(10);
+	powerUpCost_.push_back(20);
+	powerUpCost_.push_back(30);
+	powerUpCost_.push_back(40);
+
+	minoCountLevel_ = 1;
+	minoCountUpCost_.push_back(50);
+	minoCountUpCost_.push_back(60);
+	minoCountUpCost_.push_back(70);
+	minoCountUpCost_.push_back(80);
+	minoCountUpCost_.push_back(90);
 }
 
 void MainGameSyste::Update()
@@ -61,6 +98,17 @@ void MainGameSyste::Update()
 		if (nowTurn_ != Turn::CHANGE) {
 			prevTurn_ = nowTurn_;
 		}
+
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+			//パワーアップ
+			if (powerUpButton_->GetIsCollision()) {
+				PowerUp();
+			}
+			//1ターンに置くパーツの数を
+			if (minoCountUpButton_->GetIsCollision()) {
+				MinoCountUp();
+			}
+		}
 	}
 	//クリアしたら
 	else {
@@ -79,7 +127,6 @@ void MainGameSyste::Update()
 	if (player_->GetIsAlive() == false) {
 		gameState_ = State::GAMEOVER;
 		panel_->SetUpdateType(UpdateType::SpriteOnly);
-
 	}
 
 	if (enemyManager_.GetIsChangeNowEnemy() || enemyManager_.GetNowEnemy() == nullptr) {
@@ -100,8 +147,9 @@ void MainGameSyste::Update()
 			GameOverUpdate();
 		}
 	}
-	
-	
+
+	powerUpButton_->Update();
+	minoCountUpButton_->Update();
 }
 
 void MainGameSyste::DrawSprite()
@@ -118,6 +166,8 @@ void MainGameSyste::DrawSprite()
 			retryButton_->Draw();
 		}
 	}
+	powerUpButton_->Draw();
+	minoCountUpButton_->Draw();
 }
 
 void MainGameSyste::DrawImGui()
@@ -141,9 +191,16 @@ void MainGameSyste::DrawImGui()
 
 	if (gameState_ == State::CLEAR)gameStatestring += "Clear";
 	else if (gameState_ == State::GAME) gameStatestring += "fighting";
-	else if(gameState_ == State::GAMEOVER) gameStatestring += "GAMEOVER";
+	else if (gameState_ == State::GAMEOVER) gameStatestring += "GAMEOVER";
 
 	ImGui::Text(gameStatestring.c_str());
+
+	ImGui::End();
+
+	ImGui::Begin("Cost");
+
+	ImGui::Text("powerUpCost : %d , Now : %d", powerUpCost_.at(powerLevel_ - 1), panel_->GetEmptyPanelNum());
+	ImGui::Text("minoCountUpCost : %d , Now : %d", minoCountUpCost_.at(powerLevel_ - 1), panel_->GetEmptyPanelNum());
 
 	ImGui::End();
 }
@@ -199,7 +256,6 @@ void MainGameSyste::TurnPlayer()
 		if (minos_.size() <= 0 || panel_->GetIsAllFill()) {
 			//パネル更新
 			panel_->PanelUpdate();
-			reloadMinoNum_ = 2;
 			//敵にダメージを与える
 			int32_t damage = panel_->GetAttackPanelNum() * player_->GetAttackPower();
 			enemy_->Damage(damage);
@@ -238,5 +294,28 @@ void MainGameSyste::GameOverUpdate()
 
 			SceneManager::SetChangeStart(SceneName::Game);
 		}
+	}
+}
+
+void MainGameSyste::PowerUp()
+{
+	const int32_t cost = powerUpCost_.at(powerLevel_ - 1);
+	int32_t nowEmptyPanelNum = panel_->GetEmptyPanelNum();
+	if (cost <= nowEmptyPanelNum) {
+		int32_t power = player_->GetAttackPower();
+		power += 1;
+		player_->SetAttackPower(power);
+
+		panel_->PanelReset();
+	}
+}
+
+void MainGameSyste::MinoCountUp()
+{
+	const int32_t cost = minoCountUpCost_.at(minoCountLevel_ - 1);
+	int32_t nowEmptyPanelNum = panel_->GetEmptyPanelNum();
+	if (cost <= nowEmptyPanelNum) {
+		reloadMinoNum_++;
+		panel_->PanelReset();
 	}
 }

@@ -27,6 +27,7 @@ public:
 	void DrawImGui();
 public:
 	void Damage(int32_t damage);
+	void SetAttackPower(int32_t power) { attackpower_ = power; }
 public:
 	int32_t GetAttackPower() { return attackpower_; }
 	bool GetIsAlive() { return isAlive_; }

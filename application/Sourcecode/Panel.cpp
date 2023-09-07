@@ -63,7 +63,7 @@ void Panel::Update()
 	if (updateType_ == UpdateType::All)
 	{
 		Vector2 mPos = MouseInput::GetInstance()->mPos_;
-
+		emptyPanelNum_ = 0;
 		for (int32_t y = 0; y < displayPanel_.size(); y++)
 		{
 			for (int32_t x = 0; x < displayPanel_[y].size(); x++)
@@ -89,6 +89,10 @@ void Panel::Update()
 				else if (displayPanel_[x][y] != State::EMPTY)
 				{
 					displayPanel_[x][y] = systemPanel_[x][y];
+				}
+				
+				if (systemPanel_[x][y] == State::EMPTY) {
+					emptyPanelNum_++;
 				}
 			}
 		}
@@ -195,31 +199,7 @@ void Panel::DrawImGui()
 	}
 	//リセット
 	if (ImGui::Button("Reset")) {
-		for (uint32_t y = 0; y < displayPanel_.size(); y++)
-		{
-			for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
-			{
-				displayPanel_[x][y] = 0;
-			}
-		}
-
-		uint32_t sizeMinY = ((uint32_t)(displayPanel_.size() - 1) / 2);
-		uint32_t sizeMaxY = ((uint32_t)(displayPanel_.size() - 1) / 2) + (initalSize_ - 1);
-
-		uint32_t sizeMinX = ((uint32_t)(displayPanel_[0].size() - 1) / 2);
-		uint32_t sizeMaxX = ((uint32_t)(displayPanel_[0].size() - 1) / 2) + (initalSize_ - 1);
-
-		for (uint32_t y = 0; y < displayPanel_.size(); y++)
-		{
-			for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
-			{
-				if (y >= sizeMinY && y <= sizeMaxY &&
-					x >= sizeMinX && x <= sizeMaxX) {
-					displayPanel_[x][y] = State::EMPTY;
-				}
-				systemPanel_[x][y] = displayPanel_[x][y];
-			}
-		}
+		PanelReset();
 	}
 	//次のラウンドに行くための処理をする
 	if (ImGui::Button("NextRound")) {
@@ -227,6 +207,7 @@ void Panel::DrawImGui()
 	}
 
 	ImGui::Text("isAllFill : %d", isAllFill_);
+	ImGui::Text("emptyPanelNum : %d", emptyPanelNum_);
 
 	ImGui::End();
 }
@@ -247,6 +228,35 @@ void Panel::PanelUpdate()
 				//攻撃パネルをカウントする
 				attackPanelNum_++;
 			}
+		}
+	}
+}
+
+void Panel::PanelReset()
+{
+	for (uint32_t y = 0; y < displayPanel_.size(); y++)
+	{
+		for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
+		{
+			displayPanel_[x][y] = 0;
+		}
+	}
+
+	uint32_t sizeMinY = ((uint32_t)(displayPanel_.size() - 1) / 2);
+	uint32_t sizeMaxY = ((uint32_t)(displayPanel_.size() - 1) / 2) + (initalSize_ - 1);
+
+	uint32_t sizeMinX = ((uint32_t)(displayPanel_[0].size() - 1) / 2);
+	uint32_t sizeMaxX = ((uint32_t)(displayPanel_[0].size() - 1) / 2) + (initalSize_ - 1);
+
+	for (uint32_t y = 0; y < displayPanel_.size(); y++)
+	{
+		for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
+		{
+			if (y >= sizeMinY && y <= sizeMaxY &&
+				x >= sizeMinX && x <= sizeMaxX) {
+				displayPanel_[x][y] = State::EMPTY;
+			}
+			systemPanel_[x][y] = displayPanel_[x][y];
 		}
 	}
 }

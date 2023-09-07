@@ -37,7 +37,7 @@ void SceneManager::Update()
 
 #ifdef _DEBUG
 	if (Key::TriggerKey(DIK_1)) {
-		//Transition<TitleScene>();
+		Transition<TitleScene>();
 	}
 	if (Key::TriggerKey(DIK_2)) {
 		Transition<GameScene>();

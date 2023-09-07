@@ -30,6 +30,10 @@ private:
 	uint32_t reloadMinoNum_;
 	std::vector<MinoType> minos_;
 	std::vector<MinoType> minosList_;
+	std::vector<int32_t> powerUpCost_;
+	std::vector<int32_t> minoCountUpCost_;
+	uint32_t powerLevel_;
+	uint32_t minoCountLevel_;
 
 	Player* player_;
 	IEnemy* enemy_;
@@ -43,12 +47,19 @@ private:
 	std::unique_ptr<Button> retryButton_;
 	Vector2 uiUpPos_;
 	Vector2 uiDownPos_;
+
+	std::unique_ptr<Button> powerUpButton_;
+	std::unique_ptr<Button> minoCountUpButton_;
+	Vector2 powerUpPos_;
+	Vector2 minoCountUpPos_;
 public:
 	MainGameSyste();
 	void Update();
 	void DrawSprite();
 	void DrawImGui();
 private:
+	void SpriteInit();
+	void CostInit();
 	//É~ÉmÇï‚è[Ç∑ÇÈ
 	void ReloadMino();
 
@@ -57,6 +68,8 @@ private:
 	void TurnEnemy();
 
 	void GameOverUpdate();
+	void PowerUp();
+	void MinoCountUp();
 public:
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetEnemy(IEnemy* enemy) { enemy_ = enemy; }
