@@ -16,6 +16,7 @@ void LoadManager::LoadTexture()
 {
 	LoadGraph("white1280x720.png", "White1280x720");
 	LoadGraph("white1x1.png", "White");
+	LoadGraph("number.png", "Number");
 	//パネル関連
 	LoadGraph("panel.png", "Panel");
 	//プレイヤー

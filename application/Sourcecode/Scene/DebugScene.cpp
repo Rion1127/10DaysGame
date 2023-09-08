@@ -27,6 +27,8 @@ void DebugScene::Ini()
 	dotSprite_.SetTexture(TextureManager::GetInstance()->GetTexture("DotTest"));
 	dotSprite_.Ini();
 	dotSprite_.SetPos(Vector2(100,800));
+
+	numberSprite_ = std::make_unique<Number>(3,Vector2(300,500),0.3f);
 }
 
 void DebugScene::Update()
@@ -38,6 +40,8 @@ void DebugScene::Update()
 	mainSystem_->Update();
 	player_->Update();
 	dotSprite_.Update();
+
+	numberSprite_->Update();
 }
 
 void DebugScene::Draw()
@@ -46,6 +50,7 @@ void DebugScene::Draw()
 	mainSystem_->DrawSprite();
 	player_->Draw();
 	dotSprite_.Draw();
+	numberSprite_->Draw();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);

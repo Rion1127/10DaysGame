@@ -492,6 +492,9 @@
     <ClCompile Include="application\Sourcecode\MouseUI.cpp">
       <Filter>application\ソースファイル\UI</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Number.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -769,6 +772,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\MouseUI.h">
       <Filter>application\ヘッダーファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Number.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

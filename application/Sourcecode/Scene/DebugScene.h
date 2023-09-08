@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "MainGameSyste.h"
+#include "Number.h"
 
 class DebugScene final:
     public IScene
@@ -23,6 +24,8 @@ private:
 	MinoList minoList_;
 
 	Sprite dotSprite_;
+
+	std::unique_ptr<Number> numberSprite_;
 public:
 	~DebugScene();
 
