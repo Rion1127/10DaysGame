@@ -52,7 +52,9 @@ private:
 	Vector2 uiDownPos_;
 
 	std::unique_ptr<Button> minoCountUpButton_;
+	std::unique_ptr<Button> attackButton_;
 	Vector2 minoCountUpPos_;
+	Vector2 attackPos_;
 
 	MouseUI mouseUi_;
 public:
