@@ -40,4 +40,6 @@ void BaseDrawer::BaseInitialize(const YTransform::Status& trfmStatus, Matrix4* m
 	isResetAnimeStatus_ = true;
 
 	sprite_.Ini();
+
+	ResetAnimation();
 }

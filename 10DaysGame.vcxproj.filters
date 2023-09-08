@@ -217,6 +217,12 @@
     <Filter Include="application\ヘッダーファイル\Animation\Drawer\Actor">
       <UniqueIdentifier>{04b697a6-5648-4f25-a4b6-ce12e0fd6b03}</UniqueIdentifier>
     </Filter>
+    <Filter Include="application\ソースファイル\Animation\Drawer\Number">
+      <UniqueIdentifier>{faf5df02-1e01-4b4b-89bd-25e3ce30b5d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\ヘッダーファイル\Animation\Drawer\Number">
+      <UniqueIdentifier>{ca800c03-5545-4b74-8dec-06e9f1fa6518}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\base\main.cpp">
@@ -486,14 +492,32 @@
     <ClCompile Include="application\Sourcecode\Animation\NextMinoDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\MouseUI.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\PanelDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\MouseUI.cpp">
-      <Filter>application\ソースファイル\UI</Filter>
+    <ClCompile Include="application\Sourcecode\Animation\HPDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Number.cpp">
       <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\TransitionDrawer.cpp">
+      <Filter>application\ソースファイル\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\AnimationManager.cpp">
+      <Filter>application\ソースファイル\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\DamageDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\DigitDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -767,14 +791,32 @@
     <ClInclude Include="application\Sourcecode\Animation\NextMinoDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
+    <ClInclude Include="application\Sourcecode\MouseUI.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\PanelDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\MouseUI.h">
-      <Filter>application\ヘッダーファイル\UI</Filter>
+    <ClInclude Include="application\Sourcecode\Animation\HPDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Number.h">
       <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\AnimationManager.h">
+      <Filter>application\ヘッダーファイル\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\TransitionDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\DamageDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\DigitDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="NumberDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

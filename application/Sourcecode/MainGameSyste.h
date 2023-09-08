@@ -6,6 +6,7 @@
 #include "YCameraManager.h"
 #include "NextMinoDrawer.h"
 #include "Button.h"
+#include "Timer.h"
 
 #include "MouseUI.h"
 class MainGameSyste
@@ -57,6 +58,7 @@ private:
 	Vector2 attackPos_;
 
 	MouseUI mouseUi_;
+	Timer redoCoolTime_;
 public:
 	MainGameSyste();
 	void Update();

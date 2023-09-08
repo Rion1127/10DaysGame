@@ -49,6 +49,6 @@ void YTimer::Update(const float passRate)
 float YTimer::Ratio() const
 {
 	// 0‚ÅŠ„‚ç‚È‚¢‚æ‚¤‚É
-	if (endFrame_ == 0) { return 0.0f; }
+	if (endFrame_ == 0) { return 1.0f; }
 	return current_ / static_cast<float>(endFrame_);
 }

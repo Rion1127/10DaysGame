@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <array>
+#include <list>
 #include "Mino.h"
 #include "Vector2.h"
 #include "mInput.h"
@@ -48,6 +49,8 @@ private:
 	std::vector<std::vector<int32_t>> displayPanel_;
 	//システム上のパネル
 	std::vector<std::vector<int32_t>> systemPanel_;
+	std::list<std::vector<std::vector<int32_t>>> oldPanelList_;
+	std::list<MinoType> usedMinoType_;
 	int32_t maxPanelSize_;
 	int32_t initalSize_;
 	//現在選択しているパネル上の座標
@@ -79,6 +82,8 @@ public:
 	//パネルを次のターンにする
 	void PanelUpdate();
 	void PanelReset();
+	void ReDoReset();
+	void ReDo(std::vector<MinoType>* minos);
 private:
 	//パネルをセットできるか確認する
 	bool IsCanChange(const Mino& mino);
