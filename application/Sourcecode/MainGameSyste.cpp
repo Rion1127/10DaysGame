@@ -262,7 +262,7 @@ void MainGameSyste::TurnPlayer()
 			player_->AttackAnimation(panel_->GetDisplayPanel());
 		}
 	}
-
+	//ƒŠƒhƒD‹@”\
 	if (Key::TriggerKey(DIK_Z)) {
 		if (redoCoolTime_.GetIsEnd()) {
 			panel_->ReDo(&minos_);
