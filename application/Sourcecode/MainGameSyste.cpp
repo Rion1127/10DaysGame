@@ -24,6 +24,8 @@ MainGameSyste::MainGameSyste()
 
 	SpriteInit();
 	CostInit();
+
+	redoCoolTime_.SetLimitTime(5);
 }
 
 void MainGameSyste::SpriteInit()
@@ -237,12 +239,14 @@ void MainGameSyste::TurnChange()
 		nowTurn_ = Turn::PLAYER;
 		//ƒ~ƒm‚ðƒŠƒ[ƒh‚·‚é
 		ReloadMino();
+		panel_->ReDoReset();
 	}
 	prevTurn_ = nowTurn_;
 }
 
 void MainGameSyste::TurnPlayer()
 {
+	redoCoolTime_.AddTime(1);
 	if (minos_.size() > 0) {
 		panel_->ChangeMinoAnimation(minos_[0]);
 	}
@@ -256,6 +260,12 @@ void MainGameSyste::TurnPlayer()
 
 		if (minos_.size() <= 0 || panel_->GetIsAllFill()) {
 			player_->AttackAnimation(panel_->GetDisplayPanel());
+		}
+	}
+
+	if (Key::TriggerKey(DIK_Z)) {
+		if (redoCoolTime_.GetIsEnd()) {
+			panel_->ReDo(&minos_);
 		}
 	}
 

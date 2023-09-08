@@ -133,6 +133,7 @@ void Panel::Update()
 				}
 			}
 		}
+		
 		//見た目のパネルの配列を更新
 		DisplayPanelUpdate(nowMino_);
 
@@ -274,6 +275,12 @@ void Panel::PanelReset()
 			systemPanel_[x][y] = displayPanel_[x][y];
 		}
 	}
+}
+
+void Panel::ReDoReset()
+{
+	oldPanelList_.clear();
+	usedMinoType_.clear();
 }
 
 bool Panel::IsCanChange(const Mino& mino)
@@ -434,9 +441,32 @@ Mino Panel::SetRotMino(const Mino& mino)
 	return result;
 }
 
+void Panel::ReDo(std::vector<MinoType>* minos)
+{
+	if (oldPanelList_.size() > 0 && usedMinoType_.size() > 0) {
+		int32_t sizeY = (int32_t)oldPanelList_.front().size();
+		int32_t sizeX = (int32_t)oldPanelList_.front()[0].size();
+		for (int32_t y = 0; y < sizeY; y++)
+		{
+			for (int32_t x = 0; x < sizeX; x++)
+			{
+				systemPanel_[y][x] = oldPanelList_.front()[y][x];
+			}
+		}
+		oldPanelList_.erase(oldPanelList_.begin());
+		
+		minos->insert(minos->begin(), usedMinoType_.front());
+
+		usedMinoType_.erase(usedMinoType_.begin());
+	}
+}
+
 void Panel::SetPanel(const Mino& mino)
 {
 	if (IsCanChange(mino) == false) return;
+
+	oldPanelList_.push_front(systemPanel_);
+	usedMinoType_.push_front(minoType_);
 
 	uint32_t sizeY = selectPos_.y + (uint32_t)mino.panel_.size();
 	uint32_t sizeX = selectPos_.x + (uint32_t)mino.panel_[0].size();
