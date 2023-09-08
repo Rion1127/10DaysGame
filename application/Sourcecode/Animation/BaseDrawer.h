@@ -25,6 +25,17 @@ namespace YGame
 		/// </summary>
 		/// <param name="trfmStatus"> : トランスフォーム情報</param>
 		void SetTransform(const YTransform::Status& trfmStatus);
+
+		/// <summary>
+		/// アニメリセット
+		/// </summary>
+		virtual void ResetAnimation() {};
+
+		/// <summary>
+		/// 色設定
+		/// </summary>
+		/// <param name="color"> : 色</param>
+		void SetColor(const Color& color) { sprite_.SetColor(color); }
 	
 	public:
 
@@ -34,16 +45,10 @@ namespace YGame
 	
 	protected:
 
-		/// <summary>
-		/// 初期化
-		/// </summary>
-		/// <param name="trfmStatus"> : トランスフォーム情報</param>
-		/// <param name="matParent"> : 親行列</param>
+		// 基底初期化
 		void BaseInitialize(const YTransform::Status& trfmStatus, Matrix4* matParent);
 
-		/// <summary>
-		/// アニメ更新
-		/// </summary>
+		// アニメ更新
 		virtual void UpdateAnimation() {};
 	
 	protected:
