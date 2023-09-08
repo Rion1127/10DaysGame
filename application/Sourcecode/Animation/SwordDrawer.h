@@ -33,6 +33,8 @@ namespace YGame
 		/// •`‰æ
 		/// </summary>
 		void Draw();
+	public:
+		bool GetRotaTimEnd() { return rotaTim_.IsEnd(); }
 
 	private:
 

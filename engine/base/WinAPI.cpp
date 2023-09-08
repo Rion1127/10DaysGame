@@ -44,7 +44,7 @@ void WinAPI::Ini()
 
 	hwnd_ = CreateWindow(w_.lpszClassName,	// クラス名
 		L"DirectXGame",						// タイトルバーの文字
-		WS_OVERLAPPEDWINDOW,				// 標準的なウィンドウスタイル
+		WS_SYSMENU,							// ウィンドウサイズ変更不可
 		CW_USEDEFAULT,						// 表示X座標(OSに任せる)
 		CW_USEDEFAULT,						// 表示Y座標(OSに任せる)
 		wrc_.right - wrc_.left,				// ウィンドウ横幅

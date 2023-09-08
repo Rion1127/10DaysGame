@@ -33,5 +33,6 @@ public:
 public:
 	int32_t GetAttackPower() { return attackpower_; }
 	bool GetIsAlive() { return isAlive_; }
+	bool GetRotTimEnd() { return sword_.GetRotaTimEnd(); }
 };
 

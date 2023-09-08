@@ -245,16 +245,21 @@ void MainGameSyste::TurnPlayer()
 		//配置出来たミノを消す
 		minos_.erase(minos_.begin());
 
-		//残りの数が0になった場合かすべてのマスを埋めた時ターンを終了する
 		if (minos_.size() <= 0 || panel_->GetIsAllFill()) {
+			player_->AttackAnimation(panel_->GetDisplayPanel());
+		}
+	}
+
+	//残りの数が0になった場合かすべてのマスを埋めた時ターンを終了する
+	if (minos_.size() <= 0 || panel_->GetIsAllFill()) {
+		panel_->SetUpdateType(UpdateType::SpriteOnly);
+		if (player_->GetRotTimEnd()) {
 			//パネル更新
 			panel_->PanelUpdate();
 			//敵にダメージを与える
 			int32_t damage = panel_->GetAttackPanelNum() * player_->GetAttackPower();
 			enemy_->Damage(damage);
 			nowTurn_ = Turn::CHANGE;
-
-			player_->AttackAnimation(panel_->GetDisplayPanel());
 		}
 	}
 }

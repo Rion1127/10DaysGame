@@ -486,11 +486,11 @@
     <ClCompile Include="application\Sourcecode\Animation\NextMinoDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\MouseUI.cpp">
-      <Filter>engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\PanelDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\MouseUI.cpp">
+      <Filter>application\ソースファイル\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -764,11 +764,11 @@
     <ClInclude Include="application\Sourcecode\Animation\NextMinoDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\MouseUI.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\PanelDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\MouseUI.h">
+      <Filter>application\ヘッダーファイル\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
