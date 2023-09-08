@@ -40,7 +40,7 @@ namespace YGame
 		/// </summary>
 		/// <param name="colorType"> : 色</param>
 		/// <param name="alphaRatio"> : アルファ値比率</param>
-		void ChangeColor(const BlockColorType colorType, const float alphaRatio = 255);
+		void ChangeColor(const BlockColorType colorType, const float alphaRatio = 1.0f);
 
 		/// <summary>
 		/// 色取得
