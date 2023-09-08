@@ -256,6 +256,7 @@ void MainGameSyste::TurnPlayer()
 		if (player_->GetRotTimEnd()) {
 			//パネル更新
 			panel_->PanelUpdate();
+			panel_->SetIsAllFill(false);
 			//敵にダメージを与える
 			int32_t damage = panel_->GetAttackPanelNum() * player_->GetAttackPower();
 			enemy_->Damage(damage);

@@ -93,6 +93,7 @@ public:
 	void ChangeMinoAnimation(MinoType type) { minoType_ = type; }
 	void SetUpdateType(UpdateType type) { updateType_ = type; }
 	void SetRotNum(uint32_t rotnum) { rotNum_ = rotnum; }
+	void SetIsAllFill(bool flag) { isAllFill_ = flag; }
 public:
 	bool GetisSetComplete() { return isSetComplete_; }
 	bool GetIsAllFill() { return isAllFill_; }
