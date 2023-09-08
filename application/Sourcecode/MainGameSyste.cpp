@@ -11,7 +11,7 @@ MainGameSyste::MainGameSyste()
 	nowTurn_ = Turn::PLAYER;
 	gameState_ = State::GAME;
 	//ターンごとに補充するミノの数
-	reloadMinoNum_ = 2;
+	reloadMinoNum_ = 6;
 
 	ReloadMino();
 
@@ -43,10 +43,17 @@ void MainGameSyste::SpriteInit()
 
 	minoCountUpPos_ = {
 		WinAPI::GetWindowSize().x / 1.3f,
-		WinAPI::GetWindowSize().y / 1.3f
+		WinAPI::GetWindowSize().y / 1.15f
 	};
 	minoCountUpButton_ = std::make_unique<Button>(minoCountUpPos_);
 	minoCountUpButton_->SetTexture(TextureManager::GetInstance()->GetTexture("MinoCouintUp"));
+
+	attackPos_ = {
+		WinAPI::GetWindowSize().x / 1.3f,
+		WinAPI::GetWindowSize().y / 1.3f
+	};
+	attackButton_ = std::make_unique<Button>(attackPos_);
+	attackButton_->SetTexture(TextureManager::GetInstance()->GetTexture("AttackButton"));
 }
 
 void MainGameSyste::CostInit()
@@ -98,6 +105,7 @@ void MainGameSyste::Update()
 			}
 		}
 		minoCountUpButton_->Update();
+		attackButton_->Update();
 	}
 	//クリアしたら
 	else {
@@ -158,6 +166,7 @@ void MainGameSyste::DrawSprite()
 	}
 	
 	minoCountUpButton_->Draw();
+	attackButton_->Draw();
 	nextMinoDrawer_.Draw();
 	mouseUi_.Draw();
 }
@@ -261,6 +270,15 @@ void MainGameSyste::TurnPlayer()
 			int32_t damage = panel_->GetAttackPanelNum() * player_->GetAttackPower();
 			enemy_->Damage(damage);
 			nowTurn_ = Turn::CHANGE;
+		}
+	}
+	//攻撃ボタンを押したら
+	if (attackButton_->GetIsCollision()) {
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+			if (minos_.size() > 0) {
+				minos_.clear();
+				player_->AttackAnimation(panel_->GetDisplayPanel());
+			}
 		}
 	}
 }
