@@ -105,7 +105,8 @@ void MainGameSyste::CostInit()
 
 void MainGameSyste::Update()
 {
-	if (gameState_ != State::PAUSE) {
+	if (gameState_ != State::PAUSE &&
+		gameState_ != State::GAMEOVER) {
 		enemyManager_.Update();
 		panel_->Update();
 
