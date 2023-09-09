@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseDrawer.h"
 #include "HitActor.h"
+#include "SplineEase.h"
 #include "YTimer.h"
 
 namespace YGame
@@ -18,9 +19,16 @@ namespace YGame
 		void Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent);
 
 		/// <summary>
+		/// 攻撃アニメーション
+		/// </summary>
+		void AttackAnimation();
+
+		/// <summary>
 		/// 被弾アニメーション
 		/// </summary>
 		void HitAnimation();
+
+		bool GetIsEndAttack() { return isEndAttack_; }
 
 	public:
 
@@ -43,5 +51,11 @@ namespace YGame
 		YMath::YTimer moveTim_;
 
 		uint32_t moveCount_;
+
+		YMath::SplineEase<float> attackEas_;
+
+		YMath::YTimer attackTim_;
+
+		bool isEndAttack_ = false;
 	};
 }

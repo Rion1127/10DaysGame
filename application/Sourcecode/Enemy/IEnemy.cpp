@@ -51,6 +51,11 @@ IEnemy::IEnemy(int32_t health, int32_t attackPower)
 	damage_.Initialize({ {0.0f,-32.0f,0.0f},{},{0.5f,0.5f,1.0f} }, &trfm_.m_, 0);
 }
 
+void IEnemy::AttackAnimation()
+{
+	drawer_.AttackAnimation();
+}
+
 void IEnemy::Damage(int32_t health)
 {
 	health_ -= health;

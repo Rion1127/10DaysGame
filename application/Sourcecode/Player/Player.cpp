@@ -77,6 +77,12 @@ void Player::Damage(int32_t damage)
 	damage_.DamageAnimation();
 }
 
+void Player::Recovery(int32_t health)
+{
+	health_ += health;
+	hpBar_.ChangeHPAnimation(health_);
+}
+
 void Player::IdleAnimation()
 {
 	drawer_.IdleAnimation();
