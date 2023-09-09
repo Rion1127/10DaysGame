@@ -80,5 +80,10 @@ private:
 public:
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetEnemy(IEnemy* enemy) { enemy_ = enemy; }
+
+public:
+	void TutorialInit();
+	void TutorialUpdate();
+	void TutorialDraw();
 };
 

@@ -11,7 +11,7 @@ MainGameSyste::MainGameSyste()
 	nowTurn_ = Turn::PLAYER;
 	gameState_ = State::GAME;
 	//ターンごとに補充するミノの数
-	reloadMinoNum_ = 2;
+	reloadMinoNum_ = 5;
 
 	ReloadMino();
 
@@ -344,3 +344,37 @@ void MainGameSyste::MinoCountUp()
 		panel_->PanelReset();
 	}
 }
+
+#pragma region チュートリアル
+void MainGameSyste::TutorialInit()
+{
+	panel_ = std::make_unique<Panel>();
+
+	nowTurn_ = Turn::PLAYER;
+	gameState_ = State::GAME;
+	//ターンごとに補充するミノの数
+	reloadMinoNum_ = 5;
+
+	ReloadMino();
+
+	nextMinoDrawer_.Initialize();
+	enemy_ = enemyManager_.GetNowEnemy();
+
+	// カメラ取得 + 初期化
+	cameraManager_ = YCameraManager::GetInstance();
+	cameraManager_->Initialize();
+
+	SpriteInit();
+	CostInit();
+
+	redoCoolTime_.SetLimitTime(5);
+}
+
+void MainGameSyste::TutorialUpdate()
+{
+}
+
+void MainGameSyste::TutorialDraw()
+{
+}
+#pragma endregion

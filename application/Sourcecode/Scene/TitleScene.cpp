@@ -63,7 +63,7 @@ void TitleScene::Update()
 			//チュートリアルへ
 			if (tutorialButton_->GetIsCollision())
 			{
-				SceneManager::SetChangeStart(SceneName::Debug);
+				SceneManager::SetChangeStart(SceneName::Tutorial);
 				SceneManager::SetGameMode(GameMode::Tutorial);
 			}
 			//本編へ

@@ -19,7 +19,7 @@ Button::Button(Vector2 pos)
 	};
 	sprite_->GetTexture();
 	Vector2 scale =  sprite_->GetScale();
-	scale *= 0.7f;
+	scale *= 0.8f;
 	sprite_->SetScale(scale);
 
 	

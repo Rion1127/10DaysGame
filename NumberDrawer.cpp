@@ -2,7 +2,7 @@
 
 using YGame::NumberDrawer;
 
-static const Vector2 kNumberSize = { 128.0f,128.0f };
+static const Vector2 kNumberSize = { 96.0f, 96.0f };
 
 void NumberDrawer::CreateDigits()
 {

@@ -11,7 +11,7 @@
 #include "Enemy.h"
 #include "MainGameSyste.h"
 
-class TutorialScene :
+class TutorialScene final :
 	public IScene
 {
 private:
@@ -29,4 +29,5 @@ public:
 	void Update()override;
 
 	void Draw()override;
+private:
 };
