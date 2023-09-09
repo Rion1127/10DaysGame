@@ -44,15 +44,15 @@ void MainGameSyste::SpriteInit()
 	retryButton_->SetTexture(TextureManager::GetInstance()->GetTexture("Retry"));
 
 	minoCountUpPos_ = {
-		WinAPI::GetWindowSize().x / 1.3f,
-		WinAPI::GetWindowSize().y / 1.15f
+		96.f,
+		400.f
 	};
 	minoCountUpButton_ = std::make_unique<Button>(minoCountUpPos_);
 	minoCountUpButton_->SetTexture(TextureManager::GetInstance()->GetTexture("MinoCouintUp"));
 
 	attackPos_ = {
-		WinAPI::GetWindowSize().x / 1.3f,
-		WinAPI::GetWindowSize().y / 1.3f
+		96.f,
+		300.f
 	};
 	attackButton_ = std::make_unique<Button>(attackPos_);
 	attackButton_->SetTexture(TextureManager::GetInstance()->GetTexture("AttackButton"));
@@ -206,6 +206,9 @@ void MainGameSyste::DrawImGui()
 	ImGui::Text("minoCountUpCost : %d , Now : %d", minoCountUpCost_.at(powerLevel_ - 1), panel_->GetEmptyPanelNum());
 
 	ImGui::End();
+
+	/*minoCountUpButton_->DrawImgui();
+	attackButton_->DrawImgui();*/
 }
 
 void MainGameSyste::ReloadMino()

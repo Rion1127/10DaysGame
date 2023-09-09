@@ -9,7 +9,7 @@ MouseUI::MouseUI()
 	sprite_->SetTex_Size(Vector2(160,128));
 	float scaleX = 1.f / 3.f;
 	sprite_->SetScale(Vector2(scaleX,1.0f));
-	sprite_->SetPos(Vector2(600, 580));
+	sprite_->SetPos(Vector2(100, 660));
 	timer_.SetLimitTime(5);
 }
 
@@ -42,4 +42,5 @@ void MouseUI::Update()
 void MouseUI::Draw()
 {
 	sprite_->Draw();
+	//sprite_->DrawImGui();
 }
