@@ -153,7 +153,7 @@ void TransitionDrawer::FallAnimation()
 			20, 
 			{ 
 				-blocks_[y][x].trfm_.scale_,
-				Vector3(0.4f, 0.4f, 0.4f),
+				Vector3(0.1f, 0.1f, 0.1f),
 				Vector3(),
 			},
 			3.0f);
@@ -183,7 +183,7 @@ void TransitionDrawer::RiseAnimation()
 			20,
 			{
 				Vector3(),
-				Vector3(0.4f, 0.4f, 0.4f),
+				Vector3(0.1f, 0.1f, 0.1f),
 				-blocks_[y][x].trfm_.scale_,
 			},
 			3.0f);

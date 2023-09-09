@@ -91,7 +91,7 @@ void TitleScene::Update()
 	transition_.Update();
 	if (Key::TriggerKey(DIK_SPACE))
 	{
-		transition_.SceneChangeAnimation(50, 5);
+		transition_.SceneChangeAnimation(50, 10);
 	}
 }
 
