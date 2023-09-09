@@ -19,8 +19,8 @@ void EnemyDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matP
 	attackEas_.Initialize(
 		{
 			0.0f, 
-			-20.0f, 
-			+40.0f, 
+			+20.0f, 
+			-40.0f, 
 			0.0f, 
 		}, 
 		3.0f);
