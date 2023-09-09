@@ -39,6 +39,9 @@ namespace YGame
 		/// </summary>
 		/// <param name="hp"> : HP</param>
 		void ChangeHPAnimation(const int32_t hp);
+
+		int32_t MaxHP() const { return maxHp_; }
+		int32_t HP() const { return hp_; }
 	
 	private:
 

@@ -80,6 +80,11 @@ void Player::Damage(int32_t damage)
 void Player::Recovery(int32_t health)
 {
 	health_ += health;
+
+	if (hpBar_.MaxHP() <= health_)
+	{
+		hpBar_.ChangeMaxHPAnimation(health_);
+	}
 	hpBar_.ChangeHPAnimation(health_);
 }
 
