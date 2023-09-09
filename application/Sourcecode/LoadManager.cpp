@@ -21,6 +21,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("panel.png", "Panel");
 	LoadGraph("powerUpPanel.png", "PowerUpPanel");
 	LoadGraph("recoveryPanel.png", "RecoveryPanel");
+	LoadGraph("light.png", "Light");
 	//ÉvÉåÉCÉÑÅ[
 	LoadGraph("player.png", "Player");
 	LoadGraph("playerMove.png", "PlayerMove");

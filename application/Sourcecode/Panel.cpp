@@ -700,11 +700,11 @@ void PanelSprite::Update(const std::vector<std::vector<int32_t>>& panel)
 			//パネルの色変更
 			if (panel[x][y] == State::NOT_OPEN) {
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Gray);
-				panels_[x][y].ResetAnime();
+				panels_[x][y].ValidAnimtion();
 			}
 			else if (panel[x][y] == State::EMPTY) {
 				panels_[x][y].ChangeColor(YGame::BlockColorType::White);
-				panels_[x][y].ResetAnime();
+				panels_[x][y].InvalidAnimtion();
 			}
 			else if (panel[x][y] == State::ATTACK) {
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Orange);

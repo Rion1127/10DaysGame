@@ -49,11 +49,52 @@ namespace YGame
 		/// </summary>
 		void OpenAnimation();
 
+		/// <summary>
+		/// 有効アニメーション
+		/// </summary>
+		void ValidAnimtion();
+
+		/// <summary>
+		/// 無効アニメーション
+		/// </summary>
+		void InvalidAnimtion();
+
+	private:
+
+		class LightDrawer : public BaseDrawer
+		{
+		
+		public:
+			
+			void Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent);
+
+			void SetIsAct(const bool isAct) { isAct_ = isAct; }
+
+			void ResetAnimation() override;
+			
+		private:
+
+			void UpdateAnimation() override;
+		
+		private:
+
+			bool isAct_ = false;
+			YMath::YPower animePow_;
+			YMath::YPower alphaPow_;
+
+			YMath::Ease<float> heightEas_;
+			YMath::Ease<float> rotaEas_;
+			YMath::Ease<float> scaleEas_;
+			YMath::Ease<float> alphaEas_;
+		};
+	
 	private:
 
 		YTransform trfm_;
 
 		BlockDrawer blockDra_;
+
+		LightDrawer lightDra_;
 
 		SlimeActor slimeActor_;
 		
