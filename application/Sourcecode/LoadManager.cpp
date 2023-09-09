@@ -44,13 +44,5 @@ void LoadManager::LoadTexture()
 
 void LoadManager::LoadSound()
 {
-	LoadWave("swingSE.wav", "SwingSE");
-	LoadWave("hitSE.wav", "HitSE");
-	LoadWave("lockOnSE.wav", "lockOnSE");
-	LoadWave("enterSE.wav", "EnterSE");
-	LoadWave("selectSE.wav", "SelectSE");
-	LoadWave("guardSE.wav", "GuardSE");
-	LoadWave("guardHitSE.wav", "GuardHitSE");
-	LoadWave("deathSE.wav", "DeathSE");
-	LoadWave("shine.wav", "ShineSE");
+	
 }
