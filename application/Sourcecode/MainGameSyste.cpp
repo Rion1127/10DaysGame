@@ -84,8 +84,8 @@ void MainGameSyste::SpriteInit()
 	backSprite_->Ini();
 	backSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White1280x720"));
 	backSprite_->SetAnchor(Vector2(0, 0));
-	backSprite_->SetColor(Color(0,0,0,200));
-	backSprite_->SetScale(Vector2(2,2));
+	backSprite_->SetColor(Color(0, 0, 0, 200));
+	backSprite_->SetScale(Vector2(2, 2));
 }
 
 void MainGameSyste::CostInit()
@@ -235,7 +235,7 @@ void MainGameSyste::DrawSprite()
 
 void MainGameSyste::DrawSpriteFront()
 {
-	
+
 	if (gameState_ == State::CLEAR ||
 		gameState_ == State::GAMEOVER ||
 		gameState_ == State::PAUSE)
@@ -318,6 +318,7 @@ void MainGameSyste::TurnChange()
 	//自分のターンだったら敵のターンへ
 	if (prevTurn_ == Turn::PLAYER) {
 		nowTurn_ = Turn::ENEMY;
+		enemyManager_.GetNowEnemy()->AttackAnimation();
 	}
 	//敵のターンだったら自分のターンへ
 	else if (prevTurn_ == Turn::ENEMY) {
@@ -371,7 +372,7 @@ void MainGameSyste::TurnPlayer()
 			enemy_->Damage(damage);
 			nowTurn_ = Turn::CHANGE;
 
-			SoundManager::Play("Attack",false,1.0f);
+			SoundManager::Play("Attack", false, 1.0f);
 		}
 	}
 	//攻撃ボタンを押したら
@@ -389,12 +390,16 @@ void MainGameSyste::TurnEnemy()
 {
 	//プレイヤーがダメージを受ける
 	if (enemyManager_.GetIsChangeNowEnemy() == false) {
-		player_->Damage(enemy_->GetAttackPower());
-		player_->AddPowerReset();
+		if (enemyManager_.GetNowEnemy()->GetIsEndAttack()) {
+			player_->Damage(enemy_->GetAttackPower());
+			player_->AddPowerReset();
+
+			//処理が終わったらシーンをチェンジする
+			nowTurn_ = Turn::CHANGE;
+		}
 	}
 
-	//処理が終わったらシーンをチェンジする
-	nowTurn_ = Turn::CHANGE;
+	
 }
 
 void MainGameSyste::GameOverUpdate()

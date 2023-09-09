@@ -24,7 +24,7 @@ void EnemyDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matP
 			0.0f, 
 		}, 
 		3.0f);
-	attackTim_.Initialize(10);
+	attackTim_.Initialize(60);
 	isEndAttack_ = false;
 }
 
