@@ -18,7 +18,7 @@ void NextMinoDrawer::Initialize()
 		{
 			status.pos_ = 
 			{ 
-				530.0f, 
+				550.0f, 
 				300.0f, 
 				0.0f 
 			};
@@ -26,7 +26,6 @@ void NextMinoDrawer::Initialize()
 		}
 		else
 		{
-
 			status.pos_ = 
 			{ 
 				550.0f,
