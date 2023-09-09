@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="application\Sourcecode\Animation\AnimationManager.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\BaseDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\BezierEase.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\BlockDrawer.cpp" />
@@ -107,7 +106,6 @@
     <ClCompile Include="NumberDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="application\Sourcecode\Animation\AnimationManager.h" />
     <ClInclude Include="application\Sourcecode\Animation\BaseDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\BezierEase.h" />
     <ClInclude Include="application\Sourcecode\Animation\BlockDrawer.h" />

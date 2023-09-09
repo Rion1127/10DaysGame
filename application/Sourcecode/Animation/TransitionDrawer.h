@@ -58,7 +58,7 @@ namespace YGame
 
 		enum class Phase
 		{
-			Fall, Rise
+			Fall, Load, Rise
 		};
 	
 	private:
@@ -69,6 +69,7 @@ namespace YGame
 		bool isTransition_ = true;
 
 		YMath::YTimer intervalTim_;
+		YMath::YTimer loadTim_;
 		
 		Phase phase_ = Phase::Fall;
 		uint32_t phaseNum_ = 0;

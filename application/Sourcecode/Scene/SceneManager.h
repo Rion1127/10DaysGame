@@ -6,6 +6,7 @@
 #include "DirectX.h"
 #include "Util.h"
 #include "Timer.h"
+#include "TransitionDrawer.h"
 
 enum class SceneName {
 	Title,
@@ -30,6 +31,9 @@ private:
 	static bool sisSetNext_;
 	static Timer animeTimer_;
 	static GameMode sgameMode_;
+	
+	static YGame::TransitionDrawer transitionDrawer_;
+	static bool isTransitionStart_;
 public:
 	static void Ini();
 	static void Update();

@@ -13,6 +13,9 @@ bool SceneManager::sisSetNext_ = false;
 Timer SceneManager::animeTimer_;
 GameMode SceneManager::sgameMode_;
 
+YGame::TransitionDrawer SceneManager::transitionDrawer_;
+bool SceneManager::isTransitionStart_ = false;
+
 void SceneManager::Ini()
 {
 #ifdef _DEBUG
@@ -24,8 +27,8 @@ void SceneManager::Ini()
 #endif // _DEBUG
 
 	
-	
-
+	isTransitionStart_ = false;
+	transitionDrawer_.Initialize();
 
 	animeTimer_.SetLimitTime(100);
 	
@@ -54,7 +57,18 @@ void SceneManager::Update()
 	//切り替えアニメーション開始
 	if (sisSetNext_)
 	{
-		animeTimer_.AddTime(1);
+		if (isTransitionStart_ == false)
+		{
+			transitionDrawer_.SceneChangeAnimation(50, 10);
+			isTransitionStart_ = true;
+		}
+
+		if (transitionDrawer_.IsChangeMoment())
+		{
+			SceneChange();
+		}
+
+		//animeTimer_.AddTime(1);
 		
 		//シーン遷移
 		if (animeTimer_.GetIsEnd())
@@ -69,6 +83,8 @@ void SceneManager::Update()
 			animeTimer_.AddTime(-1);
 		}
 	}
+
+	transitionDrawer_.Update();
 }
 
 void SceneManager::Draw()
@@ -77,6 +93,8 @@ void SceneManager::Draw()
 	scurrentScene_->Draw();
 
 	PipelineManager::PreDraw("Sprite",TRIANGLELIST);
+	
+	transitionDrawer_.Draw();
 }
 
 void SceneManager::SceneChange()

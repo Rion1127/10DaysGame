@@ -45,6 +45,7 @@ void TransitionDrawer::Initialize()
 	isTransition_ = false;
 	
 	intervalTim_.Initialize(0);
+	loadTim_.Initialize(20);
 
 	phase_ = Phase::Fall;
 	phaseNum_ = 0;
@@ -58,6 +59,7 @@ void TransitionDrawer::Update()
 	isChangeMoment_ = false;
 
 	intervalTim_.Update();
+	
 	if (intervalTim_.IsEnd())
 	{
 		if (phase_ == Phase::Fall)
@@ -68,9 +70,9 @@ void TransitionDrawer::Update()
 			phaseCounter_++;
 			if (phaseNum_ <= phaseCounter_)
 			{
-				isChangeMoment_ = true;
-				
-				phase_ = Phase::Rise;
+				phase_ = Phase::Load;
+				intervalTim_.Reset(false);
+				loadTim_.Reset(true);
 			}
 		}
 		else if (phase_ == Phase::Rise)
@@ -92,6 +94,15 @@ void TransitionDrawer::Update()
 		}
 	}
 
+	loadTim_.Update();
+	if (loadTim_.IsEnd())
+	{
+		isChangeMoment_ = true;
+		phase_ = Phase::Rise;
+		intervalTim_.Reset(true);
+		loadTim_.Reset(false);
+	}
+
 	trfm_.UpdateMatrix();
 	for (size_t y = 0; y < blocks_.size(); y++)
 	{
@@ -110,6 +121,7 @@ void TransitionDrawer::SceneChangeAnimation(const uint32_t frame, const uint32_t
 	isTransition_ = true;
 
 	intervalTim_.Initialize(frame / phaseNum, true);
+	loadTim_.Reset(false);
 	
 	phaseNum_ = phaseNum;
 	phaseCounter_ = 1;
