@@ -4,6 +4,7 @@
 #include "Mino.h"
 #include "Collision.h"
 #include "WinAPI.h"
+#include "RRandom.h"
 
 #pragma region Panel
 Panel::Panel()
@@ -241,6 +242,146 @@ void Panel::PanelReset()
 	uint32_t sizeMinX = ((uint32_t)(displayPanel_[0].size() - 1) / 2);
 	uint32_t sizeMaxX = ((uint32_t)(displayPanel_[0].size() - 1) / 2) + (initalSize_ - 1);
 
+	uint32_t maxpUpPanelNum = 2;
+	uint32_t pUpPanelNum = 0;
+	uint32_t maxrecovPanelNum = 2;
+	uint32_t recovPanelNum = 0;
+
+	std::vector<Vector2> pUppos;
+	std::vector<Vector2> recovpos;
+
+	for (uint32_t i = 0; i < maxpUpPanelNum; i++)
+	{
+		bool vertiOrhoriz = RRandom::Rand(0, 1);
+		Vector2 pos;
+		//縦
+		if (vertiOrhoriz) {
+			bool upOrDown = RRandom::Rand(0, 1);
+			
+			//上
+			if (upOrDown) {
+				int32_t posx = (int32_t)(displayPanel_.size() - 1);
+				pos = {
+					(float)RRandom::Rand(0,posx),
+					0
+				};
+			}
+			//下
+			else {
+				int32_t posx = (int32_t)(displayPanel_.size() - 1);
+				pos = {
+					(float)RRandom::Rand(0,posx),
+					(float)(displayPanel_.size() - 1)
+				};
+			}
+		}
+		//横
+		else {
+			bool rightOrLeft = RRandom::Rand(0, 1);
+			//左
+			if (rightOrLeft) {
+				pos = {
+					0,
+					(float)RRandom::Rand(0,(int32_t)(displayPanel_.size() - 1)),
+				};
+			}
+			//右
+			else {
+				pos = {
+					(float)(displayPanel_.size() - 1),
+					(float)RRandom::Rand(0,(int32_t)(displayPanel_.size() - 1))
+				};
+			}
+		}
+
+		bool ismatch = false;
+		if (pUppos.size() > 0) {
+			if (pUppos[i - 1] == pos) {
+				ismatch = true;
+			}
+		}
+
+		if (ismatch) {
+			i--;
+			continue;
+		}
+
+		pUppos.push_back(pos);
+	}
+
+	for (uint32_t i = 0; i < maxrecovPanelNum; i++)
+	{
+		bool vertiOrhoriz = RRandom::Rand(0, 1);
+		Vector2 pos;
+		//縦
+		if (vertiOrhoriz) {
+			bool upOrDown = RRandom::Rand(0, 1);
+
+			//上
+			if (upOrDown) {
+				int32_t posx = (int32_t)(displayPanel_.size() - 1);
+				pos = {
+					(float)RRandom::Rand(0,posx),
+					0
+				};
+			}
+			//下
+			else {
+				int32_t posx = (int32_t)(displayPanel_.size() - 1);
+				pos = {
+					(float)RRandom::Rand(0,posx),
+					(float)(displayPanel_.size() - 1)
+				};
+			}
+		}
+		//横
+		else {
+			bool rightOrLeft = RRandom::Rand(0, 1);
+			//左
+			if (rightOrLeft) {
+				pos = {
+					0,
+					(float)RRandom::Rand(0,(int32_t)(displayPanel_.size() - 1)),
+				};
+			}
+			//右
+			else {
+				pos = {
+					(float)(displayPanel_.size() - 1),
+					(float)RRandom::Rand(0,(int32_t)(displayPanel_.size() - 1))
+				};
+			}
+		}
+
+		bool ismatch = false;
+		for (uint32_t j = 0; j < maxpUpPanelNum; j++) {
+			if (pUppos[j] == pos) {
+				ismatch = true;
+			}
+		}
+		if (recovpos.size() > 0) {
+			if (recovpos[i - 1] == pos) {
+				ismatch = true;
+			}
+		}
+
+		if (ismatch) {
+			i--;
+			continue;
+		}
+		recovpos.push_back(pos);
+	}
+
+	for (uint32_t i = 0; i < maxpUpPanelNum; i++)
+	{
+		displayPanel_[(int32_t)pUppos[i].x][(int32_t)pUppos[i].y] = State::PowerUp;
+	}
+
+	for (uint32_t i = 0; i < maxrecovPanelNum; i++)
+	{
+		displayPanel_[(int32_t)recovpos[i].x][(int32_t)recovpos[i].y] = State::Recovery;
+	}
+
 	for (uint32_t y = 0; y < displayPanel_.size(); y++)
 	{
 		for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
@@ -250,10 +391,7 @@ void Panel::PanelReset()
 				displayPanel_[x][y] = State::EMPTY;
 			}
 
-			if (x == 0 || x == 9 ||
-				y == 0 || y == 9) {
-				displayPanel_[x][y] = State::Recovery;
-			}
+			
 
 			systemPanel_[x][y] = displayPanel_[x][y];
 		}
@@ -475,6 +613,18 @@ void Panel::SetPanel(const Mino& mino)
 			{
 				systemPanel_[x][y] = State::NEXT_RELEASE;
 			}
+			else if (systemPanel_[x][y] == State::PowerUp &&
+				mino.panel_[panelY][panelX] == 1)
+			{
+				systemPanel_[x][y] = State::NEXT_RELEASE;
+				powerUpPanelNum_++;
+			}
+			else if (systemPanel_[x][y] == State::Recovery &&
+				mino.panel_[panelY][panelX] == 1)
+			{
+				systemPanel_[x][y] = State::NEXT_RELEASE;
+				recoveryPanelNum_++;
+			}
 			//全て更新する
 			displayPanel_[x][y] = systemPanel_[x][y];
 
@@ -483,6 +633,18 @@ void Panel::SetPanel(const Mino& mino)
 		panelY++;
 	}
 	isSetComplete_ = true;
+}
+uint32_t Panel::GetPowerUpPanelNum()
+{
+	uint32_t result = powerUpPanelNum_;
+	powerUpPanelNum_ = 0;
+	return result;
+}
+uint32_t Panel::GetRecoveryPanelNum()
+{
+	uint32_t result = recoveryPanelNum_;
+	recoveryPanelNum_ = 0;
+	return result;
 }
 #pragma endregion
 
@@ -521,6 +683,12 @@ void PanelSprite::Update(const std::vector<std::vector<int32_t>>& panel)
 	{
 		for (uint32_t x = 0; x < panels_[y].size(); x++)
 		{
+			if (panel[x][y] != State::PowerUp&&
+				panel[x][y] != State::Recovery &&
+				panel[x][y] != State::TEMPPOS) {
+				panels_[x][y].SetTexture(TextureManager::GetInstance()->GetTexture("Panel"));
+			}
+
 			//パネルの色変更
 			if (panel[x][y] == State::NOT_OPEN) {
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Gray);

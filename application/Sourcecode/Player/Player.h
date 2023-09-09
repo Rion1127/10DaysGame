@@ -7,6 +7,8 @@ class Player
 private:
 	int32_t health_;
 	int32_t attackpower_;
+	int32_t baseAttackpower_;
+	int32_t powerUpValue_;
 	bool isAlive_;
 
 	// トランスフォーム
@@ -25,11 +27,15 @@ public:
 	void IdleAnimation();
 	void MoveAnimation();
 
+	void AddPowerReset() { powerUpValue_ = 0; };
+
 	void Draw();
 	void DrawImGui();
 public:
 	void Damage(int32_t damage);
 	void SetAttackPower(int32_t power) { attackpower_ = power; }
+	void AddAttackPower(int32_t power) { powerUpValue_ = power; }
+	void Recovery(int32_t health) { health_ += health; }
 public:
 	int32_t GetAttackPower() { return attackpower_; }
 	bool GetIsAlive() { return isAlive_; }

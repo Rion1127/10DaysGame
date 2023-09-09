@@ -11,7 +11,7 @@ MainGameSyste::MainGameSyste()
 	nowTurn_ = Turn::PLAYER;
 	gameState_ = State::GAME;
 	//ターンごとに補充するミノの数
-	reloadMinoNum_ = 6;
+	reloadMinoNum_ = 2;
 
 	ReloadMino();
 
@@ -240,6 +240,11 @@ void MainGameSyste::TurnChange()
 		//ミノをリロードする
 		ReloadMino();
 		panel_->ReDoReset();
+
+		int32_t powerUp = panel_->GetPowerUpPanelNum() * 2;
+		player_->AddAttackPower(powerUp);
+		int32_t recovery = panel_->GetRecoveryPanelNum() * 10;
+		player_->Recovery(recovery);
 	}
 	prevTurn_ = nowTurn_;
 }
@@ -298,6 +303,7 @@ void MainGameSyste::TurnEnemy()
 	//プレイヤーがダメージを受ける
 	if (enemyManager_.GetIsChangeNowEnemy() == false) {
 		player_->Damage(enemy_->GetAttackPower());
+		player_->AddPowerReset();
 	}
 
 	//処理が終わったらシーンをチェンジする

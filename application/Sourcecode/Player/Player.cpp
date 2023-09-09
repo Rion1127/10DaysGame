@@ -12,7 +12,7 @@ void Player::Initialize()
 	};
 
 	health_ = 100;
-	attackpower_ = 2;
+	baseAttackpower_ = 2;
 	isAlive_ = true;
 
 	// トランスフォーム
@@ -33,6 +33,7 @@ void Player::Update()
 	if (health_ <= 0) {
 		isAlive_ = false;
 	}
+	attackpower_ = baseAttackpower_ + powerUpValue_;
 
 	drawer_.Update();
 	sword_.Update();

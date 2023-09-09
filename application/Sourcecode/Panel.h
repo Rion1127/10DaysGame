@@ -74,6 +74,9 @@ private:
 	uint32_t rotNum_;
 	Mino nowMino_;
 	Box2D allPanelSize_;
+
+	uint32_t powerUpPanelNum_;
+	uint32_t recoveryPanelNum_;
 public:
 	Panel();
 	void Update();
@@ -107,6 +110,8 @@ public:
 	int32_t GetAttackPanelNum() { return attackPanelNum_; }
 	int32_t GetEmptyPanelNum() { return emptyPanelNum_; }
 	Mino GetNowMino() { return nowMino_; }
+	uint32_t GetPowerUpPanelNum();
+	uint32_t GetRecoveryPanelNum();
 
 	std::vector<std::vector<int32_t>> GetDisplayPanel() { return displayPanel_; }
 };
