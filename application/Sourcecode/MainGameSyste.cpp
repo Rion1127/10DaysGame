@@ -1,6 +1,7 @@
 #include "MainGameSyste.h"
 #include "RRandom.h"
 #include "SceneManager.h"
+#include "mSound.h"
 
 using YGame::YCameraManager;
 
@@ -369,6 +370,8 @@ void MainGameSyste::TurnPlayer()
 			int32_t damage = panel_->GetAttackPanelNum() * player_->GetAttackPower();
 			enemy_->Damage(damage);
 			nowTurn_ = Turn::CHANGE;
+
+			SoundManager::Play("Attack",false,1.0f);
 		}
 	}
 	//UŒ‚ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚ç

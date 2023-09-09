@@ -44,5 +44,7 @@ void LoadManager::LoadTexture()
 
 void LoadManager::LoadSound()
 {
-	
+	LoadWave("attackSE.wav", "Attack");
+	LoadWave("click_1SE.wav", "Click_1SE");
+	LoadWave("click_2SE.wav", "Click_2SE");
 }
