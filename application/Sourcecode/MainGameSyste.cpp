@@ -44,14 +44,14 @@ void MainGameSyste::SpriteInit()
 	retryButton_->SetTexture(TextureManager::GetInstance()->GetTexture("Retry"));
 
 	minoCountUpPos_ = {
-		96.f,
+		80.f,
 		400.f
 	};
 	minoCountUpButton_ = std::make_unique<Button>(minoCountUpPos_);
 	minoCountUpButton_->SetTexture(TextureManager::GetInstance()->GetTexture("MinoCouintUp"));
 
 	attackPos_ = {
-		96.f,
+		80.f,
 		300.f
 	};
 	attackButton_ = std::make_unique<Button>(attackPos_);
