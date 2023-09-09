@@ -41,6 +41,7 @@ void TitleScene::Ini()
 	endlessButton_ = std::make_unique<Button>(endlessPos);
 	endlessButton_->SetTexture(TextureManager::GetInstance()->GetTexture("EndlessButton"));
 
+	transition_.Initialize();
 }
 
 void TitleScene::Update()
@@ -86,6 +87,12 @@ void TitleScene::Update()
 	tutorialButton_->Update();
 	mainGameButton_->Update();
 	endlessButton_->Update();
+
+	transition_.Update();
+	if (Key::TriggerKey(DIK_SPACE))
+	{
+		transition_.SceneChangeAnimation(50, 10);
+	}
 }
 
 void TitleScene::Draw()
@@ -97,6 +104,8 @@ void TitleScene::Draw()
 		mainGameButton_->Draw();
 		endlessButton_->Draw();
 	}
+
+	transition_.Draw();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);

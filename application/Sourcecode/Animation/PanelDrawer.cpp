@@ -10,7 +10,7 @@ void PanelDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matP
 	blockDra_.Initialize(YTransform::Status::Default(), &trfm_.m_, BlockColorType::None);
 
 	// アニメーション用
-	slimeActor_.Initialize(10, { Vector3(), Vector3(0.4f, 0.4f, 0.4f) }, 3.0f);
+	slimeActor_.Initialize(20, { Vector3(), Vector3(0.4f, 0.4f, 0.4f), Vector3() }, 3.0f);
 	rotaTim_.Initialize(40);
 
 	isSet_ = false;
