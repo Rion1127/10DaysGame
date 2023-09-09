@@ -6,12 +6,12 @@
 void Player::Initialize()
 {	
 	Vector3 pos = {
-		WinAPI::GetWindowSize().x / 3.4f,
-		WinAPI::GetWindowSize().y / 5.f,
+		WinAPI::GetWindowSize().x / 2.0f - 128.0f,
+		WinAPI::GetWindowSize().y / 6.0f,
 		0.0f
 	};
 
-	Vector3 scale = { 1.0f,1.0f,0.0f };
+	Vector3 scale = { 0.75f,0.75f,0.0f };
 
 	health_ = 100;
 	baseAttackpower_ = 2;

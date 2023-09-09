@@ -4,12 +4,12 @@
 IEnemy::IEnemy()
 {
 	Vector3 pos = {
-		WinAPI::GetWindowSize().x / 3.5f,
-		WinAPI::GetWindowSize().y / 5.f,
+		WinAPI::GetWindowSize().x / 2.0f + 256.0f,
+		WinAPI::GetWindowSize().y / 6.0f,
 		0.0f
 	};
 
-	Vector3 scale = { 1.0f,1.0f,0.0f };
+	Vector3 scale = { 0.75f,0.75f,0.0f };
 
 	health_ = 0;
 	isAlive_ = false;
@@ -29,12 +29,12 @@ IEnemy::IEnemy()
 IEnemy::IEnemy(int32_t health, int32_t attackPower)
 {
 	Vector3 pos = {
-		WinAPI::GetWindowSize().x / 1.5f,
-		WinAPI::GetWindowSize().y / 5.f,
+		WinAPI::GetWindowSize().x / 2.0f + 128.0f,
+		WinAPI::GetWindowSize().y / 6.0f,
 		0.0f
 	};
-	
-	Vector3 scale = { 1.0f,1.0f,0.0f };
+
+	Vector3 scale = { 0.75f,0.75f,0.0f };
 
 	health_ = health;
 	isAlive_ = true;
