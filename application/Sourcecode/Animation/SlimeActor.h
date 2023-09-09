@@ -14,9 +14,7 @@ namespace YGame
 
 		enum class EaseType
 		{
-			eIn,
-
-			eOut,
+			eIn, eOut, eInOut, eOutIn,
 		};
 	
 	public:

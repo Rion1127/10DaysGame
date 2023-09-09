@@ -55,6 +55,14 @@ Vector3 SlimeActor::WobbleScaleValue(const EaseType easeType) const
 	{
 		return ease_.Out(ratio);
 	}
+	if (easeType == EaseType::eInOut)
+	{
+		return ease_.InOut(ratio);
+	}
+	if (easeType == EaseType::eOutIn)
+	{
+		return ease_.OutIn(ratio);
+	}
 
 	return Vector3();
 }

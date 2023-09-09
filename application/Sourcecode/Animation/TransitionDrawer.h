@@ -20,16 +20,30 @@ namespace YGame
 		void Update();
 
 		/// <summary>
-		/// シーン遷移演出
+		/// 幕引き演出
 		/// </summary>
-		/// <param name="fallFrame"> : 幕引き時間</param>
-		/// <param name="riseFrame"> : 幕開け時間</param>
-		void SceneChangeAnimation(const uint32_t fallFrame, const uint32_t riseFrame);
+		/// <param name="frame"> : 時間</param>
+		/// <param name="phaseNum"> : フェーズ数</param>
+		void SceneChangeAnimation(const uint32_t frame, const uint32_t phaseNum);
 
 		/// <summary>
 		/// 描画
 		/// </summary>
 		void Draw();
+
+		/// <summary>
+		/// 遷移する瞬間
+		/// </summary>
+		/// <returns></returns>
+		bool IsChangeMoment() const { return isChangeMoment_; }
+	
+	private:
+
+		// 幕引きアニメーション
+		void FallAnimation();
+		
+		// 幕開けアニメーション
+		void RiseAnimation();
 	
 	private:
 
@@ -38,14 +52,28 @@ namespace YGame
 			YTransform trfm_;
 			BlockDrawer drawer_;
 			SlimeActor slime_;
+			bool isExpand_ = false;
+			bool isContract_ = false;
+		};
+
+		enum class Phase
+		{
+			Fall, Rise
 		};
 	
 	private:
 
 		YTransform trfm_;
 		std::array<std::array<Block, 10>, 20> blocks_;
+		
+		bool isTransition_ = true;
 
-		uint32_t fallFrame_;
-		uint32_t riseFrame_;
+		YMath::YTimer intervalTim_;
+		
+		Phase phase_ = Phase::Fall;
+		uint32_t phaseNum_ = 0;
+		uint32_t phaseCounter_ = 0;
+
+		bool isChangeMoment_ = false;
 	};
 }
