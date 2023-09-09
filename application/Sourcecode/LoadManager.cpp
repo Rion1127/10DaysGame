@@ -48,5 +48,6 @@ void LoadManager::LoadSound()
 	LoadWave("click_1SE.wav", "Click_1SE");
 	LoadWave("click_2SE.wav", "Click_2SE");
 	LoadWave("rotSE.wav", "RotSE");
-	//LoadWave("panelSetSE.wav.wav", "PanelSetSE");
+	LoadWave("setSE.wav", "SetSE");
+	LoadWave("cantSetSE.wav", "CantSetSE");
 }

@@ -588,7 +588,12 @@ void Panel::ReDo(std::vector<MinoType>* minos)
 
 void Panel::SetPanel(const Mino& mino)
 {
-	if (IsCanChange(mino) == false) return;
+	if (IsCanChange(mino) == false) {
+		SoundManager::Play("CantSetSE", false, 1.0f);
+		return;
+	}
+
+	SoundManager::Play("SetSE", false, 1.0f);
 
 	oldPanelList_.push_front(systemPanel_);
 	usedMinoType_.push_front(minoType_);

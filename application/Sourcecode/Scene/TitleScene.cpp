@@ -53,6 +53,7 @@ void TitleScene::Update()
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
 		{
 			type_ = TitleType::StageSelect;
+			SoundManager::Play("Click_2SE", false, 1.0f);
 		}
 	}
 	else if (type_ == TitleType::StageSelect)
@@ -65,18 +66,21 @@ void TitleScene::Update()
 			{
 				SceneManager::SetChangeStart(SceneName::Tutorial);
 				SceneManager::SetGameMode(GameMode::Tutorial);
+				SoundManager::Play("Click_2SE", false, 1.0f);
 			}
 			//本編へ
 			else if (mainGameButton_->GetIsCollision())
 			{
 				SceneManager::SetChangeStart(SceneName::Game);
 				SceneManager::SetGameMode(GameMode::MainGame);
+				SoundManager::Play("Click_2SE", false, 1.0f);
 			}
 			//エンドレスへ
 			else if (mainGameButton_->GetIsCollision())
 			{
 				SceneManager::SetChangeStart(SceneName::Game);
 				SceneManager::SetGameMode(GameMode::EndLess);
+				SoundManager::Play("Click_2SE", false, 1.0f);
 			}
 		}
 

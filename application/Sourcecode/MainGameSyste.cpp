@@ -383,6 +383,7 @@ void MainGameSyste::TurnPlayer()
 	if (attackButton_->GetIsCollision()) {
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
 			if (minos_.size() > 0) {
+				SoundManager::Play("Click_2SE", false, 1.0f);
 				minos_.clear();
 				player_->AttackAnimation(panel_->GetDisplayPanel());
 			}
