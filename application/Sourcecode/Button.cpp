@@ -27,7 +27,7 @@ Button::Button(Vector2 pos)
 
 void Button::Update()
 {
-	//sprite_->SetPos(pos_);
+	sprite_->SetPos(pos_);
 
 	colSize_ = {
 		sprite_->GetTexture().size_.x * sprite_->GetScale().x,

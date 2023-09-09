@@ -60,7 +60,7 @@ void NextMinoDrawer::Update(const std::vector<MinoType>& minos)
 void NextMinoDrawer::Draw()
 {
 	frame_->Draw();
-	frame_->DrawImGui();
+	//frame_->DrawImGui();
 	for (size_t i = 0; i < nextMinos_.size(); i++)
 	{
 		if (i == 0) { continue; }

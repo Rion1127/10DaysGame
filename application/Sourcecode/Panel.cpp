@@ -30,8 +30,8 @@ Panel::Panel()
 	spriteScale_ = 1;
 	//スプライトのサイズ
 	spritePos_ = { 
-		WinAPI::GetWindowSize().x / 2.f -  ((displayPanel_.size() / 2) - 1   ) * spriteSize_,
-		WinAPI::GetWindowSize().y / 2.f - ((displayPanel_[0].size() / 2) - 1) * spriteSize_
+		WinAPI::GetWindowSize().x / 2.f -  ((displayPanel_.size() / 2)) * spriteSize_ + 16.f,
+		WinAPI::GetWindowSize().y / 2.f - ((displayPanel_[0].size() / 2) - 2) * spriteSize_
 	};
 	
 	sprite_ = std::make_unique<PanelSprite>(maxPanelSize_, spritePos_, spriteScale_);

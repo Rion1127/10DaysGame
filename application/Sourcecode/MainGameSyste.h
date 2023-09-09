@@ -17,10 +17,12 @@ private:
 		ENEMY,
 		CHANGE
 	};
+public:
 	enum class State {
 		GAME,
 		CLEAR,
-		GAMEOVER
+		GAMEOVER,
+		PAUSE
 	};
 private:
 	//åªç›ÇÃÉ^Å[Éì
@@ -59,10 +61,18 @@ private:
 
 	MouseUI mouseUi_;
 	Timer redoCoolTime_;
+
+	std::unique_ptr<Button> pauseButton_;
+	std::unique_ptr<Button> backButton_;
+	Vector2 pausePos_;
+	Vector2 backPos_;
+	std::unique_ptr<Sprite> backSprite_;
+	std::unique_ptr<Sprite> pauseSprite_;
 public:
 	MainGameSyste();
 	void Update();
 	void DrawSprite();
+	void DrawSpriteFront();
 	void DrawImGui();
 private:
 	void SpriteInit();
@@ -80,7 +90,8 @@ private:
 public:
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetEnemy(IEnemy* enemy) { enemy_ = enemy; }
-
+public:
+	State GetGameState() { return gameState_; }
 private:
 	enum class TutorialStep {
 		Set,

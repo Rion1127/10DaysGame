@@ -32,13 +32,13 @@ void MainGameSyste::SpriteInit()
 {
 	uiUpPos_ = {
 		WinAPI::GetWindowSize().x / 2.f,
-		WinAPI::GetWindowSize().y / 1.3f
+		WinAPI::GetWindowSize().y / 1.8f
 	};
 	titleButton_ = std::make_unique<Button>(uiUpPos_);
 	titleButton_->SetTexture(TextureManager::GetInstance()->GetTexture("TitleButton"));
 	uiDownPos_ = {
 		WinAPI::GetWindowSize().x / 2.f,
-		WinAPI::GetWindowSize().y / 1.1f
+		WinAPI::GetWindowSize().y / 1.5f
 	};
 	retryButton_ = std::make_unique<Button>(uiUpPos_);
 	retryButton_->SetTexture(TextureManager::GetInstance()->GetTexture("Retry"));
@@ -56,6 +56,35 @@ void MainGameSyste::SpriteInit()
 	};
 	attackButton_ = std::make_unique<Button>(attackPos_);
 	attackButton_->SetTexture(TextureManager::GetInstance()->GetTexture("AttackButton"));
+
+	pausePos_ = {
+		80.f,
+		50.f
+	};
+	pauseButton_ = std::make_unique<Button>(pausePos_);
+	pauseButton_->SetTexture(TextureManager::GetInstance()->GetTexture("PauseButton"));
+
+	backPos_ = uiDownPos_;
+	backButton_ = std::make_unique<Button>(backPos_);
+	backButton_->SetTexture(TextureManager::GetInstance()->GetTexture("BackButton"));
+	backButton_->Update();
+
+	pauseSprite_ = std::make_unique<Sprite>();
+	pauseSprite_->Ini();
+	pauseSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Pause"));
+	Vector2 pausePos = {
+		WinAPI::GetWindowSize().x / 2.f,
+		WinAPI::GetWindowSize().y / 2.5f
+	};
+	pauseSprite_->SetPos(pausePos);
+	pauseSprite_->Update();
+
+	backSprite_ = std::make_unique<Sprite>();
+	backSprite_->Ini();
+	backSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("White1280x720"));
+	backSprite_->SetAnchor(Vector2(0, 0));
+	backSprite_->SetColor(Color(0,0,0,200));
+	backSprite_->SetScale(Vector2(2,2));
 }
 
 void MainGameSyste::CostInit()
@@ -76,10 +105,20 @@ void MainGameSyste::CostInit()
 
 void MainGameSyste::Update()
 {
-	enemyManager_.Update();
-	panel_->Update();
-	if (enemyManager_.GetIsAllEnemyDestroy() == false) {
-		gameState_ = State::GAME;
+	if (gameState_ != State::PAUSE) {
+		enemyManager_.Update();
+		panel_->Update();
+
+		if (enemyManager_.GetIsAllEnemyDestroy() == false) {
+			gameState_ = State::GAME;
+		}
+		else {
+			gameState_ = State::CLEAR;
+		}
+	}
+
+	if (gameState_ == State::GAME) {
+
 		panel_->SetUpdateType(UpdateType::All);
 		//敵の攻撃
 		if (nowTurn_ == Turn::PLAYER) {
@@ -106,12 +145,19 @@ void MainGameSyste::Update()
 				MinoCountUp();
 			}
 		}
+
+		if (pauseButton_->GetIsCollision()) {
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+				gameState_ = State::PAUSE;
+			}
+		}
+
 		minoCountUpButton_->Update();
 		attackButton_->Update();
+		pauseButton_->Update();
 	}
 	//クリアしたら
-	else {
-		gameState_ = State::CLEAR;
+	else if (gameState_ == State::CLEAR) {
 		panel_->SetUpdateType(UpdateType::SpriteOnly);
 
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
@@ -121,6 +167,24 @@ void MainGameSyste::Update()
 				SceneManager::SetChangeStart(SceneName::Title);
 			}
 		}
+	}
+	else if (gameState_ == State::PAUSE) {
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+			if (titleButton_->GetIsCollision())
+			{
+				SceneManager::SetChangeStart(SceneName::Title);
+			}
+			if (backButton_->GetIsCollision())
+			{
+				gameState_ = State::GAME;
+			}
+		}
+
+		titleButton_->SetPos(uiDownPos_);
+		backButton_->SetPos(uiUpPos_);
+
+		backButton_->Update();
+		pauseSprite_->Update();
 	}
 
 	if (player_->GetIsAlive() == false) {
@@ -139,7 +203,8 @@ void MainGameSyste::Update()
 	cameraManager_->Update();
 
 	if (gameState_ == State::CLEAR ||
-		gameState_ == State::GAMEOVER)
+		gameState_ == State::GAMEOVER ||
+		gameState_ == State::PAUSE)
 	{
 		//クリアの時はタイトルに戻るスプライトだけ有効にする
 		titleButton_->Update();
@@ -150,27 +215,42 @@ void MainGameSyste::Update()
 	}
 
 	mouseUi_.Update();
+	backSprite_->Update();
 }
 
 void MainGameSyste::DrawSprite()
 {
 	panel_->DrawSprite();
 	enemyManager_.Draw();
+
+
+	minoCountUpButton_->Draw();
+	attackButton_->Draw();
+	nextMinoDrawer_.Draw();
+	mouseUi_.Draw();
+	pauseButton_->Draw();
+}
+
+void MainGameSyste::DrawSpriteFront()
+{
+	
 	if (gameState_ == State::CLEAR ||
-		gameState_ == State::GAMEOVER)
+		gameState_ == State::GAMEOVER ||
+		gameState_ == State::PAUSE)
 	{
+		backSprite_->Draw();
 		//クリアの時はタイトルに戻るスプライトだけ有効にする
 		titleButton_->Draw();
 
 		if (gameState_ == State::GAMEOVER) {
 			retryButton_->Draw();
 		}
+
+		if (gameState_ == State::PAUSE) {
+			backButton_->Draw();
+			pauseSprite_->Draw();
+		}
 	}
-	
-	minoCountUpButton_->Draw();
-	attackButton_->Draw();
-	nextMinoDrawer_.Draw();
-	mouseUi_.Draw();
 }
 
 void MainGameSyste::DrawImGui()

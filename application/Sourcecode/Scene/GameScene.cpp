@@ -32,7 +32,9 @@ void GameScene::Update()
 #endif //_DEBUG
 
 	mainSystem_->Update();
-	player_->Update();
+	if (mainSystem_->GetGameState() != MainGameSyste::State::PAUSE) {
+		player_->Update();
+	}
 }
 
 void GameScene::Draw()
@@ -40,6 +42,7 @@ void GameScene::Draw()
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	mainSystem_->DrawSprite();
 	player_->Draw();
+	mainSystem_->DrawSpriteFront();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);

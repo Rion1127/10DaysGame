@@ -37,6 +37,9 @@ void LoadManager::LoadTexture()
 	LoadGraph("mouse.png", "Mouse");
 	LoadGraph("attackButton.png", "AttackButton");
 	LoadGraph("nextParts.png", "NextParts");
+	LoadGraph("pauseButton.png", "PauseButton");
+	LoadGraph("pause.png", "Pause");
+	LoadGraph("backButton.png", "BackButton");
 }
 
 void LoadManager::LoadSound()
