@@ -26,13 +26,14 @@ Panel::Panel()
 	isSetComplete_ = false;
 	isAllFill_ = false;
 	updateType_ = UpdateType::All;
-	//スプライトのサイズ
-	spritePos_ = { 
-		WinAPI::GetWindowSize().x / 3.4f,
-		WinAPI::GetWindowSize().y / 3.f
-	};
 	spriteSize_ = 32;
 	spriteScale_ = 1;
+	//スプライトのサイズ
+	spritePos_ = { 
+		WinAPI::GetWindowSize().x / 2.f -  ((displayPanel_.size() / 2) - 1   ) * spriteSize_,
+		WinAPI::GetWindowSize().y / 2.f - ((displayPanel_[0].size() / 2) - 1) * spriteSize_
+	};
+	
 	sprite_ = std::make_unique<PanelSprite>(maxPanelSize_, spritePos_, spriteScale_);
 
 	rotNum_ = 0;

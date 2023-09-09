@@ -219,7 +219,7 @@ void Sprite::DrawImGui()
 
 	// Menu Bar
 	float pos[2] = { pos_.x,pos_.y };
-	ImGui::DragFloat2("pos", pos, 1.0f, 0.f,WinAPI::GetWindowSize().x);
+	ImGui::DragFloat2("pos", pos, 1.0f, 0.f,1280.f);
 
 	pos_.x = pos[0];
 	pos_.y = pos[1];

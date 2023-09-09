@@ -11,11 +11,13 @@ private:
 	Box2D col_;
 	bool isCollision_;
 	PipeLineState state_;
+	Vector2 colSize_;
 public:
 	Button(Vector2 pos);
 
 	void Update();
 	void Draw();
+	void DrawImgui();
 public:
 	bool GetIsCollision() { return isCollision_; }
 public:
