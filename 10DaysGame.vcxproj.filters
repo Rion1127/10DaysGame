@@ -504,12 +504,6 @@
     <ClCompile Include="application\Sourcecode\Number.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Animation\TransitionDrawer.cpp">
-      <Filter>application\ソースファイル\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Animation\AnimationManager.cpp">
-      <Filter>application\ソースファイル\Animation</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\DamageDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
     </ClCompile>
@@ -518,6 +512,9 @@
     </ClCompile>
     <ClCompile Include="NumberDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\TransitionDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -803,12 +800,6 @@
     <ClInclude Include="application\Sourcecode\Number.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Animation\AnimationManager.h">
-      <Filter>application\ヘッダーファイル\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Sourcecode\Animation\TransitionDrawer.h">
-      <Filter>application\ヘッダーファイル\Animation</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\DamageDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
     </ClInclude>
@@ -817,6 +808,9 @@
     </ClInclude>
     <ClInclude Include="NumberDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\TransitionDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

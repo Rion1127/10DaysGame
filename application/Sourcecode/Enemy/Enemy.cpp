@@ -16,11 +16,15 @@ void Enemy::Update()
 	trfm_.UpdateMatrix({ YGame::YCameraManager::GetInstance()->GetCameraPos(), {}, {} });
 
 	drawer_.Update();
+	hpBar_.Update();
+	damage_.Update();
 }
 
 void Enemy::Draw()
 {
 	drawer_.Draw();
+	hpBar_.Draw();
+	damage_.Draw();
 }
 
 void Enemy::DrawImGui()

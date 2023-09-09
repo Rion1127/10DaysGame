@@ -1,6 +1,8 @@
 #pragma once
 #include "PlayerDrawer.h"
 #include "SwordDrawer.h"
+#include "HPDrawer.h"
+#include "DamageDrawer.h"
 
 class Player
 {
@@ -17,6 +19,8 @@ private:
 	// アニメーション
 	YGame::PlayerDrawer drawer_;
 	YGame::SwordDrawer sword_;
+	YGame::HPDrawer hpBar_;
+	YGame::DamageDrawer damage_;
 public:
 
 	void Initialize();
