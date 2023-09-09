@@ -14,8 +14,23 @@ void EnemyDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matP
 	hitActor_.Initialize();
 
 	moveTim_.Initialize(10, true);
-
 	moveCount_ = 0;
+	
+	attackEas_.Initialize(
+		{
+			0.0f, 
+			-20.0f, 
+			+40.0f, 
+			0.0f, 
+		}, 
+		3.0f);
+	attackTim_.Initialize(10);
+	isEndAttack_ = false;
+}
+
+void EnemyDrawer::AttackAnimation()
+{
+	attackTim_.Reset(true);
 }
 
 void EnemyDrawer::HitAnimation()
@@ -39,9 +54,19 @@ void EnemyDrawer::UpdateAnimation()
 		sprite_.SetTex_LeftTop({ 128.0f * static_cast<float>(moveCount_), 0.0f });
 	}
 
+	isEndAttack_ = false;
+	attackTim_.Update();
+	if (attackTim_.IsEnd())
+	{
+		attackTim_.Reset();
+		isEndAttack_ = true;
+	}
+
 	hitActor_.Update();
 
 	animeStatus_.pos_ += hitActor_.ShakePosValue();
+	
+	animeStatus_.pos_.x += attackEas_.In(attackTim_.Ratio());
 
 	sprite_.SetColor(hitActor_.ColorValue());
 }

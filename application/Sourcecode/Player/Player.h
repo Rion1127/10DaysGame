@@ -39,7 +39,7 @@ public:
 	void Damage(int32_t damage);
 	void SetAttackPower(int32_t power) { attackpower_ = power; }
 	void AddAttackPower(int32_t power) { powerUpValue_ = power; }
-	void Recovery(int32_t health) { health_ += health; }
+	void Recovery(int32_t health);
 public:
 	int32_t GetAttackPower() { return attackpower_; }
 	bool GetIsAlive() { return isAlive_; }

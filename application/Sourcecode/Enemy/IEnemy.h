@@ -27,10 +27,13 @@ public:
 	virtual void Draw() = 0;
 
 	virtual void DrawImGui() = 0;
+
+	void AttackAnimation();
 public:
 	void Damage(int32_t health);
 public:
 	bool GetIsAlive() { return isAlive_; }
 	int32_t GetAttackPower() { return attackPower_; }
+	bool GetIsEndAttack() { return drawer_.GetIsEndAttack(); }
 };
 
