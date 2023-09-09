@@ -5,6 +5,7 @@
 #include "Collision.h"
 #include "WinAPI.h"
 #include "RRandom.h"
+#include "mSound.h"
 
 #pragma region Panel
 Panel::Panel()
@@ -85,6 +86,7 @@ void Panel::Update()
 		}
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_RIGHT))
 		{
+			SoundManager::Play("RotSE",false,1.0f);
 			rotNum_++;
 			if (rotNum_ > 3)rotNum_ = 0;
 		}

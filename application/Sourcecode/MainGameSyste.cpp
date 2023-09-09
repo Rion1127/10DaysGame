@@ -151,6 +151,7 @@ void MainGameSyste::Update()
 		if (pauseButton_->GetIsCollision()) {
 			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
 				gameState_ = State::PAUSE;
+				SoundManager::Play("Click_1SE", false, 1.0f);
 			}
 		}
 
@@ -175,10 +176,12 @@ void MainGameSyste::Update()
 			if (titleButton_->GetIsCollision())
 			{
 				SceneManager::SetChangeStart(SceneName::Title);
+				SoundManager::Play("Click_2SE", false, 1.0f);
 			}
 			if (backButton_->GetIsCollision())
 			{
 				gameState_ = State::GAME;
+				SoundManager::Play("Click_2SE", false, 1.0f);
 			}
 		}
 
@@ -372,7 +375,8 @@ void MainGameSyste::TurnPlayer()
 			enemy_->Damage(damage);
 			nowTurn_ = Turn::CHANGE;
 
-			SoundManager::Play("Attack", false, 1.0f);
+			float pitch = RRandom::RandF(0.7f, 1.f);
+			SoundManager::Play("Attack", false, 1.0f, pitch);
 		}
 	}
 	//攻撃ボタンを押したら
@@ -393,6 +397,9 @@ void MainGameSyste::TurnEnemy()
 		if (enemyManager_.GetNowEnemy()->GetIsEndAttack()) {
 			player_->Damage(enemy_->GetAttackPower());
 			player_->AddPowerReset();
+
+			float pitch = RRandom::RandF(0.7f, 1.f);
+			SoundManager::Play("Attack", false, 1.0f, pitch);
 
 			//処理が終わったらシーンをチェンジする
 			nowTurn_ = Turn::CHANGE;
