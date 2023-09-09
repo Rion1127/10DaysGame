@@ -19,32 +19,9 @@ Panel::Panel()
 		displayPanel_[i].resize(maxPanelSize_);
 		systemPanel_[i].resize(maxPanelSize_);
 	}
+	//パネルを初期状態にする
+	PanelReset();
 
-	for (int32_t y = 0; y < displayPanel_.size(); y++)
-	{
-		for (int32_t x = 0; x < displayPanel_[y].size(); x++)
-		{
-			displayPanel_[x][y] = 0;
-		}
-	}
-	//中心からinitalSize_の分、空のパネルを配置する
-	int32_t sizeMinY = ((int32_t)(displayPanel_.size() - 1) / 2);
-	int32_t sizeMaxY = ((int32_t)(displayPanel_.size() - 1) / 2) + (initalSize_ - 1);
-
-	int32_t sizeMinX = ((int32_t)(displayPanel_[0].size() - 1) / 2);
-	int32_t sizeMaxX = ((int32_t)(displayPanel_[0].size() - 1) / 2) + (initalSize_ - 1);
-
-	for (int32_t y = 0; y < displayPanel_.size(); y++)
-	{
-		for (int32_t x = 0; x < displayPanel_[y].size(); x++)
-		{
-			if (y >= sizeMinY && y <= sizeMaxY&&
-				x >= sizeMinX && x <= sizeMaxX) {
-				displayPanel_[x][y] = State::EMPTY;
-			}
-			systemPanel_[x][y] = displayPanel_[x][y];
-		}
-	}
 	isSetComplete_ = false;
 	isAllFill_ = false;
 	updateType_ = UpdateType::All;
@@ -272,6 +249,12 @@ void Panel::PanelReset()
 				x >= sizeMinX && x <= sizeMaxX) {
 				displayPanel_[x][y] = State::EMPTY;
 			}
+
+			if (x == 0 || x == 9 ||
+				y == 0 || y == 9) {
+				displayPanel_[x][y] = State::Recovery;
+			}
+
 			systemPanel_[x][y] = displayPanel_[x][y];
 		}
 	}
@@ -350,7 +333,8 @@ void Panel::DisplayPanelUpdate(const Mino& mino)
 		for (uint32_t x = selectPos_.x; x < sizeX; x++)
 		{
 			bool isSetTempPos =
-				systemPanel_[x][y] == State::EMPTY || systemPanel_[x][y] == State::NOT_OPEN;
+				systemPanel_[x][y] == State::EMPTY || systemPanel_[x][y] == State::NOT_OPEN || 
+				systemPanel_[x][y] == State::PowerUp || systemPanel_[x][y] == State::Recovery;
 			//空のパネルに配置したら
 			if (isSetTempPos &&
 				mino.panel_[panelY][panelX] == 1)
@@ -559,6 +543,14 @@ void PanelSprite::Update(const std::vector<std::vector<int32_t>>& panel)
 			}
 			else if (panel[x][y] == State::TEMPPOS) {
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Cyan);
+			}
+			else if (panel[x][y] == State::PowerUp) {
+				panels_[x][y].SetTexture(TextureManager::GetInstance()->GetTexture("PowerUpPanel"));
+				panels_[x][y].ChangeColor(YGame::BlockColorType::White);
+			}
+			else if (panel[x][y] == State::Recovery) {
+				panels_[x][y].SetTexture(TextureManager::GetInstance()->GetTexture("RecoveryPanel"));
+				panels_[x][y].ChangeColor(YGame::BlockColorType::White);
 			}
 
 			panels_[x][y].Update();

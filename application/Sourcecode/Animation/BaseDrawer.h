@@ -36,6 +36,8 @@ namespace YGame
 		/// </summary>
 		/// <param name="color"> : êF</param>
 		void SetColor(const Color& color) { sprite_.SetColor(color); }
+
+		void SetTexture(Texture* texture) { sprite_.SetTexture(texture); }
 	
 	public:
 

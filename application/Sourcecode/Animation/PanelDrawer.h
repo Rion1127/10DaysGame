@@ -37,6 +37,8 @@ namespace YGame
 		/// </summary>
 		void ChangeColor(const BlockColorType& colorType);
 
+		void SetTexture(Texture* texture) { blockDra_.SetTexture(texture); }
+
 		/// <summary>
 		/// 設置アニメーション
 		/// </summary>
