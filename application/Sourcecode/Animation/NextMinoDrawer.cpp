@@ -5,8 +5,8 @@ using YGame::NextMinoDrawer;
 void NextMinoDrawer::Initialize()
 {
 	static const float kScale = 0.75f;
-	
-		for (size_t i = 0; i < nextMinos_.size(); i++)
+
+	for (size_t i = 0; i < nextMinos_.size(); i++)
 	{
 		YTransform::Status status;
 
@@ -16,26 +16,31 @@ void NextMinoDrawer::Initialize()
 		}
 		else if (i == 1)
 		{
-			status.pos_ = 
-			{ 
-				550.0f, 
-				300.0f, 
-				0.0f 
+			status.pos_ =
+			{
+				550.0f,
+				300.0f,
+				0.0f
 			};
 			status.scale_ = { kScale,kScale,0.0f };
 		}
 		else
 		{
-			status.pos_ = 
-			{ 
+			status.pos_ =
+			{
 				550.0f,
-				250.0f + 75.0f * static_cast<float>(i), 
+				250.0f + 75.0f * static_cast<float>(i),
 				0.0f };
 			status.scale_ = { kScale / 1.5f,kScale / 1.5f,0.0f };
 		}
 
 		nextMinos_[i].Initialize(status);
 	}
+
+	frame_ = std::make_unique<Sprite>();
+	frame_->Ini("frame");
+	frame_->SetTexture(TextureManager::GetInstance()->GetTexture("NextParts"));
+	frame_->SetPos(Vector2(537.f,416.f));
 }
 
 void NextMinoDrawer::Update(const std::vector<MinoType>& minos)
@@ -49,10 +54,13 @@ void NextMinoDrawer::Update(const std::vector<MinoType>& minos)
 	}
 
 	elderMinos_ = minos;
+	frame_->Update();
 }
 
 void NextMinoDrawer::Draw()
 {
+	frame_->Draw();
+	frame_->DrawImGui();
 	for (size_t i = 0; i < nextMinos_.size(); i++)
 	{
 		if (i == 0) { continue; }
@@ -75,7 +83,7 @@ void NextMinoDrawer::ChangeNextMino(const std::vector<MinoType>& minos)
 		{
 			nextMinos_[index].ChangeMinoAnimation(minos[index]);
 		}
-		
+
 		// ÉpÅ[Écå∏è≠éû
 		if (isEndCurrent && isEndElder == false)
 		{
@@ -107,10 +115,10 @@ void NextMinoDrawer::NextMino::Initialize(const YTransform::Status& trfmStatus)
 	slime_.Initialize(
 		20,
 		{
-			Vector3( 0.0f, 0.0f, 0.0f),
+			Vector3(0.0f, 0.0f, 0.0f),
 			-trfmStatus.scale_ ,
-			Vector3( 0.0f, 0.0f, 0.0f),
-		}, 
+			Vector3(0.0f, 0.0f, 0.0f),
+		},
 		3.0f);
 
 	colorTim_.Initialize(5);
@@ -158,7 +166,7 @@ void NextMinoDrawer::NextMino::ChangeMinoAnimation(const MinoType type)
 
 	slime_.Wobble();
 	colorTim_.Reset(true);
-	
+
 	isInvisible_ = false;
 }
 
@@ -166,7 +174,7 @@ void NextMinoDrawer::NextMino::InvisibleMinoAnimation()
 {
 	slime_.Wobble();
 	colorTim_.Reset(true);
-	
+
 	isInvisible_ = true;
 }
 
@@ -211,7 +219,7 @@ void NextMinoDrawer::NextMino::ChangeMino()
 		for (size_t j = 0; j < panel[i].size(); j++)
 		{
 			if (panel[i][j] != 1) { continue; }
-		
+
 			YTransform::Status status = YTransform::Status::Default();
 
 			status.pos_ = { 32.0f * j, 32.0f * i, 0.0f };

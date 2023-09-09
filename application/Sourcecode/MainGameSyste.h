@@ -81,6 +81,14 @@ public:
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetEnemy(IEnemy* enemy) { enemy_ = enemy; }
 
+private:
+	enum class TutorialStep {
+		Set,
+		Rot,
+
+	};
+private:
+	TutorialStep tutorialstep_;
 public:
 	void TutorialInit();
 	void TutorialUpdate();

@@ -36,6 +36,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("minoCouintUp.png", "MinoCouintUp");
 	LoadGraph("mouse.png", "Mouse");
 	LoadGraph("attackButton.png", "AttackButton");
+	LoadGraph("nextParts.png", "NextParts");
 }
 
 void LoadManager::LoadSound()

@@ -2,6 +2,7 @@
 #include "Mino.h"
 #include "BlockDrawer.h"
 #include "SlimeActor.h"
+#include "Sprite.h"
 
 namespace YGame
 {
@@ -79,5 +80,6 @@ namespace YGame
 
 		std::array<NextMino, 5> nextMinos_;
 	
+		std::unique_ptr<Sprite> frame_;
 	};
 }
