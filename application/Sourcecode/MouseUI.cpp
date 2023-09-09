@@ -7,8 +7,8 @@ MouseUI::MouseUI()
 	sprite_->Ini("mouseUI");
 	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Mouse"));
 	sprite_->SetTex_Size(Vector2(160,128));
-	float scaleX = 1.f / 3.f;
-	sprite_->SetScale(Vector2(scaleX,1.0f));
+	float scaleX = (1.f / 3.f) * 0.8f;
+	sprite_->SetScale(Vector2(scaleX, 0.8f));
 	sprite_->SetPos(Vector2(100, 660));
 	timer_.SetLimitTime(5);
 }
