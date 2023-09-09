@@ -18,7 +18,7 @@ void NextMinoDrawer::Initialize()
 		{
 			status.pos_ = 
 			{ 
-				600.0f, 
+				550.0f, 
 				300.0f, 
 				0.0f 
 			};
@@ -26,10 +26,9 @@ void NextMinoDrawer::Initialize()
 		}
 		else
 		{
-
 			status.pos_ = 
 			{ 
-				620.0f,
+				550.0f,
 				250.0f + 75.0f * static_cast<float>(i), 
 				0.0f };
 			status.scale_ = { kScale / 1.5f,kScale / 1.5f,0.0f };
