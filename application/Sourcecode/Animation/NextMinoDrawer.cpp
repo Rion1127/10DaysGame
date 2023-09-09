@@ -5,7 +5,7 @@ using YGame::NextMinoDrawer;
 void NextMinoDrawer::Initialize()
 {
 	static const float kScale = 0.75f;
-
+	
 	for (size_t i = 0; i < nextMinos_.size(); i++)
 	{
 		YTransform::Status status;
