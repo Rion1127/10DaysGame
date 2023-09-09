@@ -40,7 +40,7 @@ void NextMinoDrawer::Initialize()
 	frame_ = std::make_unique<Sprite>();
 	frame_->Ini("frame");
 	frame_->SetTexture(TextureManager::GetInstance()->GetTexture("NextParts"));
-	frame_->SetPos(Vector2(537.f,416.f));
+	frame_->SetPos(Vector2(537.f,414.f));
 }
 
 void NextMinoDrawer::Update(const std::vector<MinoType>& minos)
