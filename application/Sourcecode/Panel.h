@@ -16,7 +16,9 @@ enum State {
 	ATTACK,
 	NEXT_RELEASE,
 	SELECT,
-	TEMPPOS
+	TEMPPOS,
+	PowerUp,
+	Recovery
 };
 enum class UpdateType {
 	All,
