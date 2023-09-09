@@ -516,6 +516,9 @@
     <ClCompile Include="application\Sourcecode\Animation\TransitionDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\RecoveryDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -811,6 +814,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\TransitionDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\RecoveryDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

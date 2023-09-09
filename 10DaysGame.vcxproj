@@ -24,6 +24,7 @@
     <ClCompile Include="application\Sourcecode\Animation\NextMinoDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\PanelDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\PlayerDrawer.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\RecoveryDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\SwordDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\TransitionDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\YCameraManager.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="application\Sourcecode\Animation\Lerp.h" />
     <ClInclude Include="application\Sourcecode\Animation\NextMinoDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\PanelDrawer.h" />
+    <ClInclude Include="application\Sourcecode\Animation\RecoveryDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\SwordDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\TransitionDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\YCameraManager.h" />

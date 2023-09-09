@@ -3,6 +3,7 @@
 #include "SwordDrawer.h"
 #include "HPDrawer.h"
 #include "DamageDrawer.h"
+#include "RecoveryDrawer.h"
 
 class Player
 {
@@ -21,6 +22,7 @@ private:
 	YGame::SwordDrawer sword_;
 	YGame::HPDrawer hpBar_;
 	YGame::DamageDrawer damage_;
+	YGame::RecoveryDrawer recovery_;
 public:
 
 	void Initialize();

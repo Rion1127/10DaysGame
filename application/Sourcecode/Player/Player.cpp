@@ -27,6 +27,7 @@ void Player::Initialize()
 	sword_.Initialize(20, 20, &trfm_.m_);
 	hpBar_.Initialize({ {0.0f,96.0f,0.0f},{},{1.0f,1.0f,1.0f} }, &trfm_.m_, health_);
 	damage_.Initialize({ {0.0f,-32.0f,0.0f},{},{0.5f,0.5f,1.0f} }, &trfm_.m_, 0);
+	recovery_.Initialize({ {0.0f,-64.0f,0.0f},{},{0.5f,0.5f,1.0f} }, &trfm_.m_, 0);
 
 	drawer_.MoveAnimation();
 }
@@ -44,6 +45,7 @@ void Player::Update()
 	sword_.Update();
 	hpBar_.Update();
 	damage_.Update();
+	recovery_.Update();
 }
 
 void Player::AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndices)
@@ -57,6 +59,7 @@ void Player::Draw()
 	sword_.Draw();
 	hpBar_.Draw();
 	damage_.Draw();
+	recovery_.Draw();
 }
 
 void Player::DrawImGui()
@@ -86,6 +89,12 @@ void Player::Recovery(int32_t health)
 		hpBar_.ChangeMaxHPAnimation(health_);
 	}
 	hpBar_.ChangeHPAnimation(health_);
+
+	if (0 < health)
+	{
+		recovery_.SetNumber(health);
+		recovery_.RecoverAnimation();
+	}
 }
 
 void Player::IdleAnimation()

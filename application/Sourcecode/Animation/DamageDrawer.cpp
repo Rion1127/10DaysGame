@@ -103,5 +103,5 @@ void DamageDrawer::DamageDigitDrawer::UpdateAnimation()
 	alphaPow_.Update(isDisp_);
 
 	float alphaRatio = alphaEas_.InOut(alphaPow_.Ratio());
-	sprite_.SetColor(Color(255, 255, 255, 255 * alphaRatio));
+	sprite_.SetColor(Color(200, 20, 20, 255 * alphaRatio));
 }

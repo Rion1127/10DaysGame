@@ -24,7 +24,7 @@ namespace YGame
 		/// <summary>
 		/// •`‰æ
 		/// </summary>
-		void Draw();
+		virtual void Draw();
 
 		/// <summary>
 		/// ”İ’è
