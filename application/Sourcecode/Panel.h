@@ -77,6 +77,7 @@ private:
 
 	uint32_t powerUpPanelNum_;
 	uint32_t recoveryPanelNum_;
+	uint32_t totalPanel_;
 public:
 	Panel();
 	void Update();
@@ -112,6 +113,7 @@ public:
 	Mino GetNowMino() { return nowMino_; }
 	uint32_t GetPowerUpPanelNum();
 	uint32_t GetRecoveryPanelNum();
+	uint32_t GetTotalEmptyPanelNum() { return totalPanel_; };
 
 	std::vector<std::vector<int32_t>> GetDisplayPanel() { return displayPanel_; }
 };

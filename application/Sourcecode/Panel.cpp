@@ -205,6 +205,7 @@ void Panel::DrawImGui()
 
 	ImGui::Text("isAllFill : %d", isAllFill_);
 	ImGui::Text("emptyPanelNum : %d", emptyPanelNum_);
+	ImGui::Text("totalPanel_ : %d", totalPanel_);
 
 	ImGui::End();
 }
@@ -604,6 +605,8 @@ void Panel::SetPanel(const Mino& mino)
 	uint32_t panelX = 0;
 	uint32_t panelY = 0;
 
+	uint32_t nextReleaseNum = 0;
+
 	for (uint32_t y = selectPos_.y; y < sizeY; y++)
 	{
 		panelX = 0;
@@ -620,6 +623,7 @@ void Panel::SetPanel(const Mino& mino)
 				mino.panel_[panelY][panelX] == 1)
 			{
 				systemPanel_[x][y] = State::NEXT_RELEASE;
+				nextReleaseNum++;
 			}
 			else if (systemPanel_[x][y] == State::PowerUp &&
 				mino.panel_[panelY][panelX] == 1)
@@ -641,6 +645,8 @@ void Panel::SetPanel(const Mino& mino)
 		panelY++;
 	}
 	isSetComplete_ = true;
+
+	totalPanel_ += nextReleaseNum;
 }
 uint32_t Panel::GetPowerUpPanelNum()
 {

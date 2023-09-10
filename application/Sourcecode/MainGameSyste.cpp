@@ -12,7 +12,7 @@ MainGameSyste::MainGameSyste()
 	nowTurn_ = Turn::PLAYER;
 	gameState_ = State::GAME;
 	//ターンごとに補充するミノの数
-	reloadMinoNum_ = 5;
+	reloadMinoNum_ = 4;
 
 	ReloadMino();
 
@@ -126,7 +126,12 @@ void MainGameSyste::Update()
 		//敵の攻撃
 		if (nowTurn_ == Turn::PLAYER) {
 			TurnPlayer();
-			panel_->SetUpdateType(UpdateType::All);
+			if (minos_.size() > 0) {
+				panel_->SetUpdateType(UpdateType::All);
+			}
+			else {
+				panel_->SetUpdateType(UpdateType::SpriteOnly);
+			}
 		}
 		//敵の攻撃
 		else if (nowTurn_ == Turn::ENEMY) {
@@ -145,12 +150,7 @@ void MainGameSyste::Update()
 			prevTurn_ = nowTurn_;
 		}
 
-		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
-			//1ターンに置くパーツの数を増やす
-			if (minoCountUpButton_->GetIsCollision()) {
-				MinoCountUp();
-			}
-		}
+		MinoCountUp();
 
 		if (pauseButton_->GetIsCollision()) {
 			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
@@ -353,7 +353,9 @@ void MainGameSyste::TurnPlayer()
 		panel_->SetisSetComplete(false);
 		panel_->SetRotNum(0);
 		//配置出来たミノを消す
-		minos_.erase(minos_.begin());
+		if (minos_.size() > 0) {
+			minos_.erase(minos_.begin());
+		}
 
 		if (minos_.size() <= 0 || panel_->GetIsAllFill()) {
 			player_->AttackAnimation(panel_->GetDisplayPanel());
@@ -438,12 +440,12 @@ void MainGameSyste::GameOverUpdate()
 void MainGameSyste::MinoCountUp()
 {
 	const int32_t cost = minoCountUpCost_.at(minoCountLevel_ - 1);
-	int32_t nowEmptyPanelNum = panel_->GetEmptyPanelNum();
+	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();;
 	//空白のパネルがコストよりも多ければ
 	if (cost <= nowEmptyPanelNum) {
 		minoCountLevel_++;
 		reloadMinoNum_++;
-		panel_->PanelReset();
+		//panel_->PanelReset();
 	}
 }
 
