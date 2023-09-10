@@ -519,6 +519,9 @@
     <ClCompile Include="application\Sourcecode\Animation\RecoveryDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
     </ClCompile>
+    <ClCompile Include="MinoCounterDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -817,6 +820,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\RecoveryDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="MinoCounterDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

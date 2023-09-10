@@ -119,11 +119,11 @@ void Panel::Update()
 		//見た目のパネルの配列を更新
 		DisplayPanelUpdate(nowMino_);
 
-		sprite_->Update(displayPanel_);
+		sprite_->Update(systemPanel_, displayPanel_);
 	}
 	else
 	{
-		sprite_->Update(displayPanel_);
+		sprite_->Update(systemPanel_, displayPanel_);
 	}
 }
 
@@ -570,48 +570,55 @@ PanelSprite::PanelSprite(uint32_t panelSize, Vector2 basePos, float panelScale)
 	}
 }
 
-void PanelSprite::Update(const std::vector<std::vector<int32_t>>& panel)
+void PanelSprite::Update(const std::vector<std::vector<int32_t>>& system, const std::vector<std::vector<int32_t>>& display)
 {
 	for (uint32_t y = 0; y < panels_.size(); y++)
 	{
 		for (uint32_t x = 0; x < panels_[y].size(); x++)
 		{
-			if (panel[x][y] != State::PowerUp &&
-				panel[x][y] != State::Recovery &&
-				panel[x][y] != State::TEMPPOS) {
+			if (display[x][y] != State::PowerUp &&
+				display[x][y] != State::Recovery &&
+				display[x][y] != State::TEMPPOS) {
 				panels_[x][y].SetTexture(TextureManager::GetInstance()->GetTexture("Panel"));
 			}
 
 			//パネルの色変更
-			if (panel[x][y] == State::NOT_OPEN) {
+			if (display[x][y] == State::NOT_OPEN) {
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Gray);
-				panels_[x][y].ValidAnimtion();
+				panels_[x][y].ResetAnime();
 			}
-			else if (panel[x][y] == State::EMPTY) {
+			else if (display[x][y] == State::EMPTY) {
 				panels_[x][y].ChangeColor(YGame::BlockColorType::White);
-				panels_[x][y].InvalidAnimtion();
+				panels_[x][y].ResetAnime();
 			}
-			else if (panel[x][y] == State::ATTACK) {
+			else if (display[x][y] == State::ATTACK) {
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Orange);
 				SetAnimation(x, y);
 			}
-			else if (panel[x][y] == State::SELECT) {
+			else if (display[x][y] == State::SELECT) {
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Orange);
 			}
-			else if (panel[x][y] == State::NEXT_RELEASE) {
+			else if (display[x][y] == State::NEXT_RELEASE) {
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Blue);
 				OpenAnimation(x, y);
 			}
-			else if (panel[x][y] == State::TEMPPOS) {
+			else if (display[x][y] == State::TEMPPOS) {
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Cyan);
 			}
-			else if (panel[x][y] == State::PowerUp) {
+			else if (display[x][y] == State::PowerUp) {
 				panels_[x][y].SetTexture(TextureManager::GetInstance()->GetTexture("PowerUpPanel"));
 				panels_[x][y].ChangeColor(YGame::BlockColorType::White);
 			}
-			else if (panel[x][y] == State::Recovery) {
+			else if (display[x][y] == State::Recovery) {
 				panels_[x][y].SetTexture(TextureManager::GetInstance()->GetTexture("RecoveryPanel"));
 				panels_[x][y].ChangeColor(YGame::BlockColorType::White);
+			}
+
+			if (system[x][y] == State::NOT_OPEN) {
+				panels_[x][y].ValidAnimtion();
+			}
+			else if (system[x][y] == State::EMPTY) {
+				panels_[x][y].InvalidAnimtion();
 			}
 
 			panels_[x][y].Update();

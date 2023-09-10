@@ -17,6 +17,8 @@ MainGameSyste::MainGameSyste()
 	ReloadMino();
 
 	nextMinoDrawer_.Initialize();
+	minoCounterDrawer_.Initialize();
+	
 	enemy_ = enemyManager_.GetNowEnemy();
 
 	// カメラ取得 + 初期化
@@ -197,6 +199,10 @@ void MainGameSyste::Update()
 	}
 
 	nextMinoDrawer_.Update(minos_);
+	
+	int32_t cost = minoCountUpCost_.at(minoCountLevel_);
+	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
+	minoCounterDrawer_.Update(cost - nowEmptyPanelNum);
 
 	// カメラ更新
 	cameraManager_->Update();
@@ -224,6 +230,7 @@ void MainGameSyste::DrawSprite()
 
 	attackButton_->Draw();
 	nextMinoDrawer_.Draw();
+	minoCounterDrawer_.Draw();
 	mouseUi_.Draw();
 	pauseButton_->Draw();
 }
@@ -572,6 +579,9 @@ void MainGameSyste::TutorialUpdate()
 	}
 
 	nextMinoDrawer_.Update(minos_);
+	int32_t cost = minoCountUpCost_.at(minoCountLevel_);
+	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
+	minoCounterDrawer_.Update(cost - nowEmptyPanelNum);
 
 	// カメラ更新
 	cameraManager_->Update();

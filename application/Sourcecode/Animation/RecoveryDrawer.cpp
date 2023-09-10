@@ -125,7 +125,7 @@ void RecoveryDrawer::RecoveryDigitDrawer::UpdateAnimation()
 void RecoveryDrawer::PlusDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
 {
 	BaseInitialize(trfmStatus, matParent);
-	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Light"));
+	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Recovery"));
 
 	emitTim_.Initialize(40);
 	heightEas_.Initialize(0.0f, -16.0f, 4.0f);
