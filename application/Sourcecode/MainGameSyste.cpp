@@ -264,9 +264,9 @@ void MainGameSyste::DrawSpriteFront()
 void MainGameSyste::DrawImGui()
 {
 	if (enemy_ != nullptr) {
-		enemy_->DrawImGui();
+		//enemy_->DrawImGui();
 	}
-	panel_->DrawImGui();
+	//panel_->DrawImGui();
 	/*ImGui::Begin("MainGameSyste");
 	ImGui::Text("%d", reloadMinoNum_);
 
@@ -288,11 +288,11 @@ void MainGameSyste::DrawImGui()
 
 	ImGui::End();*/
 
-	ImGui::Begin("Cost");
+	/*ImGui::Begin("Cost");
 
 	ImGui::Text("minoCountUpCost : %d , Now : %d", minoCountUpCost_.at(powerLevel_ - 1), panel_->GetEmptyPanelNum());
 
-	ImGui::End();
+	ImGui::End();*/
 
 	/*minoCountUpButton_->DrawImgui();
 	attackButton_->DrawImgui();*/
@@ -475,7 +475,22 @@ void MainGameSyste::TutorialInit()
 	//ターンごとに補充するミノの数
 	reloadMinoNum_ = 5;
 
-	ReloadMino();
+	for (uint32_t i = 0; minos_.size() < reloadMinoNum_; i++) {
+		//ミノリストに無いときに補充する
+		if (minosList_.size() == 0) {
+			for (uint32_t j = 0; j < 7; j++) {
+				minosList_.push_back((MinoType)j);
+			}
+		}
+
+		int32_t max = (int32_t)minosList_.size() - 1;
+		int32_t rand = RRandom::Rand(0, max);
+
+		if (minosList_[rand] == MinoType::Omino) continue;
+
+		minos_.push_back(minosList_[rand]);
+		minosList_.erase(minosList_.begin() + rand);
+	}
 
 	nextMinoDrawer_.Initialize();
 	enemy_ = enemyManager_.GetNowEnemy();
