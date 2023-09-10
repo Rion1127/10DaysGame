@@ -19,6 +19,8 @@ void LoadManager::LoadTexture()
 	LoadGraph("number.png", "Number");
 	//タイトル
 	LoadGraph("karititledot0910.png", "Title");
+	//ステージセレクト
+	LoadGraph("kanban.png", "KanBan");
 	//パネル関連
 	LoadGraph("panel.png", "Panel");
 	LoadGraph("powerUpPanel.png", "PowerUpPanel");
