@@ -104,6 +104,7 @@
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\StateMachine.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
+    <ClCompile Include="MinoCounterDrawer.cpp" />
     <ClCompile Include="NumberDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +201,7 @@
     <ClInclude Include="engine\util\StateMachine.h" />
     <ClInclude Include="engine\util\Timer.h" />
     <ClInclude Include="application\Sourcecode\Animation\PlayerDrawer.h" />
+    <ClInclude Include="MinoCounterDrawer.h" />
     <ClInclude Include="NumberDrawer.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

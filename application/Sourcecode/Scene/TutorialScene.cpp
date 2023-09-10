@@ -22,6 +22,9 @@ void TutorialScene::Ini()
 	player_->Initialize();
 
 	mainSystem_->SetPlayer(player_.get());
+	mainSystem_->TutorialInit();
+
+	
 }
 
 void TutorialScene::Update()
@@ -34,6 +37,8 @@ void TutorialScene::Update()
 	if (mainSystem_->GetGameState() != MainGameSyste::State::PAUSE) {
 		player_->Update();
 	}
+
+	
 }
 
 void TutorialScene::Draw()
@@ -42,6 +47,8 @@ void TutorialScene::Draw()
 	mainSystem_->TutorialDraw();
 	player_->Draw();
 	mainSystem_->TutorialDrawFront();
+	
+
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);
@@ -54,6 +61,7 @@ void TutorialScene::Draw()
 
 #ifdef _DEBUG
 	mainSystem_->DrawImGui();
+	mainSystem_->TutorialDrawImGui();
 	player_->DrawImGui();
 #endif // _DEBUG
 }

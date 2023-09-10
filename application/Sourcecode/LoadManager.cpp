@@ -43,6 +43,11 @@ void LoadManager::LoadTexture()
 	LoadGraph("pauseButton.png", "PauseButton");
 	LoadGraph("pause.png", "Pause");
 	LoadGraph("backButton.png", "BackButton");
+	//UI
+	LoadGraph("textFrame.png", "TextFrame");
+	LoadGraph("tutorialText.png", "TutorialText");
+	
+	LoadGraph("recoveryEffect.png", "Recovery");
 }
 
 void LoadManager::LoadSound()

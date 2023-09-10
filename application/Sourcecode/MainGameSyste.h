@@ -5,6 +5,7 @@
 #include "EnemyManager.h"
 #include "YCameraManager.h"
 #include "NextMinoDrawer.h"
+#include "MinoCounterDrawer.h"
 #include "Button.h"
 #include "Timer.h"
 
@@ -39,7 +40,9 @@ private:
 	std::vector<int32_t> minoCountUpCost_;
 	uint32_t powerLevel_;
 	uint32_t minoCountLevel_;
+	
 	YGame::NextMinoDrawer nextMinoDrawer_;
+	YGame::MinoCounterDrawer minoCounterDrawer_;
 
 	Player* player_;
 	IEnemy* enemy_;
@@ -95,15 +98,23 @@ private:
 	enum class TutorialStep {
 		Set,
 		Rot,
-
+		StatusUp,
+		PanelNumUp,
+		End
 	};
 private:
 	TutorialStep tutorialstep_;
+
+	int32_t tutorialIndexX_;
+	int32_t tutorialIndexY_;
+
+	std::unique_ptr<Sprite> textFrameSprite_;
+	std::unique_ptr<Sprite> textSprite_;
 public:
 	void TutorialInit();
 	void TutorialUpdate();
 	void TutorialDraw();
 	void TutorialDrawFront();
-
+	void TutorialDrawImGui();
 };
 
