@@ -26,6 +26,7 @@ Panel::Panel()
 
 	isSetComplete_ = false;
 	isAllFill_ = false;
+	isPanelReset_ = false;
 	updateType_ = UpdateType::All;
 	spriteSize_ = 32;
 	spriteScale_ = 1;
@@ -260,6 +261,8 @@ void Panel::PanelReset()
 			systemPanel_[x][y] = displayPanel_[x][y];
 		}
 	}
+
+	isPanelReset_ = false;
 }
 
 void Panel::ReDoReset()
@@ -499,6 +502,13 @@ void Panel::SetPanel(const Mino& mino)
 			}
 			//ëSÇƒçXêVÇ∑ÇÈ
 			displayPanel_[x][y] = systemPanel_[x][y];
+
+			if (x == 0 || x == 9 || y == 0 || y == 9) {
+				if (systemPanel_[x][y] == State::NEXT_RELEASE ||
+					systemPanel_[x][y] == State::EMPTY) {
+					isPanelReset_ = true;
+				}
+			}
 
 			panelX++;
 		}

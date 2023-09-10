@@ -45,13 +45,6 @@ void MainGameSyste::SpriteInit()
 	retryButton_ = std::make_unique<Button>(uiUpPos_);
 	retryButton_->SetTexture(TextureManager::GetInstance()->GetTexture("Retry"));
 
-	minoCountUpPos_ = {
-		80.f,
-		400.f
-	};
-	minoCountUpButton_ = std::make_unique<Button>(minoCountUpPos_);
-	minoCountUpButton_->SetTexture(TextureManager::GetInstance()->GetTexture("MinoCouintUp"));
-
 	attackPos_ = {
 		80.f,
 		300.f
@@ -98,7 +91,7 @@ void MainGameSyste::CostInit()
 	powerUpCost_.push_back(40);
 
 	minoCountLevel_ = 1;
-	
+
 	for (uint32_t i = 0; i < 100; i++) {
 		int32_t cost = 50 + i * 20;
 		minoCountUpCost_.push_back(cost);
@@ -121,8 +114,6 @@ void MainGameSyste::Update()
 	}
 
 	if (gameState_ == State::GAME) {
-
-
 		//敵の攻撃
 		if (nowTurn_ == Turn::PLAYER) {
 			TurnPlayer();
@@ -159,7 +150,6 @@ void MainGameSyste::Update()
 			}
 		}
 
-		minoCountUpButton_->Update();
 		attackButton_->Update();
 		pauseButton_->Update();
 	}
@@ -232,8 +222,6 @@ void MainGameSyste::DrawSprite()
 	panel_->DrawSprite();
 	enemyManager_.Draw();
 
-
-	minoCountUpButton_->Draw();
 	attackButton_->Draw();
 	nextMinoDrawer_.Draw();
 	mouseUi_.Draw();
@@ -332,6 +320,10 @@ void MainGameSyste::TurnChange()
 		//ミノをリロードする
 		ReloadMino();
 		panel_->ReDoReset();
+
+		if (panel_->GetPanelReset()) {
+			panel_->PanelReset();
+		}
 
 		int32_t powerUp = panel_->GetPowerUpPanelNum() * 2;
 		player_->AddAttackPower(powerUp);
@@ -440,7 +432,7 @@ void MainGameSyste::GameOverUpdate()
 void MainGameSyste::MinoCountUp()
 {
 	const int32_t cost = minoCountUpCost_.at(minoCountLevel_);
-	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();;
+	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	//空白のパネルがコストよりも多ければ
 	if (cost <= nowEmptyPanelNum) {
 		minoCountLevel_++;
@@ -514,12 +506,7 @@ void MainGameSyste::TutorialUpdate()
 			prevTurn_ = nowTurn_;
 		}
 
-		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
-			//1ターンに置くパーツの数を増やす
-			if (minoCountUpButton_->GetIsCollision()) {
-				MinoCountUp();
-			}
-		}
+		MinoCountUp();
 
 		if (pauseButton_->GetIsCollision()) {
 			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
@@ -528,7 +515,6 @@ void MainGameSyste::TutorialUpdate()
 			}
 		}
 
-		minoCountUpButton_->Update();
 		attackButton_->Update();
 		pauseButton_->Update();
 	}
@@ -601,7 +587,6 @@ void MainGameSyste::TutorialDraw()
 	panel_->DrawSprite();
 	enemyManager_.Draw();
 
-	minoCountUpButton_->Draw();
 	attackButton_->Draw();
 	nextMinoDrawer_.Draw();
 	mouseUi_.Draw();

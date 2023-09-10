@@ -78,6 +78,8 @@ private:
 	uint32_t powerUpPanelNum_;
 	uint32_t recoveryPanelNum_;
 	uint32_t totalPanel_;
+
+	bool isPanelReset_;
 public:
 	Panel();
 	void Update();
@@ -108,6 +110,7 @@ public:
 public:
 	bool GetisSetComplete() { return isSetComplete_; }
 	bool GetIsAllFill() { return isAllFill_; }
+	bool GetPanelReset() { return isPanelReset_; }
 	int32_t GetAttackPanelNum() { return attackPanelNum_; }
 	int32_t GetEmptyPanelNum() { return emptyPanelNum_; }
 	Mino GetNowMino() { return nowMino_; }
