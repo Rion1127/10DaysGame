@@ -28,7 +28,8 @@ void HPDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matPare
 
 void HPDrawer::Update()
 {
-	number_.SetNumber(hp_);
+	if (hp_ <= 0) { number_.SetNumber(0); }
+	else { number_.SetNumber(hp_); }
 	
 	trfm_.UpdateMatrix();
 	for (size_t i = 0; i < bars_.size(); i++)
@@ -65,6 +66,7 @@ void HPDrawer::ChangeHPAnimation(const int32_t hp)
 
 float HPDrawer::HPRatio()
 {
+	if (maxHp_ <= 0) { return 0; }
 	return static_cast<float>(hp_) / static_cast<float>(maxHp_);
 }
 

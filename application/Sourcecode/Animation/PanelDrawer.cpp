@@ -49,7 +49,7 @@ void PanelDrawer::ResetAnime()
 	isSet_ = false;
 	isOpen_ = false;
 
-	lightDra_.ResetAnimation();
+	//lightDra_.ResetAnimation();
 }
 
 void PanelDrawer::ChangeColor(const BlockColorType& colorType)

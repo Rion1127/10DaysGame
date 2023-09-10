@@ -31,7 +31,7 @@ private:
 public:
 	PanelSprite(uint32_t panelSize,Vector2 basePos, float panelScale);
 
-	void Update(const std::vector<std::vector<int32_t>>& panel);
+	void Update(const std::vector<std::vector<int32_t>>& system, const std::vector<std::vector<int32_t>>& display);
 	void Draw();
 private:
 	void SetAnimation(const size_t x, const size_t y);
