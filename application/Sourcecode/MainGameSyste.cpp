@@ -98,11 +98,11 @@ void MainGameSyste::CostInit()
 	powerUpCost_.push_back(40);
 
 	minoCountLevel_ = 1;
-	minoCountUpCost_.push_back(50);
-	minoCountUpCost_.push_back(60);
-	minoCountUpCost_.push_back(70);
-	minoCountUpCost_.push_back(80);
-	minoCountUpCost_.push_back(90);
+	
+	for (uint32_t i = 0; i < 100; i++) {
+		int32_t cost = 50 + i * 20;
+		minoCountUpCost_.push_back(cost);
+	}
 }
 
 void MainGameSyste::Update()
@@ -439,12 +439,15 @@ void MainGameSyste::GameOverUpdate()
 
 void MainGameSyste::MinoCountUp()
 {
-	const int32_t cost = minoCountUpCost_.at(minoCountLevel_ - 1);
+	const int32_t cost = minoCountUpCost_.at(minoCountLevel_);
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();;
 	//空白のパネルがコストよりも多ければ
 	if (cost <= nowEmptyPanelNum) {
 		minoCountLevel_++;
 		reloadMinoNum_++;
+
+		size_t costMaxNum = minoCountUpCost_.size() - 1;
+		minoCountLevel_ = (uint32_t)Min(costMaxNum, (size_t)minoCountLevel_);
 		//panel_->PanelReset();
 	}
 }
