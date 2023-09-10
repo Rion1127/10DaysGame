@@ -68,6 +68,7 @@ private:
 	Vector2 backPos_;
 	std::unique_ptr<Sprite> backSprite_;
 	std::unique_ptr<Sprite> pauseSprite_;
+	bool isNext_;
 public:
 	MainGameSyste();
 	void Update();

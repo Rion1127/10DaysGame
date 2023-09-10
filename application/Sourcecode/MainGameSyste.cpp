@@ -27,6 +27,7 @@ MainGameSyste::MainGameSyste()
 	CostInit();
 
 	redoCoolTime_.SetLimitTime(5);
+	isNext_ = false;
 }
 
 void MainGameSyste::SpriteInit()
@@ -121,19 +122,22 @@ void MainGameSyste::Update()
 
 	if (gameState_ == State::GAME) {
 
-		panel_->SetUpdateType(UpdateType::All);
+
 		//敵の攻撃
 		if (nowTurn_ == Turn::PLAYER) {
 			TurnPlayer();
+			panel_->SetUpdateType(UpdateType::All);
 		}
 		//敵の攻撃
 		else if (nowTurn_ == Turn::ENEMY) {
 			TurnEnemy();
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 		//ターンを交代する
 		else if (nowTurn_ == Turn::CHANGE) {
 			//ターンをチェンジする
 			TurnChange();
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 
 		//前のターンがどっちのターンか記録しておく
@@ -297,12 +301,12 @@ void MainGameSyste::DrawImGui()
 
 void MainGameSyste::ReloadMino()
 {
-	minos_.clear();
-	for (uint32_t i = 0; i < reloadMinoNum_; i++) {
+	//minos_.clear();
+	for (uint32_t i = 0; minos_.size() < reloadMinoNum_; i++) {
 		//ミノリストに無いときに補充する
 		if (minosList_.size() == 0) {
-			for (uint32_t i = 0; i < 7; i++) {
-				minosList_.push_back((MinoType)i);
+			for (uint32_t j = 0; j < 7; j++) {
+				minosList_.push_back((MinoType)j);
 			}
 		}
 
@@ -363,7 +367,7 @@ void MainGameSyste::TurnPlayer()
 	}
 
 	//残りの数が0になった場合かすべてのマスを埋めた時ターンを終了する
-	if (minos_.size() <= 0 || panel_->GetIsAllFill()) {
+	if (minos_.size() <= 0 || panel_->GetIsAllFill() || isNext_ == true) {
 		panel_->SetUpdateType(UpdateType::SpriteOnly);
 		if (player_->GetRotTimEnd()) {
 			//パネル更新
@@ -376,14 +380,16 @@ void MainGameSyste::TurnPlayer()
 
 			float pitch = RRandom::RandF(0.7f, 1.f);
 			SoundManager::Play("Attack", false, 1.0f, pitch);
+
+			isNext_ = false;
 		}
 	}
 	//攻撃ボタンを押したら
 	if (attackButton_->GetIsCollision()) {
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
-			if (minos_.size() > 0) {
+			if (isNext_ == false) {
 				SoundManager::Play("Click_2SE", false, 1.0f);
-				minos_.clear();
+				isNext_ = true;
 				player_->AttackAnimation(panel_->GetDisplayPanel());
 			}
 		}
@@ -406,7 +412,7 @@ void MainGameSyste::TurnEnemy()
 		}
 	}
 
-	
+
 }
 
 void MainGameSyste::GameOverUpdate()
