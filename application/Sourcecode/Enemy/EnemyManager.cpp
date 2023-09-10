@@ -4,11 +4,11 @@
 EnemyManager::EnemyManager()
 {
 #ifdef _DEBUG
+#endif // _DEBUG
 	list_.SetEnemy("MainGame", &enemyList_);
 
 	nowEnemy_.swap(enemyList_[0]);
 	enemyList_.erase(enemyList_.begin());
-#endif // _DEBUG
 
 	isChangeNowEnemy_ = false;
 }

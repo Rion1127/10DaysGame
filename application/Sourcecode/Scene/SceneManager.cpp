@@ -24,7 +24,7 @@ void SceneManager::Ini()
 	Transition<TitleScene>();
 #else
 	//ビルド開始時のシーン
-	Transition<GameScene>();
+	Transition<TitleScene>();
 #endif // _DEBUG
 
 	

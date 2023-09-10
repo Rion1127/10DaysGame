@@ -62,6 +62,7 @@ void MainGameSyste::SpriteInit()
 	};
 	pauseButton_ = std::make_unique<Button>(pausePos_);
 	pauseButton_->SetTexture(TextureManager::GetInstance()->GetTexture("PauseButton"));
+	pauseButton_->Update();
 
 	backPos_ = uiDownPos_;
 	backButton_ = std::make_unique<Button>(backPos_);
@@ -84,6 +85,7 @@ void MainGameSyste::SpriteInit()
 	backSprite_->SetAnchor(Vector2(0, 0));
 	backSprite_->SetColor(Color(0, 0, 0, 200));
 	backSprite_->SetScale(Vector2(2, 2));
+	backSprite_->Update();
 }
 
 void MainGameSyste::CostInit()
