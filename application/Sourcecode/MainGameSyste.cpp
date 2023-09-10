@@ -499,7 +499,7 @@ void MainGameSyste::TutorialInit()
 	textSprite_->SetTex_Size(Vector2(320, 120));
 	Vector2 textureSize = TextureManager::GetInstance()->GetTexture("TutorialText")->size_;
 	textureSize = {
-		1.f / 4.f,
+		1.f / 6.f,
 		1.f / 4.f,
 	};
 	textSprite_->SetScale(textureSize);
@@ -521,21 +521,33 @@ void MainGameSyste::TutorialUpdate()
 	}
 
 	if (tutorialstep_ == TutorialStep::Set) {
-		//白いパネルに置いてみよう
+		
 		if (tutorialIndexX_ == 0) {
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+				tutorialIndexX_++;
+			}
+		}
+		if (tutorialIndexX_ == 1) {
 			if (panel_->GetisSetComplete()) {
-				if (tutorialIndexX_ == 0)tutorialIndexX_++;
+				if (tutorialIndexX_ == 1)tutorialIndexX_++;
+			}
+		}
+		//オレンジのパネルは…
+		else if (tutorialIndexX_ == 2) {
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+				tutorialIndexX_++;
 			}
 		}
 		//青いパネルは次のターンで…
-		else if (tutorialIndexX_ == 1) {
+		else if (tutorialIndexX_ == 3) {
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
 				tutorialIndexX_++;
 			}
 		}
 		// 全てのパネルを埋めるか攻撃ボタンを…
-		else if (tutorialIndexX_ == 2) {
+		else if (tutorialIndexX_ == 4) {
 			panel_->SetUpdateType(UpdateType::All);
 			if (attackButton_->GetIsCollision()) {
 				if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
@@ -548,10 +560,11 @@ void MainGameSyste::TutorialUpdate()
 				tutorialstep_ = TutorialStep::StatusUp;
 			}
 		}
+		
 	}
 	else if (tutorialstep_ == TutorialStep::StatusUp) {
 		//基本はこうやってパネルを…
-		if (tutorialIndexX_ == 3) {
+		if (tutorialIndexX_ == 5) {
 			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
 				tutorialIndexX_ = 0;
 				tutorialIndexY_++;
@@ -573,7 +586,8 @@ void MainGameSyste::TutorialUpdate()
 		else if (tutorialIndexX_ == 2) {
 			if (panel_->GetPanelReset()) {
 				tutorialstep_ = TutorialStep::PanelNumUp;
-				tutorialIndexX_++;
+				tutorialIndexY_++;
+				tutorialIndexX_ = 0;
 			}
 		}
 
@@ -593,9 +607,9 @@ void MainGameSyste::TutorialUpdate()
 		}
 		//１ターンに置けるパーツの数が…
 		else if (tutorialIndexX_ == 1) {
-			if (minoCountLevel_ > 0) {
-				tutorialIndexX_ = 0;
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
 				tutorialIndexY_++;
+				tutorialIndexX_ = 0;
 				tutorialstep_ = TutorialStep::End;
 			}
 		}
@@ -721,17 +735,18 @@ void MainGameSyste::TutorialUpdate()
 
 	if (tutorialIndexY_ == 0) {
 		if (tutorialIndexX_ == 0) {
-
-		}
-		else if (tutorialIndexX_ == 1) {
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
-		else if (tutorialIndexX_ == 2) {
+		else if (tutorialIndexX_ == 1) {
 			panel_->SetUpdateType(UpdateType::All);
+		}
+		else if (tutorialIndexX_ == 2) {
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 		else if (tutorialIndexX_ == 3) {
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
+
 	}
 	else if (tutorialIndexY_ == 1) {
 		if (tutorialIndexX_ == 0) {
@@ -746,16 +761,22 @@ void MainGameSyste::TutorialUpdate()
 		else if (tutorialIndexX_ == 3) {
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
+		else if (tutorialIndexX_ == 4) {
+			panel_->SetUpdateType(UpdateType::All);
+		}
+		else if (tutorialIndexX_ == 5) {
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+		}
 	}
 	else if (tutorialIndexY_ == 2) {
 		if (tutorialIndexX_ == 0) {
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 		else if (tutorialIndexX_ == 1) {
-			panel_->SetUpdateType(UpdateType::All);
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 		else if (tutorialIndexX_ == 2) {
-			panel_->SetUpdateType(UpdateType::All);
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 		else if (tutorialIndexX_ == 3) {
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
@@ -763,7 +784,7 @@ void MainGameSyste::TutorialUpdate()
 	}
 	else if (tutorialIndexY_ == 3) {
 		if (tutorialIndexX_ == 3) {
-			panel_->SetUpdateType(UpdateType::All);
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 		else {
 
