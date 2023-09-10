@@ -312,7 +312,9 @@ void MainGameSyste::TurnChange()
 	//自分のターンだったら敵のターンへ
 	if (prevTurn_ == Turn::PLAYER) {
 		nowTurn_ = Turn::ENEMY;
-		enemyManager_.GetNowEnemy()->AttackAnimation();
+		if (enemyManager_.GetNowEnemy() != nullptr) {
+			enemyManager_.GetNowEnemy()->AttackAnimation();
+		}
 	}
 	//敵のターンだったら自分のターンへ
 	else if (prevTurn_ == Turn::ENEMY) {
@@ -325,10 +327,16 @@ void MainGameSyste::TurnChange()
 			panel_->PanelReset();
 		}
 
-		int32_t powerUp = panel_->GetPowerUpPanelNum() * 2;
-		player_->AddAttackPower(powerUp);
-		int32_t recovery = panel_->GetRecoveryPanelNum() * 10;
+		int32_t powerUp = panel_->GetStateUpValue().attackUp_;
+		player_->AddAttack(powerUp);
+		int32_t recovery = panel_->GetStateUpValue().recoverUp_;
 		player_->Recovery(recovery);
+		int32_t luck = panel_->GetStateUpValue().luckUp_;
+		player_->AddLuck(luck);
+		int32_t health = panel_->GetStateUpValue().healthUp_;
+		player_->AddHealth(health);
+
+		panel_->ResetStateUp();
 	}
 	prevTurn_ = nowTurn_;
 }
@@ -396,8 +404,7 @@ void MainGameSyste::TurnEnemy()
 	if (enemyManager_.GetIsChangeNowEnemy() == false) {
 		if (enemyManager_.GetNowEnemy()->GetIsEndAttack()) {
 			player_->Damage(enemy_->GetAttackPower());
-			player_->AddPowerReset();
-
+			
 			float pitch = RRandom::RandF(0.7f, 1.f);
 			SoundManager::Play("Attack", false, 1.0f, pitch);
 
@@ -405,8 +412,11 @@ void MainGameSyste::TurnEnemy()
 			nowTurn_ = Turn::CHANGE;
 		}
 	}
-
-
+	else {
+		//処理が終わったらシーンをチェンジする
+		nowTurn_ = Turn::CHANGE;
+	}
+	
 }
 
 void MainGameSyste::GameOverUpdate()

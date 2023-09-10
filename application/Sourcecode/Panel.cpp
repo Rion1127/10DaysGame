@@ -31,11 +31,11 @@ Panel::Panel()
 	spriteSize_ = 32;
 	spriteScale_ = 1;
 	//スプライトのサイズ
-	spritePos_ = { 
-		WinAPI::GetWindowSize().x / 2.f -  ((displayPanel_.size() / 2)) * spriteSize_ + 16.f,
+	spritePos_ = {
+		WinAPI::GetWindowSize().x / 2.f - ((displayPanel_.size() / 2)) * spriteSize_ + 16.f,
 		WinAPI::GetWindowSize().y / 2.f - ((displayPanel_[0].size() / 2) - 2) * spriteSize_
 	};
-	
+
 	sprite_ = std::make_unique<PanelSprite>(maxPanelSize_, spritePos_, spriteScale_);
 
 	rotNum_ = 0;
@@ -79,7 +79,7 @@ void Panel::Update()
 				{
 					displayPanel_[x][y] = systemPanel_[x][y];
 				}
-				
+
 				if (systemPanel_[x][y] == State::EMPTY) {
 					emptyPanelNum_++;
 				}
@@ -87,7 +87,7 @@ void Panel::Update()
 		}
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_RIGHT))
 		{
-			SoundManager::Play("RotSE",false,1.0f);
+			SoundManager::Play("RotSE", false, 1.0f);
 			rotNum_++;
 			if (rotNum_ > 3)rotNum_ = 0;
 		}
@@ -115,7 +115,7 @@ void Panel::Update()
 				}
 			}
 		}
-		
+
 		//見た目のパネルの配列を更新
 		DisplayPanelUpdate(nowMino_);
 
@@ -154,7 +154,7 @@ void Panel::DrawImGui()
 				systemPanel_[5][y], systemPanel_[6][y], systemPanel_[7][y], systemPanel_[8][y], systemPanel_[9][y]);
 		}
 	}
-	
+
 	//選択しているパネル場所変更
 	ImGui::InputInt("x", (int*)&selectPos_.x);
 	ImGui::InputInt("y", (int*)&selectPos_.y);
@@ -162,10 +162,10 @@ void Panel::DrawImGui()
 	std::string typeName;
 	static int panelType = 0;
 	ImGui::InputInt("type", &panelType);
-	panelType = Clamp(panelType,0,6);
+	panelType = Clamp(panelType, 0, 6);
 	//minoType_ = (MinoType)panelType;
 
-	
+
 
 	if (panelType == 0) {
 		typeName = "Omino";
@@ -190,7 +190,7 @@ void Panel::DrawImGui()
 	}
 
 	ImGui::Text(typeName.c_str());
-	
+
 	//選択しているミノを設置
 	if (ImGui::Button("SetPanel")) {
 		SetPanel(MinoList::GetMinoList((MinoType)panelType));
@@ -218,6 +218,15 @@ void Panel::PanelUpdate()
 	{
 		for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
 		{
+			if (x == 0 || x == 9 || y == 0 || y == 9) {
+				if (systemPanel_[x][y] == State::NEXT_RELEASE) {
+					isPanelReset_ = true;
+					if (x == 0)stateUp_.healthUp_++;
+					if (x == 9)stateUp_.attackUp_++;
+					if (y == 0)stateUp_.luckUp_++;
+					if (y == 9)stateUp_.recoverUp_++;
+				}
+			}
 			//NEXT_RELEASEを攻撃可能パネルにして攻撃パネルもリセットする
 			if (systemPanel_[x][y] == State::NEXT_RELEASE) {
 				systemPanel_[x][y] = State::EMPTY;
@@ -256,7 +265,7 @@ void Panel::PanelReset()
 				displayPanel_[x][y] = State::EMPTY;
 			}
 
-			
+
 
 			systemPanel_[x][y] = displayPanel_[x][y];
 		}
@@ -338,7 +347,7 @@ void Panel::DisplayPanelUpdate(const Mino& mino)
 		for (uint32_t x = selectPos_.x; x < sizeX; x++)
 		{
 			bool isSetTempPos =
-				systemPanel_[x][y] == State::EMPTY || systemPanel_[x][y] == State::NOT_OPEN || 
+				systemPanel_[x][y] == State::EMPTY || systemPanel_[x][y] == State::NOT_OPEN ||
 				systemPanel_[x][y] == State::PowerUp || systemPanel_[x][y] == State::Recovery;
 			//空のパネルに配置したら
 			if (isSetTempPos &&
@@ -443,7 +452,7 @@ void Panel::ReDo(std::vector<MinoType>* minos)
 			}
 		}
 		oldPanelList_.erase(oldPanelList_.begin());
-		
+
 		minos->insert(minos->begin(), usedMinoType_.front());
 
 		usedMinoType_.erase(usedMinoType_.begin());
@@ -503,13 +512,6 @@ void Panel::SetPanel(const Mino& mino)
 			//全て更新する
 			displayPanel_[x][y] = systemPanel_[x][y];
 
-			if (x == 0 || x == 9 || y == 0 || y == 9) {
-				if (systemPanel_[x][y] == State::NEXT_RELEASE ||
-					systemPanel_[x][y] == State::EMPTY) {
-					isPanelReset_ = true;
-				}
-			}
-
 			panelX++;
 		}
 		panelY++;
@@ -529,6 +531,13 @@ uint32_t Panel::GetRecoveryPanelNum()
 	uint32_t result = recoveryPanelNum_;
 	recoveryPanelNum_ = 0;
 	return result;
+}
+void Panel::ResetStateUp()
+{
+	stateUp_.attackUp_ = 0;
+	stateUp_.healthUp_ = 0;
+	stateUp_.luckUp_ = 0;
+	stateUp_.recoverUp_ = 0;
 }
 #pragma endregion
 
@@ -567,7 +576,7 @@ void PanelSprite::Update(const std::vector<std::vector<int32_t>>& panel)
 	{
 		for (uint32_t x = 0; x < panels_[y].size(); x++)
 		{
-			if (panel[x][y] != State::PowerUp&&
+			if (panel[x][y] != State::PowerUp &&
 				panel[x][y] != State::Recovery &&
 				panel[x][y] != State::TEMPPOS) {
 				panels_[x][y].SetTexture(TextureManager::GetInstance()->GetTexture("Panel"));

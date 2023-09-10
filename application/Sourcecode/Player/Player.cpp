@@ -39,8 +39,7 @@ void Player::Update()
 	if (health_ <= 0) {
 		isAlive_ = false;
 	}
-	attackpower_ = baseAttackpower_ + powerUpValue_;
-
+	
 	drawer_.Update();
 	sword_.Update();
 	hpBar_.Update();
@@ -66,7 +65,7 @@ void Player::DrawImGui()
 {
 	ImGui::Begin("player");
 	ImGui::Text("HP : %d", health_);
-	ImGui::Text("power : %d", attackpower_);
+	ImGui::Text("power : %d", baseAttackpower_);
 	ImGui::End();
 }
 
@@ -95,6 +94,18 @@ void Player::Recovery(int32_t health)
 		recovery_.SetNumber(health);
 		recovery_.RecoverAnimation();
 	}
+}
+
+void Player::AddHealth(int32_t health) {
+	health_ += health;
+}
+
+void Player::AddAttack(int32_t attack) {
+	baseAttackpower_ += attack;
+}
+
+void Player::AddLuck(int32_t luck) {
+	luck_ += luck;
 }
 
 void Player::IdleAnimation()

@@ -41,10 +41,16 @@ private:
 class Panel
 {
 private:
-	
 	struct SelectPos {
 		int32_t x;
 		int32_t y;
+	};
+
+	struct StateUp {
+		uint32_t luckUp_;
+		uint32_t healthUp_;
+		uint32_t recoverUp_;
+		uint32_t attackUp_;
 	};
 private:
 	//•`‰æ—p‚Ìƒpƒlƒ‹
@@ -80,6 +86,8 @@ private:
 	uint32_t totalPanel_;
 
 	bool isPanelReset_;
+
+	StateUp stateUp_;
 public:
 	Panel();
 	void Update();
@@ -107,6 +115,7 @@ public:
 	void SetUpdateType(UpdateType type) { updateType_ = type; }
 	void SetRotNum(uint32_t rotnum) { rotNum_ = rotnum; }
 	void SetIsAllFill(bool flag) { isAllFill_ = flag; }
+	void ResetStateUp();
 public:
 	bool GetisSetComplete() { return isSetComplete_; }
 	bool GetIsAllFill() { return isAllFill_; }
@@ -117,6 +126,7 @@ public:
 	uint32_t GetPowerUpPanelNum();
 	uint32_t GetRecoveryPanelNum();
 	uint32_t GetTotalEmptyPanelNum() { return totalPanel_; };
+	StateUp GetStateUpValue() { return stateUp_; }
 
 	std::vector<std::vector<int32_t>> GetDisplayPanel() { return displayPanel_; }
 };
