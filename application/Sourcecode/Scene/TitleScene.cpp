@@ -19,6 +19,15 @@ TitleScene::~TitleScene()
 void TitleScene::Ini()
 {
 	sound_ = SoundManager::GetInstance();
+	titleSprite_ = std::make_unique<Sprite>();
+	titleSprite_->Ini();
+	titleSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Title"));
+	titleSprite_->SetAnchor(Vector2(0.0f, 0.0f));
+
+	kanBanSprite_ = std::make_unique<Sprite>();
+	kanBanSprite_->Ini();
+	kanBanSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("KanBan"));
+	kanBanSprite_->SetAnchor(Vector2(0.0f, 0.0f));
 
 	Vector2 tutorialPos = {
 		WinAPI::GetWindowSize().x / 4.f,
@@ -87,6 +96,9 @@ void TitleScene::Update()
 		
 	}
 
+	titleSprite_->Update();
+	kanBanSprite_->Update();
+
 	tutorialButton_->Update();
 	mainGameButton_->Update();
 	endlessButton_->Update();
@@ -95,8 +107,13 @@ void TitleScene::Update()
 void TitleScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
-	if (type_ == TitleType::StageSelect)
+	if(type_ == TitleType::Title)
 	{
+		titleSprite_->Draw();
+	}
+	else if (type_ == TitleType::StageSelect)
+	{
+		kanBanSprite_->Draw();
 		tutorialButton_->Draw();
 		mainGameButton_->Draw();
 		endlessButton_->Draw();
