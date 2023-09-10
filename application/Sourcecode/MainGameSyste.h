@@ -104,5 +104,7 @@ public:
 	void TutorialInit();
 	void TutorialUpdate();
 	void TutorialDraw();
+	void TutorialDrawFront();
+
 };
 

@@ -30,15 +30,18 @@ void TutorialScene::Update()
 
 #endif //_DEBUG
 
-	mainSystem_->Update();
-	player_->Update();
+	mainSystem_->TutorialUpdate();
+	if (mainSystem_->GetGameState() != MainGameSyste::State::PAUSE) {
+		player_->Update();
+	}
 }
 
 void TutorialScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
-	mainSystem_->DrawSprite();
+	mainSystem_->TutorialDraw();
 	player_->Draw();
+	mainSystem_->TutorialDrawFront();
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 
 	PipelineManager::PreDraw("Toon", TRIANGLELIST);

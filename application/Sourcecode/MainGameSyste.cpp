@@ -287,7 +287,6 @@ void MainGameSyste::DrawImGui()
 
 	ImGui::Begin("Cost");
 
-	ImGui::Text("powerUpCost : %d , Now : %d", powerUpCost_.at(powerLevel_ - 1), panel_->GetEmptyPanelNum());
 	ImGui::Text("minoCountUpCost : %d , Now : %d", minoCountUpCost_.at(powerLevel_ - 1), panel_->GetEmptyPanelNum());
 
 	ImGui::End();
@@ -469,9 +468,152 @@ void MainGameSyste::TutorialInit()
 
 void MainGameSyste::TutorialUpdate()
 {
+	if (gameState_ != State::PAUSE &&
+		gameState_ != State::GAMEOVER) {
+		enemyManager_.Update();
+		panel_->Update();
+
+		if (enemyManager_.GetIsAllEnemyDestroy() == false) {
+			gameState_ = State::GAME;
+		}
+		else {
+			gameState_ = State::CLEAR;
+		}
+	}
+
+	if (gameState_ == State::GAME) {
+
+		panel_->SetUpdateType(UpdateType::All);
+		//敵の攻撃
+		if (nowTurn_ == Turn::PLAYER) {
+			TurnPlayer();
+		}
+		//敵の攻撃
+		else if (nowTurn_ == Turn::ENEMY) {
+			TurnEnemy();
+		}
+		//ターンを交代する
+		else if (nowTurn_ == Turn::CHANGE) {
+			//ターンをチェンジする
+			TurnChange();
+		}
+
+		//前のターンがどっちのターンか記録しておく
+		if (nowTurn_ != Turn::CHANGE) {
+			prevTurn_ = nowTurn_;
+		}
+
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+			//1ターンに置くパーツの数を増やす
+			if (minoCountUpButton_->GetIsCollision()) {
+				MinoCountUp();
+			}
+		}
+
+		if (pauseButton_->GetIsCollision()) {
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+				gameState_ = State::PAUSE;
+				SoundManager::Play("Click_1SE", false, 1.0f);
+			}
+		}
+
+		minoCountUpButton_->Update();
+		attackButton_->Update();
+		pauseButton_->Update();
+	}
+	//クリアしたら
+	else if (gameState_ == State::CLEAR) {
+		panel_->SetUpdateType(UpdateType::SpriteOnly);
+
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+			if (titleButton_->GetIsCollision())
+			{
+
+				SceneManager::SetChangeStart(SceneName::Title);
+			}
+		}
+	}
+	else if (gameState_ == State::PAUSE) {
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+			if (titleButton_->GetIsCollision())
+			{
+				SceneManager::SetChangeStart(SceneName::Title);
+				SoundManager::Play("Click_2SE", false, 1.0f);
+			}
+			if (backButton_->GetIsCollision())
+			{
+				gameState_ = State::GAME;
+				SoundManager::Play("Click_2SE", false, 1.0f);
+			}
+		}
+
+		titleButton_->SetPos(uiDownPos_);
+		backButton_->SetPos(uiUpPos_);
+
+		backButton_->Update();
+		pauseSprite_->Update();
+	}
+
+	if (player_->GetIsAlive() == false) {
+		gameState_ = State::GAMEOVER;
+		panel_->SetUpdateType(UpdateType::SpriteOnly);
+	}
+
+	if (enemyManager_.GetIsChangeNowEnemy() || enemyManager_.GetNowEnemy() == nullptr) {
+		enemy_ = enemyManager_.GetNowEnemy();
+		enemyManager_.SetIsChangeNowEnemy(false);
+	}
+
+	nextMinoDrawer_.Update(minos_);
+
+	// カメラ更新
+	cameraManager_->Update();
+
+	if (gameState_ == State::CLEAR ||
+		gameState_ == State::GAMEOVER ||
+		gameState_ == State::PAUSE)
+	{
+		//クリアの時はタイトルに戻るスプライトだけ有効にする
+		titleButton_->Update();
+		//ゲームオーバー
+		if (gameState_ == State::GAMEOVER) {
+			GameOverUpdate();
+		}
+	}
+
+	mouseUi_.Update();
+	backSprite_->Update();
 }
 
 void MainGameSyste::TutorialDraw()
 {
+	panel_->DrawSprite();
+	enemyManager_.Draw();
+
+	minoCountUpButton_->Draw();
+	attackButton_->Draw();
+	nextMinoDrawer_.Draw();
+	mouseUi_.Draw();
+	pauseButton_->Draw();
+}
+void MainGameSyste::TutorialDrawFront()
+{
+	if (gameState_ == State::CLEAR ||
+		gameState_ == State::GAMEOVER ||
+		gameState_ == State::PAUSE)
+	{
+		backSprite_->Draw();
+		//クリアの時はタイトルに戻るスプライトだけ有効にする
+		titleButton_->Draw();
+
+		if (gameState_ == State::GAMEOVER) {
+			retryButton_->Draw();
+		}
+
+		if (gameState_ == State::PAUSE) {
+			backButton_->Draw();
+			pauseSprite_->Draw();
+		}
+	}
 }
 #pragma endregion
