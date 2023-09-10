@@ -12,7 +12,7 @@ MainGameSyste::MainGameSyste()
 	nowTurn_ = Turn::PLAYER;
 	gameState_ = State::GAME;
 	//É^Å[ÉìÇ≤Ç∆Ç…ï‚è[Ç∑ÇÈÉ~ÉmÇÃêî
-	reloadMinoNum_ = 4;
+	reloadMinoNum_ = 2;
 
 	ReloadMino();
 
@@ -99,7 +99,7 @@ void MainGameSyste::CostInit()
 	minoCountLevel_ = 0;
 
 	for (uint32_t i = 0; i < 100; i++) {
-		int32_t cost = 50 + i * 20;
+		int32_t cost = 30 + i * 50;
 		minoCountUpCost_.push_back(cost);
 	}
 }
@@ -267,7 +267,7 @@ void MainGameSyste::DrawImGui()
 		enemy_->DrawImGui();
 	}
 	panel_->DrawImGui();
-	ImGui::Begin("MainGameSyste");
+	/*ImGui::Begin("MainGameSyste");
 	ImGui::Text("%d", reloadMinoNum_);
 
 	std::string string = "NowTurn : ";
@@ -286,7 +286,7 @@ void MainGameSyste::DrawImGui()
 
 	ImGui::Text(gameStatestring.c_str());
 
-	ImGui::End();
+	ImGui::End();*/
 
 	ImGui::Begin("Cost");
 

@@ -53,8 +53,8 @@ void GameScene::Draw()
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 
-#ifdef _DEBUG
 	mainSystem_->DrawImGui();
 	player_->DrawImGui();
+#ifdef _DEBUG
 #endif // _DEBUG
 }

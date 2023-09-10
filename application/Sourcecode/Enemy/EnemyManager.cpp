@@ -53,7 +53,7 @@ EnemyPopDataList::EnemyPopDataList()
 	mainGame.enemyData.resize(3);
 	for (int32_t i = 0; i < mainGame.enemyData.size(); i++) {
 		mainGame.enemyData[i] = {
-			10000 + 4 * i,
+			100 + 4 * i,
 			3 + (2 * i)
 		};
 	}

@@ -128,7 +128,7 @@ void TitleScene::Draw()
 
 	PipelineManager::PreDraw("Particle", POINTLIST);
 
-	DrawImGui();
+	//DrawImGui();
 }
 
 void TitleScene::DrawImGui() {

@@ -64,7 +64,7 @@ void Player::Draw()
 void Player::DrawImGui()
 {
 	ImGui::Begin("player");
-	ImGui::Text("HP : %d", health_);
+	//ImGui::Text("HP : %d", health_);
 	ImGui::Text("power : %d", baseAttackpower_);
 	ImGui::End();
 }
