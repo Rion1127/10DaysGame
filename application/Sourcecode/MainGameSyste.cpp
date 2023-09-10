@@ -28,6 +28,8 @@ MainGameSyste::MainGameSyste()
 
 	redoCoolTime_.SetLimitTime(5);
 	isNext_ = false;
+
+	tutorialstep_ = TutorialStep::Set;
 }
 
 void MainGameSyste::SpriteInit()
@@ -90,7 +92,7 @@ void MainGameSyste::CostInit()
 	powerUpCost_.push_back(30);
 	powerUpCost_.push_back(40);
 
-	minoCountLevel_ = 1;
+	minoCountLevel_ = 0;
 
 	for (uint32_t i = 0; i < 100; i++) {
 		int32_t cost = 50 + i * 20;
@@ -404,7 +406,7 @@ void MainGameSyste::TurnEnemy()
 	if (enemyManager_.GetIsChangeNowEnemy() == false) {
 		if (enemyManager_.GetNowEnemy()->GetIsEndAttack()) {
 			player_->Damage(enemy_->GetAttackPower());
-			
+
 			float pitch = RRandom::RandF(0.7f, 1.f);
 			SoundManager::Play("Attack", false, 1.0f, pitch);
 
@@ -416,7 +418,7 @@ void MainGameSyste::TurnEnemy()
 		//処理が終わったらシーンをチェンジする
 		nowTurn_ = Turn::CHANGE;
 	}
-	
+
 }
 
 void MainGameSyste::GameOverUpdate()
@@ -477,6 +479,23 @@ void MainGameSyste::TutorialInit()
 	CostInit();
 
 	redoCoolTime_.SetLimitTime(5);
+
+	textFrameSprite_ = std::make_unique<Sprite>();
+	textFrameSprite_->Ini();
+	textFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("TextFrame"));
+	textFrameSprite_->SetPos(Vector2(300, 660));
+
+	textSprite_ = std::make_unique<Sprite>();
+	textSprite_->Ini();
+	textSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("TutorialText"));
+	textSprite_->SetPos(Vector2(300, 660));
+	textSprite_->SetTex_Size(Vector2(320, 120));
+	Vector2 textureSize = TextureManager::GetInstance()->GetTexture("TutorialText")->size_;
+	textureSize = {
+		1.f / 4.f,
+		1.f / 4.f,
+	};
+	textSprite_->SetScale(textureSize);
 }
 
 void MainGameSyste::TutorialUpdate()
@@ -491,6 +510,99 @@ void MainGameSyste::TutorialUpdate()
 		}
 		else {
 			gameState_ = State::CLEAR;
+		}
+	}
+
+	if (tutorialstep_ == TutorialStep::Set) {
+		//白いパネルに置いてみよう
+		if (tutorialIndexX_ == 0) {
+			if (panel_->GetisSetComplete()) {
+				if (tutorialIndexX_ == 0)tutorialIndexX_++;
+			}
+		}
+		//青いパネルは次のターンで…
+		else if (tutorialIndexX_ == 1) {
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+				tutorialIndexX_++;
+			}
+		}
+		// 全てのパネルを埋めるか攻撃ボタンを…
+		else if (tutorialIndexX_ == 2) {
+			panel_->SetUpdateType(UpdateType::All);
+			if (attackButton_->GetIsCollision()) {
+				if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+					tutorialIndexX_++;
+					tutorialstep_ = TutorialStep::StatusUp;
+				}
+			}
+			if (panel_->GetIsAllFill()) {
+				tutorialIndexX_++;
+				tutorialstep_ = TutorialStep::StatusUp;
+			}
+		}
+	}
+	else if (tutorialstep_ == TutorialStep::StatusUp) {
+		//基本はこうやってパネルを…
+		if (tutorialIndexX_ == 3) {
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+				tutorialIndexX_ = 0;
+				tutorialIndexY_++;
+			}
+		}
+		//いちばんそとがわに置くとパネルがリセット…
+		else if (tutorialIndexX_ == 0) {
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+				tutorialIndexX_++;
+			}
+		}
+		//ステータスが上がるよ
+		else if (tutorialIndexX_ == 1) {
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+				tutorialIndexX_++;
+			}
+		}
+		//外側までのぱしてみよう
+		else if (tutorialIndexX_ == 2) {
+			if (panel_->GetPanelReset()) {
+				tutorialstep_ = TutorialStep::PanelNumUp;
+				tutorialIndexX_++;
+			}
+		}
+
+	}
+	else if (tutorialstep_ == TutorialStep::PanelNumUp) {
+		if (tutorialIndexX_ == 3) {
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+				tutorialIndexX_ = 0;
+				tutorialIndexY_++;
+			}
+		}
+		//パネルを解放した数がおおければ…
+		else if (tutorialIndexX_ == 0) {
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+				tutorialIndexX_++;
+			}
+		}
+		//１ターンに置けるパーツの数が…
+		else if (tutorialIndexX_ == 1) {
+			if (minoCountLevel_ > 0) {
+				tutorialIndexX_ = 0;
+				tutorialIndexY_++;
+				tutorialstep_ = TutorialStep::End;
+			}
+		}
+	}
+	else if (tutorialstep_ == TutorialStep::End) {
+		if (tutorialIndexX_ == 0) {
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+				tutorialIndexX_++;
+			}
+		}
+		else if (tutorialIndexX_ == 1) {
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+				SceneManager::SetChangeStart(SceneName::Title);
+			}
 		}
 	}
 
@@ -590,6 +702,65 @@ void MainGameSyste::TutorialUpdate()
 
 	mouseUi_.Update();
 	backSprite_->Update();
+	textFrameSprite_->Update();
+	textSprite_->Update();
+	textSprite_->SetTex_LeftTop(
+		Vector2(tutorialIndexX_ * 320.f,
+			tutorialIndexY_ * 128.f));
+
+
+	if (tutorialIndexY_ == 0) {
+		if (tutorialIndexX_ == 0) {
+
+		}
+		else if (tutorialIndexX_ == 1) {
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+		}
+		else if (tutorialIndexX_ == 2) {
+			panel_->SetUpdateType(UpdateType::All);
+		}
+		else if (tutorialIndexX_ == 3) {
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+		}
+	}
+	else if (tutorialIndexY_ == 1) {
+		if (tutorialIndexX_ == 0) {
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+		}
+		else if (tutorialIndexX_ == 1) {
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+		}
+		else if (tutorialIndexX_ == 2) {
+			panel_->SetUpdateType(UpdateType::All);
+		}
+		else if (tutorialIndexX_ == 3) {
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+		}
+	}
+	else if (tutorialIndexY_ == 2) {
+		if (tutorialIndexX_ == 0) {
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+		}
+		else if (tutorialIndexX_ == 1) {
+			panel_->SetUpdateType(UpdateType::All);
+		}
+		else if (tutorialIndexX_ == 2) {
+			panel_->SetUpdateType(UpdateType::All);
+		}
+		else if (tutorialIndexX_ == 3) {
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+		}
+	}
+	else if (tutorialIndexY_ == 3) {
+		if (tutorialIndexX_ == 3) {
+			panel_->SetUpdateType(UpdateType::All);
+		}
+		else {
+
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+		}
+	}
+
 }
 
 void MainGameSyste::TutorialDraw()
@@ -601,6 +772,9 @@ void MainGameSyste::TutorialDraw()
 	nextMinoDrawer_.Draw();
 	mouseUi_.Draw();
 	pauseButton_->Draw();
+
+	textFrameSprite_->Draw();
+	textSprite_->Draw();
 }
 void MainGameSyste::TutorialDrawFront()
 {
@@ -621,5 +795,29 @@ void MainGameSyste::TutorialDrawFront()
 			pauseSprite_->Draw();
 		}
 	}
+}
+void MainGameSyste::TutorialDrawImGui()
+{
+	ImGui::Begin("Tutorial");
+	std::string string = "TutorialStep : ";
+
+	if (tutorialstep_ == TutorialStep::Set)string += "Set";
+	if (tutorialstep_ == TutorialStep::StatusUp)string += "StatusUp";
+	if (tutorialstep_ == TutorialStep::PanelNumUp)string += "PanelNumUp";
+
+	ImGui::Text(string.c_str());
+
+	ImGui::End();
+
+	ImGui::Begin("Mouse");
+
+	float pos[2] = {
+		MouseInput::GetInstance()->mPos_.x,
+		MouseInput::GetInstance()->mPos_.y
+	};
+
+	ImGui::DragFloat2("pos", pos);
+
+	ImGui::End();
 }
 #pragma endregion

@@ -95,15 +95,23 @@ private:
 	enum class TutorialStep {
 		Set,
 		Rot,
-
+		StatusUp,
+		PanelNumUp,
+		End
 	};
 private:
 	TutorialStep tutorialstep_;
+
+	int32_t tutorialIndexX_;
+	int32_t tutorialIndexY_;
+
+	std::unique_ptr<Sprite> textFrameSprite_;
+	std::unique_ptr<Sprite> textSprite_;
 public:
 	void TutorialInit();
 	void TutorialUpdate();
 	void TutorialDraw();
 	void TutorialDrawFront();
-
+	void TutorialDrawImGui();
 };
 
