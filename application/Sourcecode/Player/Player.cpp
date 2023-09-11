@@ -7,7 +7,7 @@ void Player::Initialize()
 {	
 	Vector3 pos = {
 		WinAPI::GetWindowSize().x / 2.0f - 128.0f,
-		WinAPI::GetWindowSize().y / 6.0f,
+		WinAPI::GetWindowSize().y / 6.0f + 8.0f,
 		0.0f
 	};
 
