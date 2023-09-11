@@ -12,6 +12,7 @@ private:
 	bool isCollision_;
 	PipeLineState state_;
 	Vector2 colSize_;
+	bool isActive_;
 public:
 	Button(Vector2 pos);
 

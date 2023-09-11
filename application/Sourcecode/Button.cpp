@@ -22,7 +22,7 @@ Button::Button(Vector2 pos)
 	scale *= 0.8f;
 	sprite_->SetScale(scale);
 
-	
+	isActive_ = true;
 }
 
 void Button::Update()
@@ -44,17 +44,27 @@ void Button::Update()
 	};
 
 	Vector2 mPos = MouseInput::GetInstance()->mPos_;
-	if (CheckBox2DtoPoint(col_, mPos))
+	//—LŒø‚ÌŽž
+	if (isActive_)
 	{
-		isCollision_ = true;
-		
-		state_ = PipeLineState::Sub;
+		if (CheckBox2DtoPoint(col_, mPos))
+		{
+			isCollision_ = true;
+
+			state_ = PipeLineState::Sub;
+		}
+		else
+		{
+			isCollision_ = false;
+
+			state_ = PipeLineState::Alpha;
+		}
+		sprite_->SetColor(Color(255, 255, 255, 255));
 	}
+	//–³Œø‚ÌŽž
 	else
 	{
-		isCollision_ = false;
-		
-		state_ = PipeLineState::Alpha;
+		sprite_->SetColor(Color(100, 100, 100, 255));
 	}
 
 	sprite_->Update();
