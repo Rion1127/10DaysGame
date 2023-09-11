@@ -19,7 +19,7 @@ void SwordDrawer::Initialize(const size_t maxXSize, const size_t maxYSize, Matri
 		{
 			Vector3(0.0f, -64.0f, 0.0f),
 			{},
-			Vector3(0.25f, 1.0f, 0.0f)
+			Vector3(0.3f, 0.5f, 0.0f)
 		}, &trfm_.m_);
 
 	// ƒpƒlƒ‹c‰¡•ª¶¬
@@ -219,12 +219,12 @@ void SwordDrawer::HandleDrawer::Initialize(const YTransform::Status& trfmStatus,
 {
 	BaseInitialize(trfmStatus, matParent);
 
-	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Panel"));
+	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Sword"));
 }
 
 void SwordDrawer::HandleDrawer::SetAlpha(const float alpha)
 {
-	sprite_.SetColor(Color(0, 0, 0, 255) * alpha);
+	sprite_.SetColor(Color(255, 255, 255, 255) * alpha);
 }
 
 void SwordDrawer::BladeDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
