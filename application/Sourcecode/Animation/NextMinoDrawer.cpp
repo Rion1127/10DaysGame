@@ -52,7 +52,7 @@ void NextMinoDrawer::Initialize()
 		nexts_[i].Initialize(status, nullptr);
 	}
 
-	nextDra_.Initialize({}, nullptr);
+	nextDra_.Initialize({ {620.0f,250.0f,0.0f},{},{0.5f,0.5f,0.0f} }, nullptr);
 
 	isReset_ = false;
 	resetTimer_.Initialize(40);
@@ -292,7 +292,7 @@ void NextMinoDrawer::LockDrawer::Initialize(const YTransform::Status& trfmStatus
 void NextMinoDrawer::NextDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
 {
 	BaseInitialize(trfmStatus, matParent);
-	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Lock"));
+	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Next"));
 }
 
 void NextMinoDrawer::NextFrameDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
