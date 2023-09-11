@@ -17,8 +17,8 @@ enum State {
 	NEXT_RELEASE,
 	SELECT,
 	TEMPPOS,
-	PowerUp,
-	Recovery
+	TEMPPOS_ON_EMPTY,
+	CANTSET
 };
 enum class UpdateType {
 	All,
@@ -81,8 +81,6 @@ private:
 	Mino nowMino_;
 	Box2D allPanelSize_;
 
-	uint32_t powerUpPanelNum_;
-	uint32_t recoveryPanelNum_;
 	uint32_t totalPanel_;
 
 	bool isPanelReset_;

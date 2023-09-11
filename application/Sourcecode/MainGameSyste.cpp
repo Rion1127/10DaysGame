@@ -365,11 +365,6 @@ void MainGameSyste::TurnChange()
 		int32_t health = panel_->GetStateUpValue().healthUp_;
 		player_->AddHealth(health);
 
-		if (powerUp != 0 || recovery != 0 || luck != 0 || health != 0)
-		{
-			
-		}
-
 		panel_->ResetStateUp();
 	}
 	prevTurn_ = nowTurn_;

@@ -80,7 +80,8 @@ void Panel::Update()
 					displayPanel_[x][y] = systemPanel_[x][y];
 				}
 
-				if (systemPanel_[x][y] == State::EMPTY) {
+				if (systemPanel_[x][y] == State::EMPTY)
+				{
 					emptyPanelNum_++;
 				}
 			}
@@ -97,7 +98,8 @@ void Panel::Update()
 		//左クリックをしたらパネルを設置する
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
 		{
-			if (CheckBox2DtoPoint(allPanelSize_, mPos)) {
+			if (CheckBox2DtoPoint(allPanelSize_, mPos))
+			{
 				SetPanel(nowMino_);
 
 				isAllFill_ = true;
@@ -123,6 +125,8 @@ void Panel::Update()
 	}
 	else
 	{
+		//見た目のパネルの配列を更新
+		DisplayPanelUpdate(nowMino_);
 		sprite_->Update(systemPanel_, displayPanel_);
 	}
 }
@@ -167,40 +171,50 @@ void Panel::DrawImGui()
 
 
 
-	if (panelType == 0) {
+	if (panelType == 0)
+	{
 		typeName = "Omino";
 	}
-	else if (panelType == 1) {
+	else if (panelType == 1)
+	{
 		typeName = "Tmino";
 	}
-	else if (panelType == 2) {
+	else if (panelType == 2)
+	{
 		typeName = "Smino";
 	}
-	else if (panelType == 3) {
+	else if (panelType == 3)
+	{
 		typeName = "Zmino";
 	}
-	else if (panelType == 4) {
+	else if (panelType == 4)
+	{
 		typeName = "Imino";
 	}
-	else if (panelType == 5) {
+	else if (panelType == 5)
+	{
 		typeName = "Lmino";
 	}
-	else if (panelType == 6) {
+	else if (panelType == 6)
+	{
 		typeName = "Jmino";
 	}
 
 	ImGui::Text(typeName.c_str());
 
 	//選択しているミノを設置
-	if (ImGui::Button("SetPanel")) {
+	if (ImGui::Button("SetPanel"))
+	{
 		SetPanel(MinoList::GetMinoList((MinoType)panelType));
 	}
 	//リセット
-	if (ImGui::Button("Reset")) {
+	if (ImGui::Button("Reset"))
+	{
 		PanelReset();
 	}
 	//次のラウンドに行くための処理をする
-	if (ImGui::Button("NextRound")) {
+	if (ImGui::Button("NextRound"))
+	{
 		PanelUpdate();
 	}
 
@@ -218,8 +232,10 @@ void Panel::PanelUpdate()
 	{
 		for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
 		{
-			if (x == 0 || x == 9 || y == 0 || y == 9) {
-				if (systemPanel_[x][y] == State::NEXT_RELEASE) {
+			if (x == 0 || x == 9 || y == 0 || y == 9)
+			{
+				if (systemPanel_[x][y] == State::NEXT_RELEASE)
+				{
 					isPanelReset_ = true;
 					if (x == 0)stateUp_.healthUp_++;
 					if (x == 9)stateUp_.attackUp_++;
@@ -228,10 +244,12 @@ void Panel::PanelUpdate()
 				}
 			}
 			//NEXT_RELEASEを攻撃可能パネルにして攻撃パネルもリセットする
-			if (systemPanel_[x][y] == State::NEXT_RELEASE) {
+			if (systemPanel_[x][y] == State::NEXT_RELEASE)
+			{
 				systemPanel_[x][y] = State::EMPTY;
 			}
-			else if (systemPanel_[x][y] == State::ATTACK) {
+			else if (systemPanel_[x][y] == State::ATTACK)
+			{
 				systemPanel_[x][y] = State::EMPTY;
 				//攻撃パネルをカウントする
 				attackPanelNum_++;
@@ -261,7 +279,8 @@ void Panel::PanelReset()
 		for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
 		{
 			if (y >= sizeMinY && y <= sizeMaxY &&
-				x >= sizeMinX && x <= sizeMaxX) {
+				x >= sizeMinX && x <= sizeMaxX)
+			{
 				displayPanel_[x][y] = State::EMPTY;
 			}
 
@@ -340,25 +359,55 @@ void Panel::DisplayPanelUpdate(const Mino& mino)
 
 	uint32_t panelX = 0;
 	uint32_t panelY = 0;
-
-	for (uint32_t y = selectPos_.y; y < sizeY; y++)
+	if (updateType_ == UpdateType::All)
 	{
-		panelX = 0;
-		for (uint32_t x = selectPos_.x; x < sizeX; x++)
+		for (uint32_t y = selectPos_.y; y < sizeY; y++)
 		{
-			bool isSetTempPos =
-				systemPanel_[x][y] == State::EMPTY || systemPanel_[x][y] == State::NOT_OPEN ||
-				systemPanel_[x][y] == State::PowerUp || systemPanel_[x][y] == State::Recovery;
-			//空のパネルに配置したら
-			if (isSetTempPos &&
-				mino.panel_[panelY][panelX] == 1)
+			panelX = 0;
+			for (uint32_t x = selectPos_.x; x < sizeX; x++)
 			{
-				displayPanel_[x][y] = State::TEMPPOS;
-			}
 
-			panelX++;
+				//開けていないパネルに重ねていたら
+				if (systemPanel_[x][y] == State::NOT_OPEN &&
+					mino.panel_[panelY][panelX] == 1)
+				{
+					displayPanel_[x][y] = State::TEMPPOS;
+				}
+				//空のパネルに重ねていたら
+				if (systemPanel_[x][y] == State::EMPTY &&
+					mino.panel_[panelY][panelX] == 1)
+				{
+					displayPanel_[x][y] = State::TEMPPOS_ON_EMPTY;
+				}
+
+				//すでにおいているパネルと被っていたら
+				if (systemPanel_[x][y] == State::ATTACK &&
+					mino.panel_[panelY][panelX] == 1 ||
+					systemPanel_[x][y] == State::NEXT_RELEASE &&
+					mino.panel_[panelY][panelX] == 1)
+				{
+					displayPanel_[x][y] = State::CANTSET;
+				}
+
+
+				panelX++;
+			}
+			panelY++;
 		}
-		panelY++;
+	}
+	else
+	{
+		for (uint32_t y = selectPos_.y; y < sizeY; y++)
+		{
+			panelX = 0;
+			for (uint32_t x = selectPos_.x; x < sizeX; x++)
+			{
+				displayPanel_[x][y] = systemPanel_[x][y];
+
+				panelX++;
+			}
+			panelY++;
+		}
 	}
 }
 
@@ -371,19 +420,23 @@ void Panel::SelectPosClamp(const Mino& mino)
 	uint32_t panelsizeY = (uint32_t)systemPanel_.size() - 1;
 	uint32_t panelsizeX = (uint32_t)systemPanel_[0].size() - 1;
 	//比較した値分移動させる
-	if (panelsizeY < sizeY) {
+	if (panelsizeY < sizeY)
+	{
 		int32_t sub = sizeY - panelsizeY;
 		selectPos_.y -= sub;
 	}
-	if (selectPos_.y < 0) {
+	if (selectPos_.y < 0)
+	{
 		selectPos_.y = Max(selectPos_.y, 0);
 	}
 
-	if (panelsizeX < sizeX) {
+	if (panelsizeX < sizeX)
+	{
 		int32_t sub = sizeX - panelsizeX;
 		selectPos_.x -= sub;
 	}
-	if (selectPos_.x < 0) {
+	if (selectPos_.x < 0)
+	{
 		selectPos_.x = Max(selectPos_.x, 0);
 	}
 }
@@ -394,25 +447,29 @@ Mino Panel::SetRotMino(const Mino& mino)
 
 	size_t sizeX = mino.panel_[0].size();
 	size_t sizeY = mino.panel_.size();
-	if (rotNum_ == 0) {
+	if (rotNum_ == 0)
+	{
 		result = mino;
 		return result;
 	}
-	if (rotNum_ == 1) {
+	if (rotNum_ == 1)
+	{
 		result.panel_.resize(sizeX);//x
 		for (int32_t i = 0; i < result.panel_.size(); i++)
 		{
 			result.panel_[i].resize(sizeY);//y
 		}
 	}
-	else if (rotNum_ == 2) {
+	else if (rotNum_ == 2)
+	{
 		result.panel_.resize(sizeY);//x
 		for (int32_t i = 0; i < result.panel_.size(); i++)
 		{
 			result.panel_[i].resize(sizeX);//y
 		}
 	}
-	else if (rotNum_ == 3) {
+	else if (rotNum_ == 3)
+	{
 		result.panel_.resize(sizeX);//x
 		for (int32_t i = 0; i < result.panel_.size(); i++)
 		{
@@ -420,17 +477,22 @@ Mino Panel::SetRotMino(const Mino& mino)
 		}
 	}
 
-	for (uint32_t y = 0; y < sizeY; y++) {
-		for (uint32_t x = 0; x < sizeX; x++) {
-			if (rotNum_ == 1) {
+	for (uint32_t y = 0; y < sizeY; y++)
+	{
+		for (uint32_t x = 0; x < sizeX; x++)
+		{
+			if (rotNum_ == 1)
+			{
 				result.panel_[x][y] =
 					mino.panel_[sizeY - 1 - y][x];
 			}
-			else if (rotNum_ == 2) {
+			else if (rotNum_ == 2)
+			{
 				result.panel_[y][x] =
 					mino.panel_[sizeY - 1 - y][sizeX - 1 - x];
 			}
-			else if (rotNum_ == 3) {
+			else if (rotNum_ == 3)
+			{
 				result.panel_[x][y] =
 					mino.panel_[y][sizeX - 1 - x];
 			}
@@ -441,7 +503,8 @@ Mino Panel::SetRotMino(const Mino& mino)
 
 void Panel::ReDo(std::vector<MinoType>* minos)
 {
-	if (oldPanelList_.size() > 0 && usedMinoType_.size() > 0) {
+	if (oldPanelList_.size() > 0 && usedMinoType_.size() > 0)
+	{
 		int32_t sizeY = (int32_t)oldPanelList_.front().size();
 		int32_t sizeX = (int32_t)oldPanelList_.front()[0].size();
 		for (int32_t y = 0; y < sizeY; y++)
@@ -461,7 +524,8 @@ void Panel::ReDo(std::vector<MinoType>* minos)
 
 void Panel::SetPanel(const Mino& mino)
 {
-	if (IsCanChange(mino) == false) {
+	if (IsCanChange(mino) == false)
+	{
 		SoundManager::Play("CantSetSE", false, 1.0f);
 		return;
 	}
@@ -497,18 +561,6 @@ void Panel::SetPanel(const Mino& mino)
 				systemPanel_[x][y] = State::NEXT_RELEASE;
 				nextReleaseNum++;
 			}
-			else if (systemPanel_[x][y] == State::PowerUp &&
-				mino.panel_[panelY][panelX] == 1)
-			{
-				systemPanel_[x][y] = State::NEXT_RELEASE;
-				powerUpPanelNum_++;
-			}
-			else if (systemPanel_[x][y] == State::Recovery &&
-				mino.panel_[panelY][panelX] == 1)
-			{
-				systemPanel_[x][y] = State::NEXT_RELEASE;
-				recoveryPanelNum_++;
-			}
 			//全て更新する
 			displayPanel_[x][y] = systemPanel_[x][y];
 
@@ -519,18 +571,6 @@ void Panel::SetPanel(const Mino& mino)
 	isSetComplete_ = true;
 
 	totalPanel_ += nextReleaseNum;
-}
-uint32_t Panel::GetPowerUpPanelNum()
-{
-	uint32_t result = powerUpPanelNum_;
-	powerUpPanelNum_ = 0;
-	return result;
-}
-uint32_t Panel::GetRecoveryPanelNum()
-{
-	uint32_t result = recoveryPanelNum_;
-	recoveryPanelNum_ = 0;
-	return result;
 }
 void Panel::ResetStateUp()
 {
@@ -576,48 +616,55 @@ void PanelSprite::Update(const std::vector<std::vector<int32_t>>& system, const 
 	{
 		for (uint32_t x = 0; x < panels_[y].size(); x++)
 		{
-			if (display[x][y] != State::PowerUp &&
-				display[x][y] != State::Recovery &&
-				display[x][y] != State::TEMPPOS) {
+			if (display[x][y] != State::TEMPPOS)
+			{
 				panels_[x][y].SetTexture(TextureManager::GetInstance()->GetTexture("Panel"));
 			}
 
 			//パネルの色変更
-			if (display[x][y] == State::NOT_OPEN) {
+			if (display[x][y] == State::NOT_OPEN)
+			{
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Gray);
 				panels_[x][y].ResetAnime();
 			}
-			else if (display[x][y] == State::EMPTY) {
+			else if (display[x][y] == State::EMPTY)
+			{
 				panels_[x][y].ChangeColor(YGame::BlockColorType::White);
 				panels_[x][y].ResetAnime();
 			}
-			else if (display[x][y] == State::ATTACK) {
+			else if (display[x][y] == State::ATTACK)
+			{
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Orange);
 				SetAnimation(x, y);
 			}
-			else if (display[x][y] == State::SELECT) {
+			else if (display[x][y] == State::SELECT)
+			{
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Orange);
 			}
-			else if (display[x][y] == State::NEXT_RELEASE) {
+			else if (display[x][y] == State::NEXT_RELEASE)
+			{
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Blue);
 				OpenAnimation(x, y);
 			}
-			else if (display[x][y] == State::TEMPPOS) {
-				panels_[x][y].ChangeColor(YGame::BlockColorType::Cyan);
+			else if (display[x][y] == State::TEMPPOS)
+			{
+				panels_[x][y].ChangeColor(YGame::BlockColorType::Blue);
 			}
-			else if (display[x][y] == State::PowerUp) {
-				panels_[x][y].SetTexture(TextureManager::GetInstance()->GetTexture("PowerUpPanel"));
-				panels_[x][y].ChangeColor(YGame::BlockColorType::White);
+			else if (display[x][y] == State::TEMPPOS_ON_EMPTY)
+			{
+				panels_[x][y].ChangeColor(YGame::BlockColorType::Orange);
 			}
-			else if (display[x][y] == State::Recovery) {
-				panels_[x][y].SetTexture(TextureManager::GetInstance()->GetTexture("RecoveryPanel"));
-				panels_[x][y].ChangeColor(YGame::BlockColorType::White);
+			else if (display[x][y] == State::CANTSET)
+			{
+				panels_[x][y].ChangeColor(YGame::BlockColorType::Red);
 			}
 
-			if (system[x][y] == State::NOT_OPEN) {
+			if (system[x][y] == State::NOT_OPEN)
+			{
 				panels_[x][y].ValidAnimtion();
 			}
-			else if (system[x][y] == State::EMPTY) {
+			else if (system[x][y] == State::EMPTY)
+			{
 				panels_[x][y].InvalidAnimtion();
 			}
 
