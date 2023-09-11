@@ -64,4 +64,5 @@ void LoadManager::LoadSound()
 	LoadWave("rotSE.wav", "RotSE");
 	LoadWave("setSE.wav", "SetSE");
 	LoadWave("cantSetSE.wav", "CantSetSE");
+	LoadWave("statusUpSE.wav", "StatysUpSE");
 }

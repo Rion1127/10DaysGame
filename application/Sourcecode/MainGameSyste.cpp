@@ -313,7 +313,7 @@ void MainGameSyste::DrawImGui()
 
 	/*minoCountUpButton_->DrawImgui();
 	attackButton_->DrawImgui();*/
-	swordSprite_->DrawImGui();
+	//swordSprite_->DrawImGui();
 }
 
 void MainGameSyste::ReloadMino()
@@ -364,6 +364,11 @@ void MainGameSyste::TurnChange()
 		player_->AddLuck(luck);
 		int32_t health = panel_->GetStateUpValue().healthUp_;
 		player_->AddHealth(health);
+
+		if (powerUp != 0 || recovery != 0 || luck != 0 || health != 0)
+		{
+			
+		}
 
 		panel_->ResetStateUp();
 	}
@@ -553,6 +558,11 @@ void MainGameSyste::TutorialInit()
 
 void MainGameSyste::TutorialUpdate()
 {
+	if (oldTutorialIndexX_ != tutorialIndexX_)
+	{
+		SoundManager::Play("Click_2SE", false, 1.0f);
+	}
+	oldTutorialIndexX_ = tutorialIndexX_;
 	if (gameState_ != State::PAUSE &&
 		gameState_ != State::GAMEOVER) {
 		enemyManager_.Update();

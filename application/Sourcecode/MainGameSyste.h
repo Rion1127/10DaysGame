@@ -108,6 +108,7 @@ private:
 	TutorialStep tutorialstep_;
 
 	int32_t tutorialIndexX_;
+	int32_t oldTutorialIndexX_;
 	int32_t tutorialIndexY_;
 
 	std::unique_ptr<Sprite> textFrameSprite_;
