@@ -71,7 +71,7 @@ EnemyPopDataList::EnemyPopDataList()
 	for (int32_t i = 0; i < tutorial.enemyData.size(); i++)
 	{
 		tutorial.enemyData[i] = {
-			100000,
+			99999999,
 			0
 		};
 	}
