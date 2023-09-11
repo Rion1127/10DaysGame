@@ -20,7 +20,7 @@ MainGameSyste::MainGameSyste()
 	minoCounterDrawer_.Initialize();
 
 	enemyManager_.SetEnemyList("MainGame");
-	
+
 	enemy_ = enemyManager_.GetNowEnemy();
 
 	// カメラ取得 + 初期化
@@ -30,7 +30,6 @@ MainGameSyste::MainGameSyste()
 	SpriteInit();
 	CostInit();
 
-	redoCoolTime_.SetLimitTime(5);
 	isNext_ = false;
 
 	tutorialstep_ = TutorialStep::Set;
@@ -46,7 +45,7 @@ MainGameSyste::MainGameSyste()
 	};
 	swordSprite_->SetPos(pos);
 
-	
+
 }
 
 void MainGameSyste::SpriteInit()
@@ -101,6 +100,14 @@ void MainGameSyste::SpriteInit()
 	backSprite_->SetColor(Color(0, 0, 0, 200));
 	backSprite_->SetScale(Vector2(2, 2));
 	backSprite_->Update();
+
+	redoPos_ = {
+		80.f,
+		370.f
+	};
+	redoButton_ = std::make_unique<Button>(redoPos_);
+	redoButton_->SetTexture(TextureManager::GetInstance()->GetTexture("RedoButton"));
+	redoButton_->Update();
 }
 
 void MainGameSyste::CostInit()
@@ -173,6 +180,13 @@ void MainGameSyste::Update()
 
 		attackButton_->Update();
 		pauseButton_->Update();
+		redoButton_->Update();
+		if (reloadMinoNum_ > minos_.size()) {
+			redoButton_->SetisActive(true);
+		}
+		else {
+			redoButton_->SetisActive(false);
+		}
 	}
 	//クリアしたら
 	else if (gameState_ == State::CLEAR) {
@@ -218,7 +232,7 @@ void MainGameSyste::Update()
 	}
 
 	nextMinoDrawer_.Update(minos_);
-	
+
 	int32_t cost = minoCountUpCost_.at(minoCountLevel_);
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	minoCounterDrawer_.Update(cost - nowEmptyPanelNum);
@@ -254,6 +268,7 @@ void MainGameSyste::DrawSprite()
 	mouseUi_.Draw();
 	pauseButton_->Draw();
 	swordSprite_->Draw();
+	redoButton_->Draw();
 }
 
 void MainGameSyste::DrawSpriteFront()
@@ -338,6 +353,7 @@ void MainGameSyste::ReloadMino()
 
 void MainGameSyste::TurnChange()
 {
+	redoButton_->SetisActive(false);
 	//自分のターンだったら敵のターンへ
 	if (prevTurn_ == Turn::PLAYER) {
 		nowTurn_ = Turn::ENEMY;
@@ -372,7 +388,6 @@ void MainGameSyste::TurnChange()
 
 void MainGameSyste::TurnPlayer()
 {
-	redoCoolTime_.AddTime(1);
 	if (minos_.size() > 0) {
 		panel_->ChangeMinoAnimation(minos_[0]);
 	}
@@ -391,14 +406,15 @@ void MainGameSyste::TurnPlayer()
 		}
 	}
 	//リドゥ機能
-	if (Key::TriggerKey(DIK_Z)) {
-		if (redoCoolTime_.GetIsEnd()) {
+	if (redoButton_->GetIsCollision()) {
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
 			panel_->ReDo(&minos_);
 		}
 	}
 
 	//残りの数が0になった場合かすべてのマスを埋めた時ターンを終了する
 	if (minos_.size() <= 0 || panel_->GetIsAllFill() || isNext_ == true) {
+		redoButton_->SetisActive(false);
 		panel_->SetUpdateType(UpdateType::SpriteOnly);
 		if (player_->GetRotTimEnd()) {
 			//パネル更新
@@ -429,6 +445,7 @@ void MainGameSyste::TurnPlayer()
 
 void MainGameSyste::TurnEnemy()
 {
+	redoButton_->SetisActive(false);
 	//プレイヤーがダメージを受ける
 	if (enemyManager_.GetIsChangeNowEnemy() == false) {
 		if (enemyManager_.GetNowEnemy()->GetIsEndAttack()) {
@@ -523,8 +540,6 @@ void MainGameSyste::TutorialInit()
 	SpriteInit();
 	CostInit();
 
-	redoCoolTime_.SetLimitTime(5);
-
 	textFrameSprite_ = std::make_unique<Sprite>();
 	textFrameSprite_->Ini();
 	textFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("TextFrame"));
@@ -533,7 +548,7 @@ void MainGameSyste::TutorialInit()
 		660.f
 	};
 	textFrameSprite_->SetPos(pos);
-	textFrameSprite_->SetAnchor(Vector2(0.5f,0.5f));
+	textFrameSprite_->SetAnchor(Vector2(0.5f, 0.5f));
 
 	textSprite_ = std::make_unique<Sprite>();
 	textSprite_->Ini();
@@ -572,7 +587,7 @@ void MainGameSyste::TutorialUpdate()
 	}
 
 	if (tutorialstep_ == TutorialStep::Set) {
-		
+
 		if (tutorialIndexX_ == 0) {
 			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
 				tutorialIndexX_++;
@@ -611,7 +626,7 @@ void MainGameSyste::TutorialUpdate()
 				tutorialstep_ = TutorialStep::StatusUp;
 			}
 		}
-		
+
 	}
 	else if (tutorialstep_ == TutorialStep::StatusUp) {
 		//基本はこうやってパネルを…

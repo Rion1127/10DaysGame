@@ -61,7 +61,6 @@ private:
 	Vector2 attackPos_;
 
 	MouseUI mouseUi_;
-	Timer redoCoolTime_;
 
 	std::unique_ptr<Button> pauseButton_;
 	std::unique_ptr<Button> backButton_;
@@ -72,6 +71,8 @@ private:
 	bool isNext_;
 
 	std::unique_ptr<Sprite> swordSprite_;
+	std::unique_ptr<Button> redoButton_;
+	Vector2 redoPos_;
 public:
 	MainGameSyste();
 	void Update();
