@@ -30,6 +30,10 @@ void Player::Initialize()
 	recovery_.Initialize({ {0.0f,-64.0f,0.0f},{},{0.5f,0.5f,1.0f} }, &trfm_.m_, 0);
 
 	drawer_.MoveAnimation();
+
+	statusFrame_.Ini("statusframe");
+	statusFrame_.SetTexture(TextureManager::GetInstance()->GetTexture("StatusFrame"));
+	statusFrame_.SetPos(Vector2(90,173));
 }
 
 void Player::Update()
@@ -45,6 +49,8 @@ void Player::Update()
 	hpBar_.Update();
 	damage_.Update();
 	recovery_.Update();
+
+	statusFrame_.Update();
 }
 
 void Player::AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndices)
@@ -59,6 +65,7 @@ void Player::Draw()
 	hpBar_.Draw();
 	damage_.Draw();
 	recovery_.Draw();
+	statusFrame_.Draw();
 }
 
 void Player::DrawImGui()
@@ -67,6 +74,8 @@ void Player::DrawImGui()
 	//ImGui::Text("HP : %d", health_);
 	ImGui::Text("power : %d", baseAttackpower_);
 	ImGui::End();
+
+	statusFrame_.DrawImGui();
 }
 
 void Player::Damage(int32_t damage)

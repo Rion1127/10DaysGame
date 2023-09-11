@@ -18,8 +18,8 @@ void NextMinoDrawer::Initialize()
 		{
 			status.pos_ =
 			{
-				550.0f,
-				300.0f,
+				620.0f,
+				350.0f,
 				0.0f
 			};
 			status.scale_ = { kScale,kScale,0.0f };
@@ -28,8 +28,8 @@ void NextMinoDrawer::Initialize()
 		{
 			status.pos_ =
 			{
-				550.0f,
-				250.0f + 75.0f * static_cast<float>(i),
+				620.0f,
+				300.0f + 75.0f * static_cast<float>(i),
 				0.0f };
 			status.scale_ = { kScale / 1.5f,kScale / 1.5f,0.0f };
 		}
@@ -40,7 +40,7 @@ void NextMinoDrawer::Initialize()
 	frame_ = std::make_unique<Sprite>();
 	frame_->Ini("frame");
 	frame_->SetTexture(TextureManager::GetInstance()->GetTexture("NextParts"));
-	frame_->SetPos(Vector2(537.f,414.f));
+	frame_->SetPos(Vector2(607.f,464.f));
 }
 
 void NextMinoDrawer::Update(const std::vector<MinoType>& minos)

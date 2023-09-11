@@ -50,6 +50,7 @@ void LoadManager::LoadTexture()
 	//UI
 	LoadGraph("textFrame.png", "TextFrame");
 	LoadGraph("tutorialText.png", "TutorialText");
+	LoadGraph("statusFrame.png", "StatusFrame");
 	
 	LoadGraph("recoveryEffect.png", "Recovery");
 }

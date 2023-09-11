@@ -23,6 +23,8 @@ private:
 	YGame::HPDrawer hpBar_;
 	YGame::DamageDrawer damage_;
 	YGame::RecoveryDrawer recovery_;
+
+	Sprite statusFrame_;
 public:
 
 	void Initialize();
