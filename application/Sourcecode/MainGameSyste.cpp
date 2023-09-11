@@ -32,6 +32,17 @@ MainGameSyste::MainGameSyste()
 	isNext_ = false;
 
 	tutorialstep_ = TutorialStep::Set;
+
+	swordSprite_ = std::make_unique<Sprite>();
+	swordSprite_->Ini();
+	swordSprite_->Update();
+	swordSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Sword"));
+
+	Vector2 pos = {
+		WinAPI::GetWindowSize().x / 2.f,
+		680.f
+	};
+	swordSprite_->SetPos(pos);
 }
 
 void MainGameSyste::SpriteInit()
@@ -225,6 +236,7 @@ void MainGameSyste::Update()
 
 	mouseUi_.Update();
 	backSprite_->Update();
+	swordSprite_->Update();
 }
 
 void MainGameSyste::DrawSprite()
@@ -237,6 +249,7 @@ void MainGameSyste::DrawSprite()
 	minoCounterDrawer_.Draw();
 	mouseUi_.Draw();
 	pauseButton_->Draw();
+	swordSprite_->Draw();
 }
 
 void MainGameSyste::DrawSpriteFront()
@@ -296,6 +309,7 @@ void MainGameSyste::DrawImGui()
 
 	/*minoCountUpButton_->DrawImgui();
 	attackButton_->DrawImgui();*/
+	swordSprite_->DrawImGui();
 }
 
 void MainGameSyste::ReloadMino()

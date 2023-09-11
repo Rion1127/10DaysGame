@@ -70,6 +70,8 @@ private:
 	std::unique_ptr<Sprite> backSprite_;
 	std::unique_ptr<Sprite> pauseSprite_;
 	bool isNext_;
+
+	std::unique_ptr<Sprite> swordSprite_;
 public:
 	MainGameSyste();
 	void Update();
