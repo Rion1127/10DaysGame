@@ -498,7 +498,7 @@
     <ClCompile Include="application\Sourcecode\Animation\PanelDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Animation\HPDrawer.cpp">
+    <ClCompile Include="application\Sourcecode\Animation\GaugeDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Number.cpp">
@@ -518,9 +518,6 @@
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\RecoveryDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
-    </ClCompile>
-    <ClCompile Include="MinoCounterDrawer.cpp">
-      <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\CountDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
@@ -809,7 +806,7 @@
     <ClInclude Include="application\Sourcecode\Animation\PanelDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Animation\HPDrawer.h">
+    <ClInclude Include="application\Sourcecode\Animation\GaugeDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Number.h">
@@ -829,9 +826,6 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\RecoveryDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
-    </ClInclude>
-    <ClInclude Include="MinoCounterDrawer.h">
-      <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\CountDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>

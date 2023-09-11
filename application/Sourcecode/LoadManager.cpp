@@ -28,6 +28,8 @@ void LoadManager::LoadTexture()
 	LoadGraph("powerUpPanel.png", "PowerUpPanel");
 	LoadGraph("recoveryPanel.png", "RecoveryPanel");
 	LoadGraph("light.png", "Light");
+	LoadGraph("nextPartsFrame.png", "Frame");
+	LoadGraph("lock.png", "Lock");
 	//ÉvÉåÉCÉÑÅ[
 	LoadGraph("player.png", "Player");
 	LoadGraph("playerMove.png", "PlayerMove");
@@ -43,7 +45,6 @@ void LoadManager::LoadTexture()
 	LoadGraph("minoCouintUp.png", "MinoCouintUp");
 	LoadGraph("mouse.png", "Mouse");
 	LoadGraph("attackButton.png", "AttackButton");
-	LoadGraph("nextParts.png", "NextParts");
 	LoadGraph("pauseButton.png", "PauseButton");
 	LoadGraph("pause.png", "Pause");
 	LoadGraph("backButton.png", "BackButton");

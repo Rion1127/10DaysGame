@@ -20,7 +20,7 @@
     <ClCompile Include="application\Sourcecode\Animation\Ease.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\EnemyDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\HitActor.cpp" />
-    <ClCompile Include="application\Sourcecode\Animation\HPDrawer.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\GaugeDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\Lerp.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\NextMinoDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\PanelDrawer.cpp" />
@@ -106,7 +106,6 @@
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\StateMachine.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
-    <ClCompile Include="MinoCounterDrawer.cpp" />
     <ClCompile Include="NumberDrawer.cpp" />
     <ClCompile Include="StatusDrawer.cpp" />
   </ItemGroup>
@@ -120,7 +119,7 @@
     <ClInclude Include="application\Sourcecode\Animation\Ease.h" />
     <ClInclude Include="application\Sourcecode\Animation\EnemyDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\HitActor.h" />
-    <ClInclude Include="application\Sourcecode\Animation\HPDrawer.h" />
+    <ClInclude Include="application\Sourcecode\Animation\GaugeDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\Lerp.h" />
     <ClInclude Include="application\Sourcecode\Animation\NextMinoDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\PanelDrawer.h" />
@@ -206,7 +205,6 @@
     <ClInclude Include="engine\util\StateMachine.h" />
     <ClInclude Include="engine\util\Timer.h" />
     <ClInclude Include="application\Sourcecode\Animation\PlayerDrawer.h" />
-    <ClInclude Include="MinoCounterDrawer.h" />
     <ClInclude Include="NumberDrawer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="StatusDrawer.h" />

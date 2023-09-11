@@ -1,7 +1,7 @@
 #pragma once
 #include "PlayerDrawer.h"
 #include "SwordDrawer.h"
-#include "HPDrawer.h"
+#include "GaugeDrawer.h"
 #include "DamageDrawer.h"
 #include "RecoveryDrawer.h"
 #include "StatusDrawer.h"
@@ -21,7 +21,7 @@ private:
 	// アニメーション
 	YGame::PlayerDrawer drawer_;
 	YGame::SwordDrawer sword_;
-	YGame::HPDrawer hpBar_;
+	YGame::GaugeDrawer hpBar_;
 	YGame::DamageDrawer damage_;
 	YGame::RecoveryDrawer recovery_;
 	

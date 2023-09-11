@@ -26,6 +26,8 @@ namespace YGame
 		/// <param name="trfmStatus"> : トランスフォーム情報</param>
 		void SetTransform(const YTransform::Status& trfmStatus);
 
+		void SetParent(Matrix4* matParent);
+
 		/// <summary>
 		/// アニメリセット
 		/// </summary>

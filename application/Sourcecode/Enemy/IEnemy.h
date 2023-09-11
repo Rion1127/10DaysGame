@@ -1,6 +1,6 @@
 #pragma once
 #include "EnemyDrawer.h"
-#include "HPDrawer.h"
+#include "GaugeDrawer.h"
 #include "DamageDrawer.h"
 
 class IEnemy
@@ -15,7 +15,7 @@ protected:
 
 	// アニメーション
 	YGame::EnemyDrawer drawer_;
-	YGame::HPDrawer hpBar_;
+	YGame::GaugeDrawer hpBar_;
 	YGame::DamageDrawer damage_;
 public:
 	IEnemy();
