@@ -35,6 +35,20 @@ void ParticleManager::Update()
 		(*itr)->particle->Update();
 		itr++;
 	}
+
+	std::list<std::shared_ptr<IParticle2D>>::iterator itr2D;
+	for (itr2D = emitters2D_.begin(); itr2D != emitters2D_.end();)
+	{
+		//パーティクルの数が0になったら
+		if ((*itr2D)->GetIsDelete() == true) {
+			itr2D = emitters2D_.erase(itr2D);
+			continue;
+		}
+
+		
+		(*itr2D)->Update();
+		itr2D++;
+	}
 }
 
 void ParticleManager::Draw()
@@ -45,6 +59,14 @@ void ParticleManager::Draw()
 	{
 		PipelineManager::PreDraw(emitter->particle->GetShaderName(), POINTLIST, emitter->particle->GetPipelineState());
 		emitter->particle->Draw();
+	}
+}
+
+void ParticleManager::DrawSprite()
+{
+	for (auto& emitter : emitters2D_)
+	{
+		emitter->Draw();
 	}
 }
 

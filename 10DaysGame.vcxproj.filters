@@ -528,6 +528,9 @@
     <ClCompile Include="StatusDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\IParticle2D.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -835,6 +838,9 @@
     </ClInclude>
     <ClInclude Include="StatusDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\IParticle2D.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

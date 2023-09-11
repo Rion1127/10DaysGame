@@ -40,6 +40,7 @@
     <ClCompile Include="application\Sourcecode\Enemy\Enemy.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\EnemyManager.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\IEnemy.cpp" />
+    <ClCompile Include="application\Sourcecode\IParticle2D.cpp" />
     <ClCompile Include="application\Sourcecode\LoadManager.cpp" />
     <ClCompile Include="application\Sourcecode\MainGameSyste.cpp" />
     <ClCompile Include="application\Sourcecode\MouseUI.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="application\Sourcecode\Enemy\Enemy.h" />
     <ClInclude Include="application\Sourcecode\Enemy\EnemyManager.h" />
     <ClInclude Include="application\Sourcecode\Enemy\IEnemy.h" />
+    <ClInclude Include="application\Sourcecode\IParticle2D.h" />
     <ClInclude Include="application\Sourcecode\LoadManager.h" />
     <ClInclude Include="application\Sourcecode\MainGameSyste.h" />
     <ClInclude Include="application\Sourcecode\MouseUI.h" />
