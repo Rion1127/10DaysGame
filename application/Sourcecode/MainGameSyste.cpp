@@ -18,6 +18,8 @@ MainGameSyste::MainGameSyste()
 
 	nextMinoDrawer_.Initialize();
 	minoCounterDrawer_.Initialize();
+
+	enemyManager_.SetEnemyList("MainGame");
 	
 	enemy_ = enemyManager_.GetNowEnemy();
 
@@ -43,6 +45,8 @@ MainGameSyste::MainGameSyste()
 		680.f
 	};
 	swordSprite_->SetPos(pos);
+
+	
 }
 
 void MainGameSyste::SpriteInit()
@@ -507,6 +511,9 @@ void MainGameSyste::TutorialInit()
 	}
 
 	nextMinoDrawer_.Initialize();
+
+	enemyManager_.SetEnemyList("Tutorial");
+
 	enemy_ = enemyManager_.GetNowEnemy();
 
 	// ƒJƒƒ‰æ“¾ + ‰Šú‰»
@@ -521,12 +528,18 @@ void MainGameSyste::TutorialInit()
 	textFrameSprite_ = std::make_unique<Sprite>();
 	textFrameSprite_->Ini();
 	textFrameSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("TextFrame"));
-	textFrameSprite_->SetPos(Vector2(300, 660));
+	Vector2 pos = {
+		WinAPI::GetWindowSize().x / 2.f,
+		660.f
+	};
+	textFrameSprite_->SetPos(pos);
+	textFrameSprite_->SetAnchor(Vector2(0.5f,0.5f));
 
 	textSprite_ = std::make_unique<Sprite>();
 	textSprite_->Ini();
 	textSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("TutorialText"));
-	textSprite_->SetPos(Vector2(300, 660));
+	textSprite_->SetPos(pos);
+	textFrameSprite_->SetAnchor(Vector2(0.5f, 0.5f));
 	textSprite_->SetTex_Size(Vector2(320, 120));
 	Vector2 textureSize = TextureManager::GetInstance()->GetTexture("TutorialText")->size_;
 	textureSize = {
@@ -534,6 +547,8 @@ void MainGameSyste::TutorialInit()
 		1.f / 4.f,
 	};
 	textSprite_->SetScale(textureSize);
+
+	//enemyManager_.SetEnemyList("Tutorial");
 }
 
 void MainGameSyste::TutorialUpdate()
@@ -777,6 +792,14 @@ void MainGameSyste::TutorialUpdate()
 		else if (tutorialIndexX_ == 3) {
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
+		else if (tutorialIndexX_ == 4)
+		{
+			panel_->SetUpdateType(UpdateType::All);
+		}
+		else if (tutorialIndexX_ == 5)
+		{
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+		}
 
 	}
 	else if (tutorialIndexY_ == 1) {
@@ -827,13 +850,7 @@ void MainGameSyste::TutorialUpdate()
 
 void MainGameSyste::TutorialDraw()
 {
-	panel_->DrawSprite();
-	enemyManager_.Draw();
-
-	attackButton_->Draw();
-	nextMinoDrawer_.Draw();
-	mouseUi_.Draw();
-	pauseButton_->Draw();
+	DrawSprite();
 
 	textFrameSprite_->Draw();
 	textSprite_->Draw();
