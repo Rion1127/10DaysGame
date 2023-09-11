@@ -522,6 +522,12 @@
     <ClCompile Include="MinoCounterDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\CountDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="StatusDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -822,6 +828,12 @@
       <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
     </ClInclude>
     <ClInclude Include="MinoCounterDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\CountDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
   </ItemGroup>

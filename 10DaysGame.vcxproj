@@ -14,6 +14,7 @@
     <ClCompile Include="application\Sourcecode\Animation\BaseDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\BezierEase.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\BlockDrawer.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\CountDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\DamageDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\DigitDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\Ease.cpp" />
@@ -106,11 +107,13 @@
     <ClCompile Include="engine\util\Timer.cpp" />
     <ClCompile Include="MinoCounterDrawer.cpp" />
     <ClCompile Include="NumberDrawer.cpp" />
+    <ClCompile Include="StatusDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\Sourcecode\Animation\BaseDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\BezierEase.h" />
     <ClInclude Include="application\Sourcecode\Animation\BlockDrawer.h" />
+    <ClInclude Include="application\Sourcecode\Animation\CountDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\DamageDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\DigitDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\Ease.h" />
@@ -204,6 +207,7 @@
     <ClInclude Include="MinoCounterDrawer.h" />
     <ClInclude Include="NumberDrawer.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="StatusDrawer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="application\Resources\shader\assimp.hlsli" />

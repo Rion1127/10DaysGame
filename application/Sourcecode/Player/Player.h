@@ -4,6 +4,7 @@
 #include "HPDrawer.h"
 #include "DamageDrawer.h"
 #include "RecoveryDrawer.h"
+#include "StatusDrawer.h"
 
 class Player
 {
@@ -23,13 +24,21 @@ private:
 	YGame::HPDrawer hpBar_;
 	YGame::DamageDrawer damage_;
 	YGame::RecoveryDrawer recovery_;
-
+	
+	YGame::YTransform statusTrfm_;
+	std::array<YGame::StatusDrawer, 2> status_;
 	Sprite statusFrame_;
 public:
 
 	void Initialize();
 
 	void Update();
+
+	void StatusUpdate(
+		const int32_t plusHealth,
+		const int32_t plusLuck,
+		const int32_t plusRecover, 
+		const int32_t plusAttack);
 
 	void AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndices);
 	void IdleAnimation();
