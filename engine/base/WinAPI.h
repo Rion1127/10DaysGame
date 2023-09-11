@@ -28,7 +28,7 @@ public:
 	HWND hwnd_;
 private:
 	// ウィンドウサイズ
-	static const uint32_t win_width_ = 700; // 横幅
+	static const uint32_t win_width_ = 704; // 横幅
 	static const uint32_t win_height_ = 800; // 縦幅
 private:
 	WinAPI(){};

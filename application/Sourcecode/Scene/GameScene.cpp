@@ -23,6 +23,11 @@ void GameScene::Ini()
 	player_->Initialize();
 
 	mainSystem_->SetPlayer(player_.get());
+
+	backGround_ = std::make_unique<Sprite>();
+	backGround_->Ini();
+	backGround_->SetTexture(TextureManager::GetInstance()->GetTexture("Stage1"));
+	backGround_->SetAnchor(Vector2(0.0f, 0.0f));
 }
 
 void GameScene::Update()
@@ -35,11 +40,14 @@ void GameScene::Update()
 	if (mainSystem_->GetGameState() != MainGameSyste::State::PAUSE) {
 		player_->Update();
 	}
+
+	backGround_->Update();
 }
 
 void GameScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
+	backGround_->Draw();
 	mainSystem_->DrawSprite();
 	player_->Draw();
 	mainSystem_->DrawSpriteFront();
