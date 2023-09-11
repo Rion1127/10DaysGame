@@ -33,7 +33,7 @@ void Player::Initialize()
 
 	statusFrame_.Ini("statusframe");
 	statusFrame_.SetTexture(TextureManager::GetInstance()->GetTexture("StatusFrame"));
-	statusFrame_.SetPos(Vector2(90,173));
+	statusFrame_.SetPos(Vector2(90,450));
 }
 
 void Player::Update()
