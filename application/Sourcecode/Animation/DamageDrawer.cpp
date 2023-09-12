@@ -18,6 +18,8 @@ void DamageDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* mat
 
 	emitTim_.Initialize(4);
 	emitCounter_ = 0;
+
+	critical_.Initialize(trfmStatus, matParent);
 }
 
 void DamageDrawer::Update(const YTransform::Status& animeStatus)
@@ -45,9 +47,19 @@ void DamageDrawer::Update(const YTransform::Status& animeStatus)
 		{
 			static_cast<DamageDigitDrawer*>(digits_[i].get())->SetIsDisp(false);
 		}
+		critical_.SetIsDisp(false);
 	}
 
 	NumberDrawer::Update(animeStatus);
+
+	critical_.Update();
+}
+
+void DamageDrawer::Draw()
+{
+	critical_.DrawBack();
+	NumberDrawer::Draw();
+	critical_.DrawFront();
 }
 
 void DamageDrawer::DamageAnimation()
@@ -60,12 +72,36 @@ void DamageDrawer::DamageAnimation()
 	for (size_t i = 0; i < digits_.size(); i++)
 	{
 		digits_[i]->ResetAnimation();
+		static_cast<DamageDigitDrawer*>(digits_[i].get())->SetIsCritical(false);
 	}
+	
+	critical_.ResetAnimation();
 }
+
+void DamageDrawer::CriticalAnimation()
+{
+	dispTim_.Reset(false);
+
+	emitTim_.Reset(true);
+	emitCounter_ = 0;
+
+	for (size_t i = 0; i < digits_.size(); i++)
+	{
+		digits_[i]->ResetAnimation();
+		static_cast<DamageDigitDrawer*>(digits_[i].get())->SetIsCritical(true);
+	}
+
+	critical_.ResetAnimation();
+	critical_.PopAnimation();
+}
+
 
 void DamageDrawer::DamageDigitDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent, const int8_t digit)
 {
 	DigitDrawer::Initialize(trfmStatus, matParent, digit);
+
+	isDisp_ = false;
+	isCritical_ = false;
 
 	popTim_.Initialize(20);
 	popHeight_.Initialize({ 0.0f, -128.0f, 0.0f }, 4.0f);
@@ -75,19 +111,19 @@ void DamageDrawer::DamageDigitDrawer::Initialize(const YTransform::Status& trfmS
 	alphaEas_.Initialize(0.0f, 1.0f, 3.0f);
 }
 
-void DamageDrawer::DamageDigitDrawer::PopAnimation()
-{
-	isDisp_ = true;
-	
-	popTim_.Reset(true);
-	alphaPow_.Reset();
-}
-
 void DamageDrawer::DamageDigitDrawer::ResetAnimation()
 {
 	isDisp_ = false;
 
 	popTim_.Reset();
+	alphaPow_.Reset();
+}
+
+void DamageDrawer::DamageDigitDrawer::PopAnimation()
+{
+	isDisp_ = true;
+	
+	popTim_.Reset(true);
 	alphaPow_.Reset();
 }
 
@@ -103,5 +139,81 @@ void DamageDrawer::DamageDigitDrawer::UpdateAnimation()
 	alphaPow_.Update(isDisp_);
 
 	float alphaRatio = alphaEas_.InOut(alphaPow_.Ratio());
-	sprite_.SetColor(Color(200, 20, 20, 255 * alphaRatio));
+	if (isCritical_) { sprite_.SetColor(Color(200, 200, 20, 255 * alphaRatio)); }
+	else { sprite_.SetColor(Color(200, 20, 20, 255 * alphaRatio)); }
+}
+
+
+void DamageDrawer::CriticalDrawer::CriticalFontDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
+{
+	BaseInitialize(trfmStatus, matParent);
+	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("CriticalFont"));
+}
+
+void DamageDrawer::CriticalDrawer::CriticalEffectDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
+{
+	BaseInitialize(trfmStatus, matParent);
+	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("CriticalEffect"));
+}
+
+void DamageDrawer::CriticalDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
+{
+	trfm_.Initialize(trfmStatus);
+	trfm_.parent_ = matParent;
+
+	font_.Initialize({ {0.0f, +64.0f, 0.0f}, {}, {1.0f,1.0f,0.0f} }, &trfm_.m_);
+	effect_.Initialize({ {}, {}, {3.0f,3.0f,0.0f} }, &trfm_.m_);
+
+	isDisp_ = false;
+
+	popTim_.Initialize(40);
+	popScale_.Initialize(-trfmStatus.scale_.x, 0.0f, 4.0f);
+
+	alphaPow_.Initialize(8);
+	alphaEas_.Initialize(0.0f, 1.0f, 3.0f);
+}
+
+void DamageDrawer::CriticalDrawer::ResetAnimation()
+{
+	isDisp_ = false;
+
+	popTim_.Reset();
+	alphaPow_.Reset();
+}
+
+void DamageDrawer::CriticalDrawer::PopAnimation()
+{
+	isDisp_ = true;
+
+	popTim_.Reset(true);
+	alphaPow_.Reset();
+}
+
+void DamageDrawer::CriticalDrawer::Update()
+{
+	popTim_.Update();
+	
+	float scaleVal = popScale_.Out(popTim_.Ratio());
+	Vector3 scale = Vector3(scaleVal, scaleVal, 0.0f);
+
+	alphaPow_.Update(isDisp_);
+
+	float alphaRatio = alphaEas_.InOut(alphaPow_.Ratio());
+	
+	effect_.SetColor(Color(255, 255, 255, 255 * alphaRatio));
+	font_.SetColor(Color(255, 255, 255, 255 * alphaRatio));
+
+	trfm_.UpdateMatrix({ {}, {}, scale });
+	font_.Update();
+	effect_.Update();
+}
+
+void DamageDrawer::CriticalDrawer::DrawBack()
+{
+	effect_.Draw();
+}
+
+void DamageDrawer::CriticalDrawer::DrawFront()
+{
+	font_.Draw();
 }

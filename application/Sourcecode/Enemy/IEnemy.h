@@ -31,7 +31,7 @@ public:
 
 	void AttackAnimation();
 public:
-	void Damage(int32_t health);
+	void Damage(int32_t health, const bool isCritical = false);
 public:
 	bool GetIsAlive() { return isAlive_; }
 	int32_t GetAttackPower() { return attackPower_; }

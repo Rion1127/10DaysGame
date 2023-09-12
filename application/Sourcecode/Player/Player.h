@@ -41,7 +41,7 @@ public:
 	void Draw();
 	void DrawImGui();
 public:
-	void Damage(int32_t damage);
+	void Damage(int32_t damage, const bool isCritical = false);
 	
 	void Recovery(int32_t recover);
 	void AddGurd(int32_t gurd);

@@ -58,7 +58,7 @@ void IEnemy::AttackAnimation()
 	drawer_.AttackAnimation();
 }
 
-void IEnemy::Damage(int32_t health)
+void IEnemy::Damage(int32_t health, const bool isCritical)
 {
 	health_ -= health;
 	if (health_ <= 0) {
@@ -71,5 +71,6 @@ void IEnemy::Damage(int32_t health)
 	drawer_.HitAnimation();
 	hpBar_.ChangeValueAnimation(health_);
 	damage_.SetNumber(health);
-	damage_.DamageAnimation();
+	if (isCritical) { damage_.CriticalAnimation(); }
+	else { damage_.DamageAnimation(); }
 }

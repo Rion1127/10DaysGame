@@ -115,14 +115,15 @@ void Player::DrawImGui()
 	statusFrame_.DrawImGui();
 }
 
-void Player::Damage(int32_t damage)
+void Player::Damage(int32_t damage, const bool isCritical)
 {
 	health_ -= damage;
 
 	drawer_.HitAnimation();
 	hpBar_.ChangeValueAnimation(health_);
 	damage_.SetNumber(damage);
-	damage_.DamageAnimation();
+	if (isCritical) { damage_.CriticalAnimation(); }
+	else { damage_.DamageAnimation(); }
 }
 
 void Player::Recovery(int32_t health)
