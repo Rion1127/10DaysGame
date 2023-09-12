@@ -40,7 +40,9 @@ void LoadManager::LoadTexture()
 	LoadGraph("player.png", "Player");
 	LoadGraph("playerMove.png", "PlayerMove");
 	//“G
-	LoadGraph("slime.png", "Enemy");
+	LoadGraph("slime.png", "Slime");
+	LoadGraph("bat.png", "Bat");
+	LoadGraph("blackBear.png", "Bear");
 	//ƒ{ƒ^ƒ“UI
 	LoadGraph("gameStartButton.png", "GameStartButton");
 	LoadGraph("tutorialButton.png", "TutorialButton");
@@ -60,6 +62,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("textFrame.png", "TextFrame");
 	LoadGraph("tutorialText.png", "TutorialText");
 	LoadGraph("statusFrame.png", "StatusFrame");
+	LoadGraph("enemyStateUI.png", "EnemyStatusFrame");
 	LoadGraph("longSword.png", "Sword");
 	LoadGraph("critical.png", "CriticalFont");
 	LoadGraph("criticalEffect.png", "CriticalEffect");

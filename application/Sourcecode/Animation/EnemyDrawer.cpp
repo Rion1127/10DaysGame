@@ -4,13 +4,30 @@
 
 using YGame::EnemyDrawer;
 
-void EnemyDrawer::Initialize(const YTransform::Status& trfmStatus, YTransform* pTrfm)
+void EnemyDrawer::Initialize(const YTransform::Status& trfmStatus, YTransform* pTrfm, const EnemyType type)
 {
 	BaseInitialize(trfmStatus, &pTrfm->m_);
-	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Enemy"));
+	
+	float scaleDiv = 0.0f;
+	if (type == EnemyType::Slime)
+	{
+		sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Slime"));
+		scaleDiv = 6.0f;
+	}
+	if (type == EnemyType::Bat)
+	{
+		sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Bat"));
+		scaleDiv = 4.0f;
+	}
+	if (type == EnemyType::Bear)
+	{
+		sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Bear"));
+		scaleDiv = 4.0f;
+	}
+	
 	sprite_.SetTex_LeftTop({});
-	sprite_.SetTex_Size({ 128.0f,128.0f });
-	trfm_.scale_ = Vector3(1.0f / 6.0f, 1.0f, 1.0f);
+	sprite_.SetTex_Size({ 144.0f,144.0f });
+	trfm_.scale_ = Vector3(1.0f / scaleDiv, 1.0f, 1.0f);
 
 	pTrfm_ = pTrfm;
 
@@ -61,7 +78,7 @@ void EnemyDrawer::UpdateAnimation()
 		moveTim_.Reset(true);
 		if (4 <= ++moveCount_) { moveCount_ = 0; }
 
-		sprite_.SetTex_LeftTop({ 128.0f * static_cast<float>(moveCount_), 0.0f });
+		sprite_.SetTex_LeftTop({ 144.0f * static_cast<float>(moveCount_), 0.0f });
 	}
 
 	isEndAttack_ = false;
