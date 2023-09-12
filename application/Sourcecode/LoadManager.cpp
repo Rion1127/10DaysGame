@@ -71,4 +71,5 @@ void LoadManager::LoadSound()
 	LoadWave("setSE.wav", "SetSE");
 	LoadWave("cantSetSE.wav", "CantSetSE");
 	LoadWave("statusUpSE.wav", "StatysUpSE");
+	LoadWave("redoSE.wav", "RedoSE");
 }
