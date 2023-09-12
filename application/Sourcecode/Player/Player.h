@@ -11,7 +11,7 @@ class Player
 private:
 	int32_t health_;		//‘Ì—Í
 	int32_t luck_;			//‰^
-	int32_t gurd_;	//–hŒä—Í
+	int32_t guard_;	//–hŒä—Í
 	int32_t baseAttackpower_;//UŒ‚—Í
 	bool isAlive_;
 
@@ -55,7 +55,7 @@ public:
 	void AddLuck(int32_t luck);
 public:
 	int32_t GetAttackPower() { return baseAttackpower_; }
-	int32_t GetGurd() { return gurd_; }
+	int32_t GetGuard() { return guard_; }
 	bool GetIsAlive() { return isAlive_; }
 	bool GetRotTimEnd() { return sword_.GetRotaTimEnd(); }
 };

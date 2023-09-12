@@ -150,7 +150,7 @@ void Player::Recovery(int32_t health)
 }
 
 void Player::AddGurd(int32_t gurd) {
-	gurd_ += gurd;
+	guard_ += gurd;
 }
 
 void Player::AddAttack(int32_t attack) {
