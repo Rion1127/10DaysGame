@@ -33,9 +33,12 @@ void NumberDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* mat
 	SetNumber(number);
 }
 
-void NumberDrawer::Update()
+void NumberDrawer::Update(const YTransform::Status& animeStatus)
 {
-	trfm_.UpdateMatrix({ offset_ });
+	YTransform::Status anime = animeStatus;
+	anime.pos_ += offset_;
+
+	trfm_.UpdateMatrix(anime);
 	
 	for (size_t i = 0; i < digits_.size(); i++)
 	{

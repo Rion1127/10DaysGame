@@ -23,7 +23,7 @@ void NextMinoDrawer::Initialize()
 			status.pos_ =
 			{
 				620.0f,
-				320.0f,
+				340.0f,
 				0.0f
 			};
 			status.scale_ *= kScale1;
@@ -33,7 +33,7 @@ void NextMinoDrawer::Initialize()
 			status.pos_ =
 			{
 				620.0f,
-				256.0f + kHeightOffset * static_cast<float>(i),
+				276.0f + kHeightOffset * static_cast<float>(i),
 				0.0f
 			};
 			status.scale_ *= kScale2;
@@ -43,7 +43,7 @@ void NextMinoDrawer::Initialize()
 			status.pos_ =
 			{
 				620.0f,
-				256.0f + kHeightOffset * static_cast<float>(i - 1),
+				276.0f + kHeightOffset * static_cast<float>(i - 1),
 				0.0f
 			};
 			status.scale_ *= kScale2;
@@ -52,7 +52,7 @@ void NextMinoDrawer::Initialize()
 		nexts_[i].Initialize(status, nullptr);
 	}
 
-	nextDra_.Initialize({ {620.0f,250.0f,0.0f},{},{0.5f,0.5f,0.0f} }, nullptr);
+	nextDra_.Initialize({ {620.0f,270.0f,0.0f},{},{0.5f,0.5f,0.0f} }, nullptr);
 
 	isReset_ = false;
 	resetTimer_.Initialize(40);
