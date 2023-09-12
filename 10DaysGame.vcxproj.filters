@@ -528,6 +528,9 @@
     <ClCompile Include="application\Sourcecode\IParticle2D.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DeadActor.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -835,6 +838,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\IParticle2D.h">
       <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadActor.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer\Actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -45,7 +45,7 @@ MainGameSyste::MainGameSyste()
 	};
 	swordSprite_->SetPos(pos);
 
-
+	YGame::DeadActor::StaticInitialize();
 }
 
 void MainGameSyste::SpriteInit()
@@ -253,6 +253,8 @@ void MainGameSyste::Update()
 	mouseUi_.Update();
 	backSprite_->Update();
 	swordSprite_->Update();
+
+	YGame::DeadActor::StaticUpdate();
 }
 
 void MainGameSyste::DrawSprite()
@@ -266,6 +268,8 @@ void MainGameSyste::DrawSprite()
 	pauseButton_->Draw();
 	swordSprite_->Draw();
 	redoButton_->Draw();
+
+	YGame::DeadActor::StaticDraw();
 }
 
 void MainGameSyste::DrawSpriteFront()

@@ -1,8 +1,7 @@
 #pragma once
 #include "BaseDrawer.h"
 #include "HitActor.h"
-#include "SplineEase.h"
-#include "YTimer.h"
+#include "DeadActor.h"
 
 namespace YGame
 {
@@ -16,7 +15,7 @@ namespace YGame
 		/// </summary>
 		/// <param name="trfmStatus"> : トランスフォーム情報</param>
 		/// <param name="matParent"> : 親行列</param>
-		void Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent);
+		void Initialize(const YTransform::Status& trfmStatus, YTransform* pTrfm);
 
 		/// <summary>
 		/// 攻撃アニメーション
@@ -27,6 +26,8 @@ namespace YGame
 		/// 被弾アニメーション
 		/// </summary>
 		void HitAnimation();
+
+		void DeadAnimation();
 
 		bool GetIsEndAttack() { return isEndAttack_; }
 
@@ -44,9 +45,12 @@ namespace YGame
 		void UpdateAnimation() override;
 
 	protected:
-
+		
+		YTransform* pTrfm_ = nullptr;
+	
 		// 被弾アニメーション
 		HitActor hitActor_;
+		DeadActor deadActor_;
 
 		YMath::YTimer moveTim_;
 
@@ -57,5 +61,7 @@ namespace YGame
 		YMath::YTimer attackTim_;
 
 		bool isEndAttack_ = false;
+
+		YMath::YTimer popTim_;
 	};
 }
