@@ -452,6 +452,8 @@ void MainGameSyste::TurnPlayer()
 			panel_->SetIsAllFill(false);
 			//敵にダメージを与える
 			int32_t damage = panel_->GetAttackPanelNum() * player_->GetAttackPower();
+			damage -= enemy_->GetGuard();
+			damage = Max(1, damage);
 			enemy_->Damage(damage);
 			nowTurn_ = Turn::CHANGE;
 
@@ -479,7 +481,10 @@ void MainGameSyste::TurnEnemy()
 	//プレイヤーがダメージを受ける
 	if (enemyManager_.GetIsChangeNowEnemy() == false) {
 		if (enemyManager_.GetNowEnemy()->GetIsEndAttack()) {
-			player_->Damage(enemy_->GetAttackPower());
+			int32_t  damage = enemy_->GetAttackPower();
+			damage -= player_->GetGuard();
+			damage = Max(1, damage);
+			player_->Damage(damage);
 
 			float pitch = RRandom::RandF(0.7f, 1.f);
 			SoundManager::Play("Attack", false, 1.0f, pitch);
