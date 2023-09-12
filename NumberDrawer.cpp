@@ -56,15 +56,16 @@ void NumberDrawer::Draw()
 
 void NumberDrawer::SetNumber(const int32_t number)
 {
-	assert(0 <= number_ || number_ < 10 * (digits_.size() + 1));
-	number_ = number;
+	int32_t num = number;
+	if (number <= 0) { num = 0; }
+	if (1000000 <= number) { num = 999999; }
+	number_ = num;
 
 	for (size_t i = 0; i < digits_.size(); i++)
 	{
 		digits_[i]->SetInvisible(true);
 	}
 
-	int32_t num = number;
 	size_t digitNum = 0;
 	size_t index = digits_.size() - 1;
 	offset_ = {};

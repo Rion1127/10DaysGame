@@ -26,19 +26,13 @@ private:
 	YGame::RecoveryDrawer recovery_;
 	
 	YGame::YTransform statusTrfm_;
-	std::array<YGame::StatusDrawer, 2> status_;
+	std::array<YGame::StatusDrawer, 4> status_;
 	Sprite statusFrame_;
 public:
 
 	void Initialize();
 
 	void Update();
-
-	void StatusUpdate(
-		const int32_t plusHealth,
-		const int32_t plusLuck,
-		const int32_t plusRecover, 
-		const int32_t plusAttack);
 
 	void AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndices);
 	void IdleAnimation();

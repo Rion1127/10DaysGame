@@ -26,6 +26,8 @@ namespace YGame
 		/// </summary>
 		virtual void Draw();
 
+		void SetPos(const Vector3& pos) { trfm_.pos_ = pos; }
+
 		/// <summary>
 		/// êîê›íË
 		/// </summary>

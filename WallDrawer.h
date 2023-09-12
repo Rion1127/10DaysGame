@@ -14,7 +14,9 @@ namespace YGame
 
 		void Draw();
 
-		void ChangePlusHealth(const int32_t plusNum);
+		void ChangeAnimation();
+
+		void ChangePlusGuard(const int32_t plusNum);
 		void ChangePlusAttack(const int32_t plusNum);
 		void ChangePlusLuck(const int32_t plusNum);
 		void ChangePlusHeal(const int32_t plusNum);
@@ -40,11 +42,14 @@ namespace YGame
 			CountDrawer counter_;
 
 			YMath::YPower plusPow_;
+			YMath::Ease<Vector3> plusPosEas_;
 		};
 	
 	private:
 
 		std::array<Wall, 4> walls_;
-
+		
+		bool isChanged_ = false;
+		YMath::YTimer changeTim_;
 	};
 }

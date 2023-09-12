@@ -244,7 +244,7 @@ void MainGameSyste::Update()
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
 	
-	wallDrawer_.ChangePlusHealth(panel_->GetStateUpValue().guardUp_);
+	wallDrawer_.ChangePlusGuard(panel_->GetStateUpValue().guardUp_);
 	wallDrawer_.ChangePlusAttack(panel_->GetStateUpValue().attackUp_);
 	wallDrawer_.ChangePlusLuck(panel_->GetStateUpValue().luckUp_);
 	wallDrawer_.ChangePlusHeal(panel_->GetStateUpValue().recoverUp_);
@@ -276,7 +276,6 @@ void MainGameSyste::DrawSprite()
 {
 	panel_->DrawSprite();
 	nextMinoDrawer_.Draw();
-	wallDrawer_.Draw();
 	
 	enemyManager_.Draw();
 
@@ -291,7 +290,6 @@ void MainGameSyste::DrawSprite()
 
 void MainGameSyste::DrawSpriteFront()
 {
-
 	if (gameState_ == State::CLEAR ||
 		gameState_ == State::GAMEOVER ||
 		gameState_ == State::PAUSE)
@@ -314,6 +312,8 @@ void MainGameSyste::DrawSpriteFront()
 			clearEffect_.Draw();
 		}
 	}
+	
+	wallDrawer_.Draw();
 }
 
 void MainGameSyste::DrawImGui()
@@ -395,6 +395,8 @@ void MainGameSyste::TurnChange()
 		if (panel_->GetPanelReset()) {
 			panel_->PanelReset();
 		}
+
+		wallDrawer_.ChangeAnimation();
 
 		int32_t powerUp = panel_->GetStateUpValue().attackUp_;
 		player_->AddAttack(powerUp);
@@ -827,7 +829,7 @@ void MainGameSyste::TutorialUpdate()
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
 
-	wallDrawer_.ChangePlusHealth(panel_->GetStateUpValue().guardUp_);
+	wallDrawer_.ChangePlusGuard(panel_->GetStateUpValue().guardUp_);
 	wallDrawer_.ChangePlusAttack(panel_->GetStateUpValue().attackUp_);
 	wallDrawer_.ChangePlusLuck(panel_->GetStateUpValue().luckUp_);
 	wallDrawer_.ChangePlusHeal(panel_->GetStateUpValue().recoverUp_);
