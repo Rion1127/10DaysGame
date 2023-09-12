@@ -408,15 +408,19 @@ void MainGameSyste::TurnPlayer()
 	//リドゥ機能
 	if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
 		if (redoButton_->GetIsCollision()) {
-			SoundManager::Play("RedoSE", false, 1.0f);
-			panel_->ReDo(&minos_);
-			nextMinoDrawer_.RetreatAnimation(minos_);
+			if (reloadMinoNum_ > minos_.size()) {
+
+				SoundManager::Play("RedoSE", false, 1.0f);
+				panel_->ReDo(&minos_);
+				nextMinoDrawer_.RetreatAnimation(minos_);
+			}
+			else {
+				SoundManager::Play("CantSetSE", false, 1.0f);
+			}
 		}
-		else {
-			SoundManager::Play("CantSetSE", false, 1.0f);
-		}
+		
 	}
-	
+
 
 	//残りの数が0になった場合かすべてのマスを埋めた時ターンを終了する
 	if (minos_.size() <= 0 || panel_->GetIsAllFill() || isNext_ == true) {

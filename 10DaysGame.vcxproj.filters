@@ -528,6 +528,9 @@
     <ClCompile Include="application\Sourcecode\IParticle2D.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="SelectScene.cpp">
+      <Filter>application\ソースファイル\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -835,6 +838,9 @@
     </ClInclude>
     <ClInclude Include="application\Sourcecode\IParticle2D.h">
       <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectScene.h">
+      <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

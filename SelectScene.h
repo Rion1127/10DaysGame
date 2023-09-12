@@ -1,3 +1,4 @@
+#pragma once
 #include "Sprite.h"
 #include "DebugCamera.h"
 #include "mInput.h"
@@ -5,21 +6,16 @@
 #include "Texture.h"
 #include "IScene.h"
 #include "Button.h"
-
-class TitleScene final :
-	public IScene
+class SelectScene :
+    public IScene
 {
 private:
-	enum class TitleType {
-		Title,
-		StageSelect
-	};
-private:
-	SoundManager* sound_ = nullptr;
-	DebugCamera debugCamera_;
-	std::unique_ptr<Sprite> titleSprite_ = nullptr;
+	std::unique_ptr<Button> tutorialButton_;
+	std::unique_ptr<Button> mainGameButton_;
+	std::unique_ptr<Button> endlessButton_;
+	std::unique_ptr<Sprite> kanBanSprite_ = nullptr;
 public:
-	~TitleScene();
+	~SelectScene();
 
 	void Ini()override;
 
@@ -27,6 +23,5 @@ public:
 
 	void Draw()override;
 private:
-	void DrawImGui();
 };
 

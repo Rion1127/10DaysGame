@@ -10,6 +10,7 @@
 
 enum class SceneName {
 	Title,
+	Select,
 	Game,
 	Debug,
 	Tutorial,
