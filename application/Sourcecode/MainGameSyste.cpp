@@ -140,7 +140,11 @@ void MainGameSyste::Update()
 			gameState_ = State::GAME;
 		}
 		else {
-			gameState_ = State::CLEAR;
+			if (gameState_ != State::CLEAR) {
+				gameState_ = State::CLEAR;
+				SoundManager::Stop("FightBGM");
+				SoundManager::Play("ClearBGM", true, 1.0f);
+			}
 		}
 	}
 
