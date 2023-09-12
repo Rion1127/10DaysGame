@@ -444,9 +444,6 @@
     <ClCompile Include="application\Sourcecode\Animation\YTransform.cpp">
       <Filter>application\ソースファイル\Animation\Math</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Animation\YPower.cpp">
-      <Filter>application\ソースファイル\Animation\Math</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\YTimer.cpp">
       <Filter>application\ソースファイル\Animation\Math</Filter>
     </ClCompile>
@@ -542,6 +539,9 @@
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Player\Player.cpp">
       <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\YPower.cpp">
+      <Filter>application\ソースファイル\Panel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
