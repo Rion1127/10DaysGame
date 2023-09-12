@@ -57,10 +57,10 @@ namespace YGame
 	private:
 
 		class FrameDrawer : public BaseDrawer
-			{
-			public:
-				void Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent);
-			};
+		{
+		public:
+			void Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent);
+		};
 		
 		class LockDrawer : public BaseDrawer
 		{

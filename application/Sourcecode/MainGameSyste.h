@@ -5,6 +5,7 @@
 #include "EnemyManager.h"
 #include "YCameraManager.h"
 #include "NextMinoDrawer.h"
+#include "WallDrawer.h"
 #include "Button.h"
 #include "Timer.h"
 
@@ -41,6 +42,7 @@ private:
 	uint32_t minoCountLevel_;
 	
 	YGame::NextMinoDrawer nextMinoDrawer_;
+	YGame::WallDrawer wallDrawer_;
 
 	Player* player_;
 	IEnemy* enemy_;

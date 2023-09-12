@@ -534,6 +534,9 @@
     <ClCompile Include="SelectScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="WallDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
