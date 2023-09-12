@@ -17,8 +17,8 @@ enum State {
 	NEXT_RELEASE,
 	SELECT,
 	TEMPPOS,
-	PowerUp,
-	Recovery
+	TEMPPOS_ON_EMPTY,
+	CANTSET
 };
 enum class UpdateType {
 	All,
@@ -59,6 +59,7 @@ private:
 	std::vector<std::vector<int32_t>> systemPanel_;
 	std::list<std::vector<std::vector<int32_t>>> oldPanelList_;
 	std::list<MinoType> usedMinoType_;
+	std::list<uint32_t> oldTotalPanel_;
 	int32_t maxPanelSize_;
 	int32_t initalSize_;
 	//現在選択しているパネル上の座標
@@ -81,10 +82,8 @@ private:
 	Mino nowMino_;
 	Box2D allPanelSize_;
 
-	uint32_t powerUpPanelNum_;
-	uint32_t recoveryPanelNum_;
 	uint32_t totalPanel_;
-
+	
 	bool isPanelReset_;
 
 	StateUp stateUp_;

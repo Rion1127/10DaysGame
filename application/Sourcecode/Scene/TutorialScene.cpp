@@ -24,7 +24,10 @@ void TutorialScene::Ini()
 	mainSystem_->SetPlayer(player_.get());
 	mainSystem_->TutorialInit();
 
-	
+	backGround_ = std::make_unique<Sprite>();
+	backGround_->Ini();
+	backGround_->SetTexture(TextureManager::GetInstance()->GetTexture("Stage1"));
+	backGround_->SetAnchor(Vector2(0.0f, 0.0f));
 }
 
 void TutorialScene::Update()
@@ -38,12 +41,13 @@ void TutorialScene::Update()
 		player_->Update();
 	}
 
-	
+	backGround_->Update();
 }
 
 void TutorialScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
+	backGround_->Draw();
 	mainSystem_->TutorialDraw();
 	player_->Draw();
 	mainSystem_->TutorialDrawFront();

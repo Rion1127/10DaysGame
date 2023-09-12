@@ -31,6 +31,8 @@ namespace YGame
 		/// </summary>
 		/// <param name="number"> : ”</param>
 		void SetNumber(const int32_t number);
+
+		void SetColor(const Color& color);
 	
 	public:
 

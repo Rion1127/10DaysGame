@@ -1,218 +1,377 @@
 #include "NextMinoDrawer.h"
+#include "Lerp.h"
 
 using YGame::NextMinoDrawer;
+using YGame::YTransform;
+
+namespace
+{
+	const float kScale1 = 0.75f;
+	const float kScale2 = 0.5f;
+	const float kHeightOffset = 85.0f;
+}
 
 void NextMinoDrawer::Initialize()
 {
-	static const float kScale = 0.75f;
 	
-	for (size_t i = 0; i < nextMinos_.size(); i++)
+	for (size_t i = 0; i < nexts_.size(); i++)
 	{
-		YTransform::Status status;
+		YTransform::Status status = YTransform::Status::Default();
 
-		if (i == 0)
-		{
-			status.scale_ = { 0.0f,0.0f,0.0f };
-		}
-		else if (i == 1)
+		if (i <= 1)
 		{
 			status.pos_ =
 			{
 				620.0f,
-				350.0f,
+				320.0f,
 				0.0f
 			};
-			status.scale_ = { kScale,kScale,0.0f };
+			status.scale_ *= kScale1;
+		}
+		else if (i < nexts_.size() - 1)
+		{
+			status.pos_ =
+			{
+				620.0f,
+				256.0f + kHeightOffset * static_cast<float>(i),
+				0.0f
+			};
+			status.scale_ *= kScale2;
 		}
 		else
 		{
 			status.pos_ =
 			{
 				620.0f,
-				300.0f + 75.0f * static_cast<float>(i),
-				0.0f };
-			status.scale_ = { kScale / 1.5f,kScale / 1.5f,0.0f };
+				256.0f + kHeightOffset * static_cast<float>(i - 1),
+				0.0f
+			};
+			status.scale_ *= kScale2;
 		}
 
-		nextMinos_[i].Initialize(status);
+		nexts_[i].Initialize(status, nullptr);
 	}
 
-	frame_ = std::make_unique<Sprite>();
-	frame_->Ini("frame");
-	frame_->SetTexture(TextureManager::GetInstance()->GetTexture("NextParts"));
-	frame_->SetPos(Vector2(607.f,464.f));
+	nextDra_.Initialize({ {620.0f,250.0f,0.0f},{},{0.5f,0.5f,0.0f} }, nullptr);
+
+	isReset_ = false;
+	resetTimer_.Initialize(40);
+
+	isAdvence_ = false;
+	isRetreat_ = false;
+	riseTimer_.Initialize(30);
+
+	lock_.lock_.Initialize({ {0.0f,-24.0f,0.0f}, {}, {0.75f,0.75f,0.0f} }, nullptr);
+	lock_.block_.Initialize({ {-64.0f,24.0f,0.0f}, {}, {1.0f,1.0f,0.0f} }, nullptr, BlockColorType::White);
+	lock_.gauge_.Initialize({ {+8.0f,24.0f,0.0f}, {}, {1.0f,1.0f,0.0f} }, nullptr, 0);
+	lock_.gauge_.SetNumberColor(Color(255, 255, 255, 255));
+	lock_.gauge_.SetGaugeColor(Color(0, 0, 0, 255), Color(20, 200, 200, 255), Color(200, 200, 20, 255));
+
+	isUnlock_ = false;
+	unlockPower_.Initialize(40);
+	unlockHeightEas_.Initialize(0.0f, 64.0f, 3.0f);
+	unlockRotaEas_.Initialize(0.0f, 3.141592f * 0.25f, 3.0f);
+
 }
 
-void NextMinoDrawer::Update(const std::vector<MinoType>& minos)
+void NextMinoDrawer::Update(const int32_t minoCount)
 {
-	// 前回と変わっていたらパーツを変更する
-	ChangeNextMino(minos);
-
-	for (size_t i = 0; i < nextMinos_.size(); i++)
+	riseTimer_.Update();
+	if (riseTimer_.IsEnd())
 	{
-		nextMinos_[i].Update();
+		riseTimer_.Reset(false);
+		isAdvence_ = false;
+		isRetreat_ = false;
+
+		ChangeNextMino();
 	}
 
-	elderMinos_ = minos;
-	frame_->Update();
+	resetTimer_.Update();
+	if (0.5f == resetTimer_.Ratio())
+	{
+		isUnlock_ = false;
+		lock_.block_.SetColor(Color(255, 255, 255, 255));
+		lock_.gauge_.SetNumberColor(Color(255, 255, 255, 255));
+		lock_.gauge_.SetGaugeColor(Color(0, 0, 0, 255), Color(20, 200, 200, 255), Color(200, 200, 20, 255));
+
+		for (size_t i = 0; i < nexts_.size(); i++)
+		{
+			nexts_[i].SetIsExist(true);
+		}
+
+		ChangeNextMino();
+	}
+	if (resetTimer_.IsEnd())
+	{
+		isReset_ = false;
+		resetTimer_.Reset(false);
+	}
+
+	for (size_t i = 0; i < nexts_.size(); i++)
+	{
+		YTransform::Status anime = AnimeStatus(i);
+		if (i == nexts_.size() - 1) { anime = {}; }
+		nexts_[i].Update(anime);
+	}
+
+	unlockPower_.Update(isUnlock_);
+
+	YTransform::Status anime = {};
+	anime.pos_.y = unlockHeightEas_.In(unlockPower_.Ratio());
+	anime.rota_.z = unlockRotaEas_.In(unlockPower_.Ratio());
+
+	float alpha = YMath::EaseIn(255.0f, 0.0f, unlockPower_.Ratio(), 3.0f);
+	lock_.lock_.SetColor(Color(255, 255, 255, alpha));
+
+	lock_.lock_.Update(anime);
+	lock_.block_.Update();
+	lock_.gauge_.ChangeValueAnimation(minoCount);
+	lock_.gauge_.Update();
+
+	nextDra_.Update();
 }
 
 void NextMinoDrawer::Draw()
 {
-	frame_->Draw();
-	//frame_->DrawImGui();
-	for (size_t i = 0; i < nextMinos_.size(); i++)
-	{
-		if (i == 0) { continue; }
-		nextMinos_[i].Draw();
-	}
+	nexts_[0].Draw();
+	nexts_[5].Draw();
+	nexts_[1].Draw();
+	nexts_[2].Draw();
+	nexts_[4].Draw();
+	nexts_[3].Draw();
+
+	nextDra_.Draw();
 }
 
-void NextMinoDrawer::ChangeNextMino(const std::vector<MinoType>& minos)
+void NextMinoDrawer::RedrawAnimation(const std::vector<MinoType>& minos)
 {
-	if (minos.size() <= 0) { return; }
-
-	size_t index = 0;
-	while (true)
+	minos_ = minos;
+	if (isReset_)
 	{
-		bool isEndCurrent = minos.size() <= index;
-		bool isEndElder = elderMinos_.size() <= index;
+		ChangeNextMino();
+		isReset_ = false;
+		resetTimer_.Reset(false);
+		return;
+	}
 
-		// パーツ増加時
-		if (isEndCurrent == false && isEndElder)
+	isReset_ = true;
+	resetTimer_.Reset(true);
+
+	for (size_t i = 0; i < nexts_.size(); i++)
+	{
+		nexts_[i].SetIsExist(false);
+	}
+
+	isAdvence_ = false;
+	isRetreat_ = false;
+	riseTimer_.Reset(false);
+
+}
+
+void NextMinoDrawer::UnlockAnimiation()
+{
+	isUnlock_ = true;
+	lock_.block_.SetColor(Color(255, 255, 255, 0));
+	lock_.gauge_.SetNumberColor(Color(255, 255, 255, 0));
+	lock_.gauge_.SetGaugeColor(Color(0, 0, 0, 0), Color(20, 200, 200, 0), Color(200, 200, 20, 0));
+}
+
+void NextMinoDrawer::AdvanceAnimation(const std::vector<MinoType>& minos)
+{
+	minos_ = minos;
+	if (isAdvence_)
+	{
+		ChangeNextMino();
+		isAdvence_ = false;
+		riseTimer_.Reset(false);
+		return;
+	}
+
+	isAdvence_ = true;
+	riseTimer_.Reset(true);
+}
+
+void NextMinoDrawer::RetreatAnimation(const std::vector<MinoType>& minos)
+{
+	minos_ = minos;
+	if (isRetreat_)
+	{
+		ChangeNextMino();
+		isRetreat_ = false;
+		riseTimer_.Reset(false);
+		return;
+	}
+
+	isRetreat_ = true;
+	riseTimer_.Reset(true);
+
+	isUnlock_ = false;
+	lock_.block_.SetColor(Color(255, 255, 255, 255));
+	lock_.gauge_.SetNumberColor(Color(255, 255, 255, 255));
+	lock_.gauge_.SetGaugeColor(Color(0, 0, 0, 255), Color(20, 200, 200, 255), Color(200, 200, 20, 255));
+}
+
+YTransform::Status NextMinoDrawer::AnimeStatus(const size_t index)
+{
+	YTransform::Status anime;
+
+	Vector3 scale = Vector3(kScale1, kScale1, 0.0f) - Vector3(kScale2, kScale2, 0.0f);
+
+
+	if (isAdvence_)
+	{
+		if (index == 0 || index == 1)
 		{
-			nextMinos_[index].ChangeMinoAnimation(minos[index]);
+			return {};
 		}
-
-		// パーツ減少時
-		if (isEndCurrent && isEndElder == false)
+		else if (index == 2)
 		{
-			nextMinos_[index].InvisibleMinoAnimation();
+			anime.pos_.y += YMath::EaseOut(0.0f, -kHeightOffset * 1.25f, riseTimer_.Ratio(), 3.0f);
+			anime.scale_ += YMath::EaseOut({}, scale, riseTimer_.Ratio(), 3.0f);
 		}
-
-		// パーツ変更時
-		if (isEndCurrent == false && isEndElder == false)
+		else
 		{
-			if (elderMinos_[index] != minos[index])
+			anime.pos_.y += YMath::EaseOut(0.0f, -kHeightOffset, riseTimer_.Ratio(), 3.0f);
+		}
+	}
+	else if (isRetreat_)
+	{
+		if (index == 0 || 4 <= index)
+		{
+			return {};
+		}
+		else if (index == 1)
+		{
+			anime.pos_.y += YMath::EaseOut(0.0f, +kHeightOffset * 1.25f, riseTimer_.Ratio(), 3.0f);
+			anime.scale_ += YMath::EaseOut({}, -scale, riseTimer_.Ratio(), 3.0f);
+		}
+		else
+		{
+			anime.pos_.y += YMath::EaseOut(0.0f, +kHeightOffset, riseTimer_.Ratio(), 3.0f);
+		}
+	}
+
+	return anime;
+}
+
+void NextMinoDrawer::ChangeNextMino()
+{
+	bool isEnd = false;
+	for (size_t i = 0; i < nexts_.size(); i++)
+	{
+		if(minos_.size() <= i) 
+		{
+			if(isEnd == false)
 			{
-				nextMinos_[index].ChangeMinoAnimation(minos[index]);
+				nexts_[i].ChangeRock(&lock_);
+				isEnd = true;
 			}
+			else
+			{
+				nexts_[i].ChangeVoid();
+			}
+			continue;
 		}
-
-		if (nextMinos_.size() <= ++index) { return; }
+		
+		nexts_[i].ChangeMino(minos_[i]);
 	}
 }
 
-void NextMinoDrawer::NextMino::Initialize(const YTransform::Status& trfmStatus)
+void NextMinoDrawer::FrameDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
+{
+	BaseInitialize(trfmStatus, matParent);
+	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Frame"));
+}
+
+void NextMinoDrawer::LockDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
+{
+	BaseInitialize(trfmStatus, matParent);
+	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Lock"));
+}
+
+void NextMinoDrawer::NextDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
+{
+	BaseInitialize(trfmStatus, matParent);
+	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Next"));
+}
+
+void NextMinoDrawer::NextFrameDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
 {
 	trfm_.Initialize(trfmStatus);
+	trfm_.parent_ = matParent;
 
 	for (size_t i = 0; i < drawers_.size(); i++)
 	{
-		drawers_[i].Initialize(YTransform::Status::Default(), &trfm_.m_, BlockColorType::None);
+		drawers_[i].Initialize({ {}, {}, {1.0f,1.0f,0.0f} }, &trfm_.m_, BlockColorType::Cyan);
 	}
+	frame_.Initialize({ {}, {}, {1.5f,1.5f,0.0f} }, &trfm_.m_);
 
-	slime_.Initialize(
-		20,
-		{
-			Vector3(0.0f, 0.0f, 0.0f),
-			-trfmStatus.scale_ ,
-			Vector3(0.0f, 0.0f, 0.0f),
-		},
-		3.0f);
+	pLock_ = nullptr;
 
-	colorTim_.Initialize(5);
+	isExist_ = false;
+	existPow_.Initialize(20);
+	existScaleEas_.Initialize(-trfmStatus.scale_, {}, 3.0f);
 }
 
-void NextMinoDrawer::NextMino::Update()
+void NextMinoDrawer::NextFrameDrawer::Update(const YTransform::Status& animeStatus)
 {
-	// 見えなくなった瞬間に色を変える
-	colorTim_.Update();
-	if (colorTim_.IsEnd())
-	{
-		ChangeMino();
+	existPow_.Update(isExist_);
 
-		colorTim_.Reset();
-	}
+	YTransform::Status anime = animeStatus;
 
-	slime_.Update();
+	if (isExist_ == false) { anime.scale_ = {}; }
+	anime.scale_ += existScaleEas_.InOut(existPow_.Ratio());
 
-	Vector3 scale;
-
-	if (slime_.IsAct())
-	{
-		scale = slime_.WobbleScaleValue(SlimeActor::EaseType::eOut);
-	}
-
-	trfm_.UpdateMatrix({ {}, {}, scale });
-
+	trfm_.UpdateMatrix(anime);
+	frame_.Update();
 	for (size_t i = 0; i < drawers_.size(); i++)
 	{
 		drawers_[i].Update();
 	}
 }
 
-void NextMinoDrawer::NextMino::Draw()
+void NextMinoDrawer::NextFrameDrawer::Draw()
 {
+	frame_.Draw();
 	for (size_t i = 0; i < drawers_.size(); i++)
 	{
 		drawers_[i].Draw();
 	}
-}
 
-void NextMinoDrawer::NextMino::ChangeMinoAnimation(const MinoType type)
-{
-	type_ = type;
-
-	slime_.Wobble();
-	colorTim_.Reset(true);
-
-	isInvisible_ = false;
-}
-
-void NextMinoDrawer::NextMino::InvisibleMinoAnimation()
-{
-	slime_.Wobble();
-	colorTim_.Reset(true);
-
-	isInvisible_ = true;
-}
-
-void NextMinoDrawer::NextMino::ChangeMino()
-{
-	BlockColorType colorType = BlockColorType::None;
-
-	if (isInvisible_ == false)
+	if (pLock_)
 	{
-		if (type_ == MinoType::Omino) { colorType = BlockColorType::Yellow; }
-		if (type_ == MinoType::Tmino) { colorType = BlockColorType::Purple; }
-		if (type_ == MinoType::Smino) { colorType = BlockColorType::Green; }
-		if (type_ == MinoType::Zmino) { colorType = BlockColorType::Red; }
-		if (type_ == MinoType::Imino) { colorType = BlockColorType::Cyan; }
-		if (type_ == MinoType::Lmino) { colorType = BlockColorType::Orange; }
-		if (type_ == MinoType::Jmino) { colorType = BlockColorType::Blue; }
+		pLock_->lock_.Draw(); 
+		pLock_->gauge_.Draw(); 
+		pLock_->block_.Draw();
 	}
+}
 
+void NextMinoDrawer::NextFrameDrawer::ResetAnimation()
+{
+	isExist_ = true;
+	existPow_.Reset();
+}
+
+void NextMinoDrawer::NextFrameDrawer::ChangeMino(const MinoType type)
+{	
 	for (size_t i = 0; i < drawers_.size(); i++)
 	{
-		drawers_[i].ChangeColor(colorType);
+		drawers_[i].ChangeColor(BlockColorType::Cyan);
 	}
 
-	if (isInvisible_) { return; }
-
 	// パネル位置変更
-	std::vector<std::vector<uint32_t>> panel = MinoList::GetMinoList(type_).panel_;
+	std::vector<std::vector<uint32_t>> panel = MinoList::GetMinoList(type).panel_;
 	size_t dIndex = 0;
 
 	Vector3 offset;
 
-	if (type_ == MinoType::Omino) { offset = { -32.0f,-32.0f,0.0f }; }
-	if (type_ == MinoType::Tmino) { offset = { -48.0f,-32.0f,0.0f }; }
-	if (type_ == MinoType::Smino) { offset = { -48.0f,-32.0f,0.0f }; }
-	if (type_ == MinoType::Zmino) { offset = { -48.0f,-32.0f,0.0f }; }
-	if (type_ == MinoType::Imino) { offset = { -16.0f,-64.0f,0.0f }; }
-	if (type_ == MinoType::Lmino) { offset = { -48.0f,-32.0f,0.0f }; }
-	if (type_ == MinoType::Jmino) { offset = { -48.0f,-32.0f,0.0f }; }
+	if (type == MinoType::Omino) { offset = { -16.0f,-16.0f,0.0f }; }
+	if (type == MinoType::Tmino) { offset = { -32.0f,-16.0f,0.0f }; }
+	if (type == MinoType::Smino) { offset = { -32.0f,-16.0f,0.0f }; }
+	if (type == MinoType::Zmino) { offset = { -32.0f,-16.0f,0.0f }; }
+	if (type == MinoType::Imino) { offset = {   0.0f,-48.0f,0.0f }; }
+	if (type == MinoType::Lmino) { offset = { -32.0f,-16.0f,0.0f }; }
+	if (type == MinoType::Jmino) { offset = { -32.0f,-16.0f,0.0f }; }
 
 	for (size_t i = 0; i < panel.size(); i++)
 	{
@@ -230,5 +389,33 @@ void NextMinoDrawer::NextMino::ChangeMino()
 			dIndex++;
 		}
 	}
+	frame_.SetColor(Color(255, 255, 255, 255));
+
+	if (pLock_) { pLock_ = nullptr; }
+}
+
+void NextMinoDrawer::NextFrameDrawer::ChangeVoid()
+{
+	for (size_t i = 0; i < drawers_.size(); i++)
+	{
+		drawers_[i].ChangeColor(BlockColorType::None);
+	}
+	frame_.SetColor(Color(0, 0, 0, 0));
+
+	if (pLock_) { pLock_ = nullptr; }
+}
+
+void NextMinoDrawer::NextFrameDrawer::ChangeRock(Lock* pLock)
+{
+	for (size_t i = 0; i < drawers_.size(); i++)
+	{
+		drawers_[i].ChangeColor(BlockColorType::None);
+	}
+	frame_.SetColor(Color(150, 150, 150, 255));
+
+	pLock_ = pLock;
+	pLock_->lock_.SetParent(&trfm_.m_);
+	pLock_->block_.SetParent(&trfm_.m_);
+	pLock_->gauge_.SetParent(&trfm_.m_);
 }
 

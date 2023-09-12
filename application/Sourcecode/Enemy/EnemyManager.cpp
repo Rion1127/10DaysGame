@@ -5,10 +5,7 @@ EnemyManager::EnemyManager()
 {
 #ifdef _DEBUG
 #endif // _DEBUG
-	list_.SetEnemy("MainGame", &enemyList_);
-
-	nowEnemy_.swap(enemyList_[0]);
-	enemyList_.erase(enemyList_.begin());
+	
 
 	isChangeNowEnemy_ = false;
 }
@@ -44,6 +41,16 @@ void EnemyManager::Draw()
 void EnemyManager::DrawImGui()
 {
 }
+
+void EnemyManager::SetEnemyList(std::string name)
+{
+	enemyList_.clear();
+	nowEnemy_ = nullptr;
+	list_.SetEnemy(name, &enemyList_);
+
+	nowEnemy_.swap(enemyList_[0]);
+	enemyList_.erase(enemyList_.begin());
+}
 #pragma endregion
 
 #pragma region
@@ -58,6 +65,17 @@ EnemyPopDataList::EnemyPopDataList()
 		};
 	}
 	dataList_.insert(std::make_pair("MainGame", mainGame));
+
+	PopData tutorial;
+	tutorial.enemyData.resize(1);
+	for (int32_t i = 0; i < tutorial.enemyData.size(); i++)
+	{
+		tutorial.enemyData[i] = {
+			99999999,
+			0
+		};
+	}
+	dataList_.insert(std::make_pair("Tutorial", tutorial));
 }
 
 void EnemyPopDataList::SetEnemy(std::string name, std::vector<std::unique_ptr<IEnemy>>* enemy)

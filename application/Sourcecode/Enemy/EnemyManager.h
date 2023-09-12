@@ -38,6 +38,8 @@ public:
 	void Draw();
 	void DrawImGui();
 
+	void SetEnemyList(std::string name);
+
 	IEnemy* GetNowEnemy() {
 		return nowEnemy_.get();
 	}

@@ -14,12 +14,13 @@
     <ClCompile Include="application\Sourcecode\Animation\BaseDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\BezierEase.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\BlockDrawer.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\CountDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\DamageDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\DigitDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\Ease.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\EnemyDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\HitActor.cpp" />
-    <ClCompile Include="application\Sourcecode\Animation\HPDrawer.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\GaugeDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\Lerp.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\NextMinoDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\PanelDrawer.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="application\Sourcecode\Enemy\Enemy.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\EnemyManager.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\IEnemy.cpp" />
+    <ClCompile Include="application\Sourcecode\IParticle2D.cpp" />
     <ClCompile Include="application\Sourcecode\LoadManager.cpp" />
     <ClCompile Include="application\Sourcecode\MainGameSyste.cpp" />
     <ClCompile Include="application\Sourcecode\MouseUI.cpp" />
@@ -104,19 +106,20 @@
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\StateMachine.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
-    <ClCompile Include="MinoCounterDrawer.cpp" />
     <ClCompile Include="NumberDrawer.cpp" />
+    <ClCompile Include="StatusDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\Sourcecode\Animation\BaseDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\BezierEase.h" />
     <ClInclude Include="application\Sourcecode\Animation\BlockDrawer.h" />
+    <ClInclude Include="application\Sourcecode\Animation\CountDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\DamageDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\DigitDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\Ease.h" />
     <ClInclude Include="application\Sourcecode\Animation\EnemyDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\HitActor.h" />
-    <ClInclude Include="application\Sourcecode\Animation\HPDrawer.h" />
+    <ClInclude Include="application\Sourcecode\Animation\GaugeDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\Lerp.h" />
     <ClInclude Include="application\Sourcecode\Animation\NextMinoDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\PanelDrawer.h" />
@@ -135,6 +138,7 @@
     <ClInclude Include="application\Sourcecode\Enemy\Enemy.h" />
     <ClInclude Include="application\Sourcecode\Enemy\EnemyManager.h" />
     <ClInclude Include="application\Sourcecode\Enemy\IEnemy.h" />
+    <ClInclude Include="application\Sourcecode\IParticle2D.h" />
     <ClInclude Include="application\Sourcecode\LoadManager.h" />
     <ClInclude Include="application\Sourcecode\MainGameSyste.h" />
     <ClInclude Include="application\Sourcecode\MouseUI.h" />
@@ -201,9 +205,9 @@
     <ClInclude Include="engine\util\StateMachine.h" />
     <ClInclude Include="engine\util\Timer.h" />
     <ClInclude Include="application\Sourcecode\Animation\PlayerDrawer.h" />
-    <ClInclude Include="MinoCounterDrawer.h" />
     <ClInclude Include="NumberDrawer.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="StatusDrawer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="application\Resources\shader\assimp.hlsli" />

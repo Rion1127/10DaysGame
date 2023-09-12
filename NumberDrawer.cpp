@@ -83,3 +83,11 @@ void NumberDrawer::SetNumber(const int32_t number)
 	offset_.x -= numberSizeX * static_cast<float>(digits_.size() - digitNum);
 	offset_.x -= (numberSizeX / 2.0f) * static_cast<float>(digitNum - 1);
 }
+
+void NumberDrawer::SetColor(const Color& color)
+{
+	for (size_t i = 0; i < digits_.size(); i++)
+	{
+		digits_[i]->SetColor(color);
+	}
+}

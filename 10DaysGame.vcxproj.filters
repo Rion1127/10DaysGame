@@ -498,7 +498,7 @@
     <ClCompile Include="application\Sourcecode\Animation\PanelDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Animation\HPDrawer.cpp">
+    <ClCompile Include="application\Sourcecode\Animation\GaugeDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Number.cpp">
@@ -519,8 +519,14 @@
     <ClCompile Include="application\Sourcecode\Animation\RecoveryDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
     </ClCompile>
-    <ClCompile Include="MinoCounterDrawer.cpp">
+    <ClCompile Include="application\Sourcecode\Animation\CountDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="StatusDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\IParticle2D.cpp">
+      <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -800,7 +806,7 @@
     <ClInclude Include="application\Sourcecode\Animation\PanelDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
-    <ClInclude Include="application\Sourcecode\Animation\HPDrawer.h">
+    <ClInclude Include="application\Sourcecode\Animation\GaugeDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Number.h">
@@ -821,8 +827,14 @@
     <ClInclude Include="application\Sourcecode\Animation\RecoveryDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
     </ClInclude>
-    <ClInclude Include="MinoCounterDrawer.h">
+    <ClInclude Include="application\Sourcecode\Animation\CountDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\IParticle2D.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

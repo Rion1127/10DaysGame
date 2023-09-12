@@ -12,6 +12,7 @@ private:
 	bool isCollision_;
 	PipeLineState state_;
 	Vector2 colSize_;
+	bool isActive_;
 public:
 	Button(Vector2 pos);
 
@@ -23,4 +24,5 @@ public:
 public:
 	void SetTexture(Texture* texture);
 	void SetPos(Vector2 pos) { pos_ = pos; }
+	void SetisActive(bool flag) { isActive_ = flag; }
 };

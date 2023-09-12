@@ -3,6 +3,14 @@
 #include <imgui.h>
 #include "WinAPI.h"
 
+namespace 
+{
+	//const size_t kHelthIndex = 0;
+	const size_t kAttackIndex = 0;
+	const size_t kLuckIndex = 1;
+	//const size_t kIndex = 0;
+}
+
 void Player::Initialize()
 {	
 	Vector3 pos = {
@@ -26,14 +34,32 @@ void Player::Initialize()
 	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_.m_);
 	sword_.Initialize(20, 20, &trfm_.m_);
 	hpBar_.Initialize({ {0.0f,96.0f,0.0f},{},{1.0f,1.0f,1.0f} }, &trfm_.m_, health_);
+	hpBar_.SetGaugeColor(Color(0, 0, 0, 255), Color(200, 20, 20, 255), Color(20, 200, 20, 255));
 	damage_.Initialize({ {0.0f,-32.0f,0.0f},{},{0.5f,0.5f,1.0f} }, &trfm_.m_, 0);
 	recovery_.Initialize({ {0.0f,-64.0f,0.0f},{},{0.5f,0.5f,1.0f} }, &trfm_.m_, 0);
 
 	drawer_.MoveAnimation();
 
+	statusTrfm_.Initialize();
+	statusTrfm_.pos_ = Vector3(90, 500, 0);
+
 	statusFrame_.Ini("statusframe");
 	statusFrame_.SetTexture(TextureManager::GetInstance()->GetTexture("StatusFrame"));
-	statusFrame_.SetPos(Vector2(90,450));
+	for (size_t i = 0; i < status_.size(); i++)
+	{
+		YGame::YTransform::Status status = YGame::YTransform::Status::Default();
+		
+		status.pos_ = { statusFrame_.GetPos().x,statusFrame_.GetPos().y,0.0f };
+		status.pos_.x += 32.0f;
+		status.pos_.y += (i * 36.0f) + 4.0f;
+
+		status.scale_ = { 0.25f,0.25f,1.0f };
+
+		status_[i].Initialize(status, &statusTrfm_.m_);
+	}
+
+	status_[kAttackIndex].PowerUpAnimation(baseAttackpower_);
+	status_[kLuckIndex].PowerUpAnimation(luck_);
 }
 
 void Player::Update()
@@ -50,7 +76,20 @@ void Player::Update()
 	damage_.Update();
 	recovery_.Update();
 
-	statusFrame_.Update();
+	statusTrfm_.UpdateMatrix();
+	statusFrame_.Update(statusTrfm_.m_);
+	for (size_t i = 0; i < status_.size(); i++)
+	{
+		status_[i].Update();
+	}
+}
+
+void Player::StatusUpdate(const int32_t plusHealth, const int32_t plusLuck, const int32_t plusRecover, const int32_t plusAttack)
+{
+	status_[kAttackIndex].PlusAnimation(plusAttack);
+	status_[kLuckIndex].PlusAnimation(plusLuck);
+	//status_[2].PlusAnimation();
+	//status_[3].PlusAnimation();
 }
 
 void Player::AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndices)
@@ -66,6 +105,10 @@ void Player::Draw()
 	damage_.Draw();
 	recovery_.Draw();
 	statusFrame_.Draw();
+	for (size_t i = 0; i < status_.size(); i++)
+	{
+		status_[i].Draw();
+	}
 }
 
 void Player::DrawImGui()
@@ -83,7 +126,7 @@ void Player::Damage(int32_t damage)
 	health_ -= damage;
 
 	drawer_.HitAnimation();
-	hpBar_.ChangeHPAnimation(health_);
+	hpBar_.ChangeValueAnimation(health_);
 	damage_.SetNumber(damage);
 	damage_.DamageAnimation();
 }
@@ -92,11 +135,7 @@ void Player::Recovery(int32_t health)
 {
 	health_ += health;
 
-	if (hpBar_.MaxHP() <= health_)
-	{
-		hpBar_.ChangeMaxHPAnimation(health_);
-	}
-	hpBar_.ChangeHPAnimation(health_);
+	hpBar_.ChangeValueAnimation(health_);
 
 	if (0 < health)
 	{
@@ -111,10 +150,12 @@ void Player::AddHealth(int32_t health) {
 
 void Player::AddAttack(int32_t attack) {
 	baseAttackpower_ += attack;
+	status_[kAttackIndex].PowerUpAnimation(baseAttackpower_);
 }
 
 void Player::AddLuck(int32_t luck) {
 	luck_ += luck;
+	status_[kLuckIndex].PowerUpAnimation(luck_);
 }
 
 void Player::IdleAnimation()

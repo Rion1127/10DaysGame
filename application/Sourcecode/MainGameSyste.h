@@ -5,7 +5,6 @@
 #include "EnemyManager.h"
 #include "YCameraManager.h"
 #include "NextMinoDrawer.h"
-#include "MinoCounterDrawer.h"
 #include "Button.h"
 #include "Timer.h"
 
@@ -42,7 +41,6 @@ private:
 	uint32_t minoCountLevel_;
 	
 	YGame::NextMinoDrawer nextMinoDrawer_;
-	YGame::MinoCounterDrawer minoCounterDrawer_;
 
 	Player* player_;
 	IEnemy* enemy_;
@@ -61,7 +59,6 @@ private:
 	Vector2 attackPos_;
 
 	MouseUI mouseUi_;
-	Timer redoCoolTime_;
 
 	std::unique_ptr<Button> pauseButton_;
 	std::unique_ptr<Button> backButton_;
@@ -72,6 +69,8 @@ private:
 	bool isNext_;
 
 	std::unique_ptr<Sprite> swordSprite_;
+	std::unique_ptr<Button> redoButton_;
+	Vector2 redoPos_;
 public:
 	MainGameSyste();
 	void Update();
@@ -108,6 +107,7 @@ private:
 	TutorialStep tutorialstep_;
 
 	int32_t tutorialIndexX_;
+	int32_t oldTutorialIndexX_;
 	int32_t tutorialIndexY_;
 
 	std::unique_ptr<Sprite> textFrameSprite_;
