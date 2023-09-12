@@ -61,6 +61,8 @@ void LoadManager::LoadTexture()
 	LoadGraph("tutorialText.png", "TutorialText");
 	LoadGraph("statusFrame.png", "StatusFrame");
 	LoadGraph("longSword.png", "Sword");
+	LoadGraph("critical.png", "CriticalFont");
+	LoadGraph("criticalEffect.png", "CriticalEffect");
 	
 	LoadGraph("recoveryEffect.png", "Recovery");
 	LoadGraph("debri.png", "Debri");
