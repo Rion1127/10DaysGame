@@ -7,6 +7,8 @@
 #include "Button.h"
 #include "Timer.h"
 
+#include "TitleDrawer.h"
+
 class TitleScene final :
 	public IScene
 {
@@ -18,6 +20,9 @@ private:
 private:
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
+
+	YGame::TitleDrawer titleDra_;
+
 	std::unique_ptr<Sprite> titleSprite_ = nullptr;
 	std::unique_ptr<Sprite> clickSprite_ = nullptr;
 	Timer timer_;

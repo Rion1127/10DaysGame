@@ -5,7 +5,7 @@
 
 namespace YGame
 {
-	enum class EnemyType
+	enum EnemyType
 	{
 		Slime, Bat, Bear,
 	};

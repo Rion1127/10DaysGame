@@ -112,6 +112,7 @@
     <ClCompile Include="NumberDrawer.cpp" />
     <ClCompile Include="SelectScene.cpp" />
     <ClCompile Include="StatusDrawer.cpp" />
+    <ClCompile Include="TitleDrawer.cpp" />
     <ClCompile Include="WallDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +218,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="SelectScene.h" />
     <ClInclude Include="StatusDrawer.h" />
+    <ClInclude Include="TitleDrawer.h" />
     <ClInclude Include="WallDrawer.h" />
   </ItemGroup>
   <ItemGroup>

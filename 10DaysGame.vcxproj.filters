@@ -438,10 +438,16 @@
     <ClCompile Include="application\Sourcecode\Enemy\IEnemy.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\Player.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
+    </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\Shake.cpp">
       <Filter>application\ソースファイル\Animation\Math</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\YTransform.cpp">
+      <Filter>application\ソースファイル\Animation\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\YPower.cpp">
       <Filter>application\ソースファイル\Animation\Math</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\YTimer.cpp">
@@ -537,11 +543,8 @@
     <ClCompile Include="application\Sourcecode\ClearEffect.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Player.cpp">
-      <Filter>application\ソースファイル\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="application\Sourcecode\Animation\YPower.cpp">
-      <Filter>application\ソースファイル\Panel</Filter>
+    <ClCompile Include="TitleDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -857,14 +860,17 @@
     <ClInclude Include="SelectScene.h">
       <Filter>application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="WallDrawer.h">
-      <Filter>engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\Sourcecode\GameOverEffect.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\ClearEffect.h">
       <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="WallDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

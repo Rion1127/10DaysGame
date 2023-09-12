@@ -19,6 +19,9 @@ TitleScene::~TitleScene()
 void TitleScene::Ini()
 {
 	sound_ = SoundManager::GetInstance();
+
+	titleDra_.Initialize();
+
 	titleSprite_ = std::make_unique<Sprite>();
 	titleSprite_->Ini();
 	titleSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Title"));
@@ -45,24 +48,27 @@ void TitleScene::Update()
 
 #endif //_DEBUG
 
-		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
-		{
-			if (SceneManager::GetIsSetNext() == false) {
-				SceneManager::SetChangeStart(SceneName::Select);
-				SoundManager::Play("Click_2SE", false, 1.0f);
-			}
+	if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+	{
+		if (SceneManager::GetIsSetNext() == false) {
+			SceneManager::SetChangeStart(SceneName::Select);
+			SoundManager::Play("Click_2SE", false, 1.0f);
 		}
-		timer_.AddTime(1);
-		if (timer_.GetIsEnd()) {
-			bool isInvisible = clickSprite_->GetIsInvisible();
+	}
+	timer_.AddTime(1);
+	if (timer_.GetIsEnd()) {
+		bool isInvisible = clickSprite_->GetIsInvisible();
 
-			isInvisible = (isInvisible == true) ? false : true;
+		isInvisible = (isInvisible == true) ? false : true;
 
-			clickSprite_->SetInvisivle(isInvisible);
+		clickSprite_->SetInvisivle(isInvisible);
 
-			timer_.Reset();
-		}
+		timer_.Reset();
+	}
 	//
+
+	titleDra_.Update();
+
 	titleSprite_->Update();
 	clickSprite_->Update();
 }
@@ -71,6 +77,8 @@ void TitleScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	
+	titleDra_.Draw();
+
 	titleSprite_->Draw();
 	clickSprite_->Draw();
 	
