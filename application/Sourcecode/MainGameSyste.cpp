@@ -242,8 +242,11 @@ void MainGameSyste::Update()
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
 	
+	wallDrawer_.ChangePlusHealth(panel_->GetStateUpValue().healthUp_);
+	wallDrawer_.ChangePlusAttack(panel_->GetStateUpValue().attackUp_);
+	wallDrawer_.ChangePlusLuck(panel_->GetStateUpValue().luckUp_);
+	wallDrawer_.ChangePlusHeal(panel_->GetStateUpValue().recoverUp_);
 	wallDrawer_.Update();
-
 
 	// カメラ更新
 	cameraManager_->Update();
@@ -813,8 +816,11 @@ void MainGameSyste::TutorialUpdate()
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
 
+	wallDrawer_.ChangePlusHealth(panel_->GetStateUpValue().healthUp_);
+	wallDrawer_.ChangePlusAttack(panel_->GetStateUpValue().attackUp_);
+	wallDrawer_.ChangePlusLuck(panel_->GetStateUpValue().luckUp_);
+	wallDrawer_.ChangePlusHeal(panel_->GetStateUpValue().recoverUp_);
 	wallDrawer_.Update();
-
 
 	// カメラ更新
 	cameraManager_->Update();
