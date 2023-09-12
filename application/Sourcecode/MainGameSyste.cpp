@@ -290,6 +290,7 @@ void MainGameSyste::DrawSprite()
 
 void MainGameSyste::DrawSpriteFront()
 {
+	wallDrawer_.Draw();
 	if (gameState_ == State::CLEAR ||
 		gameState_ == State::GAMEOVER ||
 		gameState_ == State::PAUSE)
@@ -313,7 +314,7 @@ void MainGameSyste::DrawSpriteFront()
 		}
 	}
 	
-	wallDrawer_.Draw();
+	
 }
 
 void MainGameSyste::DrawImGui()
