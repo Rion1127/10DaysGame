@@ -62,7 +62,7 @@ void TitleScene::Update()
 
 			timer_.Reset();
 		}
-	
+	//
 	titleSprite_->Update();
 	clickSprite_->Update();
 }
