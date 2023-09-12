@@ -26,11 +26,11 @@ ClearEffect::ClearEffect()
 		sprite_[i]->sprite->SetPos(sprite_[i]->easeStartPos_);
 		sprite_[i]->sprite->Update();
 		sprite_[i]->isActive = false;
-		sprite_[i]->timer.SetLimitTime(120);
+		sprite_[i]->timer.SetLimitTime(50);
 		sprite_[i]->sprite->SetColor(Color(255, 255, 255, 0));
 	}
 
-	timer_.SetLimitTime(10);
+	timer_.SetLimitTime(7);
 	index_ = 0;
 }
 
