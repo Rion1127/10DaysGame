@@ -168,6 +168,27 @@ void SoundManager::Stop(const SoundKey& key)
 	}
 }
 
+void SoundManager::AllStop()
+{
+	for (auto itr = ssndPlaying_.begin(); itr != ssndPlaying_.end();)
+	{
+		itr->second.sound_->Stop();
+		XAUDIO2_VOICE_STATE state;
+		itr->second.sound_->GetState(&state);
+		if (state.BuffersQueued <= 0) {
+			//’†g‚ª“ü‚Á‚Ä‚¢‚½‚ç‚·‚×‚Ä~‚ß‚é
+			if (itr->second.sound_ != nullptr) {
+				itr->second.sound_->Stop();
+			}
+			itr->second.Release();
+
+			itr = ssndPlaying_.erase(itr);
+			continue;
+		}
+		itr++;
+	}
+}
+
 void SoundManager::ReleaseAllSounds()
 {
 	for (auto itr = ssndMap_.begin(); itr != ssndMap_.end(); itr++)

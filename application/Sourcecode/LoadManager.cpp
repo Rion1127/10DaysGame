@@ -75,5 +75,9 @@ void LoadManager::LoadSound()
 	LoadWave("cantSetSE.wav", "CantSetSE");
 	LoadWave("statusUpSE.wav", "StatysUpSE");
 	LoadWave("redoSE.wav", "RedoSE");
+
+
 	LoadWave("gameOverBGM.wav", "GameOverBGM");
+	LoadWave("fightBGM.wav", "FightBGM");
+	LoadWave("titleBGM.wav", "TitleBGM");
 }

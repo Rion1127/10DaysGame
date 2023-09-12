@@ -195,6 +195,7 @@ void MainGameSyste::Update()
 			gameState_ = State::GAMEOVER;
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 			SoundManager::Play("GameOverBGM", true, 1.0f);
+			SoundManager::Stop("FightBGM");
 		}
 	}
 	//ƒNƒŠƒA‚µ‚½‚ç

@@ -97,6 +97,7 @@ public:
 	static SoundData* GetSoundData(const SoundKey& key);
 
 	static void Stop(const SoundKey& key);
+	static void AllStop();
 	
 	static void ReleaseAllSounds();
 

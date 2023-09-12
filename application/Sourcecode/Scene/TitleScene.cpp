@@ -24,6 +24,8 @@ void TitleScene::Ini()
 	titleSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Title"));
 	titleSprite_->SetAnchor(Vector2(0.0f, 0.0f));
 
+	SoundManager::AllStop();
+	SoundManager::Play("TitleBGM", true);
 }
 
 void TitleScene::Update()
