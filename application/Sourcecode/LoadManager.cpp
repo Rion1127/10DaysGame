@@ -55,6 +55,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("pause.png", "Pause");
 	LoadGraph("backButton.png", "BackButton");
 	LoadGraph("redoButton.png", "RedoButton");
+	LoadGraph("enemyStateUI.png", "EnemyStateUI");
 	//UI
 	LoadGraph("textFrame.png", "TextFrame");
 	LoadGraph("tutorialText.png", "TutorialText");
