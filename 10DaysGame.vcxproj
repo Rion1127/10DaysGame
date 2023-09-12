@@ -110,6 +110,7 @@
     <ClCompile Include="NumberDrawer.cpp" />
     <ClCompile Include="SelectScene.cpp" />
     <ClCompile Include="StatusDrawer.cpp" />
+    <ClCompile Include="WallDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\Sourcecode\Animation\BaseDrawer.h" />
@@ -212,6 +213,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="SelectScene.h" />
     <ClInclude Include="StatusDrawer.h" />
+    <ClInclude Include="WallDrawer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="application\Resources\shader\assimp.hlsli" />

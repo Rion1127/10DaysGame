@@ -34,6 +34,8 @@ void LoadManager::LoadTexture()
 	LoadGraph("nextPartsFrame.png", "Frame");
 	LoadGraph("next.png", "Next");
 	LoadGraph("lock.png", "Lock");
+	LoadGraph("wall.png", "Wall");
+	LoadGraph("effects.png", "Effect");
 	//ÉvÉåÉCÉÑÅ[
 	LoadGraph("player.png", "Player");
 	LoadGraph("playerMove.png", "PlayerMove");

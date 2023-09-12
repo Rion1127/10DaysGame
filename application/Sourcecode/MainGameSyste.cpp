@@ -10,6 +10,7 @@ MainGameSyste::MainGameSyste()
 	panel_ = std::make_unique<Panel>();
 
 	nextMinoDrawer_.Initialize();
+	wallDrawer_.Initialize();
 
 	nowTurn_ = Turn::PLAYER;
 	gameState_ = State::GAME;
@@ -230,9 +231,12 @@ void MainGameSyste::Update()
 		enemyManager_.SetIsChangeNowEnemy(false);
 	}
 
+
 	int32_t cost = minoCountUpCost_.at(minoCountLevel_);
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
+	
+	wallDrawer_.Update();
 
 
 	// カメラ更新
@@ -260,10 +264,12 @@ void MainGameSyste::Update()
 void MainGameSyste::DrawSprite()
 {
 	panel_->DrawSprite();
+	nextMinoDrawer_.Draw();
+	//wallDrawer_.Draw();
+	
 	enemyManager_.Draw();
 
 	attackButton_->Draw();
-	nextMinoDrawer_.Draw();
 	mouseUi_.Draw();
 	pauseButton_->Draw();
 	swordSprite_->Draw();
@@ -793,9 +799,13 @@ void MainGameSyste::TutorialUpdate()
 		enemyManager_.SetIsChangeNowEnemy(false);
 	}
 
+
 	int32_t cost = minoCountUpCost_.at(minoCountLevel_);
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
+
+	wallDrawer_.Update();
+
 
 	// カメラ更新
 	cameraManager_->Update();
@@ -888,6 +898,8 @@ void MainGameSyste::TutorialUpdate()
 		}
 	}
 
+
+	YGame::DeadActor::StaticUpdate();
 }
 
 void MainGameSyste::TutorialDraw()
