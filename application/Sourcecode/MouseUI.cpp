@@ -6,10 +6,10 @@ MouseUI::MouseUI()
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Ini("mouseUI");
 	sprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Mouse"));
-	sprite_->SetTex_Size(Vector2(160,128));
+	sprite_->SetTex_Size(Vector2(200,164));
 	float scaleX = (1.f / 3.f) * 0.8f;
 	sprite_->SetScale(Vector2(scaleX, 0.8f));
-	sprite_->SetPos(Vector2(100, 660));
+	sprite_->SetPos(Vector2(100, 690));
 	timer_.SetLimitTime(5);
 }
 
