@@ -75,7 +75,7 @@ void MainGameSyste::SpriteInit()
 
 	pausePos_ = {
 		80.f,
-		50.f
+		500.f
 	};
 	pauseButton_ = std::make_unique<Button>(pausePos_);
 	pauseButton_->SetTexture(TextureManager::GetInstance()->GetTexture("PauseButton"));

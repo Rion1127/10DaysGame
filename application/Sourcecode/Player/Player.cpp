@@ -41,7 +41,7 @@ void Player::Initialize()
 	drawer_.MoveAnimation();
 
 	statusTrfm_.Initialize();
-	statusTrfm_.pos_ = Vector3(90, 500, 0);
+	statusTrfm_.pos_ = Vector3(90, 130, 0);
 
 	statusFrame_.Ini("statusframe");
 	statusFrame_.SetTexture(TextureManager::GetInstance()->GetTexture("StatusFrame"));

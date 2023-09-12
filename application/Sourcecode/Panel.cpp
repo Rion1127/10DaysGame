@@ -232,6 +232,13 @@ void Panel::PanelUpdate()
 	{
 		for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
 		{
+			if (x == 0 || x == 9 || y == 0 || y == 9)
+			{
+				if (systemPanel_[x][y] == State::NEXT_RELEASE)
+				{
+					isPanelReset_ = true;
+				}
+			}
 			//NEXT_RELEASEを攻撃可能パネルにして攻撃パネルもリセットする
 			if (systemPanel_[x][y] == State::NEXT_RELEASE)
 			{
