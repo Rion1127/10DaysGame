@@ -61,7 +61,7 @@ EnemyPopDataList::EnemyPopDataList()
 	for (int32_t i = 0; i < mainGame.enemyData.size(); i++) {
 		mainGame.enemyData[i] = {
 			100 + 4 * i,
-			50 + (2 * i)
+			3 + (2 * i)
 		};
 	}
 	dataList_.insert(std::make_pair("MainGame", mainGame));

@@ -232,17 +232,6 @@ void Panel::PanelUpdate()
 	{
 		for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
 		{
-			if (x == 0 || x == 9 || y == 0 || y == 9)
-			{
-				if (systemPanel_[x][y] == State::NEXT_RELEASE)
-				{
-					isPanelReset_ = true;
-					if (x == 0)stateUp_.healthUp_++;
-					if (x == 9)stateUp_.attackUp_++;
-					if (y == 0)stateUp_.luckUp_++;
-					if (y == 9)stateUp_.recoverUp_++;
-				}
-			}
 			//NEXT_RELEASEを攻撃可能パネルにして攻撃パネルもリセットする
 			if (systemPanel_[x][y] == State::NEXT_RELEASE)
 			{
@@ -297,6 +286,7 @@ void Panel::ReDoReset()
 {
 	oldPanelList_.clear();
 	usedMinoType_.clear();
+	oldStateUp_.clear();
 }
 
 bool Panel::IsCanChange(const Mino& mino)
@@ -514,13 +504,19 @@ void Panel::ReDo(std::vector<MinoType>* minos)
 				systemPanel_[y][x] = oldPanelList_.front()[y][x];
 			}
 		}
+		//パネルを戻す
 		oldPanelList_.erase(oldPanelList_.begin());
-
 		minos->insert(minos->begin(), usedMinoType_.front());
-
+		//パーツを戻す
 		usedMinoType_.erase(usedMinoType_.begin());
-
 		totalPanel_ -= oldTotalPanel_.front();
+
+		stateUp_.attackUp_ -= oldStateUp_.front().attackUp_;
+		stateUp_.healthUp_ -= oldStateUp_.front().healthUp_;
+		stateUp_.luckUp_ -= oldStateUp_.front().luckUp_;
+		stateUp_.recoverUp_ -= oldStateUp_.front().recoverUp_;
+
+		oldStateUp_.erase(oldStateUp_.begin());
 	}
 }
 
@@ -545,6 +541,8 @@ void Panel::SetPanel(const Mino& mino)
 
 	uint32_t nextReleaseNum = 0;
 
+	oldStateUp_.emplace_front();
+
 	for (uint32_t y = selectPos_.y; y < sizeY; y++)
 	{
 		panelX = 0;
@@ -565,6 +563,30 @@ void Panel::SetPanel(const Mino& mino)
 			}
 			//全て更新する
 			displayPanel_[x][y] = systemPanel_[x][y];
+
+			
+			if (x == 0 || x == 9 || y == 0 || y == 9)
+			{
+				if (systemPanel_[x][y] == State::NEXT_RELEASE)
+				{
+					if (x == 0) {
+						oldStateUp_.front().healthUp_++;
+						stateUp_.healthUp_++;
+					}
+					if (x == 9) {
+						oldStateUp_.front().attackUp_++;
+						stateUp_.attackUp_++;
+					}
+					if (y == 0) {
+						oldStateUp_.front().luckUp_++;
+						stateUp_.luckUp_++;
+					}
+					if (y == 9) {
+						oldStateUp_.front().recoverUp_++;
+						stateUp_.recoverUp_++;
+					}
+				}
+			}
 
 			panelX++;
 		}

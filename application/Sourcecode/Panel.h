@@ -47,10 +47,10 @@ private:
 	};
 
 	struct StateUp {
-		uint32_t luckUp_;
-		uint32_t healthUp_;
-		uint32_t recoverUp_;
-		uint32_t attackUp_;
+		int32_t luckUp_;
+		int32_t healthUp_;
+		int32_t recoverUp_;
+		int32_t attackUp_;
 	};
 private:
 	//描画用のパネル
@@ -60,6 +60,7 @@ private:
 	std::list<std::vector<std::vector<int32_t>>> oldPanelList_;
 	std::list<MinoType> usedMinoType_;
 	std::list<uint32_t> oldTotalPanel_;
+	std::list<StateUp> oldStateUp_;
 	int32_t maxPanelSize_;
 	int32_t initalSize_;
 	//現在選択しているパネル上の座標
