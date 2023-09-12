@@ -297,6 +297,7 @@ void MainGameSyste::DrawSpriteFront()
 
 		if (gameState_ == State::GAMEOVER) {
 			retryButton_->Draw();
+			gameOverEffect_.Draw();
 		}
 
 		if (gameState_ == State::PAUSE) {
@@ -509,6 +510,8 @@ void MainGameSyste::GameOverUpdate()
 			SceneManager::SetChangeStart(SceneName::Game);
 		}
 	}
+
+	gameOverEffect_.Update();
 }
 
 void MainGameSyste::MinoCountUp()

@@ -36,8 +36,10 @@ void TitleScene::Update()
 
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
 		{
-			SceneManager::SetChangeStart(SceneName::Select);
-			SoundManager::Play("Click_2SE", false, 1.0f);
+			if (SceneManager::GetIsSetNext() == false) {
+				SceneManager::SetChangeStart(SceneName::Select);
+				SoundManager::Play("Click_2SE", false, 1.0f);
+			}
 		}
 	
 

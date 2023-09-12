@@ -40,19 +40,21 @@ void SelectScene::Update()
 	//選択したシーンに切り替える
 	if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
 	{
-		//チュートリアルへ
-		if (tutorialButton_->GetIsCollision())
-		{
-			SceneManager::SetChangeStart(SceneName::Tutorial);
-			SceneManager::SetGameMode(GameMode::Tutorial);
-			SoundManager::Play("Click_2SE", false, 1.0f);
-		}
-		//本編へ
-		else if (mainGameButton_->GetIsCollision())
-		{
-			SceneManager::SetChangeStart(SceneName::Game);
-			SceneManager::SetGameMode(GameMode::MainGame);
-			SoundManager::Play("Click_2SE", false, 1.0f);
+		if (SceneManager::GetIsSetNext() == false) {
+			//チュートリアルへ
+			if (tutorialButton_->GetIsCollision())
+			{
+				SceneManager::SetChangeStart(SceneName::Tutorial);
+				SceneManager::SetGameMode(GameMode::Tutorial);
+				SoundManager::Play("Click_2SE", false, 1.0f);
+			}
+			//本編へ
+			else if (mainGameButton_->GetIsCollision())
+			{
+				SceneManager::SetChangeStart(SceneName::Game);
+				SceneManager::SetGameMode(GameMode::MainGame);
+				SoundManager::Play("Click_2SE", false, 1.0f);
+			}
 		}
 		////エンドレスへ
 		//else if (mainGameButton_->GetIsCollision())

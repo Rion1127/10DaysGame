@@ -8,6 +8,7 @@
 #include "WallDrawer.h"
 #include "Button.h"
 #include "Timer.h"
+#include "GameOverEffect.h"
 
 #include "MouseUI.h"
 class MainGameSyste
@@ -73,6 +74,8 @@ private:
 	std::unique_ptr<Sprite> swordSprite_;
 	std::unique_ptr<Button> redoButton_;
 	Vector2 redoPos_;
+
+	GameOverEffect gameOverEffect_;
 public:
 	MainGameSyste();
 	void Update();

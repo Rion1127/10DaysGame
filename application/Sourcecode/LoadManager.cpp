@@ -63,6 +63,7 @@ void LoadManager::LoadTexture()
 	
 	LoadGraph("recoveryEffect.png", "Recovery");
 	LoadGraph("debri.png", "Debri");
+	LoadGraph("gameOver.png", "GameOver");
 }
 
 void LoadManager::LoadSound()
