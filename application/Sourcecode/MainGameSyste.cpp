@@ -8,7 +8,7 @@ using YGame::YCameraManager;
 MainGameSyste::MainGameSyste()
 {
 	panel_ = std::make_unique<Panel>();
-	
+
 	nextMinoDrawer_.Initialize();
 
 	nowTurn_ = Turn::PLAYER;
@@ -195,7 +195,6 @@ void MainGameSyste::Update()
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
 			if (titleButton_->GetIsCollision())
 			{
-
 				SceneManager::SetChangeStart(SceneName::Title);
 			}
 		}
@@ -230,7 +229,7 @@ void MainGameSyste::Update()
 		enemy_ = enemyManager_.GetNowEnemy();
 		enemyManager_.SetIsChangeNowEnemy(false);
 	}
-	
+
 	int32_t cost = minoCountUpCost_.at(minoCountLevel_);
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
@@ -404,15 +403,20 @@ void MainGameSyste::TurnPlayer()
 		if (minos_.size() <= 0 || panel_->GetIsAllFill()) {
 			player_->AttackAnimation(panel_->GetDisplayPanel());
 		}
-		
+
 	}
 	//リドゥ機能
-	if (redoButton_->GetIsCollision()) {
-		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+	if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		if (redoButton_->GetIsCollision()) {
+			SoundManager::Play("RedoSE", false, 1.0f);
 			panel_->ReDo(&minos_);
 			nextMinoDrawer_.RetreatAnimation(minos_);
 		}
+		else {
+			SoundManager::Play("CantSetSE", false, 1.0f);
+		}
 	}
+	
 
 	//残りの数が0になった場合かすべてのマスを埋めた時ターンを終了する
 	if (minos_.size() <= 0 || panel_->GetIsAllFill() || isNext_ == true) {
