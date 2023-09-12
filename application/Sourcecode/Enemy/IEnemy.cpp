@@ -21,7 +21,7 @@ IEnemy::IEnemy()
 	trfm_.scale_ = scale;
 
 	// アニメーション用
-	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_.m_);
+	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_);
 	hpBar_.Initialize({ {0.0f,96.0f,0.0f},{},{1.0f,1.0f,1.0f} }, &trfm_.m_, health_);
 	hpBar_.SetGaugeColor(Color(0, 0, 0, 255), Color(200, 20, 20, 255), Color(20, 200, 20, 255));
 	damage_.Initialize({ {0.0f,-32.0f,0.0f},{},{0.5f,0.5f,1.0f} }, &trfm_.m_, 0);
@@ -47,7 +47,7 @@ IEnemy::IEnemy(int32_t health, int32_t attackPower)
 	trfm_.scale_ = scale;
 
 	// アニメーション用
-	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_.m_);
+	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_);
 	hpBar_.Initialize({ {0.0f,96.0f,0.0f},{},{1.0f,1.0f,1.0f} }, &trfm_.m_, health_);
 	hpBar_.SetGaugeColor(Color(0, 0, 0, 255), Color(200, 20, 20, 255), Color(20, 200, 20, 255));
 	damage_.Initialize({ {0.0f,-32.0f,0.0f},{},{0.5f,0.5f,1.0f} }, &trfm_.m_, 0);
@@ -63,6 +63,7 @@ void IEnemy::Damage(int32_t health)
 	health_ -= health;
 	if (health_ <= 0) {
 		isAlive_ = false;
+		drawer_.DeadAnimation();
 	}
 	
 	drawer_.HitAnimation();

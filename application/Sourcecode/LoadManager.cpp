@@ -60,6 +60,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("sword.png", "Sword");
 	
 	LoadGraph("recoveryEffect.png", "Recovery");
+	LoadGraph("debri.png", "Debri");
 }
 
 void LoadManager::LoadSound()

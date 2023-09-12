@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseDrawer.h"
 #include "HitActor.h"
-#include "YTimer.h"
+#include "DeadActor.h"
 
 namespace YGame
 {
@@ -14,8 +14,8 @@ namespace YGame
 		/// 初期化
 		/// </summary>
 		/// <param name="trfmStatus"> : トランスフォーム情報</param>
-		/// <param name="matParent"> : 親行列</param>
-		void Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent);
+		/// <param name="pTrfm"> : 親行列</param>
+		void Initialize(const YTransform::Status& trfmStatus, YTransform* pTrfm);
 
 		/// <summary>
 		/// 被弾アニメーション
@@ -31,6 +31,8 @@ namespace YGame
 		/// 移動アニメーション
 		/// </summary>
 		void MoveAnimation();
+
+		void DeadAnimation();
 
 	public:
 
@@ -56,8 +58,12 @@ namespace YGame
 
 	protected:
 
+		YTransform* pTrfm_ = nullptr;
+
 		// 被弾アニメーション
 		HitActor hitActor_;
+
+		DeadActor dead_;
 
 		bool isIdle_ = false;
 		

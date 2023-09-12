@@ -62,7 +62,7 @@ void NextMinoDrawer::Initialize()
 	riseTimer_.Initialize(30);
 
 	lock_.lock_.Initialize({ {0.0f,-24.0f,0.0f}, {}, {0.75f,0.75f,0.0f} }, nullptr);
-	lock_.block_.Initialize({ {-64.0f,24.0f,0.0f}, {}, {1.0f,1.0f,0.0f} }, nullptr, BlockColorType::White);
+	lock_.block_.Initialize({ {-60.0f,24.0f,0.0f}, {}, {1.2f,1.2f,0.0f} }, nullptr, BlockColorType::Blue);
 	lock_.gauge_.Initialize({ {+8.0f,24.0f,0.0f}, {}, {1.0f,1.0f,0.0f} }, nullptr, 0);
 	lock_.gauge_.SetNumberColor(Color(255, 255, 255, 255));
 	lock_.gauge_.SetGaugeColor(Color(0, 0, 0, 255), Color(20, 200, 200, 255), Color(200, 200, 20, 255));
@@ -90,7 +90,7 @@ void NextMinoDrawer::Update(const int32_t minoCount)
 	if (0.5f == resetTimer_.Ratio())
 	{
 		isUnlock_ = false;
-		lock_.block_.SetColor(Color(255, 255, 255, 255));
+		lock_.block_.ChangeColor(BlockColorType::Blue);
 		lock_.gauge_.SetNumberColor(Color(255, 255, 255, 255));
 		lock_.gauge_.SetGaugeColor(Color(0, 0, 0, 255), Color(20, 200, 200, 255), Color(200, 200, 20, 255));
 
@@ -171,7 +171,7 @@ void NextMinoDrawer::RedrawAnimation(const std::vector<MinoType>& minos)
 void NextMinoDrawer::UnlockAnimiation()
 {
 	isUnlock_ = true;
-	lock_.block_.SetColor(Color(255, 255, 255, 0));
+	lock_.block_.ChangeColor(BlockColorType::None);
 	lock_.gauge_.SetNumberColor(Color(255, 255, 255, 0));
 	lock_.gauge_.SetGaugeColor(Color(0, 0, 0, 0), Color(20, 200, 200, 0), Color(200, 200, 20, 0));
 }
@@ -206,7 +206,7 @@ void NextMinoDrawer::RetreatAnimation(const std::vector<MinoType>& minos)
 	riseTimer_.Reset(true);
 
 	isUnlock_ = false;
-	lock_.block_.SetColor(Color(255, 255, 255, 255));
+	lock_.block_.ChangeColor(BlockColorType::Blue);
 	lock_.gauge_.SetNumberColor(Color(255, 255, 255, 255));
 	lock_.gauge_.SetGaugeColor(Color(0, 0, 0, 255), Color(20, 200, 200, 255), Color(200, 200, 20, 255));
 }
