@@ -26,6 +26,17 @@ void TitleScene::Ini()
 
 	SoundManager::AllStop();
 	SoundManager::Play("TitleBGM", true);
+
+	clickSprite_ = std::make_unique<Sprite>();
+	clickSprite_->Ini();
+	clickSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Click"));
+	Vector2 pos = {
+		WinAPI::GetWindowSize().x / 2.f,
+		WinAPI::GetWindowSize().y / 1.2f
+	};
+	clickSprite_->SetPos(pos);
+
+	timer_.SetLimitTime(60);
 }
 
 void TitleScene::Update()
@@ -41,17 +52,27 @@ void TitleScene::Update()
 				SoundManager::Play("Click_2SE", false, 1.0f);
 			}
 		}
+		timer_.AddTime(1);
+		if (timer_.GetIsEnd()) {
+			bool isInvisible = clickSprite_->GetIsInvisible();
+
+			isInvisible = (isInvisible == true) ? false : true;
+
+			clickSprite_->SetInvisivle(isInvisible);
+
+			timer_.Reset();
+		}
 	
-
 	titleSprite_->Update();
-
+	clickSprite_->Update();
 }
 
 void TitleScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	
-		titleSprite_->Draw();
+	titleSprite_->Draw();
+	clickSprite_->Draw();
 	
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
 

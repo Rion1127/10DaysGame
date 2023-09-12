@@ -66,6 +66,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("debri.png", "Debri");
 	LoadGraph("gameOver.png", "GameOver");
 	LoadGraph("questClear.png", "QuestClear");
+	LoadGraph("click.png", "Click");
 }
 
 void LoadManager::LoadSound()
