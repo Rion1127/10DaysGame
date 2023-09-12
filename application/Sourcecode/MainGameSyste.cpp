@@ -47,6 +47,8 @@ MainGameSyste::MainGameSyste()
 	swordSprite_->SetPos(pos);
 
 	YGame::DeadActor::StaticInitialize();
+
+	SoundManager::Stop("GameOverBGM");
 }
 
 void MainGameSyste::SpriteInit()
@@ -188,6 +190,12 @@ void MainGameSyste::Update()
 		else {
 			redoButton_->SetisActive(false);
 		}
+
+		if (player_->GetIsAlive() == false) {
+			gameState_ = State::GAMEOVER;
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+			SoundManager::Play("GameOverBGM", true, 1.0f);
+		}
 	}
 	//ƒNƒŠƒA‚µ‚½‚ç
 	else if (gameState_ == State::CLEAR) {
@@ -221,10 +229,7 @@ void MainGameSyste::Update()
 		pauseSprite_->Update();
 	}
 
-	if (player_->GetIsAlive() == false) {
-		gameState_ = State::GAMEOVER;
-		panel_->SetUpdateType(UpdateType::SpriteOnly);
-	}
+	
 
 	if (enemyManager_.GetIsChangeNowEnemy() || enemyManager_.GetNowEnemy() == nullptr) {
 		enemy_ = enemyManager_.GetNowEnemy();

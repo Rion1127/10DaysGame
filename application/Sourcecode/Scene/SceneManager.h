@@ -7,6 +7,7 @@
 #include "Util.h"
 #include "Timer.h"
 #include "TransitionDrawer.h"
+#include "mSound.h"
 
 enum class SceneName {
 	Title,
