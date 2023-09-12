@@ -540,6 +540,9 @@
     <ClCompile Include="application\Sourcecode\GameOverEffect.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\ClearEffect.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -858,6 +861,9 @@
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\GameOverEffect.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\ClearEffect.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

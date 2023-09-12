@@ -36,6 +36,7 @@
     <ClCompile Include="application\Sourcecode\Animation\SplineEase.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\YTimer.cpp" />
     <ClCompile Include="application\Sourcecode\Button.cpp" />
+    <ClCompile Include="application\Sourcecode\ClearEffect.cpp" />
     <ClCompile Include="application\Sourcecode\CollisionManager.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\Enemy.cpp" />
     <ClCompile Include="application\Sourcecode\Enemy\EnemyManager.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="application\Sourcecode\Animation\SplineEase.h" />
     <ClInclude Include="application\Sourcecode\Animation\YTimer.h" />
     <ClInclude Include="application\Sourcecode\Button.h" />
+    <ClInclude Include="application\Sourcecode\ClearEffect.h" />
     <ClInclude Include="application\Sourcecode\CollisionManager.h" />
     <ClInclude Include="application\Sourcecode\Enemy\Enemy.h" />
     <ClInclude Include="application\Sourcecode\Enemy\EnemyManager.h" />

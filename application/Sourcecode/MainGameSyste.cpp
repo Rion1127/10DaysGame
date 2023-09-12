@@ -202,6 +202,8 @@ void MainGameSyste::Update()
 	else if (gameState_ == State::CLEAR) {
 		panel_->SetUpdateType(UpdateType::SpriteOnly);
 
+		clearEffect_.Update();
+
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
 			if (titleButton_->GetIsCollision())
 			{
@@ -301,11 +303,15 @@ void MainGameSyste::DrawSpriteFront()
 		if (gameState_ == State::GAMEOVER) {
 			retryButton_->Draw();
 			gameOverEffect_.Draw();
+			
 		}
 
 		if (gameState_ == State::PAUSE) {
 			backButton_->Draw();
 			pauseSprite_->Draw();
+		}
+		if (gameState_ == State::CLEAR) {
+			clearEffect_.Draw();
 		}
 	}
 }
