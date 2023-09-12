@@ -19,8 +19,6 @@ private:
 	DebugCamera debugCamera_;
 	std::unique_ptr<Sprite> titleSprite_ = nullptr;
 	std::unique_ptr<Sprite> kanBanSprite_ = nullptr;
-
-	
 	TitleType type_;
 	std::unique_ptr<Button> tutorialButton_;
 	std::unique_ptr<Button> mainGameButton_;

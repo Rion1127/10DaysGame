@@ -28,6 +28,14 @@ void GameScene::Ini()
 	backGround_->Ini();
 	backGround_->SetTexture(TextureManager::GetInstance()->GetTexture("Stage1"));
 	backGround_->SetAnchor(Vector2(0.0f, 0.0f));
+
+	puzzleBackGround_ = std::make_unique<Sprite>();
+	puzzleBackGround_->Ini();
+	puzzleBackGround_->SetPos(Vector2(0.0f,240.0f));
+
+	puzzleBackGround_->SetTexture(TextureManager::GetInstance()->GetTexture("Sand1"));
+	puzzleBackGround_->SetAnchor(Vector2(0.0f, 0.0f));
+
 }
 
 void GameScene::Update()
@@ -42,12 +50,14 @@ void GameScene::Update()
 	}
 
 	backGround_->Update();
+	puzzleBackGround_->Update();
 }
 
 void GameScene::Draw()
 {
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	backGround_->Draw();
+	puzzleBackGround_->Draw();
 	mainSystem_->DrawSprite();
 	player_->Draw();
 	mainSystem_->DrawSpriteFront();

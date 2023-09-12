@@ -23,6 +23,9 @@ void LoadManager::LoadTexture()
 	LoadGraph("kanban.png", "KanBan");
 	//ステージ背景
 	LoadGraph("stagedodai.png", "Stage1");
+	//パズル背景
+	LoadGraph("sand.png", "Sand");
+	LoadGraph("puzzleBackGround.png", "Sand1");
 	//パネル関連
 	LoadGraph("panel.png", "Panel");
 	LoadGraph("powerUpPanel.png", "PowerUpPanel");
