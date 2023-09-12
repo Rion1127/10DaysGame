@@ -5,7 +5,7 @@
 Microsoft::WRL::ComPtr<IXAudio2> SoundManager::sxAudio2_;
 IXAudio2MasteringVoice* SoundManager::smasterVoice_;
 std::map<SoundKey, SoundData> SoundManager::ssndMap_;
-std::list<SoundData> SoundManager::ssndPlaying_;
+std::map<SoundKey, SoundData> SoundManager::ssndPlaying_;
 
 std::string directoryPath_ = "application/Resources/BGM_SE/";
 
@@ -31,13 +31,13 @@ void SoundManager::Update()
 	for (auto itr = ssndPlaying_.begin(); itr != ssndPlaying_.end();)
 	{
 		XAUDIO2_VOICE_STATE state;
-		itr->sound_->GetState(&state);
+		itr->second.sound_->GetState(&state);
 		if (state.BuffersQueued <= 0) {
 			//中身が入っていたらすべて止める
-			if (itr->sound_ != nullptr) {
-				itr->sound_->Stop();
+			if (itr->second.sound_ != nullptr) {
+				itr->second.sound_->Stop();
 			}
-			itr->Release();
+			itr->second.Release();
 
 			itr = ssndPlaying_.erase(itr);
 			continue;
@@ -126,18 +126,18 @@ void SoundManager::Play(const SoundKey& key, bool loopFlag, float volum, float p
 {
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
 	//SoundData* pSnd = &;
-	ssndPlaying_.push_back(ssndMap_[key]);
-	if (ssndPlaying_.back().sound_ != nullptr)
+	ssndPlaying_.insert((std::make_pair(key,ssndMap_[key])));
+	if (ssndPlaying_.find(key)->second.sound_ != nullptr)
 	{
-		ssndPlaying_.back().sound_->Stop();
+		ssndPlaying_.find(key)->second.sound_->Stop();
 	}
 
-	sxAudio2_->CreateSourceVoice(&pSourceVoice, &ssndPlaying_.back().wfex_);
+	sxAudio2_->CreateSourceVoice(&pSourceVoice, &ssndPlaying_.find(key)->second.wfex_);
 
 	XAUDIO2_BUFFER buf{};
 
-	buf.pAudioData = ssndPlaying_.back().pBuffer_.data();
-	buf.AudioBytes = ssndPlaying_.back().bufferSize_;
+	buf.pAudioData = ssndPlaying_.find(key)->second.pBuffer_.data();
+	buf.AudioBytes = ssndPlaying_.find(key)->second.bufferSize_;
 	buf.Flags = XAUDIO2_END_OF_STREAM;
 	if (loopFlag) buf.LoopCount = XAUDIO2_LOOP_INFINITE;
 	//ボリュームセット
@@ -146,7 +146,7 @@ void SoundManager::Play(const SoundKey& key, bool loopFlag, float volum, float p
 	pSourceVoice->SetFrequencyRatio(picth);
 	pSourceVoice->Start();
 
-	ssndPlaying_.back().sound_ = pSourceVoice;
+	ssndPlaying_.find(key)->second.sound_ = pSourceVoice;
 
 
 }
@@ -159,9 +159,33 @@ SoundData* SoundManager::GetSoundData(const SoundKey& key)
 
 void SoundManager::Stop(const SoundKey& key)
 {
-	SoundData* pSnd = &ssndMap_[key];
+	//keyの音が無かったら返す
+	if (ssndPlaying_.find(key) == ssndPlaying_.end())return;
+
+	SoundData* pSnd = &ssndPlaying_.find(key)->second;
 	if (pSnd->sound_ != nullptr) {
 		pSnd->sound_->Stop();
+	}
+}
+
+void SoundManager::AllStop()
+{
+	for (auto itr = ssndPlaying_.begin(); itr != ssndPlaying_.end();)
+	{
+		itr->second.sound_->Stop();
+		XAUDIO2_VOICE_STATE state;
+		itr->second.sound_->GetState(&state);
+		if (state.BuffersQueued <= 0) {
+			//中身が入っていたらすべて止める
+			if (itr->second.sound_ != nullptr) {
+				itr->second.sound_->Stop();
+			}
+			itr->second.Release();
+
+			itr = ssndPlaying_.erase(itr);
+			continue;
+		}
+		itr++;
 	}
 }
 

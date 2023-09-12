@@ -20,7 +20,7 @@ void DamageDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* mat
 	emitCounter_ = 0;
 }
 
-void DamageDrawer::Update()
+void DamageDrawer::Update(const YTransform::Status& animeStatus)
 {
 	emitTim_.Update();
 	if (emitTim_.IsEnd())
@@ -47,7 +47,7 @@ void DamageDrawer::Update()
 		}
 	}
 
-	NumberDrawer::Update();
+	NumberDrawer::Update(animeStatus);
 }
 
 void DamageDrawer::DamageAnimation()

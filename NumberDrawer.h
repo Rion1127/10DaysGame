@@ -19,7 +19,7 @@ namespace YGame
 		/// <summary>
 		/// çXêV
 		/// </summary>
-		virtual void Update();
+		virtual void Update(const YTransform::Status& animeStatus = {});
 
 		/// <summary>
 		/// ï`âÊ
@@ -33,6 +33,8 @@ namespace YGame
 		void SetNumber(const int32_t number);
 
 		void SetColor(const Color& color);
+
+		int32_t GetNumber() { return number_; }
 	
 	public:
 
@@ -48,7 +50,8 @@ namespace YGame
 
 		int32_t number_ = 0;
 
-		YGame::YTransform trfm_;
+		YTransform trfm_;
+
 		Vector3 offset_;
 		std::array<std::unique_ptr<DigitDrawer>, 6> digits_;
 	};

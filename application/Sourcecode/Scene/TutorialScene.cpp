@@ -28,6 +28,8 @@ void TutorialScene::Ini()
 	backGround_->Ini();
 	backGround_->SetTexture(TextureManager::GetInstance()->GetTexture("Stage1"));
 	backGround_->SetAnchor(Vector2(0.0f, 0.0f));
+
+	SoundManager::AllStop();
 }
 
 void TutorialScene::Update()

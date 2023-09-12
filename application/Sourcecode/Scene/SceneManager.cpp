@@ -7,6 +7,7 @@
 #include "GameScene.h"
 #include "TitleScene.h"
 #include "TutorialScene.h"
+#include "SelectScene.h"
 
 std::unique_ptr<IScene> SceneManager::scurrentScene_ = nullptr;
 SceneName SceneManager::ssceneName_;
@@ -103,6 +104,10 @@ void SceneManager::SceneChange()
 	if (ssceneName_ == SceneName::Title)
 	{
 		Transition<TitleScene>();
+	}
+	else if (ssceneName_ == SceneName::Select)
+	{
+		Transition<SelectScene>();
 	}
 	else if (ssceneName_ == SceneName::Tutorial)
 	{

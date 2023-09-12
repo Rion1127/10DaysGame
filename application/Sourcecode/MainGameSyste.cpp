@@ -10,6 +10,7 @@ MainGameSyste::MainGameSyste()
 	panel_ = std::make_unique<Panel>();
 
 	nextMinoDrawer_.Initialize();
+	wallDrawer_.Initialize();
 
 	nowTurn_ = Turn::PLAYER;
 	gameState_ = State::GAME;
@@ -41,11 +42,13 @@ MainGameSyste::MainGameSyste()
 
 	Vector2 pos = {
 		WinAPI::GetWindowSize().x / 2.f,
-		680.f
+		744.f
 	};
 	swordSprite_->SetPos(pos);
 
+	YGame::DeadActor::StaticInitialize();
 
+	SoundManager::Stop("GameOverBGM");
 }
 
 void MainGameSyste::SpriteInit()
@@ -187,6 +190,13 @@ void MainGameSyste::Update()
 		else {
 			redoButton_->SetisActive(false);
 		}
+
+		if (player_->GetIsAlive() == false) {
+			gameState_ = State::GAMEOVER;
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+			SoundManager::Play("GameOverBGM", true, 1.0f);
+			SoundManager::Stop("FightBGM");
+		}
 	}
 	//クリアしたら
 	else if (gameState_ == State::CLEAR) {
@@ -220,19 +230,19 @@ void MainGameSyste::Update()
 		pauseSprite_->Update();
 	}
 
-	if (player_->GetIsAlive() == false) {
-		gameState_ = State::GAMEOVER;
-		panel_->SetUpdateType(UpdateType::SpriteOnly);
-	}
+	
 
 	if (enemyManager_.GetIsChangeNowEnemy() || enemyManager_.GetNowEnemy() == nullptr) {
 		enemy_ = enemyManager_.GetNowEnemy();
 		enemyManager_.SetIsChangeNowEnemy(false);
 	}
 
+
 	int32_t cost = minoCountUpCost_.at(minoCountLevel_);
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
+	
+	wallDrawer_.Update();
 
 
 	// カメラ更新
@@ -253,19 +263,25 @@ void MainGameSyste::Update()
 	mouseUi_.Update();
 	backSprite_->Update();
 	swordSprite_->Update();
+
+	YGame::DeadActor::StaticUpdate();
 }
 
 void MainGameSyste::DrawSprite()
 {
 	panel_->DrawSprite();
+	nextMinoDrawer_.Draw();
+	wallDrawer_.Draw();
+	
 	enemyManager_.Draw();
 
 	attackButton_->Draw();
-	nextMinoDrawer_.Draw();
 	mouseUi_.Draw();
 	pauseButton_->Draw();
 	swordSprite_->Draw();
 	redoButton_->Draw();
+
+	YGame::DeadActor::StaticDraw();
 }
 
 void MainGameSyste::DrawSpriteFront()
@@ -408,15 +424,19 @@ void MainGameSyste::TurnPlayer()
 	//リドゥ機能
 	if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
 		if (redoButton_->GetIsCollision()) {
-			SoundManager::Play("RedoSE", false, 1.0f);
-			panel_->ReDo(&minos_);
-			nextMinoDrawer_.RetreatAnimation(minos_);
+			if (reloadMinoNum_ > minos_.size()) {
+
+				SoundManager::Play("RedoSE", false, 1.0f);
+				panel_->ReDo(&minos_);
+				nextMinoDrawer_.RetreatAnimation(minos_);
+			}
+			else {
+				SoundManager::Play("CantSetSE", false, 1.0f);
+			}
 		}
-		else {
-			SoundManager::Play("CantSetSE", false, 1.0f);
-		}
+		
 	}
-	
+
 
 	//残りの数が0になった場合かすべてのマスを埋めた時ターンを終了する
 	if (minos_.size() <= 0 || panel_->GetIsAllFill() || isNext_ == true) {
@@ -785,9 +805,13 @@ void MainGameSyste::TutorialUpdate()
 		enemyManager_.SetIsChangeNowEnemy(false);
 	}
 
+
 	int32_t cost = minoCountUpCost_.at(minoCountLevel_);
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
+
+	wallDrawer_.Update();
+
 
 	// カメラ更新
 	cameraManager_->Update();
@@ -880,6 +904,8 @@ void MainGameSyste::TutorialUpdate()
 		}
 	}
 
+
+	YGame::DeadActor::StaticUpdate();
 }
 
 void MainGameSyste::TutorialDraw()

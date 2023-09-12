@@ -25,4 +25,5 @@ public:
 	void SetTexture(Texture* texture);
 	void SetPos(Vector2 pos) { pos_ = pos; }
 	void SetisActive(bool flag) { isActive_ = flag; }
+	void SetAncorPoint(Vector2 ancor) { sprite_->SetAnchor(ancor); };
 };

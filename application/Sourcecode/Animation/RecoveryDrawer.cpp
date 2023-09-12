@@ -28,7 +28,7 @@ void RecoveryDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* m
 	}
 }
 
-void RecoveryDrawer::Update()
+void RecoveryDrawer::Update(const YTransform::Status& animeStatus)
 {
 	dispTim_.Update();
 	if (dispTim_.IsEnd())
@@ -44,7 +44,7 @@ void RecoveryDrawer::Update()
 		}
 	}
 
-	NumberDrawer::Update();
+	NumberDrawer::Update(animeStatus);
 
 	for (size_t i = 0; i < plusDras_.size(); i++)
 	{

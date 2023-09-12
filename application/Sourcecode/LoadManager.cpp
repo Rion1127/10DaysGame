@@ -34,6 +34,8 @@ void LoadManager::LoadTexture()
 	LoadGraph("nextPartsFrame.png", "Frame");
 	LoadGraph("next.png", "Next");
 	LoadGraph("lock.png", "Lock");
+	LoadGraph("wall.png", "Wall");
+	LoadGraph("effects.png", "Effect");
 	//ÉvÉåÉCÉÑÅ[
 	LoadGraph("player.png", "Player");
 	LoadGraph("playerMove.png", "PlayerMove");
@@ -60,6 +62,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("sword.png", "Sword");
 	
 	LoadGraph("recoveryEffect.png", "Recovery");
+	LoadGraph("debri.png", "Debri");
 }
 
 void LoadManager::LoadSound()
@@ -72,4 +75,9 @@ void LoadManager::LoadSound()
 	LoadWave("cantSetSE.wav", "CantSetSE");
 	LoadWave("statusUpSE.wav", "StatysUpSE");
 	LoadWave("redoSE.wav", "RedoSE");
+
+
+	LoadWave("gameOverBGM.wav", "GameOverBGM");
+	LoadWave("fightBGM.wav", "FightBGM");
+	LoadWave("titleBGM.wav", "TitleBGM");
 }

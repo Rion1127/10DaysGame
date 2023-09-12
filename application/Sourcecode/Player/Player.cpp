@@ -31,7 +31,7 @@ void Player::Initialize()
 	trfm_.scale_ = scale;
 
 	// アニメーション用
-	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_.m_);
+	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_);
 	sword_.Initialize(20, 20, &trfm_.m_);
 	hpBar_.Initialize({ {0.0f,96.0f,0.0f},{},{1.0f,1.0f,1.0f} }, &trfm_.m_, health_);
 	hpBar_.SetGaugeColor(Color(0, 0, 0, 255), Color(200, 20, 20, 255), Color(20, 200, 20, 255));
@@ -134,6 +134,11 @@ void Player::Damage(int32_t damage)
 void Player::Recovery(int32_t health)
 {
 	health_ += health;
+	
+	if (health_ <= 0)
+	{
+		drawer_.DeadAnimation();
+	}
 
 	hpBar_.ChangeValueAnimation(health_);
 

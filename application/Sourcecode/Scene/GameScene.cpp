@@ -36,6 +36,8 @@ void GameScene::Ini()
 	puzzleBackGround_->SetTexture(TextureManager::GetInstance()->GetTexture("Sand1"));
 	puzzleBackGround_->SetAnchor(Vector2(0.0f, 0.0f));
 
+	SoundManager::AllStop();
+	SoundManager::Play("FightBGM",true);
 }
 
 void GameScene::Update()

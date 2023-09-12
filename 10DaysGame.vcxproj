@@ -60,6 +60,7 @@
     <ClCompile Include="application\Sourcecode\Shader\HighLumi.cpp" />
     <ClCompile Include="application\Sourcecode\Shader\LineBlur.cpp" />
     <ClCompile Include="application\Sourcecode\Shader\Noise.cpp" />
+    <ClCompile Include="DeadActor.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
     <ClCompile Include="engine\2d\MultiTexture.cpp" />
@@ -107,7 +108,9 @@
     <ClCompile Include="engine\util\StateMachine.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
     <ClCompile Include="NumberDrawer.cpp" />
+    <ClCompile Include="SelectScene.cpp" />
     <ClCompile Include="StatusDrawer.cpp" />
+    <ClCompile Include="WallDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\Sourcecode\Animation\BaseDrawer.h" />
@@ -158,6 +161,7 @@
     <ClInclude Include="application\Sourcecode\Shader\HighLumi.h" />
     <ClInclude Include="application\Sourcecode\Shader\LineBlur.h" />
     <ClInclude Include="application\Sourcecode\Shader\Noise.h" />
+    <ClInclude Include="DeadActor.h" />
     <ClInclude Include="engine\2d\IPostEffect.h" />
     <ClInclude Include="engine\2d\MultipleRenderTarget.h" />
     <ClInclude Include="engine\2d\MultiTexture.h" />
@@ -207,7 +211,9 @@
     <ClInclude Include="application\Sourcecode\Animation\PlayerDrawer.h" />
     <ClInclude Include="NumberDrawer.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SelectScene.h" />
     <ClInclude Include="StatusDrawer.h" />
+    <ClInclude Include="WallDrawer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="application\Resources\shader\assimp.hlsli" />

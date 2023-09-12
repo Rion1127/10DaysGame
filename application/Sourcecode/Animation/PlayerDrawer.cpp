@@ -3,11 +3,13 @@
 
 using YGame::PlayerDrawer;
 
-void PlayerDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
+void PlayerDrawer::Initialize(const YTransform::Status& trfmStatus, YTransform* pTrfm)
 {
-	BaseInitialize(trfmStatus, matParent);
+	BaseInitialize(trfmStatus, &pTrfm->m_);
 	ChangeTexture(TextureType::Idle);
 	
+	pTrfm_ = pTrfm;
+
 	hitActor_.Initialize();
 
 	isIdle_ = true;
@@ -55,6 +57,11 @@ void PlayerDrawer::MoveAnimation()
 	isIdle_ = false;
 
 	isMove_ = true;
+}
+
+void PlayerDrawer::DeadAnimation()
+{
+	dead_.Explosion(pTrfm_->pos_);
 }
 
 void PlayerDrawer::ChangeTexture(const TextureType textureType)
