@@ -84,4 +84,5 @@ void LoadManager::LoadSound()
 	LoadWave("gameOverBGM.wav", "GameOverBGM");
 	LoadWave("fightBGM.wav", "FightBGM");
 	LoadWave("titleBGM.wav", "TitleBGM");
+	LoadWave("clearBGM.wav", "ClearBGM");
 }
