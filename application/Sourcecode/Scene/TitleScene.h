@@ -5,6 +5,7 @@
 #include "Texture.h"
 #include "IScene.h"
 #include "Button.h"
+#include "Timer.h"
 
 class TitleScene final :
 	public IScene
@@ -18,6 +19,8 @@ private:
 	SoundManager* sound_ = nullptr;
 	DebugCamera debugCamera_;
 	std::unique_ptr<Sprite> titleSprite_ = nullptr;
+	std::unique_ptr<Sprite> clickSprite_ = nullptr;
+	Timer timer_;
 public:
 	~TitleScene();
 

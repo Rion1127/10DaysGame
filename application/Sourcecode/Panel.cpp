@@ -232,6 +232,13 @@ void Panel::PanelUpdate()
 	{
 		for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
 		{
+			if (x == 0 || x == 9 || y == 0 || y == 9)
+			{
+				if (systemPanel_[x][y] == State::NEXT_RELEASE)
+				{
+					isPanelReset_ = true;
+				}
+			}
 			//NEXT_RELEASEを攻撃可能パネルにして攻撃パネルもリセットする
 			if (systemPanel_[x][y] == State::NEXT_RELEASE)
 			{
@@ -512,7 +519,7 @@ void Panel::ReDo(std::vector<MinoType>* minos)
 		totalPanel_ -= oldTotalPanel_.front();
 
 		stateUp_.attackUp_ -= oldStateUp_.front().attackUp_;
-		stateUp_.healthUp_ -= oldStateUp_.front().healthUp_;
+		stateUp_.guardUp_ -= oldStateUp_.front().guardUp_;
 		stateUp_.luckUp_ -= oldStateUp_.front().luckUp_;
 		stateUp_.recoverUp_ -= oldStateUp_.front().recoverUp_;
 
@@ -570,8 +577,8 @@ void Panel::SetPanel(const Mino& mino)
 				if (systemPanel_[x][y] == State::NEXT_RELEASE)
 				{
 					if (x == 0) {
-						oldStateUp_.front().healthUp_++;
-						stateUp_.healthUp_++;
+						oldStateUp_.front().guardUp_++;
+						stateUp_.guardUp_++;
 					}
 					if (x == 9) {
 						oldStateUp_.front().attackUp_++;
@@ -600,7 +607,7 @@ void Panel::SetPanel(const Mino& mino)
 void Panel::ResetStateUp()
 {
 	stateUp_.attackUp_ = 0;
-	stateUp_.healthUp_ = 0;
+	stateUp_.guardUp_ = 0;
 	stateUp_.luckUp_ = 0;
 	stateUp_.recoverUp_ = 0;
 }

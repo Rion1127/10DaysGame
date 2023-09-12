@@ -134,6 +134,7 @@ public:
 	Vector2 GetPos() { return pos_; }
 	Color GetColor() { return color_; }
 	Texture GetTexture() { return texture_; }
+	bool GetIsInvisible() { return isInvisible_; }
 private:
 	void TransferVertex();
 };

@@ -75,7 +75,7 @@ void MainGameSyste::SpriteInit()
 
 	pausePos_ = {
 		80.f,
-		50.f
+		500.f
 	};
 	pauseButton_ = std::make_unique<Button>(pausePos_);
 	pauseButton_->SetTexture(TextureManager::GetInstance()->GetTexture("PauseButton"));
@@ -202,6 +202,8 @@ void MainGameSyste::Update()
 	else if (gameState_ == State::CLEAR) {
 		panel_->SetUpdateType(UpdateType::SpriteOnly);
 
+		clearEffect_.Update();
+
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
 			if (titleButton_->GetIsCollision())
 			{
@@ -242,7 +244,7 @@ void MainGameSyste::Update()
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
 	
-	wallDrawer_.ChangePlusHealth(panel_->GetStateUpValue().healthUp_);
+	wallDrawer_.ChangePlusGuard(panel_->GetStateUpValue().guardUp_);
 	wallDrawer_.ChangePlusAttack(panel_->GetStateUpValue().attackUp_);
 	wallDrawer_.ChangePlusLuck(panel_->GetStateUpValue().luckUp_);
 	wallDrawer_.ChangePlusHeal(panel_->GetStateUpValue().recoverUp_);
@@ -274,7 +276,6 @@ void MainGameSyste::DrawSprite()
 {
 	panel_->DrawSprite();
 	nextMinoDrawer_.Draw();
-	wallDrawer_.Draw();
 	
 	enemyManager_.Draw();
 
@@ -289,7 +290,7 @@ void MainGameSyste::DrawSprite()
 
 void MainGameSyste::DrawSpriteFront()
 {
-
+	wallDrawer_.Draw();
 	if (gameState_ == State::CLEAR ||
 		gameState_ == State::GAMEOVER ||
 		gameState_ == State::PAUSE)
@@ -301,13 +302,19 @@ void MainGameSyste::DrawSpriteFront()
 		if (gameState_ == State::GAMEOVER) {
 			retryButton_->Draw();
 			gameOverEffect_.Draw();
+			
 		}
 
 		if (gameState_ == State::PAUSE) {
 			backButton_->Draw();
 			pauseSprite_->Draw();
 		}
+		if (gameState_ == State::CLEAR) {
+			clearEffect_.Draw();
+		}
 	}
+	
+	
 }
 
 void MainGameSyste::DrawImGui()
@@ -390,14 +397,16 @@ void MainGameSyste::TurnChange()
 			panel_->PanelReset();
 		}
 
+		wallDrawer_.ChangeAnimation();
+
 		int32_t powerUp = panel_->GetStateUpValue().attackUp_;
 		player_->AddAttack(powerUp);
 		int32_t recovery = panel_->GetStateUpValue().recoverUp_;
 		player_->Recovery(recovery);
 		int32_t luck = panel_->GetStateUpValue().luckUp_;
 		player_->AddLuck(luck);
-		int32_t health = panel_->GetStateUpValue().healthUp_;
-		player_->AddHealth(health);
+		int32_t gurd = panel_->GetStateUpValue().guardUp_;
+		player_->AddGurd(gurd);
 
 		panel_->ResetStateUp();
 	}
@@ -452,6 +461,8 @@ void MainGameSyste::TurnPlayer()
 			panel_->SetIsAllFill(false);
 			//敵にダメージを与える
 			int32_t damage = panel_->GetAttackPanelNum() * player_->GetAttackPower();
+			damage -= enemy_->GetGuard();
+			damage = Max(1, damage);
 			enemy_->Damage(damage);
 			nowTurn_ = Turn::CHANGE;
 
@@ -479,7 +490,10 @@ void MainGameSyste::TurnEnemy()
 	//プレイヤーがダメージを受ける
 	if (enemyManager_.GetIsChangeNowEnemy() == false) {
 		if (enemyManager_.GetNowEnemy()->GetIsEndAttack()) {
-			player_->Damage(enemy_->GetAttackPower());
+			int32_t  damage = enemy_->GetAttackPower();
+			damage -= player_->GetGuard();
+			damage = Max(1, damage);
+			player_->Damage(damage);
 
 			float pitch = RRandom::RandF(0.7f, 1.f);
 			SoundManager::Play("Attack", false, 1.0f, pitch);
@@ -816,7 +830,7 @@ void MainGameSyste::TutorialUpdate()
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
 
-	wallDrawer_.ChangePlusHealth(panel_->GetStateUpValue().healthUp_);
+	wallDrawer_.ChangePlusGuard(panel_->GetStateUpValue().guardUp_);
 	wallDrawer_.ChangePlusAttack(panel_->GetStateUpValue().attackUp_);
 	wallDrawer_.ChangePlusLuck(panel_->GetStateUpValue().luckUp_);
 	wallDrawer_.ChangePlusHeal(panel_->GetStateUpValue().recoverUp_);

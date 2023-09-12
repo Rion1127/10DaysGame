@@ -438,9 +438,6 @@
     <ClCompile Include="application\Sourcecode\Enemy\IEnemy.cpp">
       <Filter>application\ソースファイル\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="application\Sourcecode\Player\Player.cpp">
-      <Filter>application\ソースファイル\Player</Filter>
-    </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\Shake.cpp">
       <Filter>application\ソースファイル\Animation\Math</Filter>
     </ClCompile>
@@ -539,6 +536,12 @@
     </ClCompile>
     <ClCompile Include="application\Sourcecode\GameOverEffect.cpp">
       <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\ClearEffect.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Player\Player.cpp">
+      <Filter>application\ソースファイル\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -858,6 +861,9 @@
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\GameOverEffect.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\ClearEffect.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

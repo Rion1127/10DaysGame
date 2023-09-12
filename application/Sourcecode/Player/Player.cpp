@@ -5,10 +5,10 @@
 
 namespace 
 {
-	//const size_t kHelthIndex = 0;
-	const size_t kAttackIndex = 0;
-	const size_t kLuckIndex = 1;
-	//const size_t kIndex = 0;
+	const size_t kHealthIndex = 0;
+	const size_t kAttackIndex = 1;
+	const size_t kGuardIndex = 2;
+	const size_t kLuckIndex = 3;
 }
 
 void Player::Initialize()
@@ -41,7 +41,7 @@ void Player::Initialize()
 	drawer_.MoveAnimation();
 
 	statusTrfm_.Initialize();
-	statusTrfm_.pos_ = Vector3(90, 500, 0);
+	statusTrfm_.pos_ = Vector3(90, 130, 0);
 
 	statusFrame_.Ini("statusframe");
 	statusFrame_.SetTexture(TextureManager::GetInstance()->GetTexture("StatusFrame"));
@@ -49,16 +49,18 @@ void Player::Initialize()
 	{
 		YGame::YTransform::Status status = YGame::YTransform::Status::Default();
 		
-		status.pos_ = { statusFrame_.GetPos().x,statusFrame_.GetPos().y,0.0f };
-		status.pos_.x += 32.0f;
+		status.pos_ = { statusFrame_.GetPos().x,statusFrame_.GetPos().y - 58.0f,0.0f };
+		status.pos_.x += 24.0f;
 		status.pos_.y += (i * 36.0f) + 4.0f;
 
-		status.scale_ = { 0.25f,0.25f,1.0f };
+		status.scale_ = { 0.20f,0.20f,1.0f };
 
 		status_[i].Initialize(status, &statusTrfm_.m_);
 	}
 
+	status_[kHealthIndex].PowerUpAnimation(health_);
 	status_[kAttackIndex].PowerUpAnimation(baseAttackpower_);
+	status_[kGuardIndex].PowerUpAnimation(guard_);
 	status_[kLuckIndex].PowerUpAnimation(luck_);
 }
 
@@ -82,14 +84,6 @@ void Player::Update()
 	{
 		status_[i].Update();
 	}
-}
-
-void Player::StatusUpdate(const int32_t plusHealth, const int32_t plusLuck, const int32_t plusRecover, const int32_t plusAttack)
-{
-	status_[kAttackIndex].PlusAnimation(plusAttack);
-	status_[kLuckIndex].PlusAnimation(plusLuck);
-	//status_[2].PlusAnimation();
-	//status_[3].PlusAnimation();
 }
 
 void Player::AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndices)
@@ -134,6 +128,7 @@ void Player::Damage(int32_t damage)
 void Player::Recovery(int32_t health)
 {
 	health_ += health;
+	status_[kHealthIndex].PowerUpAnimation(health_);
 	
 	if (health_ <= 0)
 	{
@@ -147,10 +142,12 @@ void Player::Recovery(int32_t health)
 		recovery_.SetNumber(health);
 		recovery_.RecoverAnimation();
 	}
+
 }
 
-void Player::AddHealth(int32_t health) {
-	health_ += health;
+void Player::AddGurd(int32_t gurd) {
+	guard_ += gurd;
+	status_[kGuardIndex].PowerUpAnimation(guard_);
 }
 
 void Player::AddAttack(int32_t attack) {

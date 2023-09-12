@@ -9,6 +9,7 @@
 #include "Button.h"
 #include "Timer.h"
 #include "GameOverEffect.h"
+#include "ClearEffect.h"
 
 #include "MouseUI.h"
 class MainGameSyste
@@ -76,6 +77,7 @@ private:
 	Vector2 redoPos_;
 
 	GameOverEffect gameOverEffect_;
+	ClearEffect clearEffect_;
 public:
 	MainGameSyste();
 	void Update();

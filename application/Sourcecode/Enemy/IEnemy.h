@@ -9,6 +9,7 @@ protected:
 	int32_t health_;
 	bool isAlive_;
 	int32_t attackPower_;
+	int32_t guard_;
 	
 	// トランスフォーム
 	YGame::YTransform trfm_;
@@ -34,6 +35,7 @@ public:
 public:
 	bool GetIsAlive() { return isAlive_; }
 	int32_t GetAttackPower() { return attackPower_; }
+	int32_t GetGuard() { return guard_; }
 	bool GetIsEndAttack() { return drawer_.GetIsEndAttack(); }
 };
 
