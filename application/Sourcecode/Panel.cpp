@@ -519,6 +519,8 @@ void Panel::ReDo(std::vector<MinoType>* minos)
 		minos->insert(minos->begin(), usedMinoType_.front());
 
 		usedMinoType_.erase(usedMinoType_.begin());
+
+		totalPanel_ -= oldTotalPanel_.front();
 	}
 }
 
@@ -571,6 +573,7 @@ void Panel::SetPanel(const Mino& mino)
 	isSetComplete_ = true;
 
 	totalPanel_ += nextReleaseNum;
+	oldTotalPanel_.push_front(nextReleaseNum);
 }
 void Panel::ResetStateUp()
 {
