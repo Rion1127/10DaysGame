@@ -19,11 +19,14 @@ Button::Button(Vector2 pos)
 		pos_.y + (sprite_->GetTexture().size_.y / 2)
 	};
 	sprite_->GetTexture();
-	Vector2 scale =  sprite_->GetScale();
+
+	Vector2 scale = sprite_->GetScale();
 	scale *= 0.8f;
 	sprite_->SetScale(scale);
 
 	isActive_ = true;
+	animeCount_ = 0;
+	animeTimer_ = 0;
 }
 
 void Button::Update()
@@ -46,11 +49,40 @@ void Button::Update()
 
 	Vector2 mPos = MouseInput::GetInstance()->mPos_;
 
-	if (CheckBox2DtoPoint(col_, mPos))
+	if (CheckBox2DtoPoint(col_, mPos) && isAnime_ == false)
 	{
 		isCollision_ = true;
 
 		state_ = PipeLineState::Sub;
+
+	}
+	else if(CheckBox2DtoPoint(col_, mPos) && isAnime_ == true)
+	{
+		animeTimer_++;
+
+		if(animeTimer_ >= 20)
+		{
+			animeTimer_ = 0;
+			if(animeCount_ < animeMaxCount_)
+			{
+				animeCount_++;
+			}
+			else
+			{
+				animeCount_ = 0;
+			}
+
+			Vector2 result;
+			result.x = texSize_.x * animeCount_;
+			result.y = 0.0f;
+
+			sprite_->SetTex_LeftTop(result);
+		}
+
+		
+		isCollision_ = true;
+
+		state_ = PipeLineState::Alpha;
 	}
 	else
 	{
@@ -97,4 +129,29 @@ void Button::SetTexture(Texture* texture)
 		pos_.x + (sprite_->GetTexture().size_.x / 2),
 		pos_.y + (sprite_->GetTexture().size_.y / 2)
 	};
+}
+
+void Button::SetAnime(Vector2 texSize, UINT animeMaxNum,bool isAnime)
+{
+	col_.leftUp = {
+		pos_.x - (sprite_->GetTexture().size_.x / 2),
+		pos_.y - (sprite_->GetTexture().size_.y / 2)
+	};
+	col_.RightDown = {
+		pos_.x + (sprite_->GetTexture().size_.x / 2),
+		pos_.y + (sprite_->GetTexture().size_.y / 2)
+	};
+
+	isAnime_ = true;
+	texSize_ = texSize;
+
+	sprite_->SetTex_LeftTop({});
+	sprite_->SetTex_Size(Vector2(300.0f, 200.0f));
+	sprite_->SetScale(Vector2(0.3f, 0.3f));
+
+	pos_ = { 400.0f,400.0f };
+	sprite_->SetPos(pos_);
+
+	animeMaxCount_ = animeMaxNum;
+	
 }
