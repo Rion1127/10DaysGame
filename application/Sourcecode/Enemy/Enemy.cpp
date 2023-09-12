@@ -18,6 +18,13 @@ void Enemy::Update()
 	drawer_.Update();
 	hpBar_.Update();
 	damage_.Update();
+
+	statusTrfm_.UpdateMatrix();
+	statusFrame_.Update(statusTrfm_.m_);
+	for (size_t i = 0; i < status_.size(); i++)
+	{
+		status_[i].Update();
+	}
 }
 
 void Enemy::Draw()
@@ -25,6 +32,11 @@ void Enemy::Draw()
 	drawer_.Draw();
 	hpBar_.Draw();
 	damage_.Draw();
+	statusFrame_.Draw();
+	for (size_t i = 0; i < status_.size(); i++)
+	{
+		status_[i].Draw();
+	}
 }
 
 void Enemy::DrawImGui()

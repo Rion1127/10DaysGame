@@ -2,6 +2,7 @@
 #include "EnemyDrawer.h"
 #include "GaugeDrawer.h"
 #include "DamageDrawer.h"
+#include "StatusDrawer.h"
 
 class IEnemy
 {
@@ -18,6 +19,10 @@ protected:
 	YGame::EnemyDrawer drawer_;
 	YGame::GaugeDrawer hpBar_;
 	YGame::DamageDrawer damage_;
+
+	YGame::YTransform statusTrfm_;
+	std::array<YGame::StatusDrawer, 3> status_;
+	Sprite statusFrame_;
 public:
 	IEnemy();
 	IEnemy(int32_t health, int32_t attackPower);

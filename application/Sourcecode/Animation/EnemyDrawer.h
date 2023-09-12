@@ -5,6 +5,11 @@
 
 namespace YGame
 {
+	enum class EnemyType
+	{
+		Slime, Bat, Bear,
+	};
+	
 	class EnemyDrawer : public BaseDrawer
 	{
 
@@ -15,7 +20,7 @@ namespace YGame
 		/// </summary>
 		/// <param name="trfmStatus"> : トランスフォーム情報</param>
 		/// <param name="matParent"> : 親行列</param>
-		void Initialize(const YTransform::Status& trfmStatus, YTransform* pTrfm);
+		void Initialize(const YTransform::Status& trfmStatus, YTransform* pTrfm, const EnemyType type);
 
 		/// <summary>
 		/// 攻撃アニメーション
