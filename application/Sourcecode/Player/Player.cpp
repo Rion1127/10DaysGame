@@ -3,6 +3,14 @@
 #include <imgui.h>
 #include "WinAPI.h"
 
+namespace 
+{
+	//const size_t kHelthIndex = 0;
+	const size_t kAttackIndex = 0;
+	const size_t kLuckIndex = 1;
+	//const size_t kIndex = 0;
+}
+
 void Player::Initialize()
 {	
 	Vector3 pos = {
@@ -26,6 +34,7 @@ void Player::Initialize()
 	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_.m_);
 	sword_.Initialize(20, 20, &trfm_.m_);
 	hpBar_.Initialize({ {0.0f,96.0f,0.0f},{},{1.0f,1.0f,1.0f} }, &trfm_.m_, health_);
+	hpBar_.SetGaugeColor(Color(0, 0, 0, 255), Color(200, 20, 20, 255), Color(20, 200, 20, 255));
 	damage_.Initialize({ {0.0f,-32.0f,0.0f},{},{0.5f,0.5f,1.0f} }, &trfm_.m_, 0);
 	recovery_.Initialize({ {0.0f,-64.0f,0.0f},{},{0.5f,0.5f,1.0f} }, &trfm_.m_, 0);
 
@@ -49,8 +58,8 @@ void Player::Initialize()
 		status_[i].Initialize(status, &statusTrfm_.m_);
 	}
 
-	status_[0].PowerUpAnimation(baseAttackpower_);
-	status_[1].PowerUpAnimation(luck_);
+	status_[kAttackIndex].PowerUpAnimation(baseAttackpower_);
+	status_[kLuckIndex].PowerUpAnimation(luck_);
 }
 
 void Player::Update()
@@ -77,8 +86,8 @@ void Player::Update()
 
 void Player::StatusUpdate(const int32_t plusHealth, const int32_t plusLuck, const int32_t plusRecover, const int32_t plusAttack)
 {
-	status_[0].PlusAnimation(plusAttack);
-	status_[1].PlusAnimation(plusLuck);
+	status_[kAttackIndex].PlusAnimation(plusAttack);
+	status_[kLuckIndex].PlusAnimation(plusLuck);
 	//status_[2].PlusAnimation();
 	//status_[3].PlusAnimation();
 }
@@ -117,7 +126,7 @@ void Player::Damage(int32_t damage)
 	health_ -= damage;
 
 	drawer_.HitAnimation();
-	hpBar_.ChangeHPAnimation(health_);
+	hpBar_.ChangeValueAnimation(health_);
 	damage_.SetNumber(damage);
 	damage_.DamageAnimation();
 }
@@ -126,11 +135,7 @@ void Player::Recovery(int32_t health)
 {
 	health_ += health;
 
-	if (hpBar_.MaxHP() <= health_)
-	{
-		hpBar_.ChangeMaxHPAnimation(health_);
-	}
-	hpBar_.ChangeHPAnimation(health_);
+	hpBar_.ChangeValueAnimation(health_);
 
 	if (0 < health)
 	{
@@ -145,12 +150,12 @@ void Player::AddHealth(int32_t health) {
 
 void Player::AddAttack(int32_t attack) {
 	baseAttackpower_ += attack;
-	status_[0].PowerUpAnimation(baseAttackpower_);
+	status_[kAttackIndex].PowerUpAnimation(baseAttackpower_);
 }
 
 void Player::AddLuck(int32_t luck) {
 	luck_ += luck;
-	status_[1].PowerUpAnimation(luck_);
+	status_[kLuckIndex].PowerUpAnimation(luck_);
 }
 
 void Player::IdleAnimation()

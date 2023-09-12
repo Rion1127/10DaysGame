@@ -8,6 +8,8 @@ using YGame::YCameraManager;
 MainGameSyste::MainGameSyste()
 {
 	panel_ = std::make_unique<Panel>();
+	
+	nextMinoDrawer_.Initialize();
 
 	nowTurn_ = Turn::PLAYER;
 	gameState_ = State::GAME;
@@ -16,8 +18,6 @@ MainGameSyste::MainGameSyste()
 
 	ReloadMino();
 
-	nextMinoDrawer_.Initialize();
-	minoCounterDrawer_.Initialize();
 
 	enemyManager_.SetEnemyList("MainGame");
 
@@ -230,12 +230,11 @@ void MainGameSyste::Update()
 		enemy_ = enemyManager_.GetNowEnemy();
 		enemyManager_.SetIsChangeNowEnemy(false);
 	}
-
-	nextMinoDrawer_.Update(minos_);
-
+	
 	int32_t cost = minoCountUpCost_.at(minoCountLevel_);
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
-	minoCounterDrawer_.Update(cost - nowEmptyPanelNum);
+	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
+
 
 	// カメラ更新
 	cameraManager_->Update();
@@ -264,7 +263,6 @@ void MainGameSyste::DrawSprite()
 
 	attackButton_->Draw();
 	nextMinoDrawer_.Draw();
-	minoCounterDrawer_.Draw();
 	mouseUi_.Draw();
 	pauseButton_->Draw();
 	swordSprite_->Draw();
@@ -349,6 +347,7 @@ void MainGameSyste::ReloadMino()
 		minosList_.erase(minosList_.begin() + rand);
 	}
 
+	nextMinoDrawer_.RedrawAnimation(minos_);
 }
 
 void MainGameSyste::TurnChange()
@@ -399,16 +398,19 @@ void MainGameSyste::TurnPlayer()
 		//配置出来たミノを消す
 		if (minos_.size() > 0) {
 			minos_.erase(minos_.begin());
+			nextMinoDrawer_.AdvanceAnimation(minos_);
 		}
 
 		if (minos_.size() <= 0 || panel_->GetIsAllFill()) {
 			player_->AttackAnimation(panel_->GetDisplayPanel());
 		}
+		
 	}
 	//リドゥ機能
 	if (redoButton_->GetIsCollision()) {
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
 			panel_->ReDo(&minos_);
+			nextMinoDrawer_.RetreatAnimation(minos_);
 		}
 	}
 
@@ -497,6 +499,8 @@ void MainGameSyste::MinoCountUp()
 		size_t costMaxNum = minoCountUpCost_.size() - 1;
 		minoCountLevel_ = (uint32_t)Min(costMaxNum, (size_t)minoCountLevel_);
 		//panel_->PanelReset();
+
+		nextMinoDrawer_.UnlockAnimiation();
 	}
 }
 
@@ -777,10 +781,9 @@ void MainGameSyste::TutorialUpdate()
 		enemyManager_.SetIsChangeNowEnemy(false);
 	}
 
-	nextMinoDrawer_.Update(minos_);
 	int32_t cost = minoCountUpCost_.at(minoCountLevel_);
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
-	minoCounterDrawer_.Update(cost - nowEmptyPanelNum);
+	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
 
 	// カメラ更新
 	cameraManager_->Update();

@@ -31,6 +31,11 @@ void BaseDrawer::SetTransform(const YTransform::Status& trfmStatus)
 	trfm_.Initialize(trfmStatus);
 }
 
+void BaseDrawer::SetParent(Matrix4* matParent)
+{
+	trfm_.parent_ = matParent;
+}
+
 void BaseDrawer::BaseInitialize(const YTransform::Status& trfmStatus, Matrix4* matParent)
 {
 	trfm_.Initialize(trfmStatus);

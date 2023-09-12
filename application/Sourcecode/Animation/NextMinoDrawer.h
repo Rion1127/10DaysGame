@@ -1,8 +1,7 @@
 #pragma once
 #include "Mino.h"
 #include "BlockDrawer.h"
-#include "SlimeActor.h"
-#include "Sprite.h"
+#include "GaugeDrawer.h"
 
 namespace YGame
 {
@@ -19,67 +18,118 @@ namespace YGame
 		/// <summary>
 		/// 更新
 		/// </summary>
-		/// <param name="minos"> : 次のミノの情報</param>
-		void Update(const std::vector<MinoType>& minos);
+		void Update(const int32_t minoCount);
 
 		/// <summary>
 		/// 描画
 		/// </summary>
 		void Draw();
+
+		/// <summary>
+		/// 引き直しアニメーション
+		/// </summary>
+		/// <param name="minos"> : 次のミノの情報</param>
+		void RedrawAnimation(const std::vector<MinoType>& minos);
+
+		/// <summary>
+		/// ロック解除アニメーション
+		/// </summary>
+		void UnlockAnimiation();
+
+		/// <summary>
+		/// 進むアニメーション
+		/// </summary>
+		/// <param name="minos"> : 次のミノの情報</param>
+		void AdvanceAnimation(const std::vector<MinoType>& minos);
+
+		/// <summary>
+		/// 退くアニメーション
+		/// </summary>
+		/// <param name="minos"> : 次のミノの情報</param>
+		void RetreatAnimation(const std::vector<MinoType>& minos);
 	
 	private:
 		
-		// ミノ替え
-		void ChangeNextMino(const std::vector<MinoType>& minos);
+		YTransform::Status AnimeStatus(const size_t index);
+
+		void ChangeNextMino();
 	
 	private:
 
-		class NextMino
+		class FrameDrawer : public BaseDrawer
+			{
+			public:
+				void Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent);
+			};
+		
+		class LockDrawer : public BaseDrawer
+		{
+		public:
+			void Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent);
+		};
+		
+		class NextDrawer : public BaseDrawer
+		{
+		public:
+			void Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent);
+		};
+
+		struct Lock
+		{
+			LockDrawer lock_;
+			BlockDrawer block_;
+			GaugeDrawer gauge_;
+		};
+		
+		class NextFrameDrawer
 		{
 
 		public:
 
-			// 初期化
-			void Initialize(const YTransform::Status& trfmStatus);
-
-			// 更新
-			void Update();
-
-			// 描画
+			void Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent);
+			void Update(const YTransform::Status& animeStatus = {});
 			void Draw();
 
-			// ミノ替えアニメ
-			void ChangeMinoAnimation(const MinoType type);
+			void ResetAnimation();
+			void SetIsExist(const bool isExist) { isExist_ = isExist; }
 			
-			// 非表示設定
-			void InvisibleMinoAnimation();
-		
+			void ChangeMino(const MinoType type);
+			void ChangeVoid();
+			void ChangeRock(Lock* pLock);
+
 		private:
 
-			// ミノ変更
-			void ChangeMino();
-		
-		private:
-			
 			YTransform trfm_;
 
-			MinoType type_;
-
 			std::array<BlockDrawer, 4> drawers_;
+			FrameDrawer frame_;
+			Lock* pLock_ = nullptr;
 
-			SlimeActor slime_;
-
-			YMath::YTimer colorTim_;
-
-			bool isInvisible_ = false;
+			bool isExist_ = false;
+			YMath::YPower existPow_;
+			YMath::Ease<Vector3> existScaleEas_;
 		};
 		
 	private:
 
-		std::vector<MinoType> elderMinos_;
+		std::vector<MinoType> minos_;
 
-		std::array<NextMino, 5> nextMinos_;
-	
-		std::unique_ptr<Sprite> frame_;
+		std::array<NextFrameDrawer, 6> nexts_;
+
+		NextDrawer nextDra_;
+
+		Lock lock_;
+		
+		bool isReset_ = false;
+		YMath::YTimer resetTimer_;
+
+		bool isAdvence_ = false;
+		bool isRetreat_ = false;
+		YMath::YTimer riseTimer_;
+
+		bool isUnlock_ = false;
+		YMath::YPower unlockPower_;
+		YMath::Ease<float> unlockHeightEas_;
+		YMath::Ease<float> unlockRotaEas_;		
 	};
 }
