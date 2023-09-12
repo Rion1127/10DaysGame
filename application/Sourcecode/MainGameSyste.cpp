@@ -726,6 +726,13 @@ void MainGameSyste::TutorialUpdate()
 
 		attackButton_->Update();
 		pauseButton_->Update();
+		redoButton_->Update();
+		if (reloadMinoNum_ > minos_.size()) {
+			redoButton_->SetisActive(true);
+		}
+		else {
+			redoButton_->SetisActive(false);
+		}
 	}
 	//ƒNƒŠƒA‚µ‚½‚ç
 	else if (gameState_ == State::CLEAR) {
