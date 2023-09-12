@@ -22,7 +22,7 @@ namespace YGame
 		/// <summary>
 		/// XV
 		/// </summary>
-		void Update() override;
+		void Update(const YTransform::Status& animeStatus = {}) override;
 
 		/// <summary>
 		/// •`‰æ

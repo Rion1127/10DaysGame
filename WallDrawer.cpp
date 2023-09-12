@@ -1,4 +1,6 @@
 #include "WallDrawer.h"
+#include "WinAPI.h"
+#include "Lerp.h"
 
 using YGame::WallDrawer;
 
@@ -8,6 +10,8 @@ namespace
 	const size_t kAttackIndex = 1;
 	const size_t kLuckIndex = 2;
 	const size_t kHealIndex = 3;
+
+	const float kNumberScale = 0.2f;
 }
 
 void WallDrawer::Initialize()
@@ -16,31 +20,37 @@ void WallDrawer::Initialize()
 	{
 		YTransform::Status wallStatus = YTransform::Status::Default();
 		
+		Vector2 center = { (WinAPI::GetWindowSize() / 2.0f).x, 464.0f };
+
 		if (i == kHealthIndex)
 		{
-			wallStatus.pos_ = Vector3();
-			wallStatus.rota_.z = 3.141592f * 0.0f;
+			wallStatus.pos_ = Vector3(center.x - 160 - 16, center.y, 0);
+			wallStatus.rota_.z = 3.141592f * 0.5f;
 		}
 		if (i == kAttackIndex)
 		{
-			wallStatus.pos_ = Vector3();
-			wallStatus.rota_.z = 3.141592f * 0.0f;
+			wallStatus.pos_ = Vector3(center.x + 160 + 16, center.y, 0);
+			wallStatus.rota_.z = 3.141592f * 0.5f;
 		}
 		if (i == kLuckIndex)
 		{
-			wallStatus.pos_ = Vector3();
+			wallStatus.pos_ = Vector3(center.x, center.y - 160 - 16, 0);
 			wallStatus.rota_.z = 3.141592f * 0.0f;
 		}
 		if (i == kHealIndex)
 		{
-			wallStatus.pos_ = Vector3();
+			wallStatus.pos_ = Vector3(center.x, center.y + 160 + 16, 0);
 			wallStatus.rota_.z = 3.141592f * 0.0f;
-
 		}
 
 		walls_[i].wall_.Initialize(wallStatus, nullptr);
-		walls_[i].effect_.Initialize({ wallStatus.pos_, {}, {1.0f,1.0f,0.0f} }, nullptr, i);
-		walls_[i].counter_.Initialize({ wallStatus.pos_, {}, {1.0f,1.0f,0.0f} }, nullptr, 10);
+		walls_[i].wall_.SetColor(Color(100, 100, 100, 255));
+
+		walls_[i].effect_.Initialize({ wallStatus.pos_, {}, {0.75f,0.75f,0.0f} }, nullptr, i);
+		walls_[i].effect_.SetColor(Color(100, 100, 100, 255));
+		
+		walls_[i].counter_.Initialize({ wallStatus.pos_ + Vector3(20,-20,0), {}, {kNumberScale,kNumberScale,0.0f} }, nullptr, 0);
+		walls_[i].plusPow_.Initialize(20);
 	}
 }
 
@@ -48,9 +58,31 @@ void WallDrawer::Update()
 {
 	for (size_t i = 0; i < walls_.size(); i++)
 	{
+		int32_t number = walls_[i].counter_.GetNumber();
+		bool isPlus = (0 < number);
+		
+		if (isPlus) 
+		{
+			float ratio = static_cast<float>(number) / 10.0f;
+			float colorVal = 100.0f * ratio;
+			walls_[i].wall_.SetColor(Color(155 + colorVal, 155 + colorVal, 20, 255));
+			walls_[i].effect_.SetColor(Color(255, 255, 255, 255)); 
+		}
+		else 
+		{
+			walls_[i].wall_.SetColor(Color(100, 100, 100, 255));
+			walls_[i].effect_.SetColor(Color(100, 100, 100, 255));
+		}
+
+		walls_[i].plusPow_.Update(isPlus);
+		float scale = YMath::EaseInOut(-kNumberScale, 0.0f, walls_[i].plusPow_.Ratio(), 3.0f);
+		float alphaRatio = YMath::EaseInOut(0.0f, 1.0f, walls_[i].plusPow_.Ratio(), 3.0f);
+
+		walls_[i].counter_.SetColor(Color(200, 200, 20, 255 * alphaRatio));
+
 		walls_[i].wall_.Update();
 		walls_[i].effect_.Update();
-		walls_[i].counter_.Update();
+		walls_[i].counter_.Update({ {}, {}, {scale,scale,0.0f} });
 	}
 }
 
@@ -60,7 +92,7 @@ void WallDrawer::Draw()
 	{
 		walls_[i].wall_.Draw();
 		walls_[i].effect_.Draw();
-		//walls_[i].counter_.Draw();
+		walls_[i].counter_.Draw();
 	}
 }
 

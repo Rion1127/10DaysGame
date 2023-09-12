@@ -18,7 +18,7 @@ namespace YGame
 		void ChangePlusAttack(const int32_t plusNum);
 		void ChangePlusLuck(const int32_t plusNum);
 		void ChangePlusHeal(const int32_t plusNum);
-
+	
 	private:
 
 		class WallPanelDrawer : public BaseDrawer
@@ -38,6 +38,8 @@ namespace YGame
 			WallPanelDrawer wall_;
 			EffectFontDrawer effect_;
 			CountDrawer counter_;
+
+			YMath::YPower plusPow_;
 		};
 	
 	private:

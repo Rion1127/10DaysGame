@@ -42,7 +42,7 @@ MainGameSyste::MainGameSyste()
 
 	Vector2 pos = {
 		WinAPI::GetWindowSize().x / 2.f,
-		680.f
+		744.f
 	};
 	swordSprite_->SetPos(pos);
 
@@ -270,7 +270,7 @@ void MainGameSyste::DrawSprite()
 {
 	panel_->DrawSprite();
 	nextMinoDrawer_.Draw();
-	//wallDrawer_.Draw();
+	wallDrawer_.Draw();
 	
 	enemyManager_.Draw();
 
