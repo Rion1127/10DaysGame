@@ -149,8 +149,8 @@ void Player::Recovery(int32_t health)
 	}
 }
 
-void Player::AddHealth(int32_t health) {
-	health_ += health;
+void Player::AddGurd(int32_t gurd) {
+	gurd_ += gurd;
 }
 
 void Player::AddAttack(int32_t attack) {

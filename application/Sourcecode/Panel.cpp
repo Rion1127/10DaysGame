@@ -519,7 +519,7 @@ void Panel::ReDo(std::vector<MinoType>* minos)
 		totalPanel_ -= oldTotalPanel_.front();
 
 		stateUp_.attackUp_ -= oldStateUp_.front().attackUp_;
-		stateUp_.healthUp_ -= oldStateUp_.front().healthUp_;
+		stateUp_.gurdUp_ -= oldStateUp_.front().gurdUp_;
 		stateUp_.luckUp_ -= oldStateUp_.front().luckUp_;
 		stateUp_.recoverUp_ -= oldStateUp_.front().recoverUp_;
 
@@ -577,8 +577,8 @@ void Panel::SetPanel(const Mino& mino)
 				if (systemPanel_[x][y] == State::NEXT_RELEASE)
 				{
 					if (x == 0) {
-						oldStateUp_.front().healthUp_++;
-						stateUp_.healthUp_++;
+						oldStateUp_.front().gurdUp_++;
+						stateUp_.gurdUp_++;
 					}
 					if (x == 9) {
 						oldStateUp_.front().attackUp_++;
@@ -607,7 +607,7 @@ void Panel::SetPanel(const Mino& mino)
 void Panel::ResetStateUp()
 {
 	stateUp_.attackUp_ = 0;
-	stateUp_.healthUp_ = 0;
+	stateUp_.gurdUp_ = 0;
 	stateUp_.luckUp_ = 0;
 	stateUp_.recoverUp_ = 0;
 }

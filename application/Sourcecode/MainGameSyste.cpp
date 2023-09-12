@@ -242,7 +242,7 @@ void MainGameSyste::Update()
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
 	
-	wallDrawer_.ChangePlusHealth(panel_->GetStateUpValue().healthUp_);
+	wallDrawer_.ChangePlusHealth(panel_->GetStateUpValue().gurdUp_);
 	wallDrawer_.ChangePlusAttack(panel_->GetStateUpValue().attackUp_);
 	wallDrawer_.ChangePlusLuck(panel_->GetStateUpValue().luckUp_);
 	wallDrawer_.ChangePlusHeal(panel_->GetStateUpValue().recoverUp_);
@@ -396,8 +396,8 @@ void MainGameSyste::TurnChange()
 		player_->Recovery(recovery);
 		int32_t luck = panel_->GetStateUpValue().luckUp_;
 		player_->AddLuck(luck);
-		int32_t health = panel_->GetStateUpValue().healthUp_;
-		player_->AddHealth(health);
+		int32_t gurd = panel_->GetStateUpValue().gurdUp_;
+		player_->AddGurd(gurd);
 
 		panel_->ResetStateUp();
 	}
@@ -816,7 +816,7 @@ void MainGameSyste::TutorialUpdate()
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
 
-	wallDrawer_.ChangePlusHealth(panel_->GetStateUpValue().healthUp_);
+	wallDrawer_.ChangePlusHealth(panel_->GetStateUpValue().gurdUp_);
 	wallDrawer_.ChangePlusAttack(panel_->GetStateUpValue().attackUp_);
 	wallDrawer_.ChangePlusLuck(panel_->GetStateUpValue().luckUp_);
 	wallDrawer_.ChangePlusHeal(panel_->GetStateUpValue().recoverUp_);

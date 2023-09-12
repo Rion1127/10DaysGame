@@ -48,7 +48,7 @@ private:
 
 	struct StateUp {
 		int32_t luckUp_;
-		int32_t healthUp_;
+		int32_t gurdUp_;
 		int32_t recoverUp_;
 		int32_t attackUp_;
 	};

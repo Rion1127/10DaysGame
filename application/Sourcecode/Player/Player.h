@@ -11,7 +11,7 @@ class Player
 private:
 	int32_t health_;		//‘Ì—Í
 	int32_t luck_;			//‰^
-	int32_t recoverValue_;	//‰ñ•œ—Í
+	int32_t gurd_;	//–hŒä—Í
 	int32_t baseAttackpower_;//UŒ‚—Í
 	bool isAlive_;
 
@@ -50,11 +50,12 @@ public:
 	void Damage(int32_t damage);
 	
 	void Recovery(int32_t recover);
-	void AddHealth(int32_t health);
+	void AddGurd(int32_t gurd);
 	void AddAttack(int32_t attack);
 	void AddLuck(int32_t luck);
 public:
 	int32_t GetAttackPower() { return baseAttackpower_; }
+	int32_t GetGurd() { return gurd_; }
 	bool GetIsAlive() { return isAlive_; }
 	bool GetRotTimEnd() { return sword_.GetRotaTimEnd(); }
 };
