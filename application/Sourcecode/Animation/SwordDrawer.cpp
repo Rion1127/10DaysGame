@@ -22,6 +22,9 @@ void SwordDrawer::Initialize(const size_t maxXSize, const size_t maxYSize, Matri
 			Vector3(0.3f, 0.5f, 0.0f)
 		}, &trfm_.m_);
 
+	bladeTrfm_.Initialize();
+	bladeTrfm_.parent_ = &trfm_.m_;
+
 	// ÉpÉlÉãècâ°ï™ê∂ê¨
 	for (size_t y = 0; y < maxYSize; y++)
 	{
@@ -30,7 +33,7 @@ void SwordDrawer::Initialize(const size_t maxXSize, const size_t maxYSize, Matri
 		{
 			blades_[y].emplace_back();
 			
-			blades_[y][x].Initialize({}, &trfm_.m_);
+			blades_[y][x].Initialize({}, &bladeTrfm_.m_);
 		}
 	}
 
@@ -57,7 +60,7 @@ void SwordDrawer::Initialize(const size_t maxXSize, const size_t maxYSize, Matri
 	step_ = AttackStep::None;
 }
 
-void SwordDrawer::AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndices)
+void SwordDrawer::AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndices, const int32_t power)
 {
 	panelCounter_ = 0.0f;
 
@@ -97,6 +100,10 @@ void SwordDrawer::AttackAnimation(const std::vector<std::vector<int32_t>>& panel
 
 	// ê∂ê¨
 	step_ = AttackStep::Forge;
+
+	//float scaleVal = 1.0f + static_cast<float>(power) * 0.01f;
+	//bladeTrfm_.pos_ = { 0.0f, 1.0f - scaleVal, 0.0f };
+	//bladeTrfm_.scale_ = { scaleVal, scaleVal, scaleVal };
 }
 
 void SwordDrawer::UpdateAttackAnimation(YGame::YTransform::Status& animeStatus)
@@ -192,6 +199,8 @@ void SwordDrawer::Update()
 	trfm_.UpdateMatrix(animeStatus);
 
 	handle_.Update();
+
+	bladeTrfm_.UpdateMatrix();
 
 	for (size_t i = 0; i < blades_.size(); i++)
 	{

@@ -47,7 +47,11 @@ void StatusDrawer::Update()
 void StatusDrawer::PowerUpAnimation(const int32_t number)
 {
 	moveTim_.Reset(true);
-	number_ = number;
+
+	int32_t num = number;
+	if (1000 <= number) { num = 999; }
+
+	number_ = num;
 }
 
 void StatusDrawer::PlusAnimation(const int32_t plusNum)

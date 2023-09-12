@@ -22,7 +22,7 @@ namespace YGame
 		/// 攻撃アニメーション
 		/// </summary>
 		/// <param name="panelIndices"> : パネル番号</param>
-		void AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndices);
+		void AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndices, const int32_t power);
 
 		/// <summary>
 		/// 更新
@@ -98,6 +98,9 @@ namespace YGame
 	private:
 
 		YTransform trfm_;
+		YTransform bladeTrfm_;
+
+		int32_t power_;
 
 		// 持ち手
 		HandleDrawer handle_;

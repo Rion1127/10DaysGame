@@ -88,7 +88,7 @@ void Player::Update()
 
 void Player::AttackAnimation(const std::vector<std::vector<int32_t>>& panelIndices)
 {
-	sword_.AttackAnimation(panelIndices);
+	sword_.AttackAnimation(panelIndices, baseAttackpower_);
 }
 
 void Player::Draw()
