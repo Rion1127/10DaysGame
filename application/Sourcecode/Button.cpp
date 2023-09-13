@@ -68,6 +68,15 @@ void Button::Update()
 	}
 	else if(CheckBox2DtoPoint(col_, mPos) && isAnime_ == true)
 	{
+		if(isCollision_ == false)
+		{
+			if(isAnimation_ == false)
+			{
+				isAnimation_ = true;
+			}
+			isCollision_ = true;
+		}
+
 		animeTimer_++;
 
 		if(animeTimer_ >= 20)
@@ -89,14 +98,23 @@ void Button::Update()
 			sprite_->SetTex_LeftTop(result);
 		}
 
-		
-		isCollision_ = true;
-
 		state_ = PipeLineState::Alpha;
 	}
 	else
 	{
 		isCollision_ = false;
+
+		if(isCollision_ == false)
+		{
+			animeCount_ = 0;
+
+			Vector2 result;
+			result.x = texSize_.x * animeCount_;
+			result.y = 0.0f;
+
+			sprite_->SetTex_LeftTop(result);
+
+		}
 
 		state_ = PipeLineState::Alpha;
 	}
@@ -163,15 +181,9 @@ void Button::SetTexture(Texture* texture)
 	};
 }
 
-void Button::AnimationUpdate()
-{
-
-}
-}
-
 void Button::SetAnime(Vector2 texSize, UINT animeMaxNum,bool isAnime)
 {
-	pos_ = { 450.0f,600.0f };
+	pos_ = { 450.0f,500.0f };
 	sprite_->SetPos(pos_);
 
 	col_.leftUp = {

@@ -30,7 +30,7 @@ public:
 	void Draw();
 	void DrawImgui();
 
-	void AnimationUpdate();
+	void SetAnime(Vector2 texSize, UINT animeMaxNum, bool isAnime);
 public:
 	bool GetIsCollision() { return isCollision_; }
 public:
