@@ -60,7 +60,7 @@ EnemyPopDataList::EnemyPopDataList()
 	mainGame.enemyData.resize(3);
 	for (int32_t i = 0; i < mainGame.enemyData.size(); i++) {
 		mainGame.enemyData[i] = {
-			100 + 10 * i,
+			1 + 10 * i,
 			3 + (4 * i),
 			0 + (2 * i)
 		};
@@ -79,7 +79,7 @@ EnemyPopDataList::EnemyPopDataList()
 	dataList_.insert(std::make_pair("Tutorial", tutorial));
 
 	PopData endless;
-	endless.enemyData.resize(999);
+	endless.enemyData.resize(100);
 	for (int32_t i = 0; i < endless.enemyData.size(); i++)
 	{
 		endless.enemyData[i] = {
