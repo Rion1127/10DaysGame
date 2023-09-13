@@ -14,22 +14,22 @@ void TitleDrawer::Initialize()
 
 void TitleDrawer::Update()
 {
-	back_.Update();
-	logo_.Update();
+	//back_.Update();
+	//logo_.Update();
 	for (size_t i = 0; i < clouds_.size(); i++)
 	{
-		clouds_[i].Update();
+		//clouds_[i].Update();
 	}
 }
 
 void TitleDrawer::Draw()
 {
-	back_.Draw();
+	//back_.Draw();
 	for (size_t i = 0; i < clouds_.size(); i++)
 	{
-		clouds_[i].Draw();
+		//clouds_[i].Draw();
 	}
-	logo_.Draw();
+	//logo_.Draw();
 }
 
 void TitleDrawer::CloudDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* matParent, const size_t texIndex)
