@@ -19,8 +19,13 @@ MainGameSyste::MainGameSyste()
 
 	ReloadMino();
 
-
-	enemyManager_.SetEnemyList("MainGame");
+	if (SceneManager::GetGameMode() == GameMode::MainGame)
+	{
+		enemyManager_.SetEnemyList("MainGame");
+	}else if (SceneManager::GetGameMode() == GameMode::EndLess)
+	{
+		enemyManager_.SetEnemyList("Endless");
+	}
 
 	enemy_ = enemyManager_.GetNowEnemy();
 
@@ -212,6 +217,7 @@ void MainGameSyste::Update()
 			if (titleButton_->GetIsCollision())
 			{
 				SceneManager::SetChangeStart(SceneName::Title);
+				SoundManager::Play("Click_2SE", false, 1.0f);
 			}
 		}
 	}
@@ -464,11 +470,33 @@ void MainGameSyste::TurnPlayer()
 			int32_t damage = panel_->GetAttackPanelNum() * player_->GetAttackPower();
 			damage -= enemy_->GetGuard();
 			damage = Max(1, damage);
-			enemy_->Damage(damage);
-			nowTurn_ = Turn::CHANGE;
+
+			int32_t critical = RRandom::Rand(0, 100);
+			//Å’á‚Å‚à1‚É‚·‚é
+			int32_t playerLuck = 1 + (player_->GetLuck() / 2);
+			playerLuck = Min(70, playerLuck);
+			
+			bool isClitical = false;
 
 			float pitch = RRandom::RandF(0.7f, 1.f);
-			SoundManager::Play("Attack", false, 1.0f, pitch);
+
+		
+			if (critical <= playerLuck)
+			{
+				isClitical = true;
+				float damageF = (float)(damage * 1.5f);
+				damage = (int32_t)damageF;
+				SoundManager::Play("CriticalSE", false, 1.0f, pitch);
+			}
+			else
+			{
+				SoundManager::Play("Attack", false, 1.0f, pitch);
+			}
+
+			enemy_->Damage(damage, isClitical);
+			nowTurn_ = Turn::CHANGE;
+
+			
 
 			isNext_ = false;
 		}
@@ -544,7 +572,7 @@ void MainGameSyste::MinoCountUp()
 		size_t costMaxNum = minoCountUpCost_.size() - 1;
 		minoCountLevel_ = (uint32_t)Min(costMaxNum, (size_t)minoCountLevel_);
 		//panel_->PanelReset();
-
+		SoundManager::Play("UnlockSE");
 		nextMinoDrawer_.UnlockAnimiation();
 	}
 }

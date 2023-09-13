@@ -87,6 +87,8 @@ void LoadManager::LoadSound()
 	LoadWave("cantSetSE.wav", "CantSetSE");
 	LoadWave("statusUpSE.wav", "StatysUpSE");
 	LoadWave("redoSE.wav", "RedoSE");
+	LoadWave("unlockSE.wav", "UnlockSE");
+	LoadWave("criticalSE.wav", "CriticalSE");
 
 
 	LoadWave("gameOverBGM.wav", "GameOverBGM");

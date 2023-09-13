@@ -60,8 +60,9 @@ EnemyPopDataList::EnemyPopDataList()
 	mainGame.enemyData.resize(3);
 	for (int32_t i = 0; i < mainGame.enemyData.size(); i++) {
 		mainGame.enemyData[i] = {
-			100 + 4 * i,
-			3 + (2 * i)
+			100 + 10 * i,
+			3 + (4 * i),
+			0 + (2 * i)
 		};
 	}
 	dataList_.insert(std::make_pair("MainGame", mainGame));
@@ -76,6 +77,17 @@ EnemyPopDataList::EnemyPopDataList()
 		};
 	}
 	dataList_.insert(std::make_pair("Tutorial", tutorial));
+
+	PopData endless;
+	endless.enemyData.resize(999);
+	for (int32_t i = 0; i < endless.enemyData.size(); i++)
+	{
+		endless.enemyData[i] = {
+			100 + 4 * i,
+			3 + (2 * i)
+		};
+	}
+	dataList_.insert(std::make_pair("Endless", endless));
 }
 
 void EnemyPopDataList::SetEnemy(std::string name, std::vector<std::unique_ptr<IEnemy>>* enemy)
@@ -84,7 +96,7 @@ void EnemyPopDataList::SetEnemy(std::string name, std::vector<std::unique_ptr<IE
 	const auto& eData = dataList_.find(name)->second.enemyData;
 	for (uint32_t i = 0; i < eData.size(); i++) {
 		std::unique_ptr<IEnemy> newEnemy =
-			std::make_unique<Enemy>(eData[i].health, eData[i].attackPower);
+			std::make_unique<Enemy>(eData[i].health, eData[i].attackPower,eData[i].guard);
 
 		enemy->emplace_back(std::move(newEnemy));
 	}

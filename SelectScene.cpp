@@ -62,19 +62,21 @@ void SelectScene::Update()
 				SceneManager::SetGameMode(GameMode::MainGame);
 				SoundManager::Play("Click_2SE", false, 1.0f);
 			}
+			//エンドレスへ
+			else if (endlessButton_->GetIsCollision())
+			{
+				SceneManager::SetChangeStart(SceneName::Game);
+				SceneManager::SetGameMode(GameMode::EndLess);
+				SoundManager::Play("Click_2SE", false, 1.0f);
+			}
 		}
-		////エンドレスへ
-		//else if (mainGameButton_->GetIsCollision())
-		//{
-		//	SceneManager::SetChangeStart(SceneName::Game);
-		//	SceneManager::SetGameMode(GameMode::EndLess);
-		//	SoundManager::Play("Click_2SE", false, 1.0f);
-		//}
+		
 	}
 	kanBanSprite_->Update();
 
 	tutorialButton_->Update();
 	mainGameButton_->Update();
+	endlessButton_->Update();
 }
 
 void SelectScene::Draw()
@@ -83,4 +85,5 @@ void SelectScene::Draw()
 	kanBanSprite_->Draw();
 	tutorialButton_->Draw();
 	mainGameButton_->Draw();
+	endlessButton_->Draw();
 }
