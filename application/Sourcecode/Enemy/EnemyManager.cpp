@@ -13,6 +13,9 @@ EnemyManager::EnemyManager()
 
 	isChangeNowEnemy_ = false;
 	
+	helthRatio_ = 0.0f;
+	attackRatio_ = 0.0f;
+	guardRatio_ = 0.0f;
 }
 void EnemyManager::Update()
 {
@@ -33,13 +36,16 @@ void EnemyManager::Update()
 		}
 		else if (SceneManager::GetGameMode() == GameMode::EndLess)
 		{
-			ratio_ += 0.01f;
+			helthRatio_		+= 0.001f;
+			attackRatio_	+= 0.01f;
+			guardRatio_		+= 0.01f;
+
 
 			int32_t enemyType = RRandom::Rand(0,2);
 
-			int32_t health	 = static_cast<int32_t>(YMath::EaseIn(1.0f,   9999.0f, ratio_, 1.5f));
-			int32_t power	 = static_cast<int32_t>(YMath::EaseIn(0.0f,    999.0f, ratio_, 1.5f));
-			int32_t guard	 = static_cast<int32_t>(YMath::EaseIn(0.0f,    999.0f, ratio_, 1.5f));
+			int32_t health	 = static_cast<int32_t>(YMath::EaseIn(1.0f,  99999.0f, helthRatio_, 1.5f));
+			int32_t power	 = static_cast<int32_t>(YMath::EaseIn(0.0f,    999.0f, attackRatio_, 1.5f));
+			int32_t guard	 = static_cast<int32_t>(YMath::EaseIn(0.0f,    999.0f, guardRatio_, 1.5f));
 
 			nowEnemy_ =
 				std::make_unique<Enemy>(health, power, guard, YGame::EnemyType(enemyType));
