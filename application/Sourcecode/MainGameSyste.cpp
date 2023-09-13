@@ -572,7 +572,7 @@ void MainGameSyste::MinoCountUp()
 		size_t costMaxNum = minoCountUpCost_.size() - 1;
 		minoCountLevel_ = (uint32_t)Min(costMaxNum, (size_t)minoCountLevel_);
 		//panel_->PanelReset();
-		SoundManager::Play("UnlockSE");
+		SoundManager::Play("UnlockSE",false,0.8f,0.7f);
 		nextMinoDrawer_.UnlockAnimiation();
 	}
 }
