@@ -2,6 +2,8 @@
 #include "Enemy.h"
 #include "RRandom.h"
 #include "SceneManager.h"
+#include "Lerp.h"
+
 #pragma region
 EnemyManager::EnemyManager()
 {
@@ -10,6 +12,7 @@ EnemyManager::EnemyManager()
 	
 
 	isChangeNowEnemy_ = false;
+	
 }
 void EnemyManager::Update()
 {
@@ -30,11 +33,13 @@ void EnemyManager::Update()
 		}
 		else if (SceneManager::GetGameMode() == GameMode::EndLess)
 		{
+			ratio_ += 0.01f;
+
 			int32_t enemyType = RRandom::Rand(0,2);
 
-			int32_t health = 10;
-			int32_t power = 2;
-			int32_t guard = 2;
+			int32_t health	 = static_cast<int32_t>(YMath::EaseIn(1.0f,   9999.0f, ratio_, 1.5f));
+			int32_t power	 = static_cast<int32_t>(YMath::EaseIn(0.0f,    999.0f, ratio_, 1.5f));
+			int32_t guard	 = static_cast<int32_t>(YMath::EaseIn(0.0f,    999.0f, ratio_, 1.5f));
 
 			nowEnemy_ =
 				std::make_unique<Enemy>(health, power, guard, YGame::EnemyType(enemyType));
@@ -110,8 +115,8 @@ EnemyPopDataList::EnemyPopDataList()
 		for (int32_t i = 0; i < endless.enemyData.size(); i++)
 		{
 			endless.enemyData[i] = {
-				10 + 4 * i,
-				3 + (2 * i),
+				1,
+				0,
 				0,
 				static_cast<YGame::EnemyType>(RRandom::Rand(0, 2))
 			};

@@ -34,7 +34,8 @@ private:
 	std::unique_ptr<IEnemy> nowEnemy_;
 	bool isChangeNowEnemy_ = false;
 	bool isAllEnemyDestroy_ = false;
-	Player* player_;
+	Player* player_ = nullptr;
+	float ratio_ = 0.0f;
 public:
 	EnemyManager();
 
