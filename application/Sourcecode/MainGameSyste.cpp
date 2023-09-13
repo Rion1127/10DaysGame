@@ -504,7 +504,7 @@ void MainGameSyste::TurnChange()
 
 		int32_t powerUp = panel_->GetStateUpValue().attackUp_;
 		player_->AddAttack(powerUp);
-		int32_t recovery = panel_->GetStateUpValue().recoverUp_;
+		int32_t recovery = panel_->GetStateUpValue().recoverUp_ * 2;
 		player_->Recovery(recovery);
 		int32_t luck = panel_->GetStateUpValue().luckUp_;
 		player_->AddLuck(luck);
