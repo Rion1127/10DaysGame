@@ -62,6 +62,7 @@
     <ClCompile Include="application\Sourcecode\Shader\HighLumi.cpp" />
     <ClCompile Include="application\Sourcecode\Shader\LineBlur.cpp" />
     <ClCompile Include="application\Sourcecode\Shader\Noise.cpp" />
+    <ClCompile Include="application\Sourcecode\StoryText.cpp" />
     <ClCompile Include="DeadActor.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="application\Sourcecode\Shader\HighLumi.h" />
     <ClInclude Include="application\Sourcecode\Shader\LineBlur.h" />
     <ClInclude Include="application\Sourcecode\Shader\Noise.h" />
+    <ClInclude Include="application\Sourcecode\StoryText.h" />
     <ClInclude Include="DeadActor.h" />
     <ClInclude Include="engine\2d\IPostEffect.h" />
     <ClInclude Include="engine\2d\MultipleRenderTarget.h" />

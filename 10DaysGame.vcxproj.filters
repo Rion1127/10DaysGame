@@ -546,6 +546,9 @@
     <ClCompile Include="TitleDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
+    <ClCompile Include="application\Sourcecode\StoryText.cpp">
+      <Filter>engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\myMath.h">
@@ -871,6 +874,9 @@
     </ClInclude>
     <ClInclude Include="TitleDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\StoryText.h">
+      <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
