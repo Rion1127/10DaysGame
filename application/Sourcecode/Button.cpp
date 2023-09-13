@@ -79,7 +79,7 @@ void Button::Update()
 
 		animeTimer_++;
 
-		if(animeTimer_ >= 20)
+		if(animeTimer_ >= animeFrame_)
 		{
 			animeTimer_ = 0;
 			if(animeCount_ < animeMaxCount_)
@@ -181,9 +181,8 @@ void Button::SetTexture(Texture* texture)
 	};
 }
 
-void Button::SetAnime(Vector2 texSize, UINT animeMaxNum,bool isAnime)
+void Button::SetAnime(Vector2 texSize, UINT animeMaxNum,bool isAnime, UINT animeFrame)
 {
-	pos_ = { 450.0f,500.0f };
 	sprite_->SetPos(pos_);
 
 	col_.leftUp = {
@@ -197,10 +196,11 @@ void Button::SetAnime(Vector2 texSize, UINT animeMaxNum,bool isAnime)
 
 	isAnime_ = true;
 	texSize_ = texSize;
+	animeFrame_ = animeFrame;
 
 	sprite_->SetTex_LeftTop({});
-	sprite_->SetTex_Size(Vector2(300.0f, 200.0f));
-	sprite_->SetScale(Vector2(1.0f / 7.0f, 1.0f));
+	sprite_->SetTex_Size(texSize_);
+	sprite_->SetScale(Vector2(1.0f / animeMaxNum, 1.0f));
 
 	
 	animeMaxCount_ = animeMaxNum;

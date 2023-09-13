@@ -13,6 +13,7 @@ private:
 	UINT animeMaxCount_;
 	UINT animeCount_;
 	UINT animeTimer_;
+	UINT animeFrame_;
 	
 	Box2D col_;
 	bool isCollision_;
@@ -30,7 +31,7 @@ public:
 	void Draw();
 	void DrawImgui();
 
-	void SetAnime(Vector2 texSize, UINT animeMaxNum, bool isAnime);
+	void SetAnime(Vector2 texSize, UINT animeMaxNum, bool isAnime, UINT animeFrame);
 public:
 	bool GetIsCollision() { return isCollision_; }
 public:
