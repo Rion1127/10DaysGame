@@ -25,7 +25,7 @@ protected:
 	Sprite statusFrame_;
 public:
 	IEnemy();
-	IEnemy(int32_t health, int32_t attackPower,int32_t guard);
+	IEnemy(int32_t health, int32_t attackPower,int32_t guard, const YGame::EnemyType type);
 	virtual ~IEnemy() {
 		int a = 0;
 	};

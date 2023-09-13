@@ -18,7 +18,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("white1x1.png", "White");
 	LoadGraph("number.png", "Number");
 	//タイトル
-	LoadGraph("karititledot0912.png", "Title");
+	LoadGraph("title.png", "Title");
 	LoadGraph("titleLogo.png", "TitleLogo");
 	LoadGraph("cloud.png", "Cloud1");
 	LoadGraph("cloud2.png", "Cloud2");
@@ -28,11 +28,9 @@ void LoadManager::LoadTexture()
 	LoadGraph("stagedodai.png", "Stage1");
 	//パズル背景
 	LoadGraph("sand.png", "Sand");
-	LoadGraph("puzzleBackGround.png", "Sand1");
+	LoadGraph("puzzleBackGround.png", "BackGroundSand");
 	//パネル関連
 	LoadGraph("panel.png", "Panel");
-	LoadGraph("powerUpPanel.png", "PowerUpPanel");
-	LoadGraph("recoveryPanel.png", "RecoveryPanel");
 	LoadGraph("light.png", "Light");
 	LoadGraph("nextPartsFrame.png", "Frame");
 	LoadGraph("next.png", "Next");
@@ -47,11 +45,9 @@ void LoadManager::LoadTexture()
 	LoadGraph("bat.png", "Bat");
 	LoadGraph("blackBear.png", "Bear");
 	//ボタンUI
-	LoadGraph("gameStartButton.png", "GameStartButton");
 	LoadGraph("beginner.png", "TutorialButton");
 	LoadGraph("titleButton.png", "TitleButton");
 	LoadGraph("endressRainbow.png", "EndlessButton");
-	LoadGraph("dotTest.png", "DotTest");
 	LoadGraph("retry.png", "Retry");
 	LoadGraph("minoCouintUp.png", "MinoCouintUp");
 	LoadGraph("mouse.png", "Mouse");
@@ -61,14 +57,16 @@ void LoadManager::LoadTexture()
 	LoadGraph("backButton.png", "BackButton");
 	LoadGraph("redoButton.png", "RedoButton");
 	LoadGraph("enemyStateUI.png", "EnemyStateUI");
-	LoadGraph("gameStartButtonAnime.png", "StartButton1");
+
 	LoadGraph("yesButton.png", "YesButton");
 	LoadGraph("noButton.png", "NoButton");
+	LoadGraph("gameStartButtonAnime.png", "StartButton");
 
 
 	//UI
 	LoadGraph("textFrame.png", "TextFrame");
 	LoadGraph("tutorialText.png", "TutorialText");
+	LoadGraph("wave.png", "Wave");
 	LoadGraph("statusFrame.png", "StatusFrame");
 	LoadGraph("enemyStateUI.png", "EnemyStatusFrame");
 	LoadGraph("longSword.png", "Sword");

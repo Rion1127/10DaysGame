@@ -7,27 +7,8 @@ using YGame::EnemyDrawer;
 void EnemyDrawer::Initialize(const YTransform::Status& trfmStatus, YTransform* pTrfm, const EnemyType type)
 {
 	BaseInitialize(trfmStatus, &pTrfm->m_);
-	
-	float scaleDiv = 0.0f;
-	if (type == EnemyType::Slime)
-	{
-		sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Slime"));
-		scaleDiv = 6.0f;
-	}
-	if (type == EnemyType::Bat)
-	{
-		sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Bat"));
-		scaleDiv = 4.0f;
-	}
-	if (type == EnemyType::Bear)
-	{
-		sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Bear"));
-		scaleDiv = 4.0f;
-	}
-	
-	sprite_.SetTex_LeftTop({});
-	sprite_.SetTex_Size({ 144.0f,144.0f });
-	trfm_.scale_ = Vector3(1.0f / scaleDiv, 1.0f, 1.0f);
+
+	SetEnemyType(type);
 
 	pTrfm_ = pTrfm;
 
@@ -63,6 +44,30 @@ void EnemyDrawer::HitAnimation()
 	float shake = 20.0f;
 	float dekey = shake / 10.0f;
 	YCameraManager::GetInstance()->ShakeCamera(shake, dekey);
+}
+
+void EnemyDrawer::SetEnemyType(const EnemyType type)
+{
+	float scaleDiv = 0.0f;
+	if (type == EnemyType::Slime)
+	{
+		sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Slime"));
+		scaleDiv = 6.0f;
+	}
+	if (type == EnemyType::Bat)
+	{
+		sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Bat"));
+		scaleDiv = 4.0f;
+	}
+	if (type == EnemyType::Bear)
+	{
+		sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Bear"));
+		scaleDiv = 4.0f;
+	}
+
+	sprite_.SetTex_LeftTop({});
+	sprite_.SetTex_Size({ 144.0f,144.0f });
+	trfm_.scale_ = Vector3(1.0f / scaleDiv, 1.0f, 1.0f);
 }
 
 void EnemyDrawer::DeadAnimation()

@@ -31,8 +31,7 @@ void SelectScene::Ini()
 	tutorialButton_->SetIsActiveAnimation(true);
 	tutorialButton_->SetAnime(Vector2(300.0f, 200.0f), 8, true,5);
 	mainGameButton_ = std::make_unique<Button>(mainGamePos);
-	//mainGameButton_->SetTexture(TextureManager::GetInstance()->GetTexture("GameStartButton"));
-	mainGameButton_->SetTexture(TextureManager::GetInstance()->GetTexture("StartButton1"));
+	mainGameButton_->SetTexture(TextureManager::GetInstance()->GetTexture("StartButton"));
 	mainGameButton_->SetIsActiveAnimation(true);
 	mainGameButton_->SetAnime(Vector2(300.f, 200.0f),7,true,10);
 	mainGameButton_->SetPos(Vector2(450.0f, 500.0f));

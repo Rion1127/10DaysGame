@@ -5,7 +5,7 @@
 
 namespace YGame
 {
-	enum EnemyType
+	enum class EnemyType : uint32_t
 	{
 		Slime, Bat, Bear,
 	};
@@ -33,6 +33,8 @@ namespace YGame
 		void HitAnimation();
 
 		void DeadAnimation();
+
+		void SetEnemyType(const EnemyType type);
 
 		bool GetIsEndAttack() { return isEndAttack_; }
 

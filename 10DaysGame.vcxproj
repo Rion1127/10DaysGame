@@ -28,6 +28,7 @@
     <ClCompile Include="application\Sourcecode\Animation\RecoveryDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\SwordDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\TransitionDrawer.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\WaveDrawer.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\YCameraManager.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\YTransform.cpp" />
     <ClCompile Include="application\Sourcecode\Animation\YPower.cpp" />
@@ -64,6 +65,7 @@
     <ClCompile Include="application\Sourcecode\Shader\Noise.cpp" />
     <ClCompile Include="application\Sourcecode\StoryText.cpp" />
     <ClCompile Include="DeadActor.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\DeadActor.cpp" />
     <ClCompile Include="engine\2d\IPostEffect.cpp" />
     <ClCompile Include="engine\2d\MultipleRenderTarget.cpp" />
     <ClCompile Include="engine\2d\MultiTexture.cpp" />
@@ -110,11 +112,11 @@
     <ClCompile Include="engine\util\RRandom.cpp" />
     <ClCompile Include="engine\util\StateMachine.cpp" />
     <ClCompile Include="engine\util\Timer.cpp" />
-    <ClCompile Include="NumberDrawer.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\NumberDrawer.cpp" />
     <ClCompile Include="SelectScene.cpp" />
-    <ClCompile Include="StatusDrawer.cpp" />
-    <ClCompile Include="TitleDrawer.cpp" />
-    <ClCompile Include="WallDrawer.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\StatusDrawer.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\TitleDrawer.cpp" />
+    <ClCompile Include="application\Sourcecode\Animation\WallDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\Sourcecode\Animation\BaseDrawer.h" />
@@ -133,6 +135,7 @@
     <ClInclude Include="application\Sourcecode\Animation\RecoveryDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\SwordDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\TransitionDrawer.h" />
+    <ClInclude Include="application\Sourcecode\Animation\WaveDrawer.h" />
     <ClInclude Include="application\Sourcecode\Animation\YCameraManager.h" />
     <ClInclude Include="application\Sourcecode\Animation\YTransform.h" />
     <ClInclude Include="application\Sourcecode\Animation\YPower.h" />
@@ -169,6 +172,7 @@
     <ClInclude Include="application\Sourcecode\Shader\Noise.h" />
     <ClInclude Include="application\Sourcecode\StoryText.h" />
     <ClInclude Include="DeadActor.h" />
+    <ClInclude Include="application\Sourcecode\Animation\DeadActor.h" />
     <ClInclude Include="engine\2d\IPostEffect.h" />
     <ClInclude Include="engine\2d\MultipleRenderTarget.h" />
     <ClInclude Include="engine\2d\MultiTexture.h" />
@@ -216,12 +220,12 @@
     <ClInclude Include="engine\util\StateMachine.h" />
     <ClInclude Include="engine\util\Timer.h" />
     <ClInclude Include="application\Sourcecode\Animation\PlayerDrawer.h" />
-    <ClInclude Include="NumberDrawer.h" />
+    <ClInclude Include="application\Sourcecode\Animation\NumberDrawer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SelectScene.h" />
-    <ClInclude Include="StatusDrawer.h" />
-    <ClInclude Include="TitleDrawer.h" />
-    <ClInclude Include="WallDrawer.h" />
+    <ClInclude Include="application\Sourcecode\Animation\StatusDrawer.h" />
+    <ClInclude Include="application\Sourcecode\Animation\TitleDrawer.h" />
+    <ClInclude Include="application\Sourcecode\Animation\WallDrawer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="application\Resources\shader\assimp.hlsli" />
