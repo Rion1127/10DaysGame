@@ -6,6 +6,7 @@
 struct EnemyData {
 	int32_t health;
 	int32_t attackPower;
+	int32_t guard;
 };
 
 struct PopData {

@@ -56,7 +56,7 @@ IEnemy::IEnemy()
 	status_[kGuardIndex].PowerUpAnimation(guard_);
 }
 
-IEnemy::IEnemy(int32_t health, int32_t attackPower)
+IEnemy::IEnemy(int32_t health, int32_t attackPower, int32_t guard)
 {
 	Vector3 pos = {
 		WinAPI::GetWindowSize().x / 2.0f + 128.0f,
@@ -69,6 +69,7 @@ IEnemy::IEnemy(int32_t health, int32_t attackPower)
 	health_ = health;
 	isAlive_ = true;
 	attackPower_ = attackPower;
+	guard_ = guard;
 
 	// トランスフォーム
 	trfm_.Initialize();

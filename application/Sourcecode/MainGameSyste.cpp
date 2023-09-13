@@ -217,6 +217,7 @@ void MainGameSyste::Update()
 			if (titleButton_->GetIsCollision())
 			{
 				SceneManager::SetChangeStart(SceneName::Title);
+				SoundManager::Play("Click_2SE", false, 1.0f);
 			}
 		}
 	}
@@ -477,18 +478,25 @@ void MainGameSyste::TurnPlayer()
 			
 			bool isClitical = false;
 
+			float pitch = RRandom::RandF(0.7f, 1.f);
+
+		
 			if (critical <= playerLuck)
 			{
 				isClitical = true;
 				float damageF = (float)(damage * 1.5f);
 				damage = (int32_t)damageF;
+				SoundManager::Play("CriticalSE", false, 1.0f, pitch);
+			}
+			else
+			{
+				SoundManager::Play("Attack", false, 1.0f, pitch);
 			}
 
 			enemy_->Damage(damage, isClitical);
 			nowTurn_ = Turn::CHANGE;
 
-			float pitch = RRandom::RandF(0.7f, 1.f);
-			SoundManager::Play("Attack", false, 1.0f, pitch);
+			
 
 			isNext_ = false;
 		}
@@ -564,7 +572,7 @@ void MainGameSyste::MinoCountUp()
 		size_t costMaxNum = minoCountUpCost_.size() - 1;
 		minoCountLevel_ = (uint32_t)Min(costMaxNum, (size_t)minoCountLevel_);
 		//panel_->PanelReset();
-
+		SoundManager::Play("UnlockSE");
 		nextMinoDrawer_.UnlockAnimiation();
 	}
 }
