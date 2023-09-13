@@ -112,7 +112,7 @@ void Player::DrawImGui()
 	ImGui::Text("power : %d", baseAttackpower_);
 	ImGui::End();
 
-	statusFrame_.DrawImGui();
+	//statusFrame_.DrawImGui();
 }
 
 void Player::Damage(int32_t damage, const bool isCritical)
