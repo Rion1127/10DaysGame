@@ -6,7 +6,7 @@ class Enemy final:
 {
 
 public:
-	Enemy(int32_t health,int32_t attackPower,int32_t guard);
+	Enemy(int32_t health,int32_t attackPower,int32_t guard, const YGame::EnemyType type);
 	~Enemy() {
 		int a = 0;
 	}

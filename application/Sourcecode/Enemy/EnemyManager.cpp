@@ -1,5 +1,6 @@
 #include "EnemyManager.h"
 #include "Enemy.h"
+#include "RRandom.h"
 #pragma region
 EnemyManager::EnemyManager()
 {
@@ -62,7 +63,8 @@ EnemyPopDataList::EnemyPopDataList()
 		mainGame.enemyData[i] = {
 			1 + 10 * i,
 			3 + (4 * i),
-			0 + (2 * i)
+			0 + (2 * i),
+			static_cast<YGame::EnemyType>(i)
 		};
 	}
 	dataList_.insert(std::make_pair("MainGame", mainGame));
@@ -73,7 +75,9 @@ EnemyPopDataList::EnemyPopDataList()
 	{
 		tutorial.enemyData[i] = {
 			99999999,
-			0
+			0,
+			0,
+			YGame::EnemyType::Slime
 		};
 	}
 	dataList_.insert(std::make_pair("Tutorial", tutorial));
@@ -84,7 +88,9 @@ EnemyPopDataList::EnemyPopDataList()
 	{
 		endless.enemyData[i] = {
 			100 + 4 * i,
-			3 + (2 * i)
+			3 + (2 * i),
+			0,
+			static_cast<YGame::EnemyType>(RRandom::Rand(0, 2))
 		};
 	}
 	dataList_.insert(std::make_pair("Endless", endless));
@@ -96,7 +102,7 @@ void EnemyPopDataList::SetEnemy(std::string name, std::vector<std::unique_ptr<IE
 	const auto& eData = dataList_.find(name)->second.enemyData;
 	for (uint32_t i = 0; i < eData.size(); i++) {
 		std::unique_ptr<IEnemy> newEnemy =
-			std::make_unique<Enemy>(eData[i].health, eData[i].attackPower,eData[i].guard);
+			std::make_unique<Enemy>(eData[i].health, eData[i].attackPower, eData[i].guard, eData[i].type);
 
 		enemy->emplace_back(std::move(newEnemy));
 	}

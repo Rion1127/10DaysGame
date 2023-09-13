@@ -7,6 +7,7 @@ struct EnemyData {
 	int32_t health;
 	int32_t attackPower;
 	int32_t guard;
+	YGame::EnemyType type;
 };
 
 struct PopData {
@@ -30,8 +31,8 @@ private:
 	std::vector<std::unique_ptr<IEnemy>> enemyList_;
 	//Œ»İí‚Á‚Ä‚¢‚é“G
 	std::unique_ptr<IEnemy> nowEnemy_;
-	bool isChangeNowEnemy_;
-	bool isAllEnemyDestroy_;
+	bool isChangeNowEnemy_ = false;
+	bool isAllEnemyDestroy_ = false;
 public:
 	EnemyManager();
 

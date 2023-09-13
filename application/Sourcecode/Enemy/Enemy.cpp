@@ -2,8 +2,8 @@
 #include "YCameraManager.h"
 #include <imgui.h>
 
-Enemy::Enemy(int32_t health, int32_t attackPower, int32_t guard) :
-	IEnemy(health, attackPower, guard)
+Enemy::Enemy(int32_t health, int32_t attackPower, int32_t guard, const YGame::EnemyType type) :
+	IEnemy(health, attackPower, guard, type)
 {
 }
 

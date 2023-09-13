@@ -28,7 +28,7 @@ IEnemy::IEnemy()
 	trfm_.scale_ = scale;
 
 	// アニメーション用
-	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_, YGame::EnemyType::Bat);
+	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_, YGame::EnemyType::Slime);
 	hpBar_.Initialize({ {0.0f,96.0f,0.0f},{},{1.0f,1.0f,1.0f} }, &trfm_.m_, health_);
 	hpBar_.SetGaugeColor(Color(0, 0, 0, 255), Color(200, 20, 20, 255), Color(20, 200, 20, 255));
 	damage_.Initialize({ {0.0f,-32.0f,0.0f},{},{0.5f,0.5f,1.0f} }, &trfm_.m_, 0);
@@ -56,7 +56,7 @@ IEnemy::IEnemy()
 	status_[kGuardIndex].PowerUpAnimation(guard_);
 }
 
-IEnemy::IEnemy(int32_t health, int32_t attackPower, int32_t guard)
+IEnemy::IEnemy(int32_t health, int32_t attackPower, int32_t guard, const YGame::EnemyType type)
 {
 	Vector3 pos = {
 		WinAPI::GetWindowSize().x / 2.0f + 128.0f,
@@ -77,7 +77,7 @@ IEnemy::IEnemy(int32_t health, int32_t attackPower, int32_t guard)
 	trfm_.scale_ = scale;
 
 	// アニメーション用
-	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_, YGame::EnemyType::Bat);
+	drawer_.Initialize(YGame::YTransform::Status::Default(), &trfm_, type);
 	hpBar_.Initialize({ {0.0f,96.0f,0.0f},{},{1.0f,1.0f,1.0f} }, &trfm_.m_, health_);
 	hpBar_.SetGaugeColor(Color(0, 0, 0, 255), Color(200, 20, 20, 255), Color(20, 200, 20, 255));
 	damage_.Initialize({ {0.0f,-32.0f,0.0f},{},{0.5f,0.5f,1.0f} }, &trfm_.m_, 0);
