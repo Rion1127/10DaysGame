@@ -19,8 +19,13 @@ MainGameSyste::MainGameSyste()
 
 	ReloadMino();
 
-
-	enemyManager_.SetEnemyList("MainGame");
+	if (SceneManager::GetGameMode() == GameMode::MainGame)
+	{
+		enemyManager_.SetEnemyList("MainGame");
+	}else if (SceneManager::GetGameMode() == GameMode::EndLess)
+	{
+		enemyManager_.SetEnemyList("Endless");
+	}
 
 	enemy_ = enemyManager_.GetNowEnemy();
 

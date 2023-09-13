@@ -76,6 +76,17 @@ EnemyPopDataList::EnemyPopDataList()
 		};
 	}
 	dataList_.insert(std::make_pair("Tutorial", tutorial));
+
+	PopData endless;
+	endless.enemyData.resize(1);
+	for (int32_t i = 0; i < endless.enemyData.size(); i++)
+	{
+		endless.enemyData[i] = {
+			100 + 4 * i,
+			3 + (2 * i)
+		};
+	}
+	dataList_.insert(std::make_pair("Endless", endless));
 }
 
 void EnemyPopDataList::SetEnemy(std::string name, std::vector<std::unique_ptr<IEnemy>>* enemy)

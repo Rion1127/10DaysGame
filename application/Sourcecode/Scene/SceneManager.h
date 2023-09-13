@@ -51,6 +51,7 @@ public:
 	static void SetGameMode(const GameMode gameMode) { sgameMode_ = gameMode; };
 public:
 	static bool GetIsSetNext() { return sisSetNext_; }
+	static GameMode GetGameMode() { return sgameMode_; }
 private:
 	static void SceneChange();
 };
