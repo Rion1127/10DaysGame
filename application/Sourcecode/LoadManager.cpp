@@ -43,7 +43,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("player.png", "Player");
 	LoadGraph("playerMove.png", "PlayerMove");
 	//“G
-	LoadGraph("slime.png", "Slime");
+	LoadGraph("slime1.png", "Slime");
 	LoadGraph("bat.png", "Bat");
 	LoadGraph("blackBear.png", "Bear");
 	//ƒ{ƒ^ƒ“UI
