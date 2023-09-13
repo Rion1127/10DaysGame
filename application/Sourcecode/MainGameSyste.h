@@ -102,7 +102,10 @@ private:
 	
 	void MinoCountUp();
 public:
-	void SetPlayer(Player* player) { player_ = player; }
+	void SetPlayer(Player* player) { 
+		player_ = player;
+		enemyManager_.SetPlayer(player);
+	}
 	void SetEnemy(IEnemy* enemy) { enemy_ = enemy; }
 public:
 	State GetGameState() { return gameState_; }

@@ -150,7 +150,15 @@ void MainGameSyste::CostInit()
 
 void MainGameSyste::Update()
 {
+	if (SceneManager::GetGameMode() == GameMode::EndLess)
+	{
+		if (storyText_.GetState() != StoryText::State::Fighting)
+		{
+			storyText_.SetState(StoryText::State::Fighting);
+		}
+	}
 	storyText_.Updadte();
+	
 	if (storyText_.GetFrameSkip())
 	{
 		storyText_.SetFrameSkip(false);

@@ -1,6 +1,7 @@
 #include "EnemyManager.h"
 #include "Enemy.h"
 #include "RRandom.h"
+#include "SceneManager.h"
 #pragma region
 EnemyManager::EnemyManager()
 {
@@ -13,14 +14,31 @@ EnemyManager::EnemyManager()
 void EnemyManager::Update()
 {
 	if (nowEnemy_ == nullptr) {
-		if (enemyList_.size() > 0) {
-			nowEnemy_.swap(enemyList_[0]);
-			enemyList_.erase(enemyList_.begin());
-			isChangeNowEnemy_ = true;
+		if (SceneManager::GetGameMode() == GameMode::MainGame)
+		{
+			if (enemyList_.size() > 0)
+			{
+				nowEnemy_.swap(enemyList_[0]);
+				enemyList_.erase(enemyList_.begin());
+				isChangeNowEnemy_ = true;
+			}
+			//“G‚ÌŽc‚è‚ª‚¢‚È‚¢Žž
+			else
+			{
+				isAllEnemyDestroy_ = true;
+			}
 		}
-		//“G‚ÌŽc‚è‚ª‚¢‚È‚¢Žž
-		else {
-			isAllEnemyDestroy_ = true;
+		else if (SceneManager::GetGameMode() == GameMode::EndLess)
+		{
+			int32_t enemyType = RRandom::Rand(0,2);
+
+			int32_t health = 10;
+			int32_t power = 2;
+			int32_t guard = 2;
+
+			nowEnemy_ =
+				std::make_unique<Enemy>(health, power, guard, YGame::EnemyType(enemyType));
+			isChangeNowEnemy_ = true;
 		}
 	}
 
@@ -83,11 +101,11 @@ EnemyPopDataList::EnemyPopDataList()
 	dataList_.insert(std::make_pair("Tutorial", tutorial));
 
 	PopData endless;
-	endless.enemyData.resize(100);
+	endless.enemyData.resize(1);
 	for (int32_t i = 0; i < endless.enemyData.size(); i++)
 	{
 		endless.enemyData[i] = {
-			100 + 4 * i,
+			10 + 4 * i,
 			3 + (2 * i),
 			0,
 			static_cast<YGame::EnemyType>(RRandom::Rand(0, 2))
