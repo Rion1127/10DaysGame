@@ -141,7 +141,7 @@ void MainGameSyste::CostInit()
 
 	minoCountLevel_ = 0;
 
-	for (uint32_t i = 0; i < 100; i++)
+	for (uint32_t i = 0; i <10; i++)
 	{
 		int32_t cost = 30 + i * 50;
 		minoCountUpCost_.push_back(cost);
@@ -150,7 +150,15 @@ void MainGameSyste::CostInit()
 
 void MainGameSyste::Update()
 {
+	if (SceneManager::GetGameMode() == GameMode::EndLess)
+	{
+		if (storyText_.GetState() != StoryText::State::Fighting)
+		{
+			storyText_.SetState(StoryText::State::Fighting);
+		}
+	}
 	storyText_.Updadte();
+	
 	if (storyText_.GetFrameSkip())
 	{
 		storyText_.SetFrameSkip(false);

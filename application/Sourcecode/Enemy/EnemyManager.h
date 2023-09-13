@@ -2,6 +2,7 @@
 #include "IEnemy.h"
 #include <vector>
 #include <unordered_map>
+#include "Player.h"
 
 struct EnemyData {
 	int32_t health;
@@ -33,6 +34,7 @@ private:
 	std::unique_ptr<IEnemy> nowEnemy_;
 	bool isChangeNowEnemy_ = false;
 	bool isAllEnemyDestroy_ = false;
+	Player* player_;
 public:
 	EnemyManager();
 
@@ -51,5 +53,6 @@ public:
 	bool GetIsEnemyEmpty() { return nowEnemy_ == nullptr && enemyList_.size() <= 0; }
 public:
 	void SetIsChangeNowEnemy(bool flag) { isChangeNowEnemy_ = flag; }
+	void SetPlayer(Player* player) { player_ = player; }
 };
 

@@ -37,5 +37,6 @@ public:
 	bool GetFrameSkip() { return frameSkip_; }
 public:
 	void SetFrameSkip(bool flag) { frameSkip_ = flag; }
+	void SetState(State state) { state_ = state; }
 };
 
