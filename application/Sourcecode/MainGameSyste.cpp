@@ -227,10 +227,12 @@ void MainGameSyste::Update()
 				SoundManager::Play("Click_1SE", false, 1.0f);
 			}
 		}
-
-		attackButton_->Update();
-		pauseButton_->Update();
-		redoButton_->Update();
+		if (storyText_.GetState() == StoryText::State::Fighting)
+		{
+			attackButton_->Update();
+			pauseButton_->Update();
+			redoButton_->Update();
+		}
 		if (reloadMinoNum_ > minos_.size())
 		{
 			redoButton_->SetisActive(true);
