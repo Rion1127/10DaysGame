@@ -33,9 +33,11 @@ void SoundManager::Update()
 	{
 		XAUDIO2_VOICE_STATE state;
 		itr->second.sound_->GetState(&state);
-		if (state.BuffersQueued <= 0) {
+		if (state.BuffersQueued <= 0)
+		{
 			//’†g‚ª“ü‚Á‚Ä‚¢‚½‚ç‚·‚×‚ÄŽ~‚ß‚é
-			if (itr->second.sound_ != nullptr) {
+			if (itr->second.sound_ != nullptr)
+			{
 				itr->second.sound_->Stop();
 			}
 			itr->second.Release();
@@ -91,7 +93,8 @@ SoundKey SoundManager::LoadWave(const std::string& path, const SoundKey& key)
 		file.read((char*)&data, sizeof(data));
 	}
 
-	if (strncmp(data.id, "data", 4) != 0) {
+	if (strncmp(data.id, "data", 4) != 0)
+	{
 		assert(0);
 	}
 
@@ -117,12 +120,14 @@ bool SoundManager::IsPlaying(const SoundKey& key) {
 	SoundData* pSnd = &ssndPlaying_[key];
 
 	XAUDIO2_VOICE_STATE state;
-	pSnd->sound_->GetState(&state);
-	if (state.BuffersQueued > 1)
+	if (pSnd->sound_ != nullptr)
 	{
-		return true;
+		pSnd->sound_->GetState(&state);
+		if (state.BuffersQueued > 0)
+		{
+			return true;
+		}
 	}
-	
 	return false;
 }
 
@@ -130,7 +135,7 @@ void SoundManager::Play(const SoundKey& key, bool loopFlag, float volum, float p
 {
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
 	//SoundData* pSnd = &;
-	ssndPlaying_.insert((std::make_pair(key,ssndMap_[key])));
+	ssndPlaying_.insert((std::make_pair(key, ssndMap_[key])));
 	if (ssndPlaying_.find(key)->second.sound_ != nullptr)
 	{
 		ssndPlaying_.find(key)->second.sound_->Stop();
@@ -167,9 +172,10 @@ void SoundManager::Stop(const SoundKey& key)
 	if (ssndPlaying_.find(key) == ssndPlaying_.end())return;
 
 	SoundData* pSnd = &ssndPlaying_.find(key)->second;
-	if (pSnd->sound_ != nullptr) {
+	if (pSnd->sound_ != nullptr)
+	{
 		pSnd->sound_->Stop();
-		
+
 	}
 	ssndPlaying_.erase(key);
 }
@@ -178,19 +184,23 @@ void SoundManager::AllStop()
 {
 	for (auto itr = ssndPlaying_.begin(); itr != ssndPlaying_.end();)
 	{
-		itr->second.sound_->Stop();
-		XAUDIO2_VOICE_STATE state;
-		itr->second.sound_->GetState(&state);
-		if (state.BuffersQueued <= 0) {
+		if (itr->second.sound_ != nullptr)
+		{
+			itr->second.sound_->Stop();
+			XAUDIO2_VOICE_STATE state;
+			itr->second.sound_->GetState(&state);
+
 			//’†g‚ª“ü‚Á‚Ä‚¢‚½‚ç‚·‚×‚ÄŽ~‚ß‚é
-			if (itr->second.sound_ != nullptr) {
+			if (itr->second.sound_ != nullptr)
+			{
 				itr->second.sound_->Stop();
 			}
-			itr->second.Release();
-
-			itr = ssndPlaying_.erase(itr);
-			continue;
 		}
+		itr->second.Release();
+
+		itr = ssndPlaying_.erase(itr);
+		continue;
+
 		itr++;
 	}
 }
@@ -200,7 +210,8 @@ void SoundManager::ReleaseAllSounds()
 	for (auto itr = ssndMap_.begin(); itr != ssndMap_.end(); itr++)
 	{
 		//’†g‚ª“ü‚Á‚Ä‚¢‚½‚ç‚·‚×‚ÄŽ~‚ß‚é
-		if (itr->second.sound_ != nullptr) {
+		if (itr->second.sound_ != nullptr)
+		{
 			itr->second.sound_->Stop();
 		}
 		itr->second.Release();
