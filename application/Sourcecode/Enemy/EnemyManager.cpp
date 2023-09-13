@@ -75,43 +75,49 @@ void EnemyManager::SetEnemyList(std::string name)
 #pragma region
 EnemyPopDataList::EnemyPopDataList()
 {
-	PopData mainGame;
-	mainGame.enemyData.resize(3);
-	for (int32_t i = 0; i < mainGame.enemyData.size(); i++) {
-		mainGame.enemyData[i] = {
-			1 + 10 * i,
-			3 + (4 * i),
-			0 + (2 * i),
-			static_cast<YGame::EnemyType>(i)
-		};
-	}
-	dataList_.insert(std::make_pair("MainGame", mainGame));
-
-	PopData tutorial;
-	tutorial.enemyData.resize(1);
-	for (int32_t i = 0; i < tutorial.enemyData.size(); i++)
+	// MAIN
 	{
-		tutorial.enemyData[i] = {
-			99999999,
-			0,
-			0,
-			YGame::EnemyType::Slime
-		};
+		PopData mainGame;
+		mainGame.enemyData.resize(5);
+		mainGame.enemyData[0] = {  25,  3,  0,YGame::EnemyType::Slime };
+		mainGame.enemyData[1] = {  50,  5, 10,YGame::EnemyType::Slime };
+		mainGame.enemyData[2] = {  50, 10, 50,YGame::EnemyType::Bat };
+		mainGame.enemyData[3] = {  75, 20, 10,YGame::EnemyType::Bat };
+		mainGame.enemyData[4] = { 150, 30, 50,YGame::EnemyType::Bear };
+		dataList_.insert(std::make_pair("MainGame", mainGame));
 	}
-	dataList_.insert(std::make_pair("Tutorial", tutorial));
 
-	PopData endless;
-	endless.enemyData.resize(1);
-	for (int32_t i = 0; i < endless.enemyData.size(); i++)
+	// TUTOTIAL
 	{
-		endless.enemyData[i] = {
-			10 + 4 * i,
-			3 + (2 * i),
-			0,
-			static_cast<YGame::EnemyType>(RRandom::Rand(0, 2))
-		};
+		PopData tutorial;
+		tutorial.enemyData.resize(1);
+		for (int32_t i = 0; i < tutorial.enemyData.size(); i++)
+		{
+			tutorial.enemyData[i] = {
+				99999999,
+				0,
+				0,
+				YGame::EnemyType::Slime
+			};
+		}
+		dataList_.insert(std::make_pair("Tutorial", tutorial));
 	}
-	dataList_.insert(std::make_pair("Endless", endless));
+
+	// ENDLESS
+	{
+		PopData endless;
+		endless.enemyData.resize(1);
+		for (int32_t i = 0; i < endless.enemyData.size(); i++)
+		{
+			endless.enemyData[i] = {
+				10 + 4 * i,
+				3 + (2 * i),
+				0,
+				static_cast<YGame::EnemyType>(RRandom::Rand(0, 2))
+			};
+		}
+		dataList_.insert(std::make_pair("Endless", endless));
+	}
 }
 
 void EnemyPopDataList::SetEnemy(std::string name, std::vector<std::unique_ptr<IEnemy>>* enemy)

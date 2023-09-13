@@ -155,7 +155,7 @@ void WallDrawer::ChangePlusHeal(const int32_t plusNum)
 {
 	if (isChanged_) { return; }
 
-	int32_t num = plusNum;
+	int32_t num = plusNum * 3;
 	if (plusNum <= 0) { num = 0; }
 	walls_[kHealIndex].counter_.ChangeAnimation(num);
 }
