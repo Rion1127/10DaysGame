@@ -114,12 +114,15 @@ SoundKey SoundManager::LoadWave(const std::string& path, const SoundKey& key)
 }
 
 bool SoundManager::IsPlaying(const SoundKey& key) {
-	IXAudio2SourceVoice* pSourceVoice = nullptr;//‚±‚ê•Û‘¶‚µ‚Æ‚­‚ÆŽ~‚ß‚ç‚ê‚é
-	SoundData* pSnd = &ssndMap_[key];
+	SoundData* pSnd = &ssndPlaying_[key];
 
-	sxAudio2_->CreateSourceVoice(&pSourceVoice, &pSnd->wfex_);
-	XAUDIO2_VOICE_STATE state{};
-	pSourceVoice->GetState(&state);
+	XAUDIO2_VOICE_STATE state;
+	pSnd->sound_->GetState(&state);
+	if (state.BuffersQueued > 1)
+	{
+		return true;
+	}
+	
 	return false;
 }
 
@@ -166,7 +169,9 @@ void SoundManager::Stop(const SoundKey& key)
 	SoundData* pSnd = &ssndPlaying_.find(key)->second;
 	if (pSnd->sound_ != nullptr) {
 		pSnd->sound_->Stop();
+		
 	}
+	ssndPlaying_.erase(key);
 }
 
 void SoundManager::AllStop()

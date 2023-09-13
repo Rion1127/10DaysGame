@@ -216,7 +216,7 @@ void MainGameSyste::Update()
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
 			if (titleButton_->GetIsCollision())
 			{
-				SceneManager::SetChangeStart(SceneName::Title);
+				SceneManager::SetChangeStart(SceneName::Select);
 				SoundManager::Play("Click_2SE", false, 1.0f);
 			}
 		}
