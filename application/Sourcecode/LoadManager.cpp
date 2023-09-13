@@ -47,7 +47,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("gameStartButton.png", "GameStartButton");
 	LoadGraph("beginner.png", "TutorialButton");
 	LoadGraph("titleButton.png", "TitleButton");
-	LoadGraph("endlessButton.png", "EndlessButton");
+	LoadGraph("endressRainbow.png", "EndlessButton");
 	LoadGraph("dotTest.png", "DotTest");
 	LoadGraph("retry.png", "Retry");
 	LoadGraph("minoCouintUp.png", "MinoCouintUp");
@@ -59,6 +59,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("redoButton.png", "RedoButton");
 	LoadGraph("enemyStateUI.png", "EnemyStateUI");
 	LoadGraph("gameStartButtonAnime.png", "StartButton1");
+
 
 	//UI
 	LoadGraph("textFrame.png", "TextFrame");
