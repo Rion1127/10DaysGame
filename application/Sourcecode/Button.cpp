@@ -1,5 +1,6 @@
 #include "Button.h"
 #include <imgui.h>
+#include "myMath.h"
 
 Button::Button(Vector2 pos)
 {
@@ -24,6 +25,8 @@ Button::Button(Vector2 pos)
 	sprite_->SetScale(scale);
 
 	isActive_ = true;
+
+	timer_.SetLimitTime(90);
 }
 
 void Button::Update()
@@ -48,7 +51,14 @@ void Button::Update()
 
 	if (CheckBox2DtoPoint(col_, mPos))
 	{
-		isCollision_ = true;
+		if (isCollision_ == false)
+		{
+			if (isAnimation_ == false)
+			{
+				isAnimation_ = true;
+			}
+			isCollision_ = true;
+		}
 
 		state_ = PipeLineState::Sub;
 	}
@@ -69,6 +79,28 @@ void Button::Update()
 	{
 		isCollision_ = false;
 		sprite_->SetColor(Color(100, 100, 100, 255));
+	}
+	//アニメーションをさせる
+	if (isActiveAnimation_)
+	{
+		sprite_->SetAnchor(Vector2(0.5f, 0.1f));
+		if (isAnimation_)
+		{
+			timer_.AddTime(1);
+			
+			float rot = 0;
+
+			float rate = 1.f - timer_.GetTimeRate();
+			rot = UpAndDown(50, Radian(45) * rate, (float)timer_.GetTimer());
+
+			sprite_->SetRot(rot);
+
+			if (timer_.GetIsEnd())
+			{
+				isAnimation_ = false;
+				timer_.Reset();
+			}
+		}
 	}
 
 	sprite_->Update();
@@ -97,4 +129,9 @@ void Button::SetTexture(Texture* texture)
 		pos_.x + (sprite_->GetTexture().size_.x / 2),
 		pos_.y + (sprite_->GetTexture().size_.y / 2)
 	};
+}
+
+void Button::AnimationUpdate()
+{
+
 }

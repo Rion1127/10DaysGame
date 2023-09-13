@@ -28,8 +28,10 @@ void SelectScene::Ini()
 	};
 	tutorialButton_ = std::make_unique<Button>(tutorialPos);
 	tutorialButton_->SetTexture(TextureManager::GetInstance()->GetTexture("TutorialButton"));
+	tutorialButton_->SetIsActiveAnimation(true);
 	mainGameButton_ = std::make_unique<Button>(mainGamePos);
 	mainGameButton_->SetTexture(TextureManager::GetInstance()->GetTexture("GameStartButton"));
+	mainGameButton_->SetIsActiveAnimation(true);
 	endlessButton_ = std::make_unique<Button>(endlessPos);
 	endlessButton_->SetTexture(TextureManager::GetInstance()->GetTexture("EndlessButton"));
 
