@@ -33,7 +33,7 @@ void GameScene::Ini()
 	puzzleBackGround_->Ini();
 	puzzleBackGround_->SetPos(Vector2(0.0f,240.0f));
 
-	puzzleBackGround_->SetTexture(TextureManager::GetInstance()->GetTexture("Sand1"));
+	puzzleBackGround_->SetTexture(TextureManager::GetInstance()->GetTexture("BackGroundSand"));
 	puzzleBackGround_->SetAnchor(Vector2(0.0f, 0.0f));
 
 	SoundManager::AllStop();

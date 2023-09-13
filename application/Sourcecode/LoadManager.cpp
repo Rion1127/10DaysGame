@@ -28,11 +28,9 @@ void LoadManager::LoadTexture()
 	LoadGraph("stagedodai.png", "Stage1");
 	//パズル背景
 	LoadGraph("sand.png", "Sand");
-	LoadGraph("puzzleBackGround.png", "Sand1");
+	LoadGraph("puzzleBackGround.png", "BackGroundSand");
 	//パネル関連
 	LoadGraph("panel.png", "Panel");
-	//LoadGraph("powerUpPanel.png", "PowerUpPanel");
-	//LoadGraph("recoveryPanel.png", "RecoveryPanel");
 	LoadGraph("light.png", "Light");
 	LoadGraph("nextPartsFrame.png", "Frame");
 	LoadGraph("next.png", "Next");
@@ -50,7 +48,6 @@ void LoadManager::LoadTexture()
 	LoadGraph("beginner.png", "TutorialButton");
 	LoadGraph("titleButton.png", "TitleButton");
 	LoadGraph("endressRainbow.png", "EndlessButton");
-	//LoadGraph("dotTest.png", "DotTest");
 	LoadGraph("retry.png", "Retry");
 	LoadGraph("minoCouintUp.png", "MinoCouintUp");
 	LoadGraph("mouse.png", "Mouse");
