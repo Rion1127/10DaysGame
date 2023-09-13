@@ -45,7 +45,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("blackBear.png", "Bear");
 	//ƒ{ƒ^ƒ“UI
 	LoadGraph("gameStartButton.png", "GameStartButton");
-	LoadGraph("tutorialButton.png", "TutorialButton");
+	LoadGraph("beginner.png", "TutorialButton");
 	LoadGraph("titleButton.png", "TitleButton");
 	LoadGraph("endlessButton.png", "EndlessButton");
 	LoadGraph("dotTest.png", "DotTest");
