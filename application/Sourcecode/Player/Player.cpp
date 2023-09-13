@@ -129,6 +129,9 @@ void Player::Damage(int32_t damage, const bool isCritical)
 void Player::Recovery(int32_t health)
 {
 	health_ += health;
+
+	health_ = Min(100, health_);
+
 	status_[kHealthIndex].PowerUpAnimation(health_);
 	
 	if (health_ <= 0)
