@@ -19,6 +19,9 @@ void LoadManager::LoadTexture()
 	LoadGraph("number.png", "Number");
 	//タイトル
 	LoadGraph("karititledot0912.png", "Title");
+	LoadGraph("titleLogo.png", "TitleLogo");
+	LoadGraph("cloud.png", "Cloud1");
+	LoadGraph("cloud2.png", "Cloud2");
 	//ステージセレクト
 	LoadGraph("kanban.png", "KanBan");
 	//ステージ背景
