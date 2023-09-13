@@ -46,6 +46,14 @@ StoryText::StoryText()
 	noButton_->SetTexture(TextureManager::GetInstance()->GetTexture("NoButton"));
 	noButton_->Update();
 
+	Vector2 kipPos = {
+		WinAPI::GetWindowSize().x / 2.9f,
+		WinAPI::GetWindowSize().y / 1.4f,
+	};
+	skipButton_ = std::make_unique<Button>(kipPos);
+	skipButton_->SetTexture(TextureManager::GetInstance()->GetTexture("SkipButton"));
+	skipButton_->Update();
+
 	speakEnd_ = SpeakEnd::Empty;
 	isEpilogueEnd_ = false;
 }
@@ -107,6 +115,14 @@ void StoryText::Updadte()
 
 			index_ = { 0,3 };
 		}
+
+		if (skipButton_->GetIsCollision()) {
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+				index_.x = 4;
+				index_.y = 2;
+			}
+		}
+		skipButton_->Update();
 	}
 	else if (state_ == State::Epilogue)
 	{
@@ -126,6 +142,14 @@ void StoryText::Updadte()
 			state_ = State::End;
 			isEpilogueEnd_ = true;
 		}
+
+		if (skipButton_->GetIsCollision()) {
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+				index_.x = 5;
+				index_.y = 4;
+			}
+		}
+		skipButton_->Update();
 	}
 
 	Vector2 leftTop = {
@@ -143,12 +167,13 @@ void StoryText::Draw()
 {
 	if (index_.x == 1 && index_.y == 2)
 	{
-	}else
-	if (state_ == State::Prologue ||
+	}
+	else if (state_ == State::Prologue ||
 		state_ == State::Epilogue)
 	{
 		framesprite_->Draw();
 		textsprite_->Draw();
+		skipButton_->Draw();
 	}
 
 	if (index_.x == 1 && index_.y == 2)

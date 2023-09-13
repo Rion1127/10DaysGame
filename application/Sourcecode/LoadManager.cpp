@@ -61,6 +61,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("yesButton.png", "YesButton");
 	LoadGraph("noButton.png", "NoButton");
 	LoadGraph("gameStartButtonAnime.png", "StartButton");
+	LoadGraph("skipButton.png", "SkipButton");
 
 
 	//UI

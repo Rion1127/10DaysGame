@@ -26,6 +26,8 @@ private:
 	bool frameSkip_;
 	SpeakEnd speakEnd_;
 
+	std::unique_ptr<Button> skipButton_;
+
 	std::unique_ptr<Button> yesButton_;
 	std::unique_ptr<Button> noButton_;
 
