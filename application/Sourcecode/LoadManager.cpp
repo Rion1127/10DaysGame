@@ -58,6 +58,8 @@ void LoadManager::LoadTexture()
 	LoadGraph("backButton.png", "BackButton");
 	LoadGraph("redoButton.png", "RedoButton");
 	LoadGraph("enemyStateUI.png", "EnemyStateUI");
+	LoadGraph("gameStartButtonAnime.png", "StartButton1");
+
 	//UI
 	LoadGraph("textFrame.png", "TextFrame");
 	LoadGraph("tutorialText.png", "TutorialText");

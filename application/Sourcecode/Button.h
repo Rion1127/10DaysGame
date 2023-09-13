@@ -7,6 +7,12 @@ class Button {
 private:
 	std::unique_ptr<Sprite> sprite_;
 	Vector2 pos_;
+	Vector2 spriteLeftPos_;
+	Vector2 texSize_;
+	bool isAnime_;
+	UINT animeMaxCount_;
+	UINT animeCount_;
+	UINT animeTimer_;
 	
 	Box2D col_;
 	bool isCollision_;
@@ -24,7 +30,7 @@ public:
 	void Draw();
 	void DrawImgui();
 
-	void AnimationUpdate();
+	void SetAnime(Vector2 texSize, UINT animeMaxNum, bool isAnime);
 public:
 	bool GetIsCollision() { return isCollision_; }
 public:
