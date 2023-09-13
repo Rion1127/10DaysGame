@@ -23,7 +23,6 @@ private:
 
 	YGame::TitleDrawer titleDra_;
 
-	std::unique_ptr<Sprite> titleSprite_ = nullptr;
 	std::unique_ptr<Sprite> clickSprite_ = nullptr;
 	Timer timer_;
 public:

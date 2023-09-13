@@ -1,4 +1,5 @@
 #include "StatusDrawer.h"
+#include "mSound.h"
 
 using YGame::StatusDrawer;
 
@@ -23,6 +24,8 @@ void StatusDrawer::Initialize(const YTransform::Status& trfmStatus, Matrix4* mat
 
 	moveTim_.Initialize(40);
 	moveEas_.Initialize(-64.0f, 0.0f, 4.0f);
+
+	isPlaySE_ = false;
 }
 
 void StatusDrawer::Update()
@@ -30,6 +33,15 @@ void StatusDrawer::Update()
 	moveTim_.Update();
 	if (moveTim_.IsEnd())
 	{
+		if (isPlaySE_)
+		{
+			if (counter_.GetNumber() != number_)
+			{
+				SoundManager::Play("StatysUpSE");
+			}
+		}
+		isPlaySE_ = false;
+
 		counter_.ChangeAnimation(number_);
 		sign_.SetColor(Color(200, 200, 20, 0));
 		plusCounter_.SetColor(Color(200, 200, 20, 0));
@@ -44,7 +56,7 @@ void StatusDrawer::Update()
 	plusCounter_.Update();
 }
 
-void StatusDrawer::PowerUpAnimation(const int32_t number)
+void StatusDrawer::PowerUpAnimation(const int32_t number, const bool isPlaySE)
 {
 	moveTim_.Reset(true);
 
@@ -52,6 +64,8 @@ void StatusDrawer::PowerUpAnimation(const int32_t number)
 	if (1000 <= number) { num = 999; }
 
 	number_ = num;
+
+	isPlaySE_ = isPlaySE;
 }
 
 void StatusDrawer::PlusAnimation(const int32_t plusNum)

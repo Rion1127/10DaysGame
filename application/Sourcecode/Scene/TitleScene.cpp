@@ -20,15 +20,10 @@ void TitleScene::Ini()
 {
 	sound_ = SoundManager::GetInstance();
 
-	titleDra_.Initialize();
-
-	titleSprite_ = std::make_unique<Sprite>();
-	titleSprite_->Ini();
-	titleSprite_->SetTexture(TextureManager::GetInstance()->GetTexture("Title"));
-	titleSprite_->SetAnchor(Vector2(0.0f, 0.0f));
-
 	SoundManager::AllStop();
 	SoundManager::Play("TitleBGM", true);
+	
+	titleDra_.Initialize();
 
 	clickSprite_ = std::make_unique<Sprite>();
 	clickSprite_->Ini();
@@ -68,8 +63,6 @@ void TitleScene::Update()
 	//
 
 	titleDra_.Update();
-
-	titleSprite_->Update();
 	clickSprite_->Update();
 }
 
@@ -78,8 +71,6 @@ void TitleScene::Draw()
 	PipelineManager::PreDraw("Sprite", TRIANGLELIST);
 	
 	titleDra_.Draw();
-
-	titleSprite_->Draw();
 	clickSprite_->Draw();
 	
 	PipelineManager::PreDraw("Object3D", TRIANGLELIST);
