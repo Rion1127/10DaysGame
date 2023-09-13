@@ -79,7 +79,7 @@ EnemyPopDataList::EnemyPopDataList()
 	dataList_.insert(std::make_pair("Tutorial", tutorial));
 
 	PopData endless;
-	endless.enemyData.resize(999);
+	endless.enemyData.resize(100);
 	for (int32_t i = 0; i < endless.enemyData.size(); i++)
 	{
 		endless.enemyData[i] = {
