@@ -46,11 +46,11 @@ StoryText::StoryText()
 	noButton_->SetTexture(TextureManager::GetInstance()->GetTexture("NoButton"));
 	noButton_->Update();
 
-	Vector2 kipPos = {
-		WinAPI::GetWindowSize().x / 2.9f,
+	Vector2 skipPos = {
+		WinAPI::GetWindowSize().x / 2.f,
 		WinAPI::GetWindowSize().y / 1.4f,
 	};
-	skipButton_ = std::make_unique<Button>(kipPos);
+	skipButton_ = std::make_unique<Button>(skipPos);
 	skipButton_->SetTexture(TextureManager::GetInstance()->GetTexture("SkipButton"));
 	skipButton_->Update();
 
