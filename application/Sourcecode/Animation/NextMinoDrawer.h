@@ -47,6 +47,8 @@ namespace YGame
 		/// </summary>
 		/// <param name="minos"> : éüÇÃÉ~ÉmÇÃèÓïÒ</param>
 		void RetreatAnimation(const std::vector<MinoType>& minos);
+
+		void SetIsFullOpen(const bool isFullOpen) { lock_.isFullOpen_ = isFullOpen; }
 	
 	private:
 		
@@ -79,6 +81,7 @@ namespace YGame
 			LockDrawer lock_;
 			BlockDrawer block_;
 			GaugeDrawer gauge_;
+			bool isFullOpen_ = false;
 		};
 		
 		class NextFrameDrawer
@@ -130,6 +133,6 @@ namespace YGame
 		bool isUnlock_ = false;
 		YMath::YPower unlockPower_;
 		YMath::Ease<float> unlockHeightEas_;
-		YMath::Ease<float> unlockRotaEas_;		
+		YMath::Ease<float> unlockRotaEas_;
 	};
 }

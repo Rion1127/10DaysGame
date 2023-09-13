@@ -332,6 +332,14 @@ void NextMinoDrawer::NextFrameDrawer::Update(const YTransform::Status& animeStat
 
 void NextMinoDrawer::NextFrameDrawer::Draw()
 {
+	if (pLock_)
+	{
+		if (pLock_->isFullOpen_)
+		{
+			return;
+		}
+	}
+
 	frame_.Draw();
 	for (size_t i = 0; i < drawers_.size(); i++)
 	{
