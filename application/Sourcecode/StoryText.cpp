@@ -47,11 +47,12 @@ StoryText::StoryText()
 	noButton_->Update();
 
 	speakEnd_ = SpeakEnd::Empty;
+	isEpilogueEnd_ = false;
 }
 
 void StoryText::Updadte()
 {
-	if (state_ != State::Fighting)
+	if (state_ == State::Prologue)
 	{
 		//‚Í‚¢or‚¢‚¢‚¦
 		if (index_.x == 1 && index_.y == 2)
@@ -103,6 +104,27 @@ void StoryText::Updadte()
 		{
 			state_ = State::Fighting;
 			frameSkip_ = true;
+
+			index_ = { 0,3 };
+		}
+	}
+	else if (state_ == State::Epilogue)
+	{
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+		{
+			index_.x++;
+			if (index_.x > 5)
+			{
+				index_.y++;
+				index_.x = 0;
+			}
+			SoundManager::Play("Click_2SE", false, 1.0f);
+		}
+
+		if (index_.x == 5 && index_.y == 4)
+		{
+			state_ = State::End;
+			isEpilogueEnd_ = true;
 		}
 	}
 

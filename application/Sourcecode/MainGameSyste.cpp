@@ -261,18 +261,27 @@ void MainGameSyste::Update()
 	//クリアしたら
 	else if (gameState_ == State::CLEAR)
 	{
+		if (storyText_.GetEpirogueEnd() == false)
+		{
+			storyText_.SetState(StoryText::State::Epilogue);
+		}
+
 		panel_->SetUpdateType(UpdateType::SpriteOnly);
 
-		clearEffect_.Update();
-
-		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+		if (storyText_.GetEpirogueEnd())
 		{
-			if (titleButton_->GetIsCollision())
+			clearEffect_.Update();
+
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
 			{
-				SceneManager::SetChangeStart(SceneName::Select);
-				SoundManager::Play("Click_2SE", false, 1.0f);
+				if (titleButton_->GetIsCollision())
+				{
+					SceneManager::SetChangeStart(SceneName::Select);
+					SoundManager::Play("Click_2SE", false, 1.0f);
+				}
 			}
 		}
+		
 	}
 	else if (gameState_ == State::PAUSE)
 	{
@@ -319,8 +328,7 @@ void MainGameSyste::Update()
 	// カメラ更新
 	cameraManager_->Update();
 
-	if (gameState_ == State::CLEAR ||
-		gameState_ == State::GAMEOVER ||
+	if (gameState_ == State::GAMEOVER ||
 		gameState_ == State::PAUSE)
 	{
 		//クリアの時はタイトルに戻るスプライトだけ有効にする
@@ -330,6 +338,12 @@ void MainGameSyste::Update()
 		{
 			GameOverUpdate();
 		}
+	}
+
+	if (gameState_ == State::CLEAR && storyText_.GetEpirogueEnd())
+	{
+		//クリアの時はタイトルに戻るスプライトだけ有効にする
+		titleButton_->Update();
 	}
 
 	mouseUi_.Update();
@@ -361,8 +375,7 @@ void MainGameSyste::DrawSpriteFront()
 {
 	wallDrawer_.Draw();
 	waveDrawer_.Draw();
-	if (gameState_ == State::CLEAR ||
-		gameState_ == State::GAMEOVER ||
+	if (gameState_ == State::GAMEOVER ||
 		gameState_ == State::PAUSE)
 	{
 		backSprite_->Draw();
@@ -381,11 +394,20 @@ void MainGameSyste::DrawSpriteFront()
 			backButton_->Draw();
 			pauseSprite_->Draw();
 		}
-		if (gameState_ == State::CLEAR)
+		
+	}
+
+	if (gameState_ == State::CLEAR)
+	{
+		if (storyText_.GetEpirogueEnd())
 		{
+			backSprite_->Draw();
 			clearEffect_.Draw();
+			//クリアの時はタイトルに戻るスプライトだけ有効にする
+			titleButton_->Draw();
 		}
 	}
+	
 	storyText_.Draw();
 
 }

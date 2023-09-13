@@ -28,6 +28,8 @@ private:
 
 	std::unique_ptr<Button> yesButton_;
 	std::unique_ptr<Button> noButton_;
+
+	bool isEpilogueEnd_;
 public:
 	StoryText();
 	void Updadte();
@@ -35,6 +37,7 @@ public:
 public:
 	State GetState() { return state_; }
 	bool GetFrameSkip() { return frameSkip_; }
+	bool GetEpirogueEnd() { return isEpilogueEnd_; }
 public:
 	void SetFrameSkip(bool flag) { frameSkip_ = flag; }
 	void SetState(State state) { state_ = state; }
