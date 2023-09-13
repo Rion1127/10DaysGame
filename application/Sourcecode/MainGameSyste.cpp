@@ -23,7 +23,8 @@ MainGameSyste::MainGameSyste()
 	if (SceneManager::GetGameMode() == GameMode::MainGame)
 	{
 		enemyManager_.SetEnemyList("MainGame");
-	}else if (SceneManager::GetGameMode() == GameMode::EndLess)
+	}
+	else if (SceneManager::GetGameMode() == GameMode::EndLess)
 	{
 		enemyManager_.SetEnemyList("Endless");
 	}
@@ -55,6 +56,15 @@ MainGameSyste::MainGameSyste()
 	YGame::DeadActor::StaticInitialize();
 
 	SoundManager::Stop("GameOverBGM");
+
+	enemyManager_.Update();
+	panel_->Update();
+
+	wallDrawer_.Update();
+
+	// カメラ更新
+	cameraManager_->Update();
+	YGame::DeadActor::StaticUpdate();
 }
 
 void MainGameSyste::SpriteInit()
@@ -65,19 +75,21 @@ void MainGameSyste::SpriteInit()
 	};
 	titleButton_ = std::make_unique<Button>(uiUpPos_);
 	titleButton_->SetTexture(TextureManager::GetInstance()->GetTexture("TitleButton"));
+	titleButton_->Update();
 	uiDownPos_ = {
 		WinAPI::GetWindowSize().x / 2.f,
 		WinAPI::GetWindowSize().y / 1.5f
 	};
 	retryButton_ = std::make_unique<Button>(uiUpPos_);
 	retryButton_->SetTexture(TextureManager::GetInstance()->GetTexture("Retry"));
-
+	retryButton_->Update();
 	attackPos_ = {
 		80.f,
 		300.f
 	};
 	attackButton_ = std::make_unique<Button>(attackPos_);
 	attackButton_->SetTexture(TextureManager::GetInstance()->GetTexture("AttackButton"));
+	attackButton_->Update();
 
 	pausePos_ = {
 		80.f,
@@ -129,7 +141,8 @@ void MainGameSyste::CostInit()
 
 	minoCountLevel_ = 0;
 
-	for (uint32_t i = 0; i < 100; i++) {
+	for (uint32_t i = 0; i < 100; i++)
+	{
 		int32_t cost = 30 + i * 50;
 		minoCountUpCost_.push_back(cost);
 	}
@@ -137,16 +150,31 @@ void MainGameSyste::CostInit()
 
 void MainGameSyste::Update()
 {
+	storyText_.Updadte();
+	if (storyText_.GetFrameSkip())
+	{
+		storyText_.SetFrameSkip(false);
+		return;
+	}
+	if (storyText_.GetState() != StoryText::State::Fighting)
+	{
+		panel_->SetUpdateType(UpdateType::SpriteOnly);
+	}
+	
 	if (gameState_ != State::PAUSE &&
-		gameState_ != State::GAMEOVER) {
+		gameState_ != State::GAMEOVER)
+	{
 		enemyManager_.Update();
 		panel_->Update();
 
-		if (enemyManager_.GetIsAllEnemyDestroy() == false) {
+		if (enemyManager_.GetIsAllEnemyDestroy() == false)
+		{
 			gameState_ = State::GAME;
 		}
-		else {
-			if (gameState_ != State::CLEAR) {
+		else
+		{
+			if (gameState_ != State::CLEAR)
+			{
 				gameState_ = State::CLEAR;
 				SoundManager::Stop("FightBGM");
 				SoundManager::Play("ClearBGM", true, 1.0f);
@@ -154,54 +182,68 @@ void MainGameSyste::Update()
 		}
 	}
 
-	if (gameState_ == State::GAME) {
+	if (gameState_ == State::GAME)
+	{
 		//敵の攻撃
-		if (nowTurn_ == Turn::PLAYER) {
+		if (nowTurn_ == Turn::PLAYER)
+		{
 			TurnPlayer();
-			if (minos_.size() > 0) {
+			if (minos_.size() > 0)
+			{
 				panel_->SetUpdateType(UpdateType::All);
 			}
-			else {
+			else
+			{
 				panel_->SetUpdateType(UpdateType::SpriteOnly);
 			}
 		}
 		//敵の攻撃
-		else if (nowTurn_ == Turn::ENEMY) {
+		else if (nowTurn_ == Turn::ENEMY)
+		{
 			TurnEnemy();
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 		//ターンを交代する
-		else if (nowTurn_ == Turn::CHANGE) {
+		else if (nowTurn_ == Turn::CHANGE)
+		{
 			//ターンをチェンジする
 			TurnChange();
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 
 		//前のターンがどっちのターンか記録しておく
-		if (nowTurn_ != Turn::CHANGE) {
+		if (nowTurn_ != Turn::CHANGE)
+		{
 			prevTurn_ = nowTurn_;
 		}
 
 		MinoCountUp();
 
-		if (pauseButton_->GetIsCollision()) {
-			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		if (pauseButton_->GetIsCollision())
+		{
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+			{
 				gameState_ = State::PAUSE;
 				SoundManager::Play("Click_1SE", false, 1.0f);
 			}
 		}
-
-		attackButton_->Update();
-		pauseButton_->Update();
-		redoButton_->Update();
-		if (reloadMinoNum_ > minos_.size()) {
+		if (storyText_.GetState() == StoryText::State::Fighting)
+		{
+			attackButton_->Update();
+			pauseButton_->Update();
+			redoButton_->Update();
+		}
+		if (reloadMinoNum_ > minos_.size())
+		{
 			redoButton_->SetisActive(true);
 		}
-		else {
+		else
+		{
 			redoButton_->SetisActive(false);
 		}
 
-		if (player_->GetIsAlive() == false) {
+		if (player_->GetIsAlive() == false)
+		{
 			gameState_ = State::GAMEOVER;
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 			SoundManager::Play("GameOverBGM", true, 1.0f);
@@ -209,12 +251,14 @@ void MainGameSyste::Update()
 		}
 	}
 	//クリアしたら
-	else if (gameState_ == State::CLEAR) {
+	else if (gameState_ == State::CLEAR)
+	{
 		panel_->SetUpdateType(UpdateType::SpriteOnly);
 
 		clearEffect_.Update();
 
-		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+		{
 			if (titleButton_->GetIsCollision())
 			{
 				SceneManager::SetChangeStart(SceneName::Select);
@@ -222,8 +266,10 @@ void MainGameSyste::Update()
 			}
 		}
 	}
-	else if (gameState_ == State::PAUSE) {
-		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+	else if (gameState_ == State::PAUSE)
+	{
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+		{
 			if (titleButton_->GetIsCollision())
 			{
 				SceneManager::SetChangeStart(SceneName::Title);
@@ -243,7 +289,8 @@ void MainGameSyste::Update()
 		pauseSprite_->Update();
 	}
 
-	if (enemyManager_.GetIsChangeNowEnemy() || enemyManager_.GetNowEnemy() == nullptr) {
+	if (enemyManager_.GetIsChangeNowEnemy() || enemyManager_.GetNowEnemy() == nullptr)
+	{
 		enemy_ = enemyManager_.GetNowEnemy();
 		enemyManager_.SetIsChangeNowEnemy(false);
 		if (enemyManager_.GetIsEnemyEmpty() == false) { waveDrawer_.GoNextWave(); }
@@ -252,7 +299,7 @@ void MainGameSyste::Update()
 	int32_t cost = minoCountUpCost_.at(minoCountLevel_);
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	nextMinoDrawer_.Update(cost - nowEmptyPanelNum);
-	
+
 	wallDrawer_.ChangePlusGuard(panel_->GetStateUpValue().guardUp_);
 	wallDrawer_.ChangePlusAttack(panel_->GetStateUpValue().attackUp_);
 	wallDrawer_.ChangePlusLuck(panel_->GetStateUpValue().luckUp_);
@@ -271,7 +318,8 @@ void MainGameSyste::Update()
 		//クリアの時はタイトルに戻るスプライトだけ有効にする
 		titleButton_->Update();
 		//ゲームオーバー
-		if (gameState_ == State::GAMEOVER) {
+		if (gameState_ == State::GAMEOVER)
+		{
 			GameOverUpdate();
 		}
 	}
@@ -281,13 +329,15 @@ void MainGameSyste::Update()
 	swordSprite_->Update();
 
 	YGame::DeadActor::StaticUpdate();
+
+	
 }
 
 void MainGameSyste::DrawSprite()
 {
 	panel_->DrawSprite();
 	nextMinoDrawer_.Draw();
-	
+
 	enemyManager_.Draw();
 
 	attackButton_->Draw();
@@ -311,27 +361,31 @@ void MainGameSyste::DrawSpriteFront()
 		//クリアの時はタイトルに戻るスプライトだけ有効にする
 		titleButton_->Draw();
 
-		if (gameState_ == State::GAMEOVER) {
+		if (gameState_ == State::GAMEOVER)
+		{
 			retryButton_->Draw();
 			gameOverEffect_.Draw();
-			
+
 		}
 
-		if (gameState_ == State::PAUSE) {
+		if (gameState_ == State::PAUSE)
+		{
 			backButton_->Draw();
 			pauseSprite_->Draw();
 		}
-		if (gameState_ == State::CLEAR) {
+		if (gameState_ == State::CLEAR)
+		{
 			clearEffect_.Draw();
 		}
 	}
-	
-	
+	storyText_.Draw();
+
 }
 
 void MainGameSyste::DrawImGui()
 {
-	if (enemy_ != nullptr) {
+	if (enemy_ != nullptr)
+	{
 		//enemy_->DrawImGui();
 	}
 	//panel_->DrawImGui();
@@ -370,10 +424,13 @@ void MainGameSyste::DrawImGui()
 void MainGameSyste::ReloadMino()
 {
 	//minos_.clear();
-	for (uint32_t i = 0; minos_.size() < reloadMinoNum_; i++) {
+	for (uint32_t i = 0; minos_.size() < reloadMinoNum_; i++)
+	{
 		//ミノリストに無いときに補充する
-		if (minosList_.size() == 0) {
-			for (uint32_t j = 0; j < 7; j++) {
+		if (minosList_.size() == 0)
+		{
+			for (uint32_t j = 0; j < 7; j++)
+			{
 				minosList_.push_back((MinoType)j);
 			}
 		}
@@ -392,20 +449,24 @@ void MainGameSyste::TurnChange()
 {
 	redoButton_->SetisActive(false);
 	//自分のターンだったら敵のターンへ
-	if (prevTurn_ == Turn::PLAYER) {
+	if (prevTurn_ == Turn::PLAYER)
+	{
 		nowTurn_ = Turn::ENEMY;
-		if (enemyManager_.GetNowEnemy() != nullptr) {
+		if (enemyManager_.GetNowEnemy() != nullptr)
+		{
 			enemyManager_.GetNowEnemy()->AttackAnimation();
 		}
 	}
 	//敵のターンだったら自分のターンへ
-	else if (prevTurn_ == Turn::ENEMY) {
+	else if (prevTurn_ == Turn::ENEMY)
+	{
 		nowTurn_ = Turn::PLAYER;
 		//ミノをリロードする
 		ReloadMino();
 		panel_->ReDoReset();
 
-		if (panel_->GetPanelReset()) {
+		if (panel_->GetPanelReset())
+		{
 			panel_->PanelReset();
 		}
 
@@ -427,47 +488,57 @@ void MainGameSyste::TurnChange()
 
 void MainGameSyste::TurnPlayer()
 {
-	if (minos_.size() > 0) {
+	if (minos_.size() > 0)
+	{
 		panel_->ChangeMinoAnimation(minos_[0]);
 	}
 
 	//パネルの設置が成功したら
-	if (panel_->GetisSetComplete()) {
+	if (panel_->GetisSetComplete())
+	{
 		panel_->SetisSetComplete(false);
 		panel_->SetRotNum(0);
 		//配置出来たミノを消す
-		if (minos_.size() > 0) {
+		if (minos_.size() > 0)
+		{
 			minos_.erase(minos_.begin());
 			nextMinoDrawer_.AdvanceAnimation(minos_);
 		}
 
-		if (minos_.size() <= 0 || panel_->GetIsAllFill()) {
+		if (minos_.size() <= 0 || panel_->GetIsAllFill())
+		{
 			player_->AttackAnimation(panel_->GetDisplayPanel());
 		}
 
 	}
 	//リドゥ機能
-	if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
-		if (redoButton_->GetIsCollision()) {
-			if (reloadMinoNum_ > minos_.size()) {
+	if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+	{
+		if (redoButton_->GetIsCollision())
+		{
+			if (reloadMinoNum_ > minos_.size())
+			{
 
 				SoundManager::Play("RedoSE", false, 1.0f);
 				panel_->ReDo(&minos_);
 				nextMinoDrawer_.RetreatAnimation(minos_);
 			}
-			else {
+			else
+			{
 				SoundManager::Play("CantSetSE", false, 1.0f);
 			}
 		}
-		
+
 	}
 
 
 	//残りの数が0になった場合かすべてのマスを埋めた時ターンを終了する
-	if (minos_.size() <= 0 || panel_->GetIsAllFill() || isNext_ == true) {
+	if (minos_.size() <= 0 || panel_->GetIsAllFill() || isNext_ == true)
+	{
 		redoButton_->SetisActive(false);
 		panel_->SetUpdateType(UpdateType::SpriteOnly);
-		if (player_->GetRotTimEnd()) {
+		if (player_->GetRotTimEnd())
+		{
 			//パネル更新
 			panel_->PanelUpdate();
 			panel_->SetIsAllFill(false);
@@ -480,12 +551,12 @@ void MainGameSyste::TurnPlayer()
 			//最低でも1にする
 			int32_t playerLuck = 1 + (player_->GetLuck() / 2);
 			playerLuck = Min(70, playerLuck);
-			
+
 			bool isClitical = false;
 
 			float pitch = RRandom::RandF(0.7f, 1.f);
 
-		
+
 			if (critical <= playerLuck)
 			{
 				isClitical = true;
@@ -501,15 +572,18 @@ void MainGameSyste::TurnPlayer()
 			enemy_->Damage(damage, isClitical);
 			nowTurn_ = Turn::CHANGE;
 
-			
+
 
 			isNext_ = false;
 		}
 	}
 	//攻撃ボタンを押したら
-	if (attackButton_->GetIsCollision()) {
-		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
-			if (isNext_ == false) {
+	if (attackButton_->GetIsCollision())
+	{
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+		{
+			if (isNext_ == false)
+			{
 				SoundManager::Play("Click_2SE", false, 1.0f);
 				isNext_ = true;
 				player_->AttackAnimation(panel_->GetDisplayPanel());
@@ -522,8 +596,10 @@ void MainGameSyste::TurnEnemy()
 {
 	redoButton_->SetisActive(false);
 	//プレイヤーがダメージを受ける
-	if (enemyManager_.GetIsChangeNowEnemy() == false) {
-		if (enemyManager_.GetNowEnemy()->GetIsEndAttack()) {
+	if (enemyManager_.GetIsChangeNowEnemy() == false)
+	{
+		if (enemyManager_.GetNowEnemy()->GetIsEndAttack())
+		{
 			int32_t  damage = enemy_->GetAttackPower();
 			damage -= player_->GetGuard();
 			damage = Max(1, damage);
@@ -536,7 +612,8 @@ void MainGameSyste::TurnEnemy()
 			nowTurn_ = Turn::CHANGE;
 		}
 	}
-	else {
+	else
+	{
 		//処理が終わったらシーンをチェンジする
 		nowTurn_ = Turn::CHANGE;
 	}
@@ -550,7 +627,8 @@ void MainGameSyste::GameOverUpdate()
 	titleButton_->SetPos(uiDownPos_);
 	retryButton_->SetPos(uiUpPos_);
 
-	if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+	if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+	{
 		if (titleButton_->GetIsCollision())
 		{
 			SceneManager::SetChangeStart(SceneName::Title);
@@ -570,14 +648,15 @@ void MainGameSyste::MinoCountUp()
 	const int32_t cost = minoCountUpCost_.at(minoCountLevel_);
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
 	//空白のパネルがコストよりも多ければ
-	if (cost <= nowEmptyPanelNum) {
+	if (cost <= nowEmptyPanelNum)
+	{
 		minoCountLevel_++;
 		reloadMinoNum_++;
 
 		size_t costMaxNum = minoCountUpCost_.size() - 1;
 		minoCountLevel_ = (uint32_t)Min(costMaxNum, (size_t)minoCountLevel_);
 		//panel_->PanelReset();
-		SoundManager::Play("UnlockSE",false,0.8f,0.7f);
+		SoundManager::Play("UnlockSE", false, 0.8f, 0.7f);
 		nextMinoDrawer_.UnlockAnimiation();
 	}
 }
@@ -592,10 +671,13 @@ void MainGameSyste::TutorialInit()
 	//ターンごとに補充するミノの数
 	reloadMinoNum_ = 5;
 
-	for (uint32_t i = 0; minos_.size() < reloadMinoNum_; i++) {
+	for (uint32_t i = 0; minos_.size() < reloadMinoNum_; i++)
+	{
 		//ミノリストに無いときに補充する
-		if (minosList_.size() == 0) {
-			for (uint32_t j = 0; j < 7; j++) {
+		if (minosList_.size() == 0)
+		{
+			for (uint32_t j = 0; j < 7; j++)
+			{
 				minosList_.push_back((MinoType)j);
 			}
 		}
@@ -660,7 +742,8 @@ void MainGameSyste::TutorialUpdate()
 	oldTutorialIndexX_ = tutorialIndexX_;
 
 	if (gameState_ != State::PAUSE &&
-		gameState_ != State::GAMEOVER) {
+		gameState_ != State::GAMEOVER)
+	{
 		enemyManager_.Update();
 		panel_->Update();
 
@@ -679,71 +762,93 @@ void MainGameSyste::TutorialUpdate()
 		}
 	}
 
-	if (tutorialstep_ == TutorialStep::Set) {
+	if (tutorialstep_ == TutorialStep::Set)
+	{
 
-		if (tutorialIndexX_ == 0) {
-			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		if (tutorialIndexX_ == 0)
+		{
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+			{
 				tutorialIndexX_++;
 			}
 		}
-		if (tutorialIndexX_ == 1) {
-			if (panel_->GetisSetComplete()) {
+		if (tutorialIndexX_ == 1)
+		{
+			if (panel_->GetisSetComplete())
+			{
 				if (tutorialIndexX_ == 1)tutorialIndexX_++;
 			}
 		}
 		//オレンジのパネルは…
-		else if (tutorialIndexX_ == 2) {
+		else if (tutorialIndexX_ == 2)
+		{
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
-			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+			{
 				tutorialIndexX_++;
 			}
 		}
 		//青いパネルは次のターンで…
-		else if (tutorialIndexX_ == 3) {
+		else if (tutorialIndexX_ == 3)
+		{
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
-			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+			{
 				tutorialIndexX_++;
 			}
 		}
 		// 全てのパネルを埋めるか攻撃ボタンを…
-		else if (tutorialIndexX_ == 4) {
+		else if (tutorialIndexX_ == 4)
+		{
 			panel_->SetUpdateType(UpdateType::All);
-			if (attackButton_->GetIsCollision()) {
-				if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+			if (attackButton_->GetIsCollision())
+			{
+				if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+				{
 					tutorialIndexX_++;
 					tutorialstep_ = TutorialStep::StatusUp;
 				}
 			}
-			if (panel_->GetIsAllFill()) {
+			if (panel_->GetIsAllFill())
+			{
 				tutorialIndexX_++;
 				tutorialstep_ = TutorialStep::StatusUp;
 			}
 		}
 
 	}
-	else if (tutorialstep_ == TutorialStep::StatusUp) {
+	else if (tutorialstep_ == TutorialStep::StatusUp)
+	{
 		//基本はこうやってパネルを…
-		if (tutorialIndexX_ == 5) {
-			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		if (tutorialIndexX_ == 5)
+		{
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+			{
 				tutorialIndexX_ = 0;
 				tutorialIndexY_++;
 			}
 		}
 		//いちばんそとがわに置くとパネルがリセット…
-		else if (tutorialIndexX_ == 0) {
-			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		else if (tutorialIndexX_ == 0)
+		{
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+			{
 				tutorialIndexX_++;
 			}
 		}
 		//ステータスが上がるよ
-		else if (tutorialIndexX_ == 1) {
-			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		else if (tutorialIndexX_ == 1)
+		{
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+			{
 				tutorialIndexX_++;
 			}
 		}
 		//外側までのぱしてみよう
-		else if (tutorialIndexX_ == 2) {
-			if (panel_->GetPanelReset()) {
+		else if (tutorialIndexX_ == 2)
+		{
+			if (panel_->GetPanelReset())
+			{
 				tutorialstep_ = TutorialStep::PanelNumUp;
 				tutorialIndexY_++;
 				tutorialIndexX_ = 0;
@@ -751,42 +856,55 @@ void MainGameSyste::TutorialUpdate()
 		}
 
 	}
-	else if (tutorialstep_ == TutorialStep::PanelNumUp) {
-		if (tutorialIndexX_ == 3) {
-			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+	else if (tutorialstep_ == TutorialStep::PanelNumUp)
+	{
+		if (tutorialIndexX_ == 3)
+		{
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+			{
 				tutorialIndexX_ = 0;
 				tutorialIndexY_++;
 			}
 		}
 		//パネルを解放した数がおおければ…
-		else if (tutorialIndexX_ == 0) {
-			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		else if (tutorialIndexX_ == 0)
+		{
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+			{
 				tutorialIndexX_++;
 			}
 		}
 		//１ターンに置けるパーツの数が…
-		else if (tutorialIndexX_ == 1) {
-			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		else if (tutorialIndexX_ == 1)
+		{
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+			{
 				tutorialIndexY_++;
 				tutorialIndexX_ = 0;
 				tutorialstep_ = TutorialStep::End;
 			}
 		}
 	}
-	else if (tutorialstep_ == TutorialStep::End) {
-		if (tutorialIndexX_ == 0) {
-			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+	else if (tutorialstep_ == TutorialStep::End)
+	{
+		if (tutorialIndexX_ == 0)
+		{
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+			{
 				tutorialIndexX_++;
 			}
 		}
-		else if (tutorialIndexX_ == 1) {
-			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		else if (tutorialIndexX_ == 1)
+		{
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+			{
 				SceneManager::SetChangeStart(SceneName::Title);
 			}
 		}
 	}
 
-	if (gameState_ == State::GAME) {
+	if (gameState_ == State::GAME)
+	{
 		//敵の攻撃
 		if (nowTurn_ == Turn::PLAYER)
 		{
@@ -852,7 +970,8 @@ void MainGameSyste::TutorialUpdate()
 		}
 	}
 	//クリアしたら
-	else if (gameState_ == State::CLEAR) {
+	else if (gameState_ == State::CLEAR)
+	{
 		panel_->SetUpdateType(UpdateType::SpriteOnly);
 
 		clearEffect_.Update();
@@ -865,7 +984,8 @@ void MainGameSyste::TutorialUpdate()
 			}
 		}
 	}
-	else if (gameState_ == State::PAUSE) {
+	else if (gameState_ == State::PAUSE)
+	{
 		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
 		{
 			if (titleButton_->GetIsCollision())
@@ -887,7 +1007,8 @@ void MainGameSyste::TutorialUpdate()
 		pauseSprite_->Update();
 	}
 
-	if (enemyManager_.GetIsChangeNowEnemy() || enemyManager_.GetNowEnemy() == nullptr) {
+	if (enemyManager_.GetIsChangeNowEnemy() || enemyManager_.GetNowEnemy() == nullptr)
+	{
 		enemy_ = enemyManager_.GetNowEnemy();
 		enemyManager_.SetIsChangeNowEnemy(false);
 	}
@@ -912,7 +1033,8 @@ void MainGameSyste::TutorialUpdate()
 		//クリアの時はタイトルに戻るスプライトだけ有効にする
 		titleButton_->Update();
 		//ゲームオーバー
-		if (gameState_ == State::GAMEOVER) {
+		if (gameState_ == State::GAMEOVER)
+		{
 			GameOverUpdate();
 		}
 	}
@@ -926,17 +1048,22 @@ void MainGameSyste::TutorialUpdate()
 			tutorialIndexY_ * 128.f));
 
 
-	if (tutorialIndexY_ == 0) {
-		if (tutorialIndexX_ == 0) {
+	if (tutorialIndexY_ == 0)
+	{
+		if (tutorialIndexX_ == 0)
+		{
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
-		else if (tutorialIndexX_ == 1) {
+		else if (tutorialIndexX_ == 1)
+		{
 			//panel_->SetUpdateType(UpdateType::All);
 		}
-		else if (tutorialIndexX_ == 2) {
+		else if (tutorialIndexX_ == 2)
+		{
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
-		else if (tutorialIndexX_ == 3) {
+		else if (tutorialIndexX_ == 3)
+		{
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 		else if (tutorialIndexX_ == 4)
@@ -949,45 +1076,60 @@ void MainGameSyste::TutorialUpdate()
 		}
 
 	}
-	else if (tutorialIndexY_ == 1) {
-		if (tutorialIndexX_ == 0) {
+	else if (tutorialIndexY_ == 1)
+	{
+		if (tutorialIndexX_ == 0)
+		{
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
-		else if (tutorialIndexX_ == 1) {
+		else if (tutorialIndexX_ == 1)
+		{
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
-		else if (tutorialIndexX_ == 2) {
+		else if (tutorialIndexX_ == 2)
+		{
 			//panel_->SetUpdateType(UpdateType::All);
 		}
-		else if (tutorialIndexX_ == 3) {
+		else if (tutorialIndexX_ == 3)
+		{
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
-		else if (tutorialIndexX_ == 4) {
+		else if (tutorialIndexX_ == 4)
+		{
 			//panel_->SetUpdateType(UpdateType::All);
 		}
-		else if (tutorialIndexX_ == 5) {
+		else if (tutorialIndexX_ == 5)
+		{
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 	}
-	else if (tutorialIndexY_ == 2) {
-		if (tutorialIndexX_ == 0) {
+	else if (tutorialIndexY_ == 2)
+	{
+		if (tutorialIndexX_ == 0)
+		{
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
-		else if (tutorialIndexX_ == 1) {
+		else if (tutorialIndexX_ == 1)
+		{
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
-		else if (tutorialIndexX_ == 2) {
+		else if (tutorialIndexX_ == 2)
+		{
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
-		else if (tutorialIndexX_ == 3) {
+		else if (tutorialIndexX_ == 3)
+		{
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 	}
-	else if (tutorialIndexY_ == 3) {
-		if (tutorialIndexX_ == 3) {
+	else if (tutorialIndexY_ == 3)
+	{
+		if (tutorialIndexX_ == 3)
+		{
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
-		else {
+		else
+		{
 
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}

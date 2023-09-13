@@ -13,7 +13,7 @@ namespace
 void TransitionDrawer::Initialize()
 {			
 	Vector2 winHalf = WinAPI::GetWindowSize() / 2.0f;
-	Vector3 pos = { winHalf.x, winHalf.y, 0.0f };
+	Vector3 pos = { winHalf.x + 72.0f, winHalf.y, 0.0f };
 	trfm_.Initialize({ pos, {}, {3.0f,3.0f,3.0f} });
 
 	Vector3 leftTop = 

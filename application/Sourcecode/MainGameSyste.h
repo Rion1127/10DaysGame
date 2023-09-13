@@ -10,6 +10,7 @@
 #include "Timer.h"
 #include "GameOverEffect.h"
 #include "ClearEffect.h"
+#include "StoryText.h"
 #include "WaveDrawer.h"
 
 #include "MouseUI.h"
@@ -80,6 +81,7 @@ private:
 
 	GameOverEffect gameOverEffect_;
 	ClearEffect clearEffect_;
+	StoryText storyText_;
 public:
 	MainGameSyste();
 	void Update();

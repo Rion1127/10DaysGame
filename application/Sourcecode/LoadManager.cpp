@@ -57,6 +57,9 @@ void LoadManager::LoadTexture()
 	LoadGraph("backButton.png", "BackButton");
 	LoadGraph("redoButton.png", "RedoButton");
 	LoadGraph("enemyStateUI.png", "EnemyStateUI");
+
+	LoadGraph("yesButton.png", "YesButton");
+	LoadGraph("noButton.png", "NoButton");
 	LoadGraph("gameStartButtonAnime.png", "StartButton");
 
 
@@ -75,6 +78,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("gameOver.png", "GameOver");
 	LoadGraph("questClear.png", "QuestClear");
 	LoadGraph("click.png", "Click");
+	LoadGraph("story.png", "Story");
 }
 
 void LoadManager::LoadSound()
