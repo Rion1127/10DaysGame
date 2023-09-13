@@ -14,11 +14,13 @@ Panel::Panel()
 	maxPanelSize_ = 10;
 	initalSize_ = 2;
 	//配列初期化
-	displayPanel_.resize(maxPanelSize_);
+	displayPanel1_.resize(maxPanelSize_);
+	displayPanel2_.resize(maxPanelSize_);
 	systemPanel_.resize(maxPanelSize_);
 	for (int32_t i = 0; i < maxPanelSize_; i++)
 	{
-		displayPanel_[i].resize(maxPanelSize_);
+		displayPanel1_[i].resize(maxPanelSize_);
+		displayPanel2_[i].resize(maxPanelSize_);
 		systemPanel_[i].resize(maxPanelSize_);
 	}
 	//パネルを初期状態にする
@@ -32,8 +34,8 @@ Panel::Panel()
 	spriteScale_ = 1;
 	//スプライトのサイズ
 	spritePos_ = {
-		WinAPI::GetWindowSize().x / 2.f - ((displayPanel_.size() / 2)) * spriteSize_ + 16.f,
-		WinAPI::GetWindowSize().y / 2.f - ((displayPanel_[0].size() / 2) - 2) * spriteSize_ +32.0f
+		WinAPI::GetWindowSize().x / 2.f - ((displayPanel1_.size() / 2)) * spriteSize_ + 16.f,
+		WinAPI::GetWindowSize().y / 2.f - ((displayPanel1_[0].size() / 2) - 2) * spriteSize_ +32.0f
 	};
 
 	sprite_ = std::make_unique<PanelSprite>(maxPanelSize_, spritePos_, spriteScale_);
@@ -42,8 +44,8 @@ Panel::Panel()
 
 	allPanelSize_.leftUp = spritePos_;
 	allPanelSize_.RightDown = {
-		spritePos_.x + displayPanel_[0].size() * spriteSize_,
-		spritePos_.y + displayPanel_[0].size() * spriteSize_
+		spritePos_.x + displayPanel1_[0].size() * spriteSize_,
+		spritePos_.y + displayPanel1_[0].size() * spriteSize_
 	};
 }
 
@@ -53,9 +55,9 @@ void Panel::Update()
 	{
 		Vector2 mPos = MouseInput::GetInstance()->mPos_;
 		emptyPanelNum_ = 0;
-		for (int32_t y = 0; y < displayPanel_.size(); y++)
+		for (int32_t y = 0; y < displayPanel1_.size(); y++)
 		{
-			for (int32_t x = 0; x < displayPanel_[y].size(); x++)
+			for (int32_t x = 0; x < displayPanel1_[y].size(); x++)
 			{
 				Vector2 leftUp = {
 					spritePos_.x + (x * spriteSize_),
@@ -75,9 +77,10 @@ void Panel::Update()
 				{
 					selectPos_ = { x,y };
 				}
-				else if (displayPanel_[x][y] != State::EMPTY)
+				else if (displayPanel1_[x][y] != State::EMPTY)
 				{
-					displayPanel_[x][y] = systemPanel_[x][y];
+					displayPanel1_[x][y] = systemPanel_[x][y];
+					displayPanel2_[x][y] = systemPanel_[x][y];
 				}
 
 				if (systemPanel_[x][y] == State::EMPTY)
@@ -121,13 +124,13 @@ void Panel::Update()
 		//見た目のパネルの配列を更新
 		DisplayPanelUpdate(nowMino_);
 
-		sprite_->Update(systemPanel_, displayPanel_);
+		sprite_->Update(systemPanel_, displayPanel1_, displayPanel2_);
 	}
 	else
 	{
 		//見た目のパネルの配列を更新
 		DisplayPanelUpdate(nowMino_);
-		sprite_->Update(systemPanel_, displayPanel_);
+		sprite_->Update(systemPanel_, displayPanel1_, displayPanel2_);
 	}
 }
 
@@ -142,11 +145,11 @@ void Panel::DrawImGui()
 	//配列表示
 	if (ImGui::CollapsingHeader("displayPanel"))
 	{
-		for (uint32_t y = 0; y < displayPanel_.size(); y++)
+		for (uint32_t y = 0; y < displayPanel1_.size(); y++)
 		{
 			ImGui::Text("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-				displayPanel_[0][y], displayPanel_[1][y], displayPanel_[2][y], displayPanel_[3][y], displayPanel_[4][y],
-				displayPanel_[5][y], displayPanel_[6][y], displayPanel_[7][y], displayPanel_[8][y], displayPanel_[9][y]);
+				displayPanel1_[0][y], displayPanel1_[1][y], displayPanel1_[2][y], displayPanel1_[3][y], displayPanel1_[4][y],
+				displayPanel1_[5][y], displayPanel1_[6][y], displayPanel1_[7][y], displayPanel1_[8][y], displayPanel1_[9][y]);
 		}
 	}
 	if (ImGui::CollapsingHeader("systemPanel"))
@@ -228,9 +231,9 @@ void Panel::DrawImGui()
 void Panel::PanelUpdate()
 {
 	attackPanelNum_ = 0;
-	for (uint32_t y = 0; y < displayPanel_.size(); y++)
+	for (uint32_t y = 0; y < displayPanel1_.size(); y++)
 	{
-		for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
+		for (uint32_t x = 0; x < displayPanel1_[y].size(); x++)
 		{
 			if (x == 0 || x == 9 || y == 0 || y == 9)
 			{
@@ -256,33 +259,35 @@ void Panel::PanelUpdate()
 
 void Panel::PanelReset()
 {
-	for (uint32_t y = 0; y < displayPanel_.size(); y++)
+	for (uint32_t y = 0; y < displayPanel1_.size(); y++)
 	{
-		for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
+		for (uint32_t x = 0; x < displayPanel1_[y].size(); x++)
 		{
-			displayPanel_[x][y] = 0;
+			displayPanel1_[x][y] = 0;
+			displayPanel2_[x][y] = 0;
 		}
 	}
 
-	uint32_t sizeMinY = ((uint32_t)(displayPanel_.size() - 1) / 2);
-	uint32_t sizeMaxY = ((uint32_t)(displayPanel_.size() - 1) / 2) + (initalSize_ - 1);
+	uint32_t sizeMinY = ((uint32_t)(displayPanel1_.size() - 1) / 2);
+	uint32_t sizeMaxY = ((uint32_t)(displayPanel1_.size() - 1) / 2) + (initalSize_ - 1);
 
-	uint32_t sizeMinX = ((uint32_t)(displayPanel_[0].size() - 1) / 2);
-	uint32_t sizeMaxX = ((uint32_t)(displayPanel_[0].size() - 1) / 2) + (initalSize_ - 1);
+	uint32_t sizeMinX = ((uint32_t)(displayPanel1_[0].size() - 1) / 2);
+	uint32_t sizeMaxX = ((uint32_t)(displayPanel1_[0].size() - 1) / 2) + (initalSize_ - 1);
 
-	for (uint32_t y = 0; y < displayPanel_.size(); y++)
+	for (uint32_t y = 0; y < displayPanel1_.size(); y++)
 	{
-		for (uint32_t x = 0; x < displayPanel_[y].size(); x++)
+		for (uint32_t x = 0; x < displayPanel1_[y].size(); x++)
 		{
 			if (y >= sizeMinY && y <= sizeMaxY &&
 				x >= sizeMinX && x <= sizeMaxX)
 			{
-				displayPanel_[x][y] = State::EMPTY;
+				displayPanel1_[x][y] = State::EMPTY;
+				displayPanel2_[x][y] = State::EMPTY;
 			}
 
 
 
-			systemPanel_[x][y] = displayPanel_[x][y];
+			systemPanel_[x][y] = displayPanel1_[x][y];
 		}
 	}
 
@@ -340,13 +345,17 @@ bool Panel::IsCanChange(const Mino& mino)
 
 void Panel::DisplayPanelUpdate(const Mino& mino)
 {
-	for (int32_t y = 0; y < displayPanel_.size(); y++)
+	for (int32_t y = 0; y < displayPanel1_.size(); y++)
 	{
-		for (int32_t x = 0; x < displayPanel_[y].size(); x++)
+		for (int32_t x = 0; x < displayPanel1_[y].size(); x++)
 		{
-			if (displayPanel_[x][y] != State::EMPTY)
+			if (displayPanel1_[x][y] != State::EMPTY)
 			{
-				displayPanel_[x][y] = systemPanel_[x][y];
+				displayPanel1_[x][y] = systemPanel_[x][y];
+			}
+			if (displayPanel2_[x][y] != State::EMPTY)
+			{
+				displayPanel2_[x][y] = systemPanel_[x][y];
 			}
 		}
 	}
@@ -368,13 +377,13 @@ void Panel::DisplayPanelUpdate(const Mino& mino)
 				if (systemPanel_[x][y] == State::NOT_OPEN &&
 					mino.panel_[panelY][panelX] == 1)
 				{
-					displayPanel_[x][y] = State::TEMPPOS;
+					displayPanel2_[x][y] = State::TEMPPOS;
 				}
 				//空のパネルに重ねていたら
 				if (systemPanel_[x][y] == State::EMPTY &&
 					mino.panel_[panelY][panelX] == 1)
 				{
-					displayPanel_[x][y] = State::TEMPPOS_ON_EMPTY;
+					displayPanel2_[x][y] = State::TEMPPOS_ON_EMPTY;
 				}
 
 				//すでにおいているパネルと被っていたら
@@ -383,7 +392,7 @@ void Panel::DisplayPanelUpdate(const Mino& mino)
 					systemPanel_[x][y] == State::NEXT_RELEASE &&
 					mino.panel_[panelY][panelX] == 1)
 				{
-					displayPanel_[x][y] = State::CANTSET;
+					displayPanel2_[x][y] = State::CANTSET;
 				}
 
 
@@ -399,7 +408,8 @@ void Panel::DisplayPanelUpdate(const Mino& mino)
 			panelX = 0;
 			for (uint32_t x = selectPos_.x; x < sizeX; x++)
 			{
-				displayPanel_[x][y] = systemPanel_[x][y];
+				displayPanel1_[x][y] = systemPanel_[x][y];
+				displayPanel2_[x][y] = systemPanel_[x][y];
 
 				panelX++;
 			}
@@ -569,7 +579,8 @@ void Panel::SetPanel(const Mino& mino)
 				nextReleaseNum++;
 			}
 			//全て更新する
-			displayPanel_[x][y] = systemPanel_[x][y];
+			displayPanel1_[x][y] = systemPanel_[x][y];
+			displayPanel2_[x][y] = systemPanel_[x][y];
 
 			
 			if (x == 0 || x == 9 || y == 0 || y == 9)
@@ -642,51 +653,55 @@ PanelSprite::PanelSprite(uint32_t panelSize, Vector2 basePos, float panelScale)
 	}
 }
 
-void PanelSprite::Update(const std::vector<std::vector<int32_t>>& system, const std::vector<std::vector<int32_t>>& display)
+void PanelSprite::Update(
+	const std::vector<std::vector<int32_t>>& system,
+	const std::vector<std::vector<int32_t>>& display1,
+	const std::vector<std::vector<int32_t>>& display2)
 {
 	for (uint32_t y = 0; y < panels_.size(); y++)
 	{
 		for (uint32_t x = 0; x < panels_[y].size(); x++)
 		{
-			if (display[x][y] != State::TEMPPOS)
+			if (display1[x][y] != State::TEMPPOS)
 			{
 				panels_[x][y].SetTexture(TextureManager::GetInstance()->GetTexture("Panel"));
 			}
 
 			//パネルの色変更
-			if (display[x][y] == State::NOT_OPEN)
+			if (display1[x][y] == State::NOT_OPEN)
 			{
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Gray);
 				panels_[x][y].ResetAnime();
 			}
-			else if (display[x][y] == State::EMPTY)
+			else if (display1[x][y] == State::EMPTY)
 			{
 				panels_[x][y].ChangeColor(YGame::BlockColorType::White);
 				panels_[x][y].ResetAnime();
 			}
-			else if (display[x][y] == State::ATTACK)
+			else if (display1[x][y] == State::ATTACK)
 			{
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Orange);
 				SetAnimation(x, y);
 			}
-			else if (display[x][y] == State::SELECT)
+			else if (display1[x][y] == State::SELECT)
 			{
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Orange);
 			}
-			else if (display[x][y] == State::NEXT_RELEASE)
+			else if (display1[x][y] == State::NEXT_RELEASE)
 			{
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Blue);
 				OpenAnimation(x, y);
 			}
-			else if (display[x][y] == State::TEMPPOS)
+			
+			if (display2[x][y] == State::TEMPPOS)
 			{
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Blue);
 			}
-			else if (display[x][y] == State::TEMPPOS_ON_EMPTY)
+			else if (display2[x][y] == State::TEMPPOS_ON_EMPTY)
 			{
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Orange);
 			}
-			else if (display[x][y] == State::CANTSET)
+			else if (display2[x][y] == State::CANTSET)
 			{
 				panels_[x][y].ChangeColor(YGame::BlockColorType::Red);
 			}

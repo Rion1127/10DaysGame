@@ -30,8 +30,10 @@ private:
 	std::vector<std::vector<YGame::PanelDrawer>> panels_;
 public:
 	PanelSprite(uint32_t panelSize,Vector2 basePos, float panelScale);
-
-	void Update(const std::vector<std::vector<int32_t>>& system, const std::vector<std::vector<int32_t>>& display);
+	void Update(
+		const std::vector<std::vector<int32_t>>& system, 
+		const std::vector<std::vector<int32_t>>& display1,
+		const std::vector<std::vector<int32_t>>& display2);
 	void Draw();
 private:
 	void SetAnimation(const size_t x, const size_t y);
@@ -54,7 +56,8 @@ private:
 	};
 private:
 	//描画用のパネル
-	std::vector<std::vector<int32_t>> displayPanel_;
+	std::vector<std::vector<int32_t>> displayPanel1_;
+	std::vector<std::vector<int32_t>> displayPanel2_;
 	//システム上のパネル
 	std::vector<std::vector<int32_t>> systemPanel_;
 	std::list<std::vector<std::vector<int32_t>>> oldPanelList_;
@@ -128,5 +131,5 @@ public:
 	uint32_t GetTotalEmptyPanelNum() { return totalPanel_; };
 	StateUp GetStateUpValue() { return stateUp_; }
 
-	std::vector<std::vector<int32_t>> GetDisplayPanel() { return displayPanel_; }
+	std::vector<std::vector<int32_t>> GetDisplayPanel() { return displayPanel1_; }
 };
