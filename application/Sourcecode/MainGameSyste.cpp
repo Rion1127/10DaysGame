@@ -236,13 +236,10 @@ void MainGameSyste::Update()
 		pauseSprite_->Update();
 	}
 
-	
-
 	if (enemyManager_.GetIsChangeNowEnemy() || enemyManager_.GetNowEnemy() == nullptr) {
 		enemy_ = enemyManager_.GetNowEnemy();
 		enemyManager_.SetIsChangeNowEnemy(false);
 	}
-
 
 	int32_t cost = minoCountUpCost_.at(minoCountLevel_);
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
@@ -580,6 +577,7 @@ void MainGameSyste::TutorialInit()
 	}
 
 	nextMinoDrawer_.Initialize();
+	nextMinoDrawer_.RedrawAnimation(minos_);
 
 	enemyManager_.SetEnemyList("Tutorial");
 
@@ -625,16 +623,24 @@ void MainGameSyste::TutorialUpdate()
 		SoundManager::Play("Click_2SE", false, 1.0f);
 	}
 	oldTutorialIndexX_ = tutorialIndexX_;
+
 	if (gameState_ != State::PAUSE &&
 		gameState_ != State::GAMEOVER) {
 		enemyManager_.Update();
 		panel_->Update();
 
-		if (enemyManager_.GetIsAllEnemyDestroy() == false) {
+		if (enemyManager_.GetIsAllEnemyDestroy() == false)
+		{
 			gameState_ = State::GAME;
 		}
-		else {
-			gameState_ = State::CLEAR;
+		else
+		{
+			if (gameState_ != State::CLEAR)
+			{
+				gameState_ = State::CLEAR;
+				SoundManager::Stop("FightBGM");
+				SoundManager::Play("ClearBGM", true, 1.0f);
+			}
 		}
 	}
 
@@ -746,31 +752,45 @@ void MainGameSyste::TutorialUpdate()
 	}
 
 	if (gameState_ == State::GAME) {
-
-		panel_->SetUpdateType(UpdateType::All);
 		//敵の攻撃
-		if (nowTurn_ == Turn::PLAYER) {
+		if (nowTurn_ == Turn::PLAYER)
+		{
 			TurnPlayer();
+			if (minos_.size() > 0)
+			{
+				panel_->SetUpdateType(UpdateType::All);
+			}
+			else
+			{
+				panel_->SetUpdateType(UpdateType::SpriteOnly);
+			}
 		}
 		//敵の攻撃
-		else if (nowTurn_ == Turn::ENEMY) {
+		else if (nowTurn_ == Turn::ENEMY)
+		{
 			TurnEnemy();
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 		//ターンを交代する
-		else if (nowTurn_ == Turn::CHANGE) {
+		else if (nowTurn_ == Turn::CHANGE)
+		{
 			//ターンをチェンジする
 			TurnChange();
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 
 		//前のターンがどっちのターンか記録しておく
-		if (nowTurn_ != Turn::CHANGE) {
+		if (nowTurn_ != Turn::CHANGE)
+		{
 			prevTurn_ = nowTurn_;
 		}
 
 		MinoCountUp();
 
-		if (pauseButton_->GetIsCollision()) {
-			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		if (pauseButton_->GetIsCollision())
+		{
+			if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+			{
 				gameState_ = State::PAUSE;
 				SoundManager::Play("Click_1SE", false, 1.0f);
 			}
@@ -779,27 +799,40 @@ void MainGameSyste::TutorialUpdate()
 		attackButton_->Update();
 		pauseButton_->Update();
 		redoButton_->Update();
-		if (reloadMinoNum_ > minos_.size()) {
+		if (reloadMinoNum_ > minos_.size())
+		{
 			redoButton_->SetisActive(true);
 		}
-		else {
+		else
+		{
 			redoButton_->SetisActive(false);
+		}
+
+		if (player_->GetIsAlive() == false)
+		{
+			gameState_ = State::GAMEOVER;
+			panel_->SetUpdateType(UpdateType::SpriteOnly);
+			SoundManager::Play("GameOverBGM", true, 1.0f);
+			SoundManager::Stop("FightBGM");
 		}
 	}
 	//クリアしたら
 	else if (gameState_ == State::CLEAR) {
 		panel_->SetUpdateType(UpdateType::SpriteOnly);
 
-		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		clearEffect_.Update();
+
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+		{
 			if (titleButton_->GetIsCollision())
 			{
-
 				SceneManager::SetChangeStart(SceneName::Title);
 			}
 		}
 	}
 	else if (gameState_ == State::PAUSE) {
-		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT)) {
+		if (MouseInput::GetInstance()->IsMouseTrigger(MOUSE_LEFT))
+		{
 			if (titleButton_->GetIsCollision())
 			{
 				SceneManager::SetChangeStart(SceneName::Title);
@@ -819,16 +852,10 @@ void MainGameSyste::TutorialUpdate()
 		pauseSprite_->Update();
 	}
 
-	if (player_->GetIsAlive() == false) {
-		gameState_ = State::GAMEOVER;
-		panel_->SetUpdateType(UpdateType::SpriteOnly);
-	}
-
 	if (enemyManager_.GetIsChangeNowEnemy() || enemyManager_.GetNowEnemy() == nullptr) {
 		enemy_ = enemyManager_.GetNowEnemy();
 		enemyManager_.SetIsChangeNowEnemy(false);
 	}
-
 
 	int32_t cost = minoCountUpCost_.at(minoCountLevel_);
 	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
@@ -869,7 +896,7 @@ void MainGameSyste::TutorialUpdate()
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 		else if (tutorialIndexX_ == 1) {
-			panel_->SetUpdateType(UpdateType::All);
+			//panel_->SetUpdateType(UpdateType::All);
 		}
 		else if (tutorialIndexX_ == 2) {
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
@@ -879,7 +906,7 @@ void MainGameSyste::TutorialUpdate()
 		}
 		else if (tutorialIndexX_ == 4)
 		{
-			panel_->SetUpdateType(UpdateType::All);
+			//panel_->SetUpdateType(UpdateType::All);
 		}
 		else if (tutorialIndexX_ == 5)
 		{
@@ -895,13 +922,13 @@ void MainGameSyste::TutorialUpdate()
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 		else if (tutorialIndexX_ == 2) {
-			panel_->SetUpdateType(UpdateType::All);
+			//panel_->SetUpdateType(UpdateType::All);
 		}
 		else if (tutorialIndexX_ == 3) {
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
 		}
 		else if (tutorialIndexX_ == 4) {
-			panel_->SetUpdateType(UpdateType::All);
+			//panel_->SetUpdateType(UpdateType::All);
 		}
 		else if (tutorialIndexX_ == 5) {
 			panel_->SetUpdateType(UpdateType::SpriteOnly);
@@ -931,19 +958,16 @@ void MainGameSyste::TutorialUpdate()
 		}
 	}
 
-
 	YGame::DeadActor::StaticUpdate();
 }
 
 void MainGameSyste::TutorialDraw()
 {
 	DrawSprite();
-
-	textFrameSprite_->Draw();
-	textSprite_->Draw();
 }
 void MainGameSyste::TutorialDrawFront()
 {
+	wallDrawer_.Draw();
 	if (gameState_ == State::CLEAR ||
 		gameState_ == State::GAMEOVER ||
 		gameState_ == State::PAUSE)
@@ -952,15 +976,25 @@ void MainGameSyste::TutorialDrawFront()
 		//クリアの時はタイトルに戻るスプライトだけ有効にする
 		titleButton_->Draw();
 
-		if (gameState_ == State::GAMEOVER) {
+		if (gameState_ == State::GAMEOVER)
+		{
 			retryButton_->Draw();
+			gameOverEffect_.Draw();
 		}
 
-		if (gameState_ == State::PAUSE) {
+		if (gameState_ == State::PAUSE)
+		{
 			backButton_->Draw();
 			pauseSprite_->Draw();
 		}
+		if (gameState_ == State::CLEAR)
+		{
+			clearEffect_.Draw();
+		}
 	}
+
+	textFrameSprite_->Draw();
+	textSprite_->Draw();
 }
 void MainGameSyste::TutorialDrawImGui()
 {
