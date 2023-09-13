@@ -464,7 +464,22 @@ void MainGameSyste::TurnPlayer()
 			int32_t damage = panel_->GetAttackPanelNum() * player_->GetAttackPower();
 			damage -= enemy_->GetGuard();
 			damage = Max(1, damage);
-			enemy_->Damage(damage);
+
+			int32_t critical = RRandom::Rand(0, 100);
+			//Å’á‚Å‚à1‚É‚·‚é
+			int32_t playerLuck = 1 + (player_->GetLuck() / 2);
+			playerLuck = Min(70, playerLuck);
+			
+			bool isClitical = false;
+
+			if (critical <= playerLuck)
+			{
+				isClitical = true;
+				float damageF = (float)(damage * 1.5f);
+				damage = (int32_t)damageF;
+			}
+
+			enemy_->Damage(damage, isClitical);
 			nowTurn_ = Turn::CHANGE;
 
 			float pitch = RRandom::RandF(0.7f, 1.f);

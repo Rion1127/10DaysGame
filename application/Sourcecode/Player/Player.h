@@ -50,6 +50,7 @@ public:
 public:
 	int32_t GetAttackPower() { return baseAttackpower_; }
 	int32_t GetGuard() { return guard_; }
+	int32_t GetLuck() { return luck_; }
 	bool GetIsAlive() { return isAlive_; }
 	bool GetRotTimEnd() { return sword_.GetRotaTimEnd(); }
 };
