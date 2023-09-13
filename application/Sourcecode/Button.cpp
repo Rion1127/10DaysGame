@@ -133,6 +133,9 @@ void Button::SetTexture(Texture* texture)
 
 void Button::SetAnime(Vector2 texSize, UINT animeMaxNum,bool isAnime)
 {
+	pos_ = { 450.0f,600.0f };
+	sprite_->SetPos(pos_);
+
 	col_.leftUp = {
 		pos_.x - (sprite_->GetTexture().size_.x / 2),
 		pos_.y - (sprite_->GetTexture().size_.y / 2)
@@ -147,11 +150,9 @@ void Button::SetAnime(Vector2 texSize, UINT animeMaxNum,bool isAnime)
 
 	sprite_->SetTex_LeftTop({});
 	sprite_->SetTex_Size(Vector2(300.0f, 200.0f));
-	sprite_->SetScale(Vector2(0.3f, 0.3f));
+	sprite_->SetScale(Vector2(1.0f / 7.0f, 1.0f));
 
-	pos_ = { 400.0f,400.0f };
-	sprite_->SetPos(pos_);
-
+	
 	animeMaxCount_ = animeMaxNum;
 	
 }
