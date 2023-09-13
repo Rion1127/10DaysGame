@@ -47,6 +47,7 @@ public:
 public:
 	bool GetIsChangeNowEnemy() { return isChangeNowEnemy_; }
 	bool GetIsAllEnemyDestroy() { return isAllEnemyDestroy_; }
+	bool GetIsEnemyEmpty() { return nowEnemy_ == nullptr && enemyList_.size() <= 0; }
 public:
 	void SetIsChangeNowEnemy(bool flag) { isChangeNowEnemy_ = flag; }
 };

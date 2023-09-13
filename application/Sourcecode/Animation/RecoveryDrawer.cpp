@@ -1,4 +1,5 @@
 #include "RecoveryDrawer.h"
+#include "mSound.h"
 
 using YGame::RecoveryDrawer;
 
@@ -75,6 +76,7 @@ void RecoveryDrawer::RecoverAnimation()
 		plusDras_[i].ResetAnimation();
 		plusDras_[i].EmitAnimation();
 	}
+	SoundManager::Play("RecoverySE");
 }
 
 

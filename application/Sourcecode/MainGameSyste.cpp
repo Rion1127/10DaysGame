@@ -11,6 +11,7 @@ MainGameSyste::MainGameSyste()
 
 	nextMinoDrawer_.Initialize();
 	wallDrawer_.Initialize();
+	waveDrawer_.Initialize();
 
 	nowTurn_ = Turn::PLAYER;
 	gameState_ = State::GAME;
@@ -245,6 +246,7 @@ void MainGameSyste::Update()
 	if (enemyManager_.GetIsChangeNowEnemy() || enemyManager_.GetNowEnemy() == nullptr) {
 		enemy_ = enemyManager_.GetNowEnemy();
 		enemyManager_.SetIsChangeNowEnemy(false);
+		if (enemyManager_.GetIsEnemyEmpty() == false) { waveDrawer_.GoNextWave(); }
 	}
 
 	int32_t cost = minoCountUpCost_.at(minoCountLevel_);
@@ -256,6 +258,8 @@ void MainGameSyste::Update()
 	wallDrawer_.ChangePlusLuck(panel_->GetStateUpValue().luckUp_);
 	wallDrawer_.ChangePlusHeal(panel_->GetStateUpValue().recoverUp_);
 	wallDrawer_.Update();
+
+	waveDrawer_.Update();
 
 	// ƒJƒƒ‰XV
 	cameraManager_->Update();
@@ -298,6 +302,7 @@ void MainGameSyste::DrawSprite()
 void MainGameSyste::DrawSpriteFront()
 {
 	wallDrawer_.Draw();
+	waveDrawer_.Draw();
 	if (gameState_ == State::CLEAR ||
 		gameState_ == State::GAMEOVER ||
 		gameState_ == State::PAUSE)
@@ -606,6 +611,8 @@ void MainGameSyste::TutorialInit()
 
 	nextMinoDrawer_.Initialize();
 	nextMinoDrawer_.RedrawAnimation(minos_);
+	wallDrawer_.Initialize();
+	waveDrawer_.Initialize();
 
 	enemyManager_.SetEnemyList("Tutorial");
 

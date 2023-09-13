@@ -510,7 +510,7 @@
     <ClCompile Include="application\Sourcecode\Animation\DigitDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
     </ClCompile>
-    <ClCompile Include="NumberDrawer.cpp">
+    <ClCompile Include="application\Sourcecode\Animation\NumberDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\Animation\TransitionDrawer.cpp">
@@ -522,19 +522,19 @@
     <ClCompile Include="application\Sourcecode\Animation\CountDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer\Number</Filter>
     </ClCompile>
-    <ClCompile Include="StatusDrawer.cpp">
+    <ClCompile Include="application\Sourcecode\Animation\StatusDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\IParticle2D.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DeadActor.cpp">
+    <ClCompile Include="application\Sourcecode\Animation\DeadActor.cpp">
       <Filter>application\ソースファイル\Animation\Drawer\Actor</Filter>
     </ClCompile>
     <ClCompile Include="SelectScene.cpp">
       <Filter>application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="WallDrawer.cpp">
+    <ClCompile Include="application\Sourcecode\Animation\WallDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
     <ClCompile Include="application\Sourcecode\GameOverEffect.cpp">
@@ -543,7 +543,10 @@
     <ClCompile Include="application\Sourcecode\ClearEffect.cpp">
       <Filter>engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="TitleDrawer.cpp">
+    <ClCompile Include="application\Sourcecode\Animation\TitleDrawer.cpp">
+      <Filter>application\ソースファイル\Animation\Drawer</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Sourcecode\Animation\WaveDrawer.cpp">
       <Filter>application\ソースファイル\Animation\Drawer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -836,7 +839,7 @@
     <ClInclude Include="application\Sourcecode\Animation\DigitDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
     </ClInclude>
-    <ClInclude Include="NumberDrawer.h">
+    <ClInclude Include="application\Sourcecode\Animation\NumberDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\Animation\TransitionDrawer.h">
@@ -848,13 +851,13 @@
     <ClInclude Include="application\Sourcecode\Animation\CountDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer\Number</Filter>
     </ClInclude>
-    <ClInclude Include="StatusDrawer.h">
+    <ClInclude Include="application\Sourcecode\Animation\StatusDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
     <ClInclude Include="application\Sourcecode\IParticle2D.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DeadActor.h">
+    <ClInclude Include="application\Sourcecode\Animation\DeadActor.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer\Actor</Filter>
     </ClInclude>
     <ClInclude Include="SelectScene.h">
@@ -866,10 +869,13 @@
     <ClInclude Include="application\Sourcecode\ClearEffect.h">
       <Filter>engine\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="WallDrawer.h">
+    <ClInclude Include="application\Sourcecode\Animation\WallDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
-    <ClInclude Include="TitleDrawer.h">
+    <ClInclude Include="application\Sourcecode\Animation\TitleDrawer.h">
+      <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Sourcecode\Animation\WaveDrawer.h">
       <Filter>application\ヘッダーファイル\Animation\Drawer</Filter>
     </ClInclude>
   </ItemGroup>
