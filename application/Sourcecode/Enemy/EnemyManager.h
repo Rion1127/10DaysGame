@@ -35,7 +35,9 @@ private:
 	bool isChangeNowEnemy_ = false;
 	bool isAllEnemyDestroy_ = false;
 	Player* player_ = nullptr;
-	float ratio_ = 0.0f;
+	float helthRatio_ = 0.0f;
+	float attackRatio_ = 0.0f;
+	float guardRatio_ = 0.0f;
 public:
 	EnemyManager();
 
