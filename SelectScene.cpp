@@ -39,7 +39,9 @@ void SelectScene::Ini()
 	
 	endlessButton_ = std::make_unique<Button>(endlessPos);
 	endlessButton_->SetTexture(TextureManager::GetInstance()->GetTexture("EndlessButton"));
-
+	endlessButton_->SetIsActiveAnimation(true);
+	endlessButton_->SetAnime(Vector2(300.f, 200.0f), 9, true, 5);
+	endlessButton_->SetPos(Vector2(510.0f, 200.0f));
 	
 	if (SoundManager::IsPlaying("TitleBGM") == false)
 	{

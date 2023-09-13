@@ -132,6 +132,7 @@ public:
 	//ÉQÉbÉ^Å[
 	Vector2 GetScale() { return Scale_; }
 	Vector2 GetPos() { return pos_; }
+	Vector2 GetAncor() { return anchorPoint_; }
 	Color GetColor() { return color_; }
 	Texture GetTexture() { return texture_; }
 	bool GetIsInvisible() { return isInvisible_; }

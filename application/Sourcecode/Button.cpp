@@ -41,13 +41,18 @@ void Button::Update()
 		sprite_->GetTexture().size_.y * sprite_->GetScale().y,
 	};
 
+	float offsetx = (colSize_.x * sprite_->GetAncor().x);
+	float offsety = (colSize_.y * sprite_->GetAncor().y);
+
 	col_.leftUp = {
-		pos_.x - (colSize_.x / 2),
-		pos_.y - (colSize_.y / 2)
+		pos_.x - offsetx,
+		pos_.y - offsety
 	};
+	offsetx = (colSize_.x * (1.f - sprite_->GetAncor().x));
+	offsety = (colSize_.y * (1.f - sprite_->GetAncor().y));
 	col_.RightDown = {
-		pos_.x + (colSize_.x / 2),
-		pos_.y + (colSize_.y / 2)
+		pos_.x + offsetx,
+		pos_.y + offsety
 	};
 
 	Vector2 mPos = MouseInput::GetInstance()->mPos_;
