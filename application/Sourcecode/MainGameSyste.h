@@ -10,6 +10,7 @@
 #include "Timer.h"
 #include "GameOverEffect.h"
 #include "ClearEffect.h"
+#include "WaveDrawer.h"
 
 #include "MouseUI.h"
 class MainGameSyste
@@ -45,6 +46,7 @@ private:
 	
 	YGame::NextMinoDrawer nextMinoDrawer_;
 	YGame::WallDrawer wallDrawer_;
+	YGame::WaveDrawer waveDrawer_;
 
 	Player* player_;
 	IEnemy* enemy_;

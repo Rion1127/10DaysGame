@@ -67,6 +67,7 @@ void LoadManager::LoadTexture()
 	//UI
 	LoadGraph("textFrame.png", "TextFrame");
 	LoadGraph("tutorialText.png", "TutorialText");
+	LoadGraph("wave.png", "Wave");
 	LoadGraph("statusFrame.png", "StatusFrame");
 	LoadGraph("enemyStateUI.png", "EnemyStatusFrame");
 	LoadGraph("longSword.png", "Sword");
