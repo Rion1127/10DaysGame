@@ -148,17 +148,17 @@ void Player::Recovery(int32_t health)
 
 void Player::AddGurd(int32_t gurd) {
 	guard_ += gurd;
-	status_[kGuardIndex].PowerUpAnimation(guard_);
+	status_[kGuardIndex].PowerUpAnimation(guard_, true);
 }
 
 void Player::AddAttack(int32_t attack) {
 	baseAttackpower_ += attack;
-	status_[kAttackIndex].PowerUpAnimation(baseAttackpower_);
+	status_[kAttackIndex].PowerUpAnimation(baseAttackpower_, true);
 }
 
 void Player::AddLuck(int32_t luck) {
 	luck_ += luck;
-	status_[kLuckIndex].PowerUpAnimation(luck_);
+	status_[kLuckIndex].PowerUpAnimation(luck_, true);
 }
 
 void Player::IdleAnimation()

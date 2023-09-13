@@ -24,7 +24,7 @@ namespace YGame
 		/// パワーアップアニメーション
 		/// </summary>
 		/// <param name="number"> : 数</param>
-		void PowerUpAnimation(const int32_t number);
+		void PowerUpAnimation(const int32_t number, const bool isPlaySE = false);
 
 		/// <summary>
 		/// プラスアニメーション
@@ -61,5 +61,6 @@ namespace YGame
 		YMath::YTimer moveTim_;
 		YMath::Ease<float> moveEas_;
 
+		bool isPlaySE_ = false;
 	};
 }
