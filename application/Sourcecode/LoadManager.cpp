@@ -79,6 +79,7 @@ void LoadManager::LoadTexture()
 	LoadGraph("questClear.png", "QuestClear");
 	LoadGraph("click.png", "Click");
 	LoadGraph("story.png", "Story");
+	LoadGraph("loading.png", "Load");
 }
 
 void LoadManager::LoadSound()

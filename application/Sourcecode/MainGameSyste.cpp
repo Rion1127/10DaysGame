@@ -49,7 +49,7 @@ MainGameSyste::MainGameSyste()
 
 	Vector2 pos = {
 		WinAPI::GetWindowSize().x / 2.f,
-		744.f
+		745.f
 	};
 	swordSprite_->SetPos(pos);
 

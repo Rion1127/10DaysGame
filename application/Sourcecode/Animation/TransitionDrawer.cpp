@@ -1,6 +1,7 @@
 #include "TransitionDrawer.h"
 #include "WinAPI.h"
 #include "RRandom.h"
+#include "Lerp.h"
 
 using YGame::TransitionDrawer;
 
@@ -13,7 +14,7 @@ namespace
 void TransitionDrawer::Initialize()
 {			
 	Vector2 winHalf = WinAPI::GetWindowSize() / 2.0f;
-	Vector3 pos = { winHalf.x, winHalf.y, 0.0f };
+	Vector3 pos = { winHalf.x + 72.0f, winHalf.y, 0.0f };
 	trfm_.Initialize({ pos, {}, {3.0f,3.0f,3.0f} });
 
 	Vector3 leftTop = 
@@ -46,6 +47,9 @@ void TransitionDrawer::Initialize()
 	
 	intervalTim_.Initialize(0);
 	loadTim_.Initialize(20);
+	loadPow_.Initialize(20);
+
+	loadDra_.Initialize({ {512, 680, 0}, {}, {1.0f,1.0f,0.0f} });
 
 	phase_ = Phase::Fall;
 	phaseNum_ = 0;
@@ -95,6 +99,7 @@ void TransitionDrawer::Update()
 	}
 
 	loadTim_.Update();
+	loadPow_.Update(loadTim_.IsAct());
 	if (loadTim_.IsEnd())
 	{
 		isChangeMoment_ = true;
@@ -114,6 +119,9 @@ void TransitionDrawer::Update()
 			blocks_[y][x].drawer_.Update();
 		}
 	}
+
+	loadDra_.SetColor(Color(255, 255, 255, 255 * YMath::EaseIn(0.0f, 1.0f, loadPow_.Ratio(), 3.0f)));
+	loadDra_.Update();
 }
 
 void TransitionDrawer::SceneChangeAnimation(const uint32_t frame, const uint32_t phaseNum)
@@ -132,6 +140,7 @@ void TransitionDrawer::SceneChangeAnimation(const uint32_t frame, const uint32_t
 		{
 			BlockColorType colorType = BlockColorType::None;
 			colorType = static_cast<BlockColorType>(RRandom::Rand(3, 9));
+			//colorType = BlockColorType::Orange;
 
 			blocks_[y][x].drawer_.ChangeColor(colorType);
 			blocks_[y][x].slime_.Initialize(0, { -blocks_[y][x].trfm_.scale_ }, 0.0f);
@@ -216,4 +225,12 @@ void TransitionDrawer::Draw()
 			blocks_[y][x].drawer_.Draw();
 		}
 	}
+
+	loadDra_.Draw();
+}
+
+void TransitionDrawer::LoadDrawer::Initialize(const YTransform::Status& trfmStatus)
+{
+	BaseInitialize(trfmStatus, nullptr);
+	sprite_.SetTexture(TextureManager::GetInstance()->GetTexture("Load"));
 }

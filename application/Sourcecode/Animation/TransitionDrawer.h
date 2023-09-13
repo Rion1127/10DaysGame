@@ -47,6 +47,12 @@ namespace YGame
 	
 	private:
 
+		class LoadDrawer : public BaseDrawer
+		{
+		public:
+			void Initialize(const YTransform::Status& trfmStatus);
+		};
+
 		struct Block
 		{
 			YTransform trfm_;
@@ -66,10 +72,13 @@ namespace YGame
 		YTransform trfm_;
 		std::array<std::array<Block, 10>, 20> blocks_;
 		
+		LoadDrawer loadDra_;
+
 		bool isTransition_ = true;
 
 		YMath::YTimer intervalTim_;
 		YMath::YTimer loadTim_;
+		YMath::YPower loadPow_;
 		
 		Phase phase_ = Phase::Fall;
 		uint32_t phaseNum_ = 0;
