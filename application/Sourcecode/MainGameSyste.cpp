@@ -141,7 +141,7 @@ void MainGameSyste::CostInit()
 
 	minoCountLevel_ = 0;
 
-	for (uint32_t i = 0; i <10; i++)
+	for (uint32_t i = 0; i < 10; i++)
 	{
 		int32_t cost = 30 + i * 50;
 		minoCountUpCost_.push_back(cost);
@@ -675,19 +675,22 @@ void MainGameSyste::GameOverUpdate()
 
 void MainGameSyste::MinoCountUp()
 {
-	const int32_t cost = minoCountUpCost_.at(minoCountLevel_);
-	int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
-	//空白のパネルがコストよりも多ければ
-	if (cost <= nowEmptyPanelNum)
-	{
-		minoCountLevel_++;
-		reloadMinoNum_++;
+	size_t costMaxNum = minoCountUpCost_.size() - 1;
+	if (costMaxNum > minoCountLevel_) {
+		const int32_t cost = minoCountUpCost_.at(minoCountLevel_);
+		int32_t nowEmptyPanelNum = panel_->GetTotalEmptyPanelNum();
+		//空白のパネルがコストよりも多ければ
+		if (cost <= nowEmptyPanelNum)
+		{
+			minoCountLevel_++;
+			reloadMinoNum_++;
 
-		size_t costMaxNum = minoCountUpCost_.size() - 1;
-		minoCountLevel_ = (uint32_t)Min(costMaxNum, (size_t)minoCountLevel_);
-		//panel_->PanelReset();
-		SoundManager::Play("UnlockSE", false, 0.8f, 0.7f);
-		nextMinoDrawer_.UnlockAnimiation();
+
+			minoCountLevel_ = (uint32_t)Min(costMaxNum, (size_t)minoCountLevel_);
+			//panel_->PanelReset();
+			SoundManager::Play("UnlockSE", false, 0.8f, 0.7f);
+			nextMinoDrawer_.UnlockAnimiation();
+		}
 	}
 }
 
