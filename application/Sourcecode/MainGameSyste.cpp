@@ -692,6 +692,9 @@ void MainGameSyste::MinoCountUp()
 			nextMinoDrawer_.UnlockAnimiation();
 		}
 	}
+	else {
+		nextMinoDrawer_.SetIsFullOpen(true);
+	}
 }
 
 #pragma region チュートリアル
