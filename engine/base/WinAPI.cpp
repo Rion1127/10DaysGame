@@ -43,7 +43,7 @@ void WinAPI::Ini()
 	AdjustWindowRect(&wrc_, WS_OVERLAPPEDWINDOW, false);
 
 	hwnd_ = CreateWindow(w_.lpszClassName,	// クラス名
-		L"それは剣と言うにはあまりにも大きすぎた",						// タイトルバーの文字
+		L"3005_それは剣と言うにはあまりにも大きすぎた",						// タイトルバーの文字
 		WS_SYSMENU,							// ウィンドウサイズ変更不可
 		CW_USEDEFAULT,						// 表示X座標(OSに任せる)
 		CW_USEDEFAULT,						// 表示Y座標(OSに任せる)
